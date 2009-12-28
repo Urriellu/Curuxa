@@ -1,0 +1,93 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace CuruxaIDE {
+	static class Globals {
+		public static Project ActiveProject {
+			get {
+				return _ActiveProject;
+			}
+			set {
+				_ActiveProject = value;
+				if(MainWindow != null) MainWindow.UpdateActivePrj(value);
+			}
+		}
+		private static Project _ActiveProject;
+
+		public static SrcFile ActiveSrcFile {
+			get {
+				return _ActiveSrcFile;
+			}
+			set {
+				_ActiveSrcFile = value;
+				if(MainWindow != null) MainWindow.UpdateActiveSrc(value);
+			}
+		}
+		private static SrcFile _ActiveSrcFile;
+
+		public static FrmMainWindow MainWindow;
+
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
+		static void Main() {
+			//if you want to generate a new Example, uncomment the following line
+			//GenerateExample();
+
+#if !DEBUG
+			Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
+			Application.ThreadException += delegate(object sender, System.Threading.ThreadExceptionEventArgs ar) {
+				Crash(ar.Exception);
+			};
+			AppDomain.CurrentDomain.UnhandledException += delegate(object sender, UnhandledExceptionEventArgs ar) {
+				Crash(ar.ExceptionObject);
+			};
+#endif
+
+			try {
+				Settings.Load();
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(MainWindow = new FrmMainWindow());
+			} catch(TypeInitializationException e) {
+				if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
+					Console.WriteLine("Windows Forms not supported!!!");
+				} else throw e;
+			}
+#if !DEBUG
+ catch(Exception e) {
+				Crash(e);
+			}
+#endif
+		}
+
+		private static void GenerateExample() {
+			Example NewExample = new Example();
+			NewExample.Project.Name = "MBP18_test01";
+			NewExample.Project.Description = "Example program for testing MBP18";
+			NewExample.Project.Language = Language.C;
+			NewExample.Project.MainBoard = MainBoard.MBP18;
+			NewExample.Project.SrcFiles.Add(new SrcFile(NewExample.Project, NewExample.Project.Name + "." + NewExample.Project.Language.GetExtension()));
+			NewExample.Save(NewExample.Project.Name + "." + Example.ExampleExtension);
+		}
+
+		private static void Crash(object Error) {
+			new FrmCrash(Error).ShowDialog();
+		}
+
+		public static void Log(string Text) {
+			if(MainWindow != null) MainWindow.Log(Text);
+		}
+
+		public static void Debug(string Text) {
+			Console.WriteLine(string.Format("[{0:00}:{1:00}:{2:00}.{3:000}] {4}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, Text));
+		}
+
+		public static void Debug(string Text, params object[] p) {
+			Debug(string.Format(Text, p));
+		}
+	}
+}
