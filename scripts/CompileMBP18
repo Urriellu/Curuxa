@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sdcc -I /usr/share/curuxa/lib -mpic14 -p16f88 "$@"

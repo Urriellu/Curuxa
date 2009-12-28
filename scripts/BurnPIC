@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$1" = "" ]; then
+	echo "First argument must be hex file"
+	exit 1
+fi
+
+CurrentPIC="`DetectPIC`"
+pk2cmd -P$CurrentPIC -M -F`pwd`/$@
