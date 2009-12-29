@@ -3,6 +3,9 @@
 * http://curuxa.org
 *=================================================================*/
 
+#define int8 char
+#define int16 int
+
 #define DigitalInput 1
 #define DigitalOutput 0
 
