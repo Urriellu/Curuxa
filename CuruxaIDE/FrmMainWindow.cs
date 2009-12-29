@@ -42,13 +42,7 @@ namespace CuruxaIDE {
 		}
 
 		private void InitSyntaxHighlight() {
-			TxtCode.Settings.CommentColor = Color.Gray;
-			TxtCode.Settings.KeywordColor = Color.Blue;
-			TxtCode.Settings.StringColor = Color.Red;
 			TxtCode.Settings.Comment = "//";
-			TxtCode.Settings.EnableComments = true;
-			TxtCode.Settings.EnableIntegers = true;
-			TxtCode.Settings.EnableStrings = true;
 			TxtCode.Settings.Keywords.Clear();
 			TxtCode.Settings.Keywords.Add("auto");
 			TxtCode.Settings.Keywords.Add("_Bool");
@@ -230,7 +224,8 @@ namespace CuruxaIDE {
 			NewProject.PrjFilePath = SaveProjectDialog.FileName;
 
 			FrmFileName FN = new FrmFileName(i18n.str("NewMainFileName") + "." + NewProject.Language.GetExtension());
-			if(FN.ShowDialog(this) == DialogResult.Cancel) return;
+			FN.ShowInTaskbar = true;
+			if(FN.ShowDialog() == DialogResult.Cancel) return;
 			string FileName = FN.TxtFileName.Text;
 			if(string.IsNullOrEmpty(FileName)) FileName = "Undefined";
 			if(!FileName.EndsWith("." + NewProject.Language.GetExtension())) FileName += "." + NewProject.Language.GetExtension();
@@ -369,8 +364,6 @@ namespace CuruxaIDE {
 
 			HighlightMatches(RxKeyWords, ColorKeywords);
 			HighlightMatches(RxMultiLineComment, ColorComments);
-
-
 		}
 
 		private void HighlightMatches(Regex regex, Color Color) {

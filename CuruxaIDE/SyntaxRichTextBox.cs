@@ -85,17 +85,29 @@ namespace CuruxaIDE {
 			SelectionLength = m_nLineLength;
 			SelectionColor = Color.Black;
 
+			bool IsPPD = false;
+
 			// Process the keywords
 			ProcessRegex(m_strKeywords, Settings.KeywordColor);
 
+			//Process preprocessor directives
+			/*if(Settings.EnablePPD) {
+				if(m_strLine[0]=='#') {
+					IsPPD = true;
+					SelectionStart = m_nLineStart;
+					SelectionLength = m_nLineLength-1;
+					SelectionColor = Settings.PPDColor;
+				}
+			}*/
+
 			// Process numbers
-			if(Settings.EnableIntegers) ProcessRegex("\\b(?:[0-9]*\\.)?[0-9]+\\b", Settings.IntegerColor);
+			if(Settings.EnableIntegers && !IsPPD) ProcessRegex("\\b(?:[0-9]*\\.)?[0-9]+\\b", Settings.IntegerColor);
 
 			// Process strings
-			if(Settings.EnableStrings) ProcessRegex("\"[^\"\\\\\\r\\n]*(?:\\\\.[^\"\\\\\\r\\n]*)*\"", Settings.StringColor);
+			if(Settings.EnableStrings && !IsPPD) ProcessRegex("\"[^\"\\\\\\r\\n]*(?:\\\\.[^\"\\\\\\r\\n]*)*\"", Settings.StringColor);
 
 			// Process comments
-			if(Settings.EnableComments && !string.IsNullOrEmpty(Settings.Comment)) ProcessRegex(Settings.Comment + ".*$", Settings.CommentColor);
+			if(Settings.EnableComments && !string.IsNullOrEmpty(Settings.Comment) && !IsPPD) ProcessRegex(Settings.Comment + ".*$", Settings.CommentColor);
 
 			SelectionStart = nPosition;
 			SelectionLength = 0;
@@ -165,17 +177,10 @@ namespace CuruxaIDE {
 	}
 
 	/// <summary>
-	/// Settings for the keywords and colors.
+	/// Settings for the keywords and colors
 	/// </summary>
 	public class SyntaxSettings {
 		SyntaxList m_rgKeywords = new SyntaxList();
-		string m_strComment = "";
-		Color m_colorComment = Color.Green;
-		Color m_colorString = Color.Gray;
-		Color m_colorInteger = Color.Red;
-		bool m_bEnableComments = true;
-		bool m_bEnableIntegers = true;
-		bool m_bEnableStrings = true;
 
 		#region Properties
 		/// <summary>
@@ -184,62 +189,56 @@ namespace CuruxaIDE {
 		public List<string> Keywords {
 			get { return m_rgKeywords.m_rgList; }
 		}
+
 		/// <summary>
 		/// The color of keywords.
 		/// </summary>
-		public Color KeywordColor {
-			get { return m_rgKeywords.m_color; }
-			set { m_rgKeywords.m_color = value; }
-		}
+		public Color KeywordColor = Color.Blue;
+
 		/// <summary>
-		/// A string containing the comment identifier.
+		/// A string containing the comment identifier
 		/// </summary>
-		public string Comment {
-			get { return m_strComment; }
-			set { m_strComment = value; }
-		}
+		public string Comment = "";
+
 		/// <summary>
 		/// The color of comments.
 		/// </summary>
-		public Color CommentColor {
-			get { return m_colorComment; }
-			set { m_colorComment = value; }
-		}
+		public Color CommentColor=Color.Green;
+
 		/// <summary>
-		/// Enables processing of comments if set to true.
+		/// Enables processing of comments if set to true
 		/// </summary>
-		public bool EnableComments {
-			get { return m_bEnableComments; }
-			set { m_bEnableComments = value; }
-		}
+		public bool EnableComments =true;
+
 		/// <summary>
-		/// Enables processing of integers if set to true.
+		/// Enables processing of integers if set to true
 		/// </summary>
-		public bool EnableIntegers {
-			get { return m_bEnableIntegers; }
-			set { m_bEnableIntegers = value; }
-		}
+		public bool EnableIntegers =true;
+
 		/// <summary>
-		/// Enables processing of strings if set to true.
+		/// Enables processing of strings if set to true
 		/// </summary>
-		public bool EnableStrings {
-			get { return m_bEnableStrings; }
-			set { m_bEnableStrings = value; }
-		}
+		public bool EnableStrings=true;
+
 		/// <summary>
-		/// The color of strings.
+		/// Enables processing of preprocessor directives if set to true
 		/// </summary>
-		public Color StringColor {
-			get { return m_colorString; }
-			set { m_colorString = value; }
-		}
+		public bool EnablePPD = true;
+
 		/// <summary>
-		/// The color of integers.
+		/// The color of strings
 		/// </summary>
-		public Color IntegerColor {
-			get { return m_colorInteger; }
-			set { m_colorInteger = value; }
-		}
+		public Color StringColor = Color.DarkRed;
+
+		/// <summary>
+		/// The color of integers
+		/// </summary>
+		public Color IntegerColor = Color.DarkGreen;
+
+		/// <summary>
+		/// The color of preprocessor directives
+		/// </summary>
+		public Color PPDColor = Color.Green;
 		#endregion
 	}
 }
