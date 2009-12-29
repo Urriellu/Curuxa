@@ -50,7 +50,7 @@ namespace CuruxaIDE {
 			try {
 				Settings.Load();
 				Application.EnableVisualStyles();
-				Application.SetCompatibleTextRenderingDefault(false);
+				Application.SetCompatibleTextRenderingDefault(true);
 				Application.Run(MainWindow = new FrmMainWindow());
 			} catch(TypeInitializationException e) {
 				if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
