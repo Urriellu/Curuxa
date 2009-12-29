@@ -107,9 +107,23 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static string IncludesDir {
 			get {
-				return ExeLocation + "/UserIncludes";
+				if(string.IsNullOrEmpty(_IncludesDir)) {
+					string[] PossibleLocations = {
+						"/usr/share/curuxa/lib", //default install path
+						ExeLocation+"/../../../lib" //relative path when debugging (running Curuxa IDE without installation)
+					};
+					foreach(string L in PossibleLocations) {
+						Globals.Debug("Looking for libraries in " + L);
+						if(File.Exists(L + "/MBP.h")) {
+							_IncludesDir = L;
+						}
+					}
+				}
+				if(string.IsNullOrEmpty(_IncludesDir)) Globals.Log(i18n.str("LibsNotFound"));
+				return _IncludesDir;
 			}
 		}
+		protected static string _IncludesDir;
 
 		/// <summary>
 		/// Path to the directory where all user-related settings and temp files are stored. Last character is NOT a slash ('/')
