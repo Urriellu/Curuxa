@@ -386,7 +386,7 @@ namespace CuruxaIDE {
 				//update object contents
 				Globals.ActiveSrcFile.Content = TxtCode.Text;
 			}
-			TxtCode.ProcessChangedText();
+			//TxtCode.ProcessChangedText();
 		}
 
 		private void MiSave_Click(object sender, EventArgs e) {
