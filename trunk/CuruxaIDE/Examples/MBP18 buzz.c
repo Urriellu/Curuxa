@@ -1,7 +1,7 @@
 /*==================================================================
-* Sample program for AO-PZ using an MBP18
+* Sample program for AO-SPK using an MBP18
 *
-* Plug AO-PZ to RA1 (pin 18).
+* Plug AO-SPK to RA1 (pin 18).
 *
 * http://curuxa.org
 *=================================================================*/
