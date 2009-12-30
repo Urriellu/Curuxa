@@ -43,10 +43,8 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
-		/// OnTextChanged
+		/// ProcessChangedText
 		/// </summary>
-		/// <param name="e"></param>
-		//protected override void OnTextChanged(EventArgs e) {
 		public void ProcessChangedText() {
 			// Calculate shit here.
 			m_nContentLength = this.TextLength;
