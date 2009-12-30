@@ -8,6 +8,8 @@ namespace CuruxaIDE {
 	/// List of available microcontrollers
 	/// </summary>
 	public enum Microcontroller {
+		PIC12F683,
+		PIC16F688,
 		PIC16F88
 	}
 }
