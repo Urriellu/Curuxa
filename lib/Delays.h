@@ -1,9 +1,13 @@
 /*==================================================================
 * Delays for PICs
-* These delays keep the PIC doing nothing, wasting time and energy
 *
-* Warning: these functions are very inexact. For better timing use
-* internal timers. For precission timing use Real Time Clocks.
+* Warning 1:
+* These delays keep the PIC doing nothing, wasting time and energy.
+* Use timers and interrupts if you want to execute something
+* else while waiting
+*
+* Warning 2: these functions are very inexact. For better timing
+* use internal timers. For precission timing use Real Time Clocks.
 *
 * Before using this library you must define one of the following values:
 * OSC_8MHz
