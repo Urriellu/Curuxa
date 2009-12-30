@@ -19,8 +19,8 @@ namespace CuruxaIDE {
 		[Description("LTIL-A")]
 		LTIL_A,
 
-		[Description("AO-PZ")]
-		AO_PZ,
+		[Description("AO-SPK")]
+		AO_SPK,
 
 		[Description("CMIR-RC")]
 		CMIR_RC
