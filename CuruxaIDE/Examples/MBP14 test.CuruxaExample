@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <Name>MBP14 test</Name>
+    <Description>Example program for testing MBP14 without Curuxa libraries</Description>
+    <MainBoard>MBP14</MainBoard>
+    <Voltage>5</Voltage>
+    <Language>C</Language>
+    <SrcFileNames>
+      <string>MBP14 test.c</string>
+    </SrcFileNames>
+  </Project>
+  <UsedModules />
+</Example>
