@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using System.Drawing;
 
 namespace CuruxaIDE {
 	/// <summary>
@@ -23,6 +24,11 @@ namespace CuruxaIDE {
 		public static readonly Encoding Charset = Encoding.UTF8;
 
 		public const string Version = "0.1-svn";
+
+		public static Color PrjListBackColor = Color.White;
+		public static Color PrjListSettingsColor = Color.Blue;
+		public static Color PrjListSrcColor = Color.Black;
+		public static Color PrjListLibsColor = Color.Gray;
 
 		/// <summary>
 		/// Add the path of a project to the list of opened projects
