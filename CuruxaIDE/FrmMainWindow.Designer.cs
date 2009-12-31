@@ -52,6 +52,7 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
+			this.TxtCode = new CuruxaIDE.SyntaxRichTextBox();
 			this.TxtLog = new System.Windows.Forms.RichTextBox();
 			this.StripPrj = new System.Windows.Forms.ToolStrip();
 			this.BtnNewFile = new System.Windows.Forms.ToolStripButton();
@@ -65,7 +66,6 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.TxtCode = new CuruxaIDE.SyntaxRichTextBox();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -317,6 +317,18 @@
 			this.TreePrj.TabIndex = 0;
 			this.TreePrj.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreePrj_NodeMouseClick);
 			// 
+			// TxtCode
+			// 
+			this.TxtCode.AcceptsTab = true;
+			this.TxtCode.DetectUrls = false;
+			this.TxtCode.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TxtCode.Location = new System.Drawing.Point(0, 0);
+			this.TxtCode.Name = "TxtCode";
+			this.TxtCode.Size = new System.Drawing.Size(638, 418);
+			this.TxtCode.TabIndex = 0;
+			this.TxtCode.Text = "";
+			this.TxtCode.TextChanged += new System.EventHandler(this.TxtCode_TextChanged);
+			// 
 			// TxtLog
 			// 
 			this.TxtLog.BackColor = System.Drawing.SystemColors.Window;
@@ -449,18 +461,6 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// TxtCode
-			// 
-			this.TxtCode.AcceptsTab = true;
-			this.TxtCode.DetectUrls = false;
-			this.TxtCode.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TxtCode.Location = new System.Drawing.Point(0, 0);
-			this.TxtCode.Name = "TxtCode";
-			this.TxtCode.Size = new System.Drawing.Size(638, 418);
-			this.TxtCode.TabIndex = 0;
-			this.TxtCode.Text = "";
-			this.TxtCode.TextChanged += new System.EventHandler(this.TxtCode_TextChanged);
-			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -474,6 +474,7 @@
 			this.MinimumSize = new System.Drawing.Size(400, 350);
 			this.Name = "FrmMainWindow";
 			this.Text = "NS (Title)";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Load += new System.EventHandler(this.MainWindow_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMainWindow_FormClosing);
 			this.StatusStrip.ResumeLayout(false);
