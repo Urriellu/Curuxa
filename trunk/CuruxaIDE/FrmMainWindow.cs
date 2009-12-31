@@ -157,13 +157,35 @@ namespace CuruxaIDE {
 		public void UpdatePrjList() {
 			TreeNode SelectedNode = TreePrj.SelectedNode;
 			TreePrj.Nodes.Clear();
+			TreePrj.BackColor = Settings.PrjListBackColor;
 			foreach(Project prj in Project.OpenProjects) {
 				TreeNode Parent = new TreeNode(prj.Name);
+				Parent.ToolTipText = prj.Description;
+				Parent.NodeFont = new Font(TreePrj.Font, FontStyle.Bold);
+
+				//Main Board
+				TreeNode TnMB = new TreeNode(prj.MainBoard.ToString());
+				TnMB.ForeColor = Settings.PrjListSettingsColor;
+				Parent.Nodes.Add(TnMB);
+
+				//Language
+				TreeNode TnLang = new TreeNode(i18n.str("Language:") + " " + prj.Language.ToString());
+				TnLang.ForeColor = Settings.PrjListSettingsColor;
+				Parent.Nodes.Add(TnLang);
+
+				//source files
 				foreach(SrcFile src in prj.SrcFiles) {
-					TreeNode Child = new TreeNode(src.FileName + ((src.Modified) ? " *" : ""));
+					TreeNode TnSrc = new TreeNode(src.FileName + ((src.Modified) ? " *" : ""));
 					//if(Globals.ActiveSrcFile != null && Globals.ActiveSrcFile.FileName == FileName) Child.NodeFont = new Font(Child.NodeFont, FontStyle.Bold);
-					Parent.Nodes.Add(Child);
+					TnSrc.ForeColor = Settings.PrjListSrcColor;
+					Parent.Nodes.Add(TnSrc);
 				}
+
+				//libraries
+				TreeNode TnLib = new TreeNode("lib test");
+				TnLib.ForeColor = Settings.PrjListLibsColor;
+				Parent.Nodes.Add(TnLib);
+
 				TreePrj.Nodes.Add(Parent);
 			}
 			TreePrj.ExpandAll();
