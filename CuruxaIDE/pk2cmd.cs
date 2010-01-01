@@ -22,7 +22,7 @@ namespace CuruxaIDE {
 			string HexFile = prj.Path + "/temp.hex"; //it has to be full path!!!
 
 			if(!File.Exists(HexFile)) {
-				Globals.Log(i18n.str("NoHex"));
+				Globals.LogIDE(i18n.str("NoHex"));
 				return 1;
 			}
 
@@ -30,7 +30,7 @@ namespace CuruxaIDE {
 			string args = "-P" + prj.MainBoard.GetMCU() + " -M -F" + HexFile;
 
 			try {
-				if(!CheckMB(prj)) Globals.Log(i18n.str("WrongMB", prj.MainBoard));
+				if(!CheckMB(prj)) Globals.LogIDE(i18n.str("WrongMB", prj.MainBoard));
 
 				ProcInfo = new ProcessStartInfo(Command, args);
 				ProcInfo.CreateNoWindow = true;
@@ -52,7 +52,7 @@ namespace CuruxaIDE {
 
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.Log(i18n.str("NoApp", RealName));
+				Globals.LogIDE(i18n.str("NoApp", RealName));
 				return 1;
 			}
 		}
@@ -63,7 +63,7 @@ namespace CuruxaIDE {
 				if(i == e.Data.Length) return;
 				if(e.Data[i] != ' ') break;
 			}
-			Globals.Log("[" + RealName + " Error] " + e.Data);
+			Globals.LogProgrammer("[" + RealName + " Error] " + e.Data);
 		}
 
 		void proc_OutputDataReceived(object sender, DataReceivedEventArgs e) {
@@ -74,7 +74,7 @@ namespace CuruxaIDE {
 				if(e.Data[i] != ' ') break;
 			}
 
-			Globals.Log("[" + RealName + "] " + e.Data);
+			Globals.LogProgrammer("[" + RealName + "] " + e.Data);
 		}
 
 		public override int Run(Project prj) {
@@ -105,7 +105,7 @@ namespace CuruxaIDE {
 
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.Log(i18n.str("NoApp", RealName));
+				Globals.LogIDE(i18n.str("NoApp", RealName));
 				return 1;
 			}
 		}
@@ -138,7 +138,7 @@ namespace CuruxaIDE {
 
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.Log(i18n.str("NoApp", RealName));
+				Globals.LogIDE(i18n.str("NoApp", RealName));
 				return 1;
 			}
 		}
@@ -172,7 +172,7 @@ namespace CuruxaIDE {
 				Globals.Debug("Waiting for exit...");
 				proc.WaitForExit();
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.Log(i18n.str("NoApp", RealName));
+				Globals.LogIDE(i18n.str("NoApp", RealName));
 			}
 			return DetectedMB;
 		}
