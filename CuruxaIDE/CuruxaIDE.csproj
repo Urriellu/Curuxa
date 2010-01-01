@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListSrcFileExtensions.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="Example.cs" />
     <Compile Include="FrmAbout.cs">
@@ -100,6 +101,7 @@
     <Compile Include="FrmProjectSettings.Designer.cs">
       <DependentUpon>FrmProjectSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProjectArrayExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
