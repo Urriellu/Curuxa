@@ -101,7 +101,7 @@ namespace CuruxaIDE {
 			try {
 				Content = File.ReadAllText(FullPath, Settings.Charset);
 			} catch(FileNotFoundException) {
-				Globals.Log(i18n.str("FileNotFound", FullPath));
+				Globals.LogIDE(i18n.str("FileNotFound", FullPath));
 			}
 		}
 
@@ -109,7 +109,7 @@ namespace CuruxaIDE {
 		/// Saves the contents to disk
 		/// </summary>
 		public void SaveFile() {
-			Globals.Log("Saving file " + FullPath);
+			Globals.LogIDE("Saving file " + FullPath);
 			File.WriteAllText(FullPath, Content, Settings.Charset);
 			Modified = false;
 			if(Globals.MainWindow != null) Globals.MainWindow.UpdatePrjList();
