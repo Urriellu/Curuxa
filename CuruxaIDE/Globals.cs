@@ -78,8 +78,25 @@ namespace CuruxaIDE {
 			new FrmCrash(Error).ShowDialog();
 		}
 
-		public static void Log(string Text) {
-			if(MainWindow != null) MainWindow.Log(Text);
+		/// <summary>
+		/// Put some text in the Curuxa IDE log
+		/// </summary>
+		public static void LogIDE(string Text) {
+			if(MainWindow != null) MainWindow.LogIDE(Text);
+		}
+
+		/// <summary>
+		/// Put some text in the build log
+		/// </summary>
+		public static void LogBuild(string Text) {
+			if(MainWindow != null) MainWindow.LogBuild(Text);
+		}
+
+		/// <summary>
+		/// Put some text in the programmer log
+		/// </summary>
+		public static void LogProgrammer(string Text) {
+			if(MainWindow != null) MainWindow.LogProgrammer(Text);
 		}
 
 		public static void Debug(string Text) {
@@ -88,6 +105,26 @@ namespace CuruxaIDE {
 
 		public static void Debug(string Text, params object[] p) {
 			Debug(string.Format(Text, p));
+		}
+
+		/// <summary>
+		/// Sets up a new build log. Focus the log's tab and clears the previous logs
+		/// </summary>
+		public static void SetupNewBuildLog() {
+			if(MainWindow != null) {
+				MainWindow.TxtLogBuild.Clear();
+				MainWindow.TabsMsg.SelectedTab = MainWindow.TabBuildLog;
+			}
+		}
+
+		/// <summary>
+		/// Sets up a new programmer log. Focus the log's tab and clears the previous logs
+		/// </summary>
+		public static void SetupNewProgrammerLog() {
+			if(MainWindow != null) {
+				MainWindow.TxtLogProgrammer.Clear();
+				MainWindow.TabsMsg.SelectedTab = MainWindow.TabProgLog;
+			}
 		}
 	}
 }
