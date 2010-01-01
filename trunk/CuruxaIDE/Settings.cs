@@ -125,7 +125,7 @@ namespace CuruxaIDE {
 						}
 					}
 				}
-				if(string.IsNullOrEmpty(_IncludesDir)) Globals.Log(i18n.str("LibsNotFound"));
+				if(string.IsNullOrEmpty(_IncludesDir)) Globals.LogIDE(i18n.str("LibsNotFound"));
 				return _IncludesDir;
 			}
 		}
@@ -167,7 +167,7 @@ namespace CuruxaIDE {
 				try {
 					Directory.CreateDirectory(AppDataPath);
 				} catch(UnauthorizedAccessException) {
-					Globals.Log("Can't create directory: " + AppDataPath);
+					Globals.LogIDE("Can't create directory: " + AppDataPath);
 				}
 			}
 			StreamWriter sw = null;
@@ -176,10 +176,10 @@ namespace CuruxaIDE {
 				XmlSerializer xs = new XmlSerializer(s.GetType());
 				xs.Serialize(sw, s);
 			} catch(IOException e) {
-				Globals.Log(i18n.str("UnableSaveSettings"));
+				Globals.LogIDE(i18n.str("UnableSaveSettings"));
 				Globals.Debug(e.Message);
 			} finally {
-				sw.Close();
+				if(sw != null) sw.Close();
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace CuruxaIDE {
 						Project.Open(PrjPath);
 					}
 				} catch(IOException e) {
-					Globals.Log(i18n.str("UnableLoadSettings"));
+					Globals.LogIDE(i18n.str("UnableLoadSettings"));
 					Globals.Debug(e.Message);
 				}
 			}
