@@ -15,6 +15,16 @@ namespace CuruxaIDE {
 		FrmAbout AboutWindow = new FrmAbout();
 		Timer TmrHighlight = new Timer();
 
+		/// <summary>
+		/// Indicates if the forms is currently being closed
+		/// </summary>
+		bool IsClosing = false;
+
+		/// <summary>
+		/// Amount of informative lines shown in the projects tree at the beginning of each project, before showing source files
+		/// </summary>
+		const uint LinesInfoPrjTree = 2;
+
 		public FrmMainWindow() {
 			InitializeComponent();
 		}
@@ -23,7 +33,7 @@ namespace CuruxaIDE {
 			UpdateLang();
 			SetTitle("");
 			InitSyntaxHighlight();
-			Log(i18n.str("AppInitialized"));
+			LogIDE(i18n.str("AppInitialized"));
 			if(Project.OpenProjects.Length > 0) Globals.ActiveProject = Project.OpenProjects[0];
 			UpdatePrjList();
 			BtnNewFile.Image = Image.FromFile(Settings.ImagesDir + "/filenew.png");
@@ -113,13 +123,20 @@ namespace CuruxaIDE {
 			MiOpenPrj.Text = i18n.str("OpenPrj");
 			UpdateActivePrj(Globals.ActiveProject);
 			UpdateActiveSrc(Globals.ActiveSrcFile);
+			TabMsgIDE.Text = i18n.str("IdeLog");
+			TabBuildLog.Text = i18n.str("BuildLog");
+			TabProgLog.Text = i18n.str("ProgLog");
+		}
+
+		string FormatLogText(string Text) {
+			return string.Format("[{0:00}:{1:00}:{2:00}] {3}\n", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, Text);
 		}
 
 		/// <summary>
-		/// Put some text into the log
+		/// Put some text into the Curuxa IDE log
 		/// </summary>
-		public void Log(string Text) {
-			Globals.Debug(Text);
+		public void LogIDE(string Text) {
+			Globals.Debug("[IDE] " + Text);
 
 			//avoid null, empty, or all-spaces texts
 			if(string.IsNullOrEmpty(Text)) return;
@@ -128,17 +145,69 @@ namespace CuruxaIDE {
 				if(Text[i] != ' ') break;
 			}
 
-			TxtLog.AppendText(string.Format("[{0:00}:{1:00}:{2:00}] {3}\n", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, Text));
-			TxtLog.SelectionStart = TxtLog.Text.Length - 1;
-			TxtLog.ScrollToCaret();
+			TxtLogIDE.AppendText(FormatLogText(Text));
+			TxtLogIDE.SelectionStart = TxtLogIDE.Text.Length - 1;
+			TxtLogIDE.ScrollToCaret();
 			LblStatus.Text = Text;
 		}
 
 		/// <summary>
-		/// Put some text into the log
+		/// Put some text into the Curuxa IDE log
 		/// </summary>
-		public void Log(string Text, params object[] p) {
-			Log(string.Format(Text, p));
+		public void LogIDE(string Text, params object[] p) {
+			LogIDE(string.Format(Text, p));
+		}
+
+		/// <summary>
+		/// Put some text into the build log
+		/// </summary>
+		public void LogBuild(string Text) {
+			Globals.Debug("[Build] " + Text);
+
+			//avoid null, empty, or all-spaces texts
+			if(string.IsNullOrEmpty(Text)) return;
+			for(int i = 0; i <= Text.Length; i++) {
+				if(i == Text.Length) return;
+				if(Text[i] != ' ') break;
+			}
+
+			TxtLogBuild.AppendText(FormatLogText(Text));
+			TxtLogBuild.SelectionStart = TxtLogIDE.Text.Length - 1;
+			TxtLogBuild.ScrollToCaret();
+			//LblStatus.Text = Text;
+		}
+
+		/// <summary>
+		/// Put some text into the programmer log
+		/// </summary>
+		public void LogProgrammer(string Text, params object[] p) {
+			LogProgrammer(string.Format(Text, p));
+		}
+
+		/// <summary>
+		/// Put some text into the programmer log
+		/// </summary>
+		public void LogProgrammer(string Text) {
+			Globals.Debug("[Programmer] " + Text);
+
+			//avoid null, empty, or all-spaces texts
+			if(string.IsNullOrEmpty(Text)) return;
+			for(int i = 0; i <= Text.Length; i++) {
+				if(i == Text.Length) return;
+				if(Text[i] != ' ') break;
+			}
+
+			TxtLogProgrammer.AppendText(FormatLogText(Text));
+			TxtLogProgrammer.SelectionStart = TxtLogIDE.Text.Length - 1;
+			TxtLogProgrammer.ScrollToCaret();
+			//LblStatus.Text = Text;
+		}
+
+		/// <summary>
+		/// Put some text into the build log
+		/// </summary>
+		public void LogBuild(string Text, params object[] p) {
+			LogBuild(string.Format(Text, p));
 		}
 
 		/// <summary>
@@ -155,6 +224,8 @@ namespace CuruxaIDE {
 		/// Update list of projects
 		/// </summary>
 		public void UpdatePrjList() {
+			if(IsClosing) return;
+
 			TreeNode SelectedNode = TreePrj.SelectedNode;
 			TreePrj.Nodes.Clear();
 			TreePrj.BackColor = Settings.PrjListBackColor;
@@ -166,12 +237,16 @@ namespace CuruxaIDE {
 				//Main Board
 				TreeNode TnMB = new TreeNode(prj.MainBoard.ToString());
 				TnMB.ForeColor = Settings.PrjListSettingsColor;
+				TnMB.ToolTipText = i18n.str("PrjTreeTooltipMB", prj.MainBoard, prj.MainBoard.GetMCU());
 				Parent.Nodes.Add(TnMB);
 
 				//Language
 				TreeNode TnLang = new TreeNode(i18n.str("Language:") + " " + prj.Language.ToString());
 				TnLang.ForeColor = Settings.PrjListSettingsColor;
+				TnLang.ToolTipText = i18n.str("PrjTreeTooltipLang", prj.Language);
 				Parent.Nodes.Add(TnLang);
+
+				//WARNING: if you add more informative lines here, remember to update "LinesInfoPrjTree" constant
 
 				//source files
 				foreach(SrcFile src in prj.SrcFiles) {
@@ -258,19 +333,19 @@ namespace CuruxaIDE {
 			Project.Add(NewProject);
 			NewProject.Save();
 			MainFile.SaveFile();
-			Globals.Log(i18n.str("NewEmptyPrj", NewProject.Path));
+			Globals.LogIDE(i18n.str("NewEmptyPrj", NewProject.Path));
 		}
 
 		private void MiOpenExpl_Click(object sender, EventArgs e) {
 			FrmNewPrjFromExample win = new FrmNewPrjFromExample();
 			if(win.ShowDialog(this) == DialogResult.OK) {
 				Example ex = win.ChosenExample;
-				Globals.Log(i18n.str("GeneratingExample", ex.Project.Name));
-				
+				Globals.LogIDE(i18n.str("GeneratingExample", ex.Project.Name));
+
 				//load contents to memory so they get copied later
 				string temp = "";
 				foreach(SrcFile src in ex.Project.SrcFiles) temp = src.Content;
-				
+
 				Project NewPrj = ex.Project;
 				NewPrj.PrjFilePath = win.TxtPrjFile.Text;
 				NewPrj.Save();
@@ -290,7 +365,7 @@ namespace CuruxaIDE {
 			OpenProjectDialog.ShowDialog(this);
 
 			string PrjFile = OpenProjectDialog.FileName;
-			Globals.Log(i18n.str("OpeningPrj", PrjFile));
+			Globals.LogIDE(i18n.str("OpeningPrj", PrjFile));
 			Project.Open(PrjFile);
 		}
 
@@ -299,6 +374,7 @@ namespace CuruxaIDE {
 		}
 
 		private void FrmMainWindow_FormClosing(object sender, FormClosingEventArgs e) {
+			IsClosing = true;
 			foreach(Project prj in Project.OpenProjects) {
 				CheckSavePrj(prj);
 			}
@@ -306,18 +382,24 @@ namespace CuruxaIDE {
 		}
 
 		private void TreePrj_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
-			switch(e.Node.Level) {
-				case 0:
-					//a project has just been selected
-					Globals.ActiveProject = Project.OpenProjects[e.Node.Index];
-					break;
-				case 1:
-					//a file has just been selected
-					Globals.ActiveProject = Project.OpenProjects[e.Node.Parent.Index];
-					Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles[e.Node.Index];
-					break;
-				default:
-					throw new NotImplementedException();
+			if(e.Node.Level == 0) {
+				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Text);
+			} else if(e.Node.Level == 1) {
+				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
+			} 
+		}
+
+		private void TreePrj_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) {
+			if(e.Node.Level == 1) {
+				//a file has just been selected
+				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
+				
+				//Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles[e.Node.Index];
+				if(e.Node.Index >= LinesInfoPrjTree) {
+					if(Globals.ActiveProject.SrcFiles.ContainsFileName(e.Node.Text)) {
+						Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text);
+					}
+				}
 			}
 		}
 
@@ -478,8 +560,13 @@ namespace CuruxaIDE {
 
 		private void MiBuildPrj_Click(object sender, EventArgs e) {
 			Globals.ActiveSrcFile.SaveFile();
-			if(Globals.ActiveProject.Build() == 0) Log(i18n.str("BuildOk"));
-			else Log(i18n.str("BuildFail"));
+			if(Globals.ActiveProject.Build() == 0) {
+				LogIDE(i18n.str("BuildOk"));
+				LogBuild(i18n.str("BuildOk"));
+			} else {
+				LogIDE(i18n.str("BuildFail"));
+				LogBuild(i18n.str("BuildFail"));
+			}
 		}
 
 		private void MiSettings_Click(object sender, EventArgs e) {
