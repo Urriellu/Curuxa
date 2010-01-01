@@ -133,9 +133,9 @@ namespace CuruxaIDE {
 			try {
 				sw = new StreamWriter(PrjFilePath);
 				xs.Serialize(sw, this);
-				Globals.Log(i18n.str("SavingFile", PrjFilePath));
+				Globals.LogIDE(i18n.str("SavingFile", PrjFilePath));
 			} catch(IOException e) {
-				Globals.Log(i18n.str("UnableSaveFile", PrjFilePath));
+				Globals.LogIDE(i18n.str("UnableSaveFile", PrjFilePath));
 				Globals.Debug(e.Message);
 			} finally {
 				if(sw != null) sw.Close();
@@ -160,7 +160,7 @@ namespace CuruxaIDE {
 		/// Build project
 		/// </summary>
 		public int Build() {
-			Globals.Log(i18n.str("BuildingPrj", Name));
+			Globals.LogIDE(i18n.str("BuildingPrj", Name));
 			return Language.GetToolsuite().Build(this);
 		}
 
@@ -168,7 +168,8 @@ namespace CuruxaIDE {
 		/// Write project contents to microcontroller
 		/// </summary>
 		public int Burn() {
-			Globals.Log(i18n.str("BurningPrj", Name));
+			Globals.LogIDE(i18n.str("BurningPrj", Name));
+			Globals.SetupNewProgrammerLog();
 			return Programmer.GetProgrammerApp().Write(this);
 		}
 
@@ -176,7 +177,8 @@ namespace CuruxaIDE {
 		/// Powers-up the microcontroller so its program starts running
 		/// </summary>
 		public int Run() {
-			Globals.Log(i18n.str("RunningPrj", Name));
+			Globals.LogIDE(i18n.str("RunningPrj", Name));
+			Globals.SetupNewProgrammerLog();
 			return Programmer.GetProgrammerApp().Run(this);
 		}
 
@@ -184,7 +186,8 @@ namespace CuruxaIDE {
 		/// Powers-down the microcontroller so its program stops running
 		/// </summary>
 		public int Stop() {
-			Globals.Log(i18n.str("StoppingPrj", Name));
+			Globals.LogIDE(i18n.str("StoppingPrj", Name));
+			Globals.SetupNewProgrammerLog();
 			return Programmer.GetProgrammerApp().Stop(this);
 		}
 
@@ -209,7 +212,7 @@ namespace CuruxaIDE {
 				Project np = LoadFromFile(PrjFile);
 				Add(np);
 			} else {
-				Globals.Log(i18n.str("FileNotFound", PrjFile));
+				Globals.LogIDE(i18n.str("FileNotFound", PrjFile));
 			}
 		}
 
@@ -242,7 +245,7 @@ namespace CuruxaIDE {
 				foreach(SrcFile src in NewPrj.SrcFiles) {
 					src.Modified = false;
 				}
-			} else Globals.Log(i18n.str("PrjFileNotExist", PrjFile));
+			} else Globals.LogIDE(i18n.str("PrjFileNotExist", PrjFile));
 			return NewPrj;
 		}
 		#endregion
