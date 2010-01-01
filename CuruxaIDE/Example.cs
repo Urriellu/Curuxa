@@ -74,7 +74,7 @@ namespace CuruxaIDE {
 				XmlSerializer xs = new XmlSerializer(typeof(Example));
 				NewEx = (Example)xs.Deserialize(new StreamReader(file));
 				NewEx.Project.Path = Settings.ExamplesDir;
-			} else Globals.Log(i18n.str("ExFileNotExist", file));
+			} else Globals.LogIDE(i18n.str("ExFileNotExist", file));
 			return NewEx;
 		}
 		#endregion
