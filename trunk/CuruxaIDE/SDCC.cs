@@ -18,7 +18,7 @@ namespace CuruxaIDE {
 			Process proc;
 
 			if(prj.MainFile == null) {
-				Globals.Log(i18n.str("NoMainSrc"));
+				Globals.LogIDE(i18n.str("NoMainSrc"));
 				return 1;
 			}
 
@@ -29,6 +29,8 @@ namespace CuruxaIDE {
 			//SDCC segmentation fault when output file contains spaces
 
 			try {
+				Globals.SetupNewBuildLog();
+
 				ProcInfo = new ProcessStartInfo(Command, args);
 				ProcInfo.CreateNoWindow = true;
 				ProcInfo.ErrorDialog = false;
@@ -50,7 +52,7 @@ namespace CuruxaIDE {
 				Environment.CurrentDirectory = OldDir;
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.Log(i18n.str("NoApp", RealName));
+				Globals.LogIDE(i18n.str("NoApp", RealName));
 				Environment.CurrentDirectory = OldDir;
 				return 1;
 			}
@@ -62,7 +64,7 @@ namespace CuruxaIDE {
 				if(i == e.Data.Length) return;
 				if(e.Data[i] != ' ') break;
 			}
-			Globals.Log("[" + RealName + " Error] " + e.Data);
+			Globals.LogBuild("[" + RealName + " Error] " + e.Data);
 		}
 
 		void proc_OutputDataReceived(object sender, DataReceivedEventArgs e) {
@@ -76,7 +78,7 @@ namespace CuruxaIDE {
 			//hide unwanted messages
 			if(e.Data.Contains("message: using default linker script")) return;
 
-			Globals.Log("[" + RealName + "] " + e.Data);
+			Globals.LogBuild("[" + RealName + "] " + e.Data);
 		}
 	}
 }
