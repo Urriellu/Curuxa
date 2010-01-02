@@ -9,6 +9,7 @@ using System.Drawing;
 
 namespace CuruxaIDE {
 	public class SyntaxRichTextBox:System.Windows.Forms.RichTextBox {
+		public Language Lang;
 		private SyntaxSettings m_settings = new SyntaxSettings();
 		private static bool m_bPaint = true;
 		private string m_strLine = "";
@@ -18,6 +19,64 @@ namespace CuruxaIDE {
 		private int m_nLineEnd = 0;
 		private string m_strKeywords = "";
 		private int m_nCurSelection = 0;
+
+		public SyntaxRichTextBox(Language SrcLang) {
+			SetLang(SrcLang);
+		}
+
+		protected void SetLang(Language lang) {
+			this.Lang = lang;
+			switch(lang) {
+				case Language.C:
+					SetupLangC();
+					break;
+
+				default: throw new NotImplementedException("language not yet supported");
+			}
+		}
+
+		protected void SetupLangC() {
+			Settings.Comment = "//";
+			Settings.Keywords.Clear();
+			Settings.Keywords.Add("auto");
+			Settings.Keywords.Add("_Bool");
+			Settings.Keywords.Add("break");
+			Settings.Keywords.Add("case");
+			Settings.Keywords.Add("char");
+			Settings.Keywords.Add("_Complex");
+			Settings.Keywords.Add("const");
+			Settings.Keywords.Add("continue");
+			Settings.Keywords.Add("default");
+			Settings.Keywords.Add("do");
+			Settings.Keywords.Add("double");
+			Settings.Keywords.Add("else");
+			Settings.Keywords.Add("enum");
+			Settings.Keywords.Add("extern");
+			Settings.Keywords.Add("float");
+			Settings.Keywords.Add("for");
+			Settings.Keywords.Add("goto");
+			Settings.Keywords.Add("if");
+			Settings.Keywords.Add("_Imaginary");
+			Settings.Keywords.Add("inline");
+			Settings.Keywords.Add("int");
+			Settings.Keywords.Add("long");
+			Settings.Keywords.Add("register");
+			Settings.Keywords.Add("restrict");
+			Settings.Keywords.Add("return");
+			Settings.Keywords.Add("short");
+			Settings.Keywords.Add("signed");
+			Settings.Keywords.Add("sizeof");
+			Settings.Keywords.Add("static");
+			Settings.Keywords.Add("struct");
+			Settings.Keywords.Add("switch");
+			Settings.Keywords.Add("typedef");
+			Settings.Keywords.Add("union");
+			Settings.Keywords.Add("unsigned");
+			Settings.Keywords.Add("void");
+			Settings.Keywords.Add("volatile");
+			Settings.Keywords.Add("while");
+			CompileKeywords();
+		}
 
 		/// <summary>
 		/// Syntax highlighter settings
@@ -201,22 +260,22 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// The color of comments.
 		/// </summary>
-		public Color CommentColor=Color.Green;
+		public Color CommentColor = Color.Green;
 
 		/// <summary>
 		/// Enables processing of comments if set to true
 		/// </summary>
-		public bool EnableComments =true;
+		public bool EnableComments = true;
 
 		/// <summary>
 		/// Enables processing of integers if set to true
 		/// </summary>
-		public bool EnableIntegers =true;
+		public bool EnableIntegers = true;
 
 		/// <summary>
 		/// Enables processing of strings if set to true
 		/// </summary>
-		public bool EnableStrings=true;
+		public bool EnableStrings = true;
 
 		/// <summary>
 		/// Enables processing of preprocessor directives if set to true
