@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ListSrcFileExtensions.cs" />
+    <Compile Include="ListViewGroupCollectionExtensions.cs" />
     <Compile Include="Programmer.cs" />
     <Compile Include="Example.cs" />
     <Compile Include="FrmAbout.cs">
@@ -178,6 +179,18 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SoftApp.cs" />
     <Compile Include="SrcFile.cs" />
+    <Compile Include="SrcTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SrcTabControl.Designer.cs">
+      <DependentUpon>SrcTabControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SrcTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SrcTabPage.Designer.cs">
+      <DependentUpon>SrcTabPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="SyntaxRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
