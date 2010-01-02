@@ -26,7 +26,7 @@ namespace CuruxaIDE {
 			set {
 				if(!_Modified && value) {
 					_Modified = value;
-					if(Globals.MainWindow != null) Globals.MainWindow.UpdatePrjList();
+					//if(Globals.MainWindow != null) Globals.MainWindow.UpdatePrjList();
 				} else {
 					_Modified = value;
 				}
@@ -55,6 +55,12 @@ namespace CuruxaIDE {
 		public string Extension {
 			get {
 				return new FileInfo(FileName).Extension.Remove(0, 1);
+			}
+		}
+
+		public Language Language {
+			get {
+				return LanguageExtensions.GetFromExtension(Extension);
 			}
 		}
 
@@ -100,6 +106,7 @@ namespace CuruxaIDE {
 		public void ReadFile() {
 			try {
 				Content = File.ReadAllText(FullPath, Settings.Charset);
+				Modified = false;
 			} catch(FileNotFoundException) {
 				Globals.LogIDE(i18n.str("FileNotFound", FullPath));
 			}
