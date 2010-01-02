@@ -32,9 +32,13 @@ namespace CuruxaIDE {
 		private void MainWindow_Load(object sender, EventArgs e) {
 			UpdateLang();
 			SetTitle("");
-			InitSyntaxHighlight();
+			//InitSyntaxHighlight();
 			LogIDE(i18n.str("AppInitialized"));
 			if(Project.OpenProjects.Length > 0) Globals.ActiveProject = Project.OpenProjects[0];
+			TreePrj.ImageList = new ImageList();
+			TreePrj.ImageList.Images.Add("Project", Image.FromFile(Settings.ImagesDir + "/CuruxaLogo.png"));
+			TreePrj.ImageList.Images.Add("Source", Image.FromFile(Settings.ImagesDir + "/edit.png"));
+			TreePrj.ImageList.Images.Add("Info", Image.FromFile(Settings.ImagesDir + "/info.png"));
 			UpdatePrjList();
 			BtnNewFile.Image = Image.FromFile(Settings.ImagesDir + "/filenew.png");
 			BtnAddFIlePrj.Image = Image.FromFile(Settings.ImagesDir + "/fileopen.png");
@@ -45,13 +49,14 @@ namespace CuruxaIDE {
 			BtnStop.Image = Image.FromFile(Settings.ImagesDir + "/stop.png");
 			BtnClosePrj.Image = Image.FromFile(Settings.ImagesDir + "/cancel.png");
 			BtnConfigPrj.Image = Image.FromFile(Settings.ImagesDir + "/configure.png");
+			TabsSrc.TabPages.Clear(); //remove demo tab page
 
-			TmrHighlight.Interval = 1000;
-			TmrHighlight.Tick += new EventHandler(TmrHighlight_Tick);
+			//TmrHighlight.Interval = 1000;
+			//TmrHighlight.Tick += new EventHandler(TmrHighlight_Tick);
 			//TmrHighlight.Start(); //syntax highlight doesn't work properly
 		}
 
-		private void InitSyntaxHighlight() {
+		/*private void InitSyntaxHighlight() {
 			TxtCode.Settings.Comment = "//";
 			TxtCode.Settings.Keywords.Clear();
 			TxtCode.Settings.Keywords.Add("auto");
@@ -92,13 +97,13 @@ namespace CuruxaIDE {
 			TxtCode.Settings.Keywords.Add("volatile");
 			TxtCode.Settings.Keywords.Add("while");
 			TxtCode.CompileKeywords();
-		}
+		}*/
 
-		void TmrHighlight_Tick(object sender, EventArgs e) {
+		/*void TmrHighlight_Tick(object sender, EventArgs e) {
 			if(TxtCode.Enabled) {
 				SyntaxHighlight();
 			}
-		}
+		}*/
 
 		private void UpdateLang() {
 			MiFile.Text = i18n.str("File");
@@ -122,7 +127,7 @@ namespace CuruxaIDE {
 			BtnConfigPrj.Text = i18n.str("PrjSettings");
 			MiOpenPrj.Text = i18n.str("OpenPrj");
 			UpdateActivePrj(Globals.ActiveProject);
-			UpdateActiveSrc(Globals.ActiveSrcFile);
+			//UpdateActiveSrc(Globals.ActiveSrcFile);
 			TabMsgIDE.Text = i18n.str("IdeLog");
 			TabBuildLog.Text = i18n.str("BuildLog");
 			TabProgLog.Text = i18n.str("ProgLog");
@@ -232,33 +237,38 @@ namespace CuruxaIDE {
 			foreach(Project prj in Project.OpenProjects) {
 				TreeNode Parent = new TreeNode(prj.Name);
 				Parent.ToolTipText = prj.Description;
+				Parent.ImageKey = Parent.SelectedImageKey = "Project";
 				Parent.NodeFont = new Font(TreePrj.Font, FontStyle.Bold);
 
 				//Main Board
 				TreeNode TnMB = new TreeNode(prj.MainBoard.ToString());
 				TnMB.ForeColor = Settings.PrjListSettingsColor;
 				TnMB.ToolTipText = i18n.str("PrjTreeTooltipMB", prj.MainBoard, prj.MainBoard.GetMCU());
+				TnMB.ImageKey = TnMB.SelectedImageKey = "Info";
 				Parent.Nodes.Add(TnMB);
 
 				//Language
 				TreeNode TnLang = new TreeNode(i18n.str("Language:") + " " + prj.Language.ToString());
 				TnLang.ForeColor = Settings.PrjListSettingsColor;
 				TnLang.ToolTipText = i18n.str("PrjTreeTooltipLang", prj.Language);
+				TnLang.ImageKey = TnLang.SelectedImageKey = "Info";
 				Parent.Nodes.Add(TnLang);
 
 				//WARNING: if you add more informative lines here, remember to update "LinesInfoPrjTree" constant
 
 				//source files
 				foreach(SrcFile src in prj.SrcFiles) {
-					TreeNode TnSrc = new TreeNode(src.FileName + ((src.Modified) ? " *" : ""));
-					//if(Globals.ActiveSrcFile != null && Globals.ActiveSrcFile.FileName == FileName) Child.NodeFont = new Font(Child.NodeFont, FontStyle.Bold);
+					//TreeNode TnSrc = new TreeNode(src.FileName + ((src.Modified) ? " *" : "")); //use this for showing an asterisk on modified files
+					TreeNode TnSrc = new TreeNode(src.FileName);
 					TnSrc.ForeColor = Settings.PrjListSrcColor;
+					TnSrc.ImageKey = TnSrc.SelectedImageKey = "Source";
 					Parent.Nodes.Add(TnSrc);
 				}
 
 				//libraries
 				TreeNode TnLib = new TreeNode("lib test");
 				TnLib.ForeColor = Settings.PrjListLibsColor;
+				TnLib.ImageKey = TnLib.SelectedImageKey = "Source";
 				Parent.Nodes.Add(TnLib);
 
 				TreePrj.Nodes.Add(Parent);
@@ -386,18 +396,19 @@ namespace CuruxaIDE {
 				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Text);
 			} else if(e.Node.Level == 1) {
 				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
-			} 
+			}
 		}
 
 		private void TreePrj_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) {
 			if(e.Node.Level == 1) {
 				//a file has just been selected
 				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
-				
+
 				//Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles[e.Node.Index];
 				if(e.Node.Index >= LinesInfoPrjTree) {
 					if(Globals.ActiveProject.SrcFiles.ContainsFileName(e.Node.Text)) {
-						Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text);
+						//Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text);
+						TabsSrc.OpenSrc(Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text));
 					}
 				}
 			}
@@ -420,27 +431,28 @@ namespace CuruxaIDE {
 			}
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Update the GUI to match the options available for the current active source file (if any)
 		/// </summary>
 		/// <param name="value">Active source file</param>
 		public void UpdateActiveSrc(SrcFile value) {
 			if(value == null) {
-				TxtCode.Enabled = false;
-				TxtCode.Text = i18n.str("NoSrcLoaded");
+				//TxtCode.Enabled = false;
+				//TxtCode.Text = i18n.str("NoSrcLoaded");
 			} else {
-				TxtCode.Enabled = true;
-				TxtCode.Text = value.Content;
-				SetTitle(Globals.ActiveProject.Name + " -> " + Globals.ActiveSrcFile.FileName);
+				//TxtCode.Enabled = true;
+				//TxtCode.Text = value.Content;
+				//SetTitle(Globals.ActiveProject.Name + " -> " + Globals.ActiveSrcFile.FileName);
+				TabsSrc.OpenSrc(
 			}
 			TxtCode.ProcessAllLines();
-		}
+		}*/
 
-		Regex RxKeyWords = new Regex("at|bool|break|byte|case|char|config|const|continue|decimal|default|do|double|else|enum|false|float|for|goto|if|int|long|null|return|sbyte|short|signed|sizeof|stackalloc|static|string|struct|switch|this|true|typedef|typeof|uint|ulong|unsigned|ushort|volatile|void|while|");
-		//Regex RxMultiLineComment = new Regex(@"/\*(.|[\r\n])*?\*/");
-		Regex RxMultiLineComment = new Regex(@"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
+		//Regex RxKeyWords = new Regex("at|bool|break|byte|case|char|config|const|continue|decimal|default|do|double|else|enum|false|float|for|goto|if|int|long|null|return|sbyte|short|signed|sizeof|stackalloc|static|string|struct|switch|this|true|typedef|typeof|uint|ulong|unsigned|ushort|volatile|void|while|");
+		////Regex RxMultiLineComment = new Regex(@"/\*(.|[\r\n])*?\*/");
+		//Regex RxMultiLineComment = new Regex(@"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
 
-		/// <summary>
+		/*/// <summary>
 		/// Color for normal source code
 		/// </summary>
 		Color ColorCode = Color.Black;
@@ -481,9 +493,9 @@ namespace CuruxaIDE {
 			//put cursor at its original position
 			TxtCode.SelectionStart = selPos;
 			TxtCode.SelectionColor = ColorCode;
-		}
+		}*/
 
-		private void TxtCode_TextChanged(object sender, EventArgs e) {
+		/*private void TxtCode_TextChanged(object sender, EventArgs e) {
 			if(TxtCode.Enabled && Globals.ActiveSrcFile != null) {
 				Globals.ActiveSrcFile.Modified = true;
 
@@ -491,7 +503,7 @@ namespace CuruxaIDE {
 				Globals.ActiveSrcFile.Content = TxtCode.Text;
 			}
 			//TxtCode.ProcessChangedText();
-		}
+		}*/
 
 		private void MiSave_Click(object sender, EventArgs e) {
 			if(Globals.ActiveSrcFile != null) {

@@ -26,6 +26,8 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMainWindow));
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.LblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StatusProgrammer = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StatusLinCol = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.MiFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiNewPrj = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,9 +54,6 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.TabsCode = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.TabsMsg = new System.Windows.Forms.TabControl();
 			this.TabMsgIDE = new System.Windows.Forms.TabPage();
 			this.TxtLogIDE = new System.Windows.Forms.RichTextBox();
@@ -74,9 +73,8 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.StatusLinCol = new System.Windows.Forms.ToolStripStatusLabel();
-			this.StatusProgrammer = new System.Windows.Forms.ToolStripStatusLabel();
-			this.TxtCode = new CuruxaIDE.SyntaxRichTextBox();
+			this.TabsSrc = new CuruxaIDE.SrcTabControl();
+			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -85,12 +83,12 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.TabsCode.SuspendLayout();
 			this.TabsMsg.SuspendLayout();
 			this.TabMsgIDE.SuspendLayout();
 			this.TabBuildLog.SuspendLayout();
 			this.TabProgLog.SuspendLayout();
 			this.StripPrj.SuspendLayout();
+			this.TabsSrc.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -112,6 +110,22 @@
 			this.LblStatus.Spring = true;
 			this.LblStatus.Text = "NS (Status text)";
 			this.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// StatusProgrammer
+			// 
+			this.StatusProgrammer.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.StatusProgrammer.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+			this.StatusProgrammer.Name = "StatusProgrammer";
+			this.StatusProgrammer.Size = new System.Drawing.Size(126, 17);
+			this.StatusProgrammer.Text = "NS (programmer status)";
+			// 
+			// StatusLinCol
+			// 
+			this.StatusLinCol.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.StatusLinCol.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+			this.StatusLinCol.Name = "StatusLinCol";
+			this.StatusLinCol.Size = new System.Drawing.Size(91, 17);
+			this.StatusLinCol.Text = "NS (line, column)";
 			// 
 			// menuStrip1
 			// 
@@ -331,8 +345,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.TxtCode);
-			this.splitContainer1.Panel1.Controls.Add(this.TabsCode);
+			this.splitContainer1.Panel1.Controls.Add(this.TabsSrc);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -340,36 +353,6 @@
 			this.splitContainer1.Size = new System.Drawing.Size(606, 496);
 			this.splitContainer1.SplitterDistance = 361;
 			this.splitContainer1.TabIndex = 0;
-			// 
-			// TabsCode
-			// 
-			this.TabsCode.Controls.Add(this.tabPage1);
-			this.TabsCode.Controls.Add(this.tabPage2);
-			this.TabsCode.Location = new System.Drawing.Point(16, 34);
-			this.TabsCode.Name = "TabsCode";
-			this.TabsCode.SelectedIndex = 0;
-			this.TabsCode.Size = new System.Drawing.Size(281, 188);
-			this.TabsCode.TabIndex = 0;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(273, 162);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(273, 162);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// TabsMsg
 			// 
@@ -572,35 +555,25 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// StatusLinCol
+			// TabsSrc
 			// 
-			this.StatusLinCol.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.StatusLinCol.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.StatusLinCol.Name = "StatusLinCol";
-			this.StatusLinCol.Size = new System.Drawing.Size(91, 17);
-			this.StatusLinCol.Text = "NS (line, column)";
+			this.TabsSrc.Controls.Add(this.TabDemo);
+			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
+			this.TabsSrc.Name = "TabsSrc";
+			this.TabsSrc.SelectedIndex = 0;
+			this.TabsSrc.Size = new System.Drawing.Size(606, 361);
+			this.TabsSrc.TabIndex = 1;
 			// 
-			// StatusProgrammer
+			// TabDemo
 			// 
-			this.StatusProgrammer.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.StatusProgrammer.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.StatusProgrammer.Name = "StatusProgrammer";
-			this.StatusProgrammer.Size = new System.Drawing.Size(126, 17);
-			this.StatusProgrammer.Text = "NS (programmer status)";
-			// 
-			// TxtCode
-			// 
-			this.TxtCode.AcceptsTab = true;
-			this.TxtCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.TxtCode.DetectUrls = false;
-			this.TxtCode.Location = new System.Drawing.Point(303, 59);
-			this.TxtCode.Name = "TxtCode";
-			this.TxtCode.Size = new System.Drawing.Size(291, 288);
-			this.TxtCode.TabIndex = 0;
-			this.TxtCode.Text = "";
-			this.TxtCode.TextChanged += new System.EventHandler(this.TxtCode_TextChanged);
+			this.TabDemo.Location = new System.Drawing.Point(4, 22);
+			this.TabDemo.Name = "TabDemo";
+			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
+			this.TabDemo.Size = new System.Drawing.Size(598, 335);
+			this.TabDemo.TabIndex = 0;
+			this.TabDemo.Text = "demo tab page";
+			this.TabDemo.UseVisualStyleBackColor = true;
 			// 
 			// FrmMainWindow
 			// 
@@ -628,13 +601,13 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
-			this.TabsCode.ResumeLayout(false);
 			this.TabsMsg.ResumeLayout(false);
 			this.TabMsgIDE.ResumeLayout(false);
 			this.TabBuildLog.ResumeLayout(false);
 			this.TabProgLog.ResumeLayout(false);
 			this.StripPrj.ResumeLayout(false);
 			this.StripPrj.PerformLayout();
+			this.TabsSrc.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -669,7 +642,6 @@
 		private System.Windows.Forms.TreeView TreePrj;
 		private System.Windows.Forms.RichTextBox TxtLogIDE;
 		private System.Windows.Forms.RichTextBox TxtCodeOLD;
-		private SyntaxRichTextBox TxtCode;
 		private System.Windows.Forms.ToolStripMenuItem MiPrjClose;
 		private System.Windows.Forms.ToolStrip StripPrj;
 		private System.Windows.Forms.ToolStripButton BtnNewFile;
@@ -685,9 +657,6 @@
 		private System.Windows.Forms.ToolStripButton BtnConfigPrj;
 		private System.Windows.Forms.ToolStripMenuItem MiOpenPrj;
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.TabControl TabsCode;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.TabPage TabMsgIDE;
 		public System.Windows.Forms.RichTextBox TxtLogBuild;
 		public System.Windows.Forms.RichTextBox TxtLogProgrammer;
@@ -696,6 +665,8 @@
 		public System.Windows.Forms.TabControl TabsMsg;
 		private System.Windows.Forms.ToolStripStatusLabel StatusLinCol;
 		private System.Windows.Forms.ToolStripStatusLabel StatusProgrammer;
+		private SrcTabControl TabsSrc;
+		private System.Windows.Forms.TabPage TabDemo;
 	}
 }
 
