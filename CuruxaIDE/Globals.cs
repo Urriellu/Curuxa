@@ -16,16 +16,7 @@ namespace CuruxaIDE {
 		}
 		private static Project _ActiveProject;
 
-		public static SrcFile ActiveSrcFile {
-			get {
-				return _ActiveSrcFile;
-			}
-			set {
-				_ActiveSrcFile = value;
-				if(MainWindow != null) MainWindow.UpdateActiveSrc(value);
-			}
-		}
-		private static SrcFile _ActiveSrcFile;
+		public static SrcFile ActiveSrcFile;
 
 		public static FrmMainWindow MainWindow;
 
