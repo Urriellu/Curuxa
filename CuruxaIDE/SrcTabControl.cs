@@ -12,7 +12,7 @@ namespace CuruxaIDE {
 	/// Managed a set of tabs containing source code editors
 	/// </summary>
 	public partial class SrcTabControl:TabControl {
-		Dictionary<SrcFile, SrcTabPage> Tabs = new Dictionary<SrcFile, SrcTabPage>();
+		public Dictionary<SrcFile, SrcTabPage> Tabs = new Dictionary<SrcFile, SrcTabPage>();
 
 		public SrcTabControl():base() {
 		}
@@ -27,6 +27,26 @@ namespace CuruxaIDE {
 				TabPages.Add(NewTab);
 			}
 			SelectedTab = Tabs[src];
+		}
+
+		internal void RemoveAllFromPrj(Project p) {
+			bool mod;
+			do {
+				mod = false;
+				foreach(KeyValuePair<SrcFile, SrcTabPage> pair in Tabs) {
+					if(pair.Key.ParentProject == p) {
+						i18n.str("ClosingTab", pair.Key.ParentProject.Name, pair.Value.Name);
+						CloseSrc(pair.Key);
+					}
+				}
+			} while(mod);
+		}
+
+		public void CloseSrc(SrcFile src) {
+			if(src != null && Tabs.ContainsKey(src)) {
+				TabPages.Remove(Tabs[src]);
+				Tabs.Remove(src);
+			}
 		}
 	}
 }
