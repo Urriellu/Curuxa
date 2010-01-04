@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CursorLocation.cs" />
     <Compile Include="ListSrcFileExtensions.cs" />
     <Compile Include="ListViewGroupCollectionExtensions.cs" />
     <Compile Include="Programmer.cs" />
