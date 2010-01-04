@@ -23,17 +23,20 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMainWindow));
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.LblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StatusProgrammer = new System.Windows.Forms.ToolStripStatusLabel();
-			this.StatusLinCol = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StatusLin = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StatusCol = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.MiFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiNewPrj = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiOpenExpl = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiOpenPrj = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.MiClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiSave = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +57,11 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.TabsSrc = new CuruxaIDE.SrcTabControl();
+			this.MenuTabs = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.MiTabSave = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiTabClose = new System.Windows.Forms.ToolStripMenuItem();
+			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.TabsMsg = new System.Windows.Forms.TabControl();
 			this.TabMsgIDE = new System.Windows.Forms.TabPage();
 			this.TxtLogIDE = new System.Windows.Forms.RichTextBox();
@@ -73,8 +81,6 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.TabsSrc = new CuruxaIDE.SrcTabControl();
-			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -83,12 +89,13 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.TabsSrc.SuspendLayout();
+			this.MenuTabs.SuspendLayout();
 			this.TabsMsg.SuspendLayout();
 			this.TabMsgIDE.SuspendLayout();
 			this.TabBuildLog.SuspendLayout();
 			this.TabProgLog.SuspendLayout();
 			this.StripPrj.SuspendLayout();
-			this.TabsSrc.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -96,7 +103,8 @@
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LblStatus,
             this.StatusProgrammer,
-            this.StatusLinCol});
+            this.StatusLin,
+            this.StatusCol});
 			this.StatusStrip.Location = new System.Drawing.Point(0, 551);
 			this.StatusStrip.Name = "StatusStrip";
 			this.StatusStrip.Size = new System.Drawing.Size(792, 22);
@@ -106,7 +114,7 @@
 			// LblStatus
 			// 
 			this.LblStatus.Name = "LblStatus";
-			this.LblStatus.Size = new System.Drawing.Size(560, 17);
+			this.LblStatus.Size = new System.Drawing.Size(552, 17);
 			this.LblStatus.Spring = true;
 			this.LblStatus.Text = "NS (Status text)";
 			this.LblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -119,13 +127,21 @@
 			this.StatusProgrammer.Size = new System.Drawing.Size(126, 17);
 			this.StatusProgrammer.Text = "NS (programmer status)";
 			// 
-			// StatusLinCol
+			// StatusLin
 			// 
-			this.StatusLinCol.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-			this.StatusLinCol.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-			this.StatusLinCol.Name = "StatusLinCol";
-			this.StatusLinCol.Size = new System.Drawing.Size(91, 17);
-			this.StatusLinCol.Text = "NS (line, column)";
+			this.StatusLin.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.StatusLin.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+			this.StatusLin.Name = "StatusLin";
+			this.StatusLin.Size = new System.Drawing.Size(51, 17);
+			this.StatusLin.Text = "NS (line)";
+			// 
+			// StatusCol
+			// 
+			this.StatusCol.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+			this.StatusCol.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+			this.StatusCol.Name = "StatusCol";
+			this.StatusCol.Size = new System.Drawing.Size(48, 17);
+			this.StatusCol.Text = "NS (col)";
 			// 
 			// menuStrip1
 			// 
@@ -146,6 +162,7 @@
             this.MiOpenExpl,
             this.MiOpenPrj,
             this.toolStripMenuItem1,
+            this.MiClose,
             this.MiSave,
             this.toolStripMenuItem2,
             this.MiExit});
@@ -178,6 +195,13 @@
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(211, 6);
+			// 
+			// MiClose
+			// 
+			this.MiClose.Name = "MiClose";
+			this.MiClose.Size = new System.Drawing.Size(214, 22);
+			this.MiClose.Text = "NS (Close)";
+			this.MiClose.Click += new System.EventHandler(this.MiClose_Click);
 			// 
 			// MiSave
 			// 
@@ -242,6 +266,7 @@
 			// MiBuildPrj
 			// 
 			this.MiBuildPrj.Name = "MiBuildPrj";
+			this.MiBuildPrj.ShortcutKeys = System.Windows.Forms.Keys.F5;
 			this.MiBuildPrj.Size = new System.Drawing.Size(187, 22);
 			this.MiBuildPrj.Text = "NS (Build)";
 			this.MiBuildPrj.Click += new System.EventHandler(this.MiBuildPrj_Click);
@@ -249,6 +274,8 @@
 			// MiProgramPrj
 			// 
 			this.MiProgramPrj.Name = "MiProgramPrj";
+			this.MiProgramPrj.ShortcutKeyDisplayString = "";
+			this.MiProgramPrj.ShortcutKeys = System.Windows.Forms.Keys.F6;
 			this.MiProgramPrj.Size = new System.Drawing.Size(187, 22);
 			this.MiProgramPrj.Text = "NS (Program)";
 			this.MiProgramPrj.Click += new System.EventHandler(this.MiProgramPrj_Click);
@@ -256,6 +283,7 @@
 			// MiRunPrj
 			// 
 			this.MiRunPrj.Name = "MiRunPrj";
+			this.MiRunPrj.ShortcutKeys = System.Windows.Forms.Keys.F7;
 			this.MiRunPrj.Size = new System.Drawing.Size(187, 22);
 			this.MiRunPrj.Text = "NS (Run)";
 			this.MiRunPrj.Click += new System.EventHandler(this.MiRunPrj_Click);
@@ -263,6 +291,8 @@
 			// MiStopPrj
 			// 
 			this.MiStopPrj.Name = "MiStopPrj";
+			this.MiStopPrj.ShortcutKeyDisplayString = "";
+			this.MiStopPrj.ShortcutKeys = System.Windows.Forms.Keys.F8;
 			this.MiStopPrj.Size = new System.Drawing.Size(187, 22);
 			this.MiStopPrj.Text = "NS (Stop)";
 			this.MiStopPrj.Click += new System.EventHandler(this.MiStopPrj_Click);
@@ -291,14 +321,15 @@
 			// MiWebsite
 			// 
 			this.MiWebsite.Name = "MiWebsite";
-			this.MiWebsite.Size = new System.Drawing.Size(196, 22);
+			this.MiWebsite.ShortcutKeys = System.Windows.Forms.Keys.F1;
+			this.MiWebsite.Size = new System.Drawing.Size(205, 22);
 			this.MiWebsite.Text = "NS (Curuxa Website)";
 			this.MiWebsite.Click += new System.EventHandler(this.MiWebsite_Click);
 			// 
 			// MiAbout
 			// 
 			this.MiAbout.Name = "MiAbout";
-			this.MiAbout.Size = new System.Drawing.Size(196, 22);
+			this.MiAbout.Size = new System.Drawing.Size(205, 22);
 			this.MiAbout.Text = "NS (About Curuxa IDE)";
 			this.MiAbout.Click += new System.EventHandler(this.MiAbout_Click);
 			// 
@@ -353,6 +384,46 @@
 			this.splitContainer1.Size = new System.Drawing.Size(606, 496);
 			this.splitContainer1.SplitterDistance = 361;
 			this.splitContainer1.TabIndex = 0;
+			// 
+			// TabsSrc
+			// 
+			this.TabsSrc.Controls.Add(this.TabDemo);
+			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
+			this.TabsSrc.Name = "TabsSrc";
+			this.TabsSrc.SelectedIndex = 0;
+			this.TabsSrc.Size = new System.Drawing.Size(606, 361);
+			this.TabsSrc.TabIndex = 1;
+			// 
+			// MenuTabs
+			// 
+			this.MenuTabs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiTabSave,
+            this.MiTabClose});
+			this.MenuTabs.Name = "MenuTabs";
+			this.MenuTabs.Size = new System.Drawing.Size(136, 48);
+			// 
+			// MiTabSave
+			// 
+			this.MiTabSave.Name = "MiTabSave";
+			this.MiTabSave.Size = new System.Drawing.Size(135, 22);
+			this.MiTabSave.Text = "NS (Save)";
+			// 
+			// MiTabClose
+			// 
+			this.MiTabClose.Name = "MiTabClose";
+			this.MiTabClose.Size = new System.Drawing.Size(135, 22);
+			this.MiTabClose.Text = "NS (Close)";
+			// 
+			// TabDemo
+			// 
+			this.TabDemo.Location = new System.Drawing.Point(4, 22);
+			this.TabDemo.Name = "TabDemo";
+			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
+			this.TabDemo.Size = new System.Drawing.Size(598, 335);
+			this.TabDemo.TabIndex = 0;
+			this.TabDemo.Text = "demo tab page";
+			this.TabDemo.UseVisualStyleBackColor = true;
 			// 
 			// TabsMsg
 			// 
@@ -555,26 +626,6 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// TabsSrc
-			// 
-			this.TabsSrc.Controls.Add(this.TabDemo);
-			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
-			this.TabsSrc.Name = "TabsSrc";
-			this.TabsSrc.SelectedIndex = 0;
-			this.TabsSrc.Size = new System.Drawing.Size(606, 361);
-			this.TabsSrc.TabIndex = 1;
-			// 
-			// TabDemo
-			// 
-			this.TabDemo.Location = new System.Drawing.Point(4, 22);
-			this.TabDemo.Name = "TabDemo";
-			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
-			this.TabDemo.Size = new System.Drawing.Size(598, 335);
-			this.TabDemo.TabIndex = 0;
-			this.TabDemo.Text = "demo tab page";
-			this.TabDemo.UseVisualStyleBackColor = true;
-			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -601,13 +652,14 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
+			this.TabsSrc.ResumeLayout(false);
+			this.MenuTabs.ResumeLayout(false);
 			this.TabsMsg.ResumeLayout(false);
 			this.TabMsgIDE.ResumeLayout(false);
 			this.TabBuildLog.ResumeLayout(false);
 			this.TabProgLog.ResumeLayout(false);
 			this.StripPrj.ResumeLayout(false);
 			this.StripPrj.PerformLayout();
-			this.TabsSrc.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -641,7 +693,6 @@
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.TreeView TreePrj;
 		private System.Windows.Forms.RichTextBox TxtLogIDE;
-		private System.Windows.Forms.RichTextBox TxtCodeOLD;
 		private System.Windows.Forms.ToolStripMenuItem MiPrjClose;
 		private System.Windows.Forms.ToolStrip StripPrj;
 		private System.Windows.Forms.ToolStripButton BtnNewFile;
@@ -663,10 +714,15 @@
 		public System.Windows.Forms.TabPage TabBuildLog;
 		public System.Windows.Forms.TabPage TabProgLog;
 		public System.Windows.Forms.TabControl TabsMsg;
-		private System.Windows.Forms.ToolStripStatusLabel StatusLinCol;
+		private System.Windows.Forms.ToolStripStatusLabel StatusLin;
 		private System.Windows.Forms.ToolStripStatusLabel StatusProgrammer;
 		private SrcTabControl TabsSrc;
 		private System.Windows.Forms.TabPage TabDemo;
+		private System.Windows.Forms.ToolStripStatusLabel StatusCol;
+		private System.Windows.Forms.ToolStripMenuItem MiClose;
+		private System.Windows.Forms.ToolStripMenuItem MiTabSave;
+		private System.Windows.Forms.ToolStripMenuItem MiTabClose;
+		public System.Windows.Forms.ContextMenuStrip MenuTabs;
 	}
 }
 
