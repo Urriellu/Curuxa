@@ -82,3 +82,6 @@ BuildLog=Build log
 ProgLog=Programmer log
 PrjTreeTooltipMB=Using Main Board: {0} ({1})
 PrjTreeTooltipLang=Project programming language: {0}
+LineX=Line {0}
+ColX=Column {0}
+ClosingTab=Closing file {1} from project {0}
