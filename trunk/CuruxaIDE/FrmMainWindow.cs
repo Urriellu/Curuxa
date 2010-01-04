@@ -313,10 +313,6 @@ namespace CuruxaIDE {
 		private void MiNewPrj_Click(object sender, EventArgs e) {
 			Project NewProject = new Project();
 
-			//Project Settings
-			FrmProjectSettings SettingsWindow = new FrmProjectSettings(NewProject);
-			if(SettingsWindow.ShowDialog(this) == DialogResult.Cancel) return;
-
 			//Save Project As...
 			SaveFileDialog SaveProjectDialog = new SaveFileDialog();
 			SaveProjectDialog.AddExtension = true;
@@ -329,6 +325,10 @@ namespace CuruxaIDE {
 			SaveProjectDialog.ValidateNames = true;
 			if(SaveProjectDialog.ShowDialog(this) == DialogResult.Cancel) return;
 			NewProject.PrjFilePath = SaveProjectDialog.FileName;
+
+			//Project Settings
+			FrmProjectSettings SettingsWindow = new FrmProjectSettings(NewProject);
+			if(SettingsWindow.ShowDialog(this) == DialogResult.Cancel) return;
 
 			FrmFileName FN = new FrmFileName(i18n.str("NewMainFileName") + "." + NewProject.Language.GetExtension());
 			FN.ShowInTaskbar = true;
@@ -514,6 +514,7 @@ namespace CuruxaIDE {
 		private void MiPrjClose_Click(object sender, EventArgs e) {
 			Project p = Globals.ActiveProject;
 			CheckSavePrj(p);
+			TabsSrc.RemoveAllFromPrj(p);
 			p.Close();
 		}
 
@@ -602,6 +603,15 @@ namespace CuruxaIDE {
 
 		private void MiStopPrj_Click(object sender, EventArgs e) {
 			Globals.ActiveProject.Stop();
+		}
+
+		public void CursorLocationChanged(CursorLocation c) {
+			StatusLin.Text = i18n.str("LineX", c.Line);
+			StatusCol.Text = i18n.str("ColX", c.Column);
+		}
+
+		private void MiClose_Click(object sender, EventArgs e) {
+			TabsSrc.CloseSrc(Globals.ActiveSrcFile);
 		}
 	}
 }
