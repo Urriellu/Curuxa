@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CuruxaIDE {
 	public partial class SrcTabPage:TabPage {
@@ -21,6 +22,18 @@ namespace CuruxaIDE {
 			TxtCode.Text = src.Content;
 			TxtCode.ProcessAllLines();
 			TxtCode.TextChanged += new EventHandler(TxtCode_TextChanged);
+			TxtCode.SelectionChanged += new EventHandler(TxtCode_SelectionChanged);
+		}
+
+		void TxtCode_SelectionChanged(object sender, EventArgs e) {
+			Point pt = new Point();
+			CursorLocation c;
+			int index = TxtCode.SelectionStart;
+			c.Line = TxtCode.GetLineFromCharIndex(index) + 1;
+			pt = TxtCode.GetPositionFromCharIndex(index);
+			pt.X = 0;
+			c.Column = index - TxtCode.GetCharIndexFromPosition(pt) + 1;
+			Globals.MainWindow.CursorLocationChanged(c);
 		}
 
 		void TxtCode_TextChanged(object sender, EventArgs e) {
