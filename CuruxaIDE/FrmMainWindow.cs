@@ -32,32 +32,39 @@ namespace CuruxaIDE {
 		private void MainWindow_Load(object sender, EventArgs e) {
 			UpdateLang();
 			SetTitle("");
-			//InitSyntaxHighlight();
 			LogIDE(i18n.str("AppInitialized"));
 			if(Project.OpenProjects.Length > 0) Globals.ActiveProject = Project.OpenProjects[0];
 			TreePrj.ImageList = new ImageList();
-			TreePrj.ImageList.Images.Add("Project", Globals.LoadImage("CuruxaLogo.png"));
+			TreePrj.ImageList.Images.Add("Project", Globals.LoadImage("CuruxaLogo_16x16.png"));
 			TreePrj.ImageList.Images.Add("Source", Globals.LoadImage("edit.png"));
 			TreePrj.ImageList.Images.Add("Info", Globals.LoadImage("info.png"));
 			UpdatePrjList();
 			MiNewFile.Image = BtnNewFile.Image = Globals.LoadImage("filenew.png");
 			MiPrjAddFile.Image = BtnAddFilePrj.Image = Globals.LoadImage("fileopen.png");
 			MiFileSave.Image = BtnSaveFile.Image = Globals.LoadImage("filesave.png");
+			MiNewPrj.Image = Globals.LoadImage("window_new.png");
+			MiPrint.Image = Globals.LoadImage("fileprint.png");
+			MiOpenPrj.Image = Globals.LoadImage("project_open.png");
 			MiPrjBuild.Image = BtnBuild.Image = Globals.LoadImage("exec.png");
 			MiPrjProgram.Image = BtnProgramMCU.Image = Globals.LoadImage("bottom.png");
 			MiPrjRun.Image = BtnRun.Image = Globals.LoadImage("play.png");
 			MiPrjStop.Image = BtnStop.Image = Globals.LoadImage("stop.png");
 			MiPrjClose.Image = BtnClosePrj.Image = Globals.LoadImage("cancel.png");
 			MiPrjSettings.Image = BtnPrjSettings.Image = Globals.LoadImage("configure.png");
-			MiPrjSaveAll.Image = BtnPrjSettings.Image = Globals.LoadImage("save_all.png");
+			MiCut.Image = BtnCut.Image = Globals.LoadImage("editcut.png");
+			MiCopy.Image = BtnCopy.Image = Globals.LoadImage("editcopy.png");
+			MiPaste.Image = BtnPaste.Image = Globals.LoadImage("editpaste.png");
+			MiPrjSaveAll.Image = BtnSaveAll.Image = Globals.LoadImage("save_all.png");
 			MiFileClose.Image = BtnFileClose.Image = Globals.LoadImage("fileclose.png");
-			MiOpenExpl.Image = BtnProgramMCU.Image = Globals.LoadImage("wizard.png");
+			MiOpenExpl.Image = Globals.LoadImage("wizard.png");
 			MiUndo.Image = BtnUndo.Image = Globals.LoadImage("undo.png");
 			MiRedo.Image = BtnRedo.Image = Globals.LoadImage("redo.png");
 			MiAbout.Image = Globals.LoadImage("CuruxaLogo_16x16.png");
 			MiWebsite.Image = Globals.LoadImage("gohome.png");
 			MiExit.Image = Globals.LoadImage("exit.png");
 			TabsSrc.TabPages.Clear(); //remove demo tab page
+
+			CheckForIllegalCrossThreadCalls = false;
 		}
 
 		private void UpdateLang() {
@@ -78,7 +85,7 @@ namespace CuruxaIDE {
 			MiAbout.Text = i18n.str("About");
 			MiPrjClose.Text = i18n.str("Close");
 			MiFileClose.Text = BtnFileClose.Text = i18n.str("CloseFile");
-			MiPrint.Text = BtnPrint.Text = i18n.str("MenuPrint");
+			MiPrint.Text = i18n.str("MenuPrint");
 			MiUndo.Text = BtnUndo.Text = i18n.str("MenuUndo");
 			MiRedo.Text = BtnRedo.Text = i18n.str("MenuRedo");
 			MiCut.Text = BtnCut.Text = i18n.str("MenuCut");
@@ -128,6 +135,8 @@ namespace CuruxaIDE {
 			LogIDE(string.Format(Text, p));
 		}
 
+		bool LogBuildLocker = false;
+
 		/// <summary>
 		/// Put some text into the build log
 		/// </summary>
@@ -144,7 +153,6 @@ namespace CuruxaIDE {
 			TxtLogBuild.AppendText(FormatLogText(Text));
 			TxtLogBuild.SelectionStart = TxtLogIDE.Text.Length - 1;
 			TxtLogBuild.ScrollToCaret();
-			//LblStatus.Text = Text;
 		}
 
 		/// <summary>
@@ -170,7 +178,6 @@ namespace CuruxaIDE {
 			TxtLogProgrammer.AppendText(FormatLogText(Text));
 			TxtLogProgrammer.SelectionStart = TxtLogIDE.Text.Length - 1;
 			TxtLogProgrammer.ScrollToCaret();
-			//LblStatus.Text = Text;
 		}
 
 		/// <summary>
@@ -193,8 +200,11 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Update list of projects
 		/// </summary>
+		///NOTE FOR DEVELOPERS: if we set regulant fonts as default (for the treeview) and then we force the Parent Node to be bold, its text wouldn't be shown properly
 		public void UpdatePrjList() {
 			if(IsClosing) return;
+
+			Font ChildrenFont = new Font(TreePrj.Font, FontStyle.Regular);
 
 			TreeNode SelectedNode = TreePrj.SelectedNode;
 			TreePrj.Nodes.Clear();
@@ -203,10 +213,10 @@ namespace CuruxaIDE {
 				TreeNode Parent = new TreeNode(prj.Name);
 				Parent.ToolTipText = prj.Description;
 				Parent.ImageKey = Parent.SelectedImageKey = "Project";
-				Parent.NodeFont = new Font(TreePrj.Font, FontStyle.Bold);
 
 				//Main Board
 				TreeNode TnMB = new TreeNode(prj.MainBoard.ToString());
+				TnMB.NodeFont = ChildrenFont;
 				TnMB.ForeColor = Settings.PrjListSettingsColor;
 				TnMB.ToolTipText = i18n.str("PrjTreeTooltipMB", prj.MainBoard, prj.MainBoard.GetMCU());
 				TnMB.ImageKey = TnMB.SelectedImageKey = "Info";
@@ -214,6 +224,7 @@ namespace CuruxaIDE {
 
 				//Language
 				TreeNode TnLang = new TreeNode(i18n.str("Language:") + " " + prj.Language.ToString());
+				TnLang.NodeFont = ChildrenFont;
 				TnLang.ForeColor = Settings.PrjListSettingsColor;
 				TnLang.ToolTipText = i18n.str("PrjTreeTooltipLang", prj.Language);
 				TnLang.ImageKey = TnLang.SelectedImageKey = "Info";
@@ -225,13 +236,16 @@ namespace CuruxaIDE {
 				foreach(SrcFile src in prj.SrcFiles) {
 					//TreeNode TnSrc = new TreeNode(src.FileName + ((src.Modified) ? " *" : "")); //use this for showing an asterisk on modified files
 					TreeNode TnSrc = new TreeNode(src.FileName);
+					TnSrc.NodeFont = ChildrenFont;
 					TnSrc.ForeColor = Settings.PrjListSrcColor;
 					TnSrc.ImageKey = TnSrc.SelectedImageKey = "Source";
+					TnSrc.ToolTipText = src.FullPath;
 					Parent.Nodes.Add(TnSrc);
 				}
 
 				//libraries
 				TreeNode TnLib = new TreeNode("lib test");
+				TnLib.NodeFont = ChildrenFont;
 				TnLib.ForeColor = Settings.PrjListLibsColor;
 				TnLib.ImageKey = TnLib.SelectedImageKey = "Source";
 				Parent.Nodes.Add(TnLib);
@@ -306,7 +320,7 @@ namespace CuruxaIDE {
 
 			//Add it to the list of open projects
 			Project.Add(NewProject);
-			NewProject.Save();
+			NewProject.SaveAll();
 			MainFile.SaveFile();
 			Globals.LogIDE(i18n.str("NewEmptyPrj", NewProject.Path));
 		}
@@ -323,7 +337,7 @@ namespace CuruxaIDE {
 
 				Project NewPrj = ex.Project;
 				NewPrj.PrjFilePath = win.TxtPrjFile.Text;
-				NewPrj.Save();
+				NewPrj.SaveAll();
 				Project.Add(NewPrj);
 			}
 		}
@@ -399,6 +413,7 @@ namespace CuruxaIDE {
 		private void MiSave_Click(object sender, EventArgs e) {
 			if(Globals.ActiveSrcFile != null) {
 				Globals.ActiveSrcFile.SaveFile();
+				if(TabsSrc.Tabs.ContainsKey(Globals.ActiveSrcFile)) TabsSrc.Tabs[Globals.ActiveSrcFile].UpdateTitle();
 			}
 		}
 
@@ -466,7 +481,7 @@ namespace CuruxaIDE {
 			if(Globals.ActiveProject == null) {
 				LogIDE(i18n.str("NoActivePrj"));
 			} else {
-				Globals.ActiveProject.Save();
+				Globals.ActiveProject.SaveAll();
 
 				if(Globals.ActiveProject.Build() == 0) {
 					LogIDE(i18n.str("BuildOk"));
@@ -479,10 +494,12 @@ namespace CuruxaIDE {
 		}
 
 		private void MiSettings_Click(object sender, EventArgs e) {
-			FrmProjectSettings frm = new FrmProjectSettings(Globals.ActiveProject);
-			frm.ShowDialog(this);
-			UpdatePrjList();
-			Globals.ActiveProject.Save();
+			if(Globals.ActiveProject != null) {
+				FrmProjectSettings frm = new FrmProjectSettings(Globals.ActiveProject);
+				frm.ShowDialog(this);
+				UpdatePrjList();
+				Globals.ActiveProject.SaveAll();
+			}
 		}
 
 		private void MiProgramPrj_Click(object sender, EventArgs e) {
@@ -511,7 +528,7 @@ namespace CuruxaIDE {
 		}
 
 		private void nSSaveAllToolStripMenuItem_Click(object sender, EventArgs e) {
-			Globals.ActiveProject.Save();
+			Globals.ActiveProject.SaveAll();
 		}
 
 		private void BtnFileClose_Click(object sender, EventArgs e) {
@@ -526,6 +543,60 @@ namespace CuruxaIDE {
 		private void MiLangEnglish_Click(object sender, EventArgs e) {
 			i18n.CurrentLanguage = "en";
 			UpdateLang();
+		}
+
+		private void BtnUndo_Click(object sender, EventArgs e) {
+			MiUndo.PerformClick();
+		}
+
+		private void MiUndo_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				//(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Undo(); THIS DOESN'T WORK WHEN SYNTAX HIGHLIGHT IS ON
+			}
+		}
+
+		private void MiRedo_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				//(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Redo(); THIS DOESN'T WORK WHEN SYNTAX HIGHLIGHT IS ON
+			}
+		}
+
+		private void BtnRedo_Click(object sender, EventArgs e) {
+			MiRedo.PerformClick();
+		}
+
+		private void BtnSaveAll_Click(object sender, EventArgs e) {
+			MiPrjSaveAll.PerformClick();
+		}
+
+		private void BtnCut_Click(object sender, EventArgs e) {
+			MiCut.PerformClick();
+		}
+
+		private void MiCut_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Cut();
+			}
+		}
+
+		private void BtnCopy_Click(object sender, EventArgs e) {
+			MiCopy.PerformClick();
+		}
+
+		private void MiCopy_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Copy();
+			}
+		}
+
+		private void BtnPaste_Click(object sender, EventArgs e) {
+			MiPaste.PerformClick();
+		}
+
+		private void MiPaste_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Paste();
+			}
 		}
 	}
 }
