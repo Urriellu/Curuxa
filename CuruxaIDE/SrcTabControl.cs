@@ -37,6 +37,8 @@ namespace CuruxaIDE {
 					if(pair.Key.ParentProject == p) {
 						i18n.str("ClosingTab", pair.Key.ParentProject.Name, pair.Value.Name);
 						CloseSrc(pair.Key);
+						mod = true;
+						break;
 					}
 				}
 			} while(mod);
