@@ -125,6 +125,7 @@ namespace CuruxaIDE {
 			string path = Settings.ImagesDir + "/" + FileName;
 			if(File.Exists(path)) return Image.FromFile(path);
 			else {
+				LogIDE("Image not found: " + FileName);
 				Bitmap blank = new Bitmap(1, 1);
 				blank.SetPixel(0, 0, Color.White);
 				return blank;
