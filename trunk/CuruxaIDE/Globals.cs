@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace CuruxaIDE {
 	static class Globals {
@@ -115,6 +118,16 @@ namespace CuruxaIDE {
 			if(MainWindow != null) {
 				MainWindow.TxtLogProgrammer.Clear();
 				MainWindow.TabsMsg.SelectedTab = MainWindow.TabProgLog;
+			}
+		}
+
+		public static Image LoadImage(string FileName) {
+			string path = Settings.ImagesDir + "/" + FileName;
+			if(File.Exists(path)) return Image.FromFile(path);
+			else {
+				Bitmap blank = new Bitmap(1, 1);
+				blank.SetPixel(0, 0, Color.White);
+				return blank;
 			}
 		}
 	}
