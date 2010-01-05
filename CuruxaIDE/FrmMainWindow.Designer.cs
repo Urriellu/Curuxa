@@ -36,6 +36,7 @@
 			this.MiOpenExpl = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiOpenPrj = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.MiPrint = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiFileClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiFileSave = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,9 +63,11 @@
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiPrjSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiHelp = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiLanguage = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiLangSpanish = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiLangEnglish = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiWebsite = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.MiLanguage = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -83,12 +86,15 @@
 			this.BtnAddFilePrj = new System.Windows.Forms.ToolStripButton();
 			this.BtnSaveFile = new System.Windows.Forms.ToolStripButton();
 			this.BtnFileClose = new System.Windows.Forms.ToolStripButton();
-			this.BtnPrint = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.BtnCut = new System.Windows.Forms.ToolStripButton();
 			this.BtnCopy = new System.Windows.Forms.ToolStripButton();
 			this.BtnPaste = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnUndo = new System.Windows.Forms.ToolStripButton();
+			this.BtnRedo = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnSaveAll = new System.Windows.Forms.ToolStripButton();
 			this.BtnClosePrj = new System.Windows.Forms.ToolStripButton();
 			this.BtnPrjSettings = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -96,16 +102,8 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.MiLangSpanish = new System.Windows.Forms.ToolStripMenuItem();
-			this.MiLangEnglish = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabsSrc = new CuruxaIDE.SrcTabControl();
 			this.TabDemo = new System.Windows.Forms.TabPage();
-			this.MiPrint = new System.Windows.Forms.ToolStripMenuItem();
-			this.BtnSaveAll = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.BtnUndo = new System.Windows.Forms.ToolStripButton();
-			this.BtnRedo = new System.Windows.Forms.ToolStripButton();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -189,8 +187,8 @@
             this.MiOpenPrj,
             this.toolStripMenuItem1,
             this.MiPrint,
-            this.MiFileClose,
             this.MiFileSave,
+            this.MiFileClose,
             this.toolStripMenuItem2,
             this.MiExit});
 			this.MiFile.Name = "MiFile";
@@ -227,9 +225,16 @@
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(239, 6);
 			// 
+			// MiPrint
+			// 
+			this.MiPrint.Name = "MiPrint";
+			this.MiPrint.Size = new System.Drawing.Size(242, 22);
+			this.MiPrint.Text = "NS (Print)";
+			// 
 			// MiFileClose
 			// 
 			this.MiFileClose.Name = "MiFileClose";
+			this.MiFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
 			this.MiFileClose.Size = new System.Drawing.Size(242, 22);
 			this.MiFileClose.Text = "NS (Close)";
 			this.MiFileClose.Click += new System.EventHandler(this.MiClose_Click);
@@ -275,6 +280,7 @@
 			this.MiUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
 			this.MiUndo.Size = new System.Drawing.Size(202, 22);
 			this.MiUndo.Text = "NS (Undo)";
+			this.MiUndo.Click += new System.EventHandler(this.MiUndo_Click);
 			// 
 			// MiRedo
 			// 
@@ -283,6 +289,7 @@
 						| System.Windows.Forms.Keys.Z)));
 			this.MiRedo.Size = new System.Drawing.Size(202, 22);
 			this.MiRedo.Text = "NS (Redo)";
+			this.MiRedo.Click += new System.EventHandler(this.MiRedo_Click);
 			// 
 			// toolStripSeparator7
 			// 
@@ -297,6 +304,7 @@
 			this.MiCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
 			this.MiCut.Size = new System.Drawing.Size(202, 22);
 			this.MiCut.Text = "NS (Cut)";
+			this.MiCut.Click += new System.EventHandler(this.MiCut_Click);
 			// 
 			// MiCopy
 			// 
@@ -306,6 +314,7 @@
 			this.MiCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.MiCopy.Size = new System.Drawing.Size(202, 22);
 			this.MiCopy.Text = "NS (Copy)";
+			this.MiCopy.Click += new System.EventHandler(this.MiCopy_Click);
 			// 
 			// MiPaste
 			// 
@@ -315,6 +324,7 @@
 			this.MiPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
 			this.MiPaste.Size = new System.Drawing.Size(202, 22);
 			this.MiPaste.Text = "NS (Paste)";
+			this.MiPaste.Click += new System.EventHandler(this.MiPaste_Click);
 			// 
 			// toolStripSeparator8
 			// 
@@ -437,6 +447,29 @@
 			this.MiHelp.Size = new System.Drawing.Size(64, 20);
 			this.MiHelp.Text = "NS (Help)";
 			// 
+			// MiLanguage
+			// 
+			this.MiLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiLangSpanish,
+            this.MiLangEnglish});
+			this.MiLanguage.Name = "MiLanguage";
+			this.MiLanguage.Size = new System.Drawing.Size(205, 22);
+			this.MiLanguage.Text = "NS (Language)";
+			// 
+			// MiLangSpanish
+			// 
+			this.MiLangSpanish.Name = "MiLangSpanish";
+			this.MiLangSpanish.Size = new System.Drawing.Size(122, 22);
+			this.MiLangSpanish.Text = "Español";
+			this.MiLangSpanish.Click += new System.EventHandler(this.MiLangSpanish_Click);
+			// 
+			// MiLangEnglish
+			// 
+			this.MiLangEnglish.Name = "MiLangEnglish";
+			this.MiLangEnglish.Size = new System.Drawing.Size(122, 22);
+			this.MiLangEnglish.Text = "English";
+			this.MiLangEnglish.Click += new System.EventHandler(this.MiLangEnglish_Click);
+			// 
 			// MiWebsite
 			// 
 			this.MiWebsite.Name = "MiWebsite";
@@ -451,15 +484,6 @@
 			this.MiAbout.Size = new System.Drawing.Size(205, 22);
 			this.MiAbout.Text = "NS (About Curuxa IDE)";
 			this.MiAbout.Click += new System.EventHandler(this.MiAbout_Click);
-			// 
-			// MiLanguage
-			// 
-			this.MiLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MiLangSpanish,
-            this.MiLangEnglish});
-			this.MiLanguage.Name = "MiLanguage";
-			this.MiLanguage.Size = new System.Drawing.Size(205, 22);
-			this.MiLanguage.Text = "NS (Language)";
 			// 
 			// splitContainer2
 			// 
@@ -484,6 +508,7 @@
 			// TreePrj
 			// 
 			this.TreePrj.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TreePrj.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TreePrj.FullRowSelect = true;
 			this.TreePrj.HideSelection = false;
 			this.TreePrj.Location = new System.Drawing.Point(0, 0);
@@ -621,7 +646,6 @@
             this.BtnAddFilePrj,
             this.BtnSaveFile,
             this.BtnFileClose,
-            this.BtnPrint,
             this.toolStripSeparator1,
             this.BtnCut,
             this.BtnCopy,
@@ -637,8 +661,7 @@
             this.BtnBuild,
             this.BtnProgramMCU,
             this.BtnRun,
-            this.BtnStop,
-            this.toolStripSeparator3});
+            this.BtnStop});
 			this.StripPrj.Location = new System.Drawing.Point(0, 24);
 			this.StripPrj.Name = "StripPrj";
 			this.StripPrj.Size = new System.Drawing.Size(792, 25);
@@ -685,15 +708,6 @@
 			this.BtnFileClose.Text = "NS (close file)";
 			this.BtnFileClose.Click += new System.EventHandler(this.BtnFileClose_Click);
 			// 
-			// BtnPrint
-			// 
-			this.BtnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnPrint.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrint.Image")));
-			this.BtnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnPrint.Name = "BtnPrint";
-			this.BtnPrint.Size = new System.Drawing.Size(23, 22);
-			this.BtnPrint.Text = "&Print";
-			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -707,6 +721,7 @@
 			this.BtnCut.Name = "BtnCut";
 			this.BtnCut.Size = new System.Drawing.Size(23, 22);
 			this.BtnCut.Text = "C&ut";
+			this.BtnCut.Click += new System.EventHandler(this.BtnCut_Click);
 			// 
 			// BtnCopy
 			// 
@@ -716,6 +731,7 @@
 			this.BtnCopy.Name = "BtnCopy";
 			this.BtnCopy.Size = new System.Drawing.Size(23, 22);
 			this.BtnCopy.Text = "&Copy";
+			this.BtnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
 			// 
 			// BtnPaste
 			// 
@@ -725,11 +741,47 @@
 			this.BtnPaste.Name = "BtnPaste";
 			this.BtnPaste.Size = new System.Drawing.Size(23, 22);
 			this.BtnPaste.Text = "&Paste";
+			this.BtnPaste.Click += new System.EventHandler(this.BtnPaste_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// BtnUndo
+			// 
+			this.BtnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnUndo.Image = ((System.Drawing.Image)(resources.GetObject("BtnUndo.Image")));
+			this.BtnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnUndo.Name = "BtnUndo";
+			this.BtnUndo.Size = new System.Drawing.Size(23, 22);
+			this.BtnUndo.Text = "NS (Undo)";
+			this.BtnUndo.Click += new System.EventHandler(this.BtnUndo_Click);
+			// 
+			// BtnRedo
+			// 
+			this.BtnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnRedo.Image = ((System.Drawing.Image)(resources.GetObject("BtnRedo.Image")));
+			this.BtnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnRedo.Name = "BtnRedo";
+			this.BtnRedo.Size = new System.Drawing.Size(23, 22);
+			this.BtnRedo.Text = "NS (Redo)";
+			this.BtnRedo.Click += new System.EventHandler(this.BtnRedo_Click);
 			// 
 			// toolStripSeparator
 			// 
 			this.toolStripSeparator.Name = "toolStripSeparator";
 			this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+			// 
+			// BtnSaveAll
+			// 
+			this.BtnSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnSaveAll.Image = ((System.Drawing.Image)(resources.GetObject("BtnSaveAll.Image")));
+			this.BtnSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSaveAll.Name = "BtnSaveAll";
+			this.BtnSaveAll.Size = new System.Drawing.Size(23, 22);
+			this.BtnSaveAll.Text = "NS (Save All)";
+			this.BtnSaveAll.Click += new System.EventHandler(this.BtnSaveAll_Click);
 			// 
 			// BtnClosePrj
 			// 
@@ -796,25 +848,6 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-			// 
-			// MiLangSpanish
-			// 
-			this.MiLangSpanish.Name = "MiLangSpanish";
-			this.MiLangSpanish.Size = new System.Drawing.Size(152, 22);
-			this.MiLangSpanish.Text = "Español";
-			this.MiLangSpanish.Click += new System.EventHandler(this.MiLangSpanish_Click);
-			// 
-			// MiLangEnglish
-			// 
-			this.MiLangEnglish.Name = "MiLangEnglish";
-			this.MiLangEnglish.Size = new System.Drawing.Size(152, 22);
-			this.MiLangEnglish.Text = "English";
-			this.MiLangEnglish.Click += new System.EventHandler(this.MiLangEnglish_Click);
-			// 
 			// TabsSrc
 			// 
 			this.TabsSrc.Controls.Add(this.TabDemo);
@@ -834,44 +867,6 @@
 			this.TabDemo.TabIndex = 0;
 			this.TabDemo.Text = "demo tab page";
 			this.TabDemo.UseVisualStyleBackColor = true;
-			// 
-			// MiPrint
-			// 
-			this.MiPrint.Name = "MiPrint";
-			this.MiPrint.Size = new System.Drawing.Size(242, 22);
-			this.MiPrint.Text = "NS (Print)";
-			// 
-			// BtnSaveAll
-			// 
-			this.BtnSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnSaveAll.Image = ((System.Drawing.Image)(resources.GetObject("BtnSaveAll.Image")));
-			this.BtnSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnSaveAll.Name = "BtnSaveAll";
-			this.BtnSaveAll.Size = new System.Drawing.Size(23, 22);
-			this.BtnSaveAll.Text = "NS (Save All)";
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-			// 
-			// BtnUndo
-			// 
-			this.BtnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnUndo.Image = ((System.Drawing.Image)(resources.GetObject("BtnUndo.Image")));
-			this.BtnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnUndo.Name = "BtnUndo";
-			this.BtnUndo.Size = new System.Drawing.Size(23, 22);
-			this.BtnUndo.Text = "NS (Undo)";
-			// 
-			// BtnRedo
-			// 
-			this.BtnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.BtnRedo.Image = ((System.Drawing.Image)(resources.GetObject("BtnRedo.Image")));
-			this.BtnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnRedo.Name = "BtnRedo";
-			this.BtnRedo.Size = new System.Drawing.Size(23, 22);
-			this.BtnRedo.Text = "NS (Redo)";
 			// 
 			// FrmMainWindow
 			// 
@@ -970,12 +965,10 @@
 		private System.Windows.Forms.ToolStripMenuItem MiTabSave;
 		private System.Windows.Forms.ToolStripMenuItem MiTabClose;
 		public System.Windows.Forms.ContextMenuStrip MenuTabs;
-		private System.Windows.Forms.ToolStripButton BtnPrint;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
 		private System.Windows.Forms.ToolStripButton BtnCut;
 		private System.Windows.Forms.ToolStripButton BtnCopy;
 		private System.Windows.Forms.ToolStripButton BtnPaste;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem MiEdit;
 		private System.Windows.Forms.ToolStripMenuItem MiUndo;
 		private System.Windows.Forms.ToolStripMenuItem MiRedo;
