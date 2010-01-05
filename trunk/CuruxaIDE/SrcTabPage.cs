@@ -10,12 +10,13 @@ using System.Drawing;
 namespace CuruxaIDE {
 	public partial class SrcTabPage:TabPage {
 		public readonly SrcFile src;
-		private SyntaxRichTextBox TxtCode;
+		public SyntaxRichTextBox TxtCode;
 
 		public SrcTabPage(SrcFile src)
 			: base() {
 			this.src = src;
 			UpdateTitle();
+			Enter += new EventHandler(SrcTabPage_Enter);
 			TxtCode = new SyntaxRichTextBox(src.Language);
 			TxtCode.Parent = this;
 			TxtCode.Dock = DockStyle.Fill;
@@ -23,6 +24,10 @@ namespace CuruxaIDE {
 			TxtCode.ProcessAllLines();
 			TxtCode.TextChanged += new EventHandler(TxtCode_TextChanged);
 			TxtCode.SelectionChanged += new EventHandler(TxtCode_SelectionChanged);
+		}
+
+		void SrcTabPage_Enter(object sender, EventArgs e) {
+			Globals.ActiveSrcFile = src;
 		}
 
 		void TxtCode_SelectionChanged(object sender, EventArgs e) {
@@ -37,11 +42,9 @@ namespace CuruxaIDE {
 		}
 
 		void TxtCode_TextChanged(object sender, EventArgs e) {
-			if(src.Modified == false) {
-				src.Modified = true;
-				src.Content = Text;
-				UpdateTitle();
-			}
+			bool m = src.Modified;
+			src.Content = TxtCode.Text;
+			if(m == false) UpdateTitle();
 			TxtCode.ProcessChangedText();
 		}
 
