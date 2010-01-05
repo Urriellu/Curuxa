@@ -19,7 +19,7 @@ namespace CuruxaIDE {
 		}
 
 		private void NewPrjFromExample_Load(object sender, EventArgs e) {
-			BtnSaveAs.Image = Image.FromFile(Settings.ImagesDir + "/fileopen.png");
+			BtnSaveAs.Image = Globals.LoadImage("fileopen.png");
 			UpdateLang();
 			UpdateExamplesList();
 
