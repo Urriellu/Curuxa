@@ -125,9 +125,15 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Save project and its source files
 		/// </summary>
-		public void Save() {
+		public void SaveAll() {
+			Save();
 			foreach(SrcFile src in SrcFiles) src.SaveFile();
+		}
 
+		/// <summary>
+		/// Save project
+		/// </summary>
+		public void Save() {
 			XmlSerializer xs = new XmlSerializer(this.GetType());
 			StreamWriter sw = null;
 			try {
