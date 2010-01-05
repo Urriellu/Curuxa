@@ -92,8 +92,9 @@ namespace CuruxaIDE {
 			SaveProjectDialog.ShowHelp = false;
 			SaveProjectDialog.Title = i18n.str("SavePrjAs");
 			SaveProjectDialog.ValidateNames = true;
-			SaveProjectDialog.ShowDialog(this);
-			TxtPrjFile.Text = SaveProjectDialog.FileName;
+			if(SaveProjectDialog.ShowDialog(this) == DialogResult.OK) {
+				TxtPrjFile.Text = SaveProjectDialog.FileName;
+			}
 			UpdateBtnStatus();
 		}
 
