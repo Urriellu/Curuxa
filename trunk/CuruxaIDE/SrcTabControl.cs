@@ -14,7 +14,8 @@ namespace CuruxaIDE {
 	public partial class SrcTabControl:TabControl {
 		public Dictionary<SrcFile, SrcTabPage> Tabs = new Dictionary<SrcFile, SrcTabPage>();
 
-		public SrcTabControl():base() {
+		public SrcTabControl()
+			: base() {
 		}
 
 		/// <summary>
@@ -46,7 +47,8 @@ namespace CuruxaIDE {
 
 		public void CloseSrc(SrcFile src) {
 			if(src != null && Tabs.ContainsKey(src)) {
-				TabPages.Remove(Tabs[src]);
+				//there is a weird bug here I can't fix. It happens on Mono+Linux
+				if(TabPages.Contains(Tabs[src])) TabPages.Remove(Tabs[src]);
 				Tabs.Remove(src);
 			}
 		}
