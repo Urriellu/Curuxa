@@ -23,6 +23,7 @@ namespace CuruxaIDE {
 
 			if(!File.Exists(HexFile)) {
 				Globals.LogIDE(i18n.str("NoHex"));
+				Globals.LogProgrammer(i18n.str("NoHex"));
 				return 1;
 			}
 
@@ -52,7 +53,9 @@ namespace CuruxaIDE {
 
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.LogIDE(i18n.str("NoApp", RealName));
+				string msg = i18n.str("NoApp", RealName);
+				Globals.LogIDE(msg);
+				Globals.LogProgrammer(msg);
 				return 1;
 			}
 		}
