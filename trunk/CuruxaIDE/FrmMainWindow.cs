@@ -36,101 +36,66 @@ namespace CuruxaIDE {
 			LogIDE(i18n.str("AppInitialized"));
 			if(Project.OpenProjects.Length > 0) Globals.ActiveProject = Project.OpenProjects[0];
 			TreePrj.ImageList = new ImageList();
-			TreePrj.ImageList.Images.Add("Project", Image.FromFile(Settings.ImagesDir + "/CuruxaLogo.png"));
-			TreePrj.ImageList.Images.Add("Source", Image.FromFile(Settings.ImagesDir + "/edit.png"));
-			TreePrj.ImageList.Images.Add("Info", Image.FromFile(Settings.ImagesDir + "/info.png"));
+			TreePrj.ImageList.Images.Add("Project", Globals.LoadImage("CuruxaLogo.png"));
+			TreePrj.ImageList.Images.Add("Source", Globals.LoadImage("edit.png"));
+			TreePrj.ImageList.Images.Add("Info", Globals.LoadImage("info.png"));
 			UpdatePrjList();
-			BtnNewFile.Image = Image.FromFile(Settings.ImagesDir + "/filenew.png");
-			BtnAddFIlePrj.Image = Image.FromFile(Settings.ImagesDir + "/fileopen.png");
-			BtnSaveFile.Image = Image.FromFile(Settings.ImagesDir + "/filesave.png");
-			BtnBuild.Image = Image.FromFile(Settings.ImagesDir + "/exec.png");
-			BtnProgramMCU.Image = Image.FromFile(Settings.ImagesDir + "/bottom.png");
-			BtnRun.Image = Image.FromFile(Settings.ImagesDir + "/play.png");
-			BtnStop.Image = Image.FromFile(Settings.ImagesDir + "/stop.png");
-			BtnClosePrj.Image = Image.FromFile(Settings.ImagesDir + "/cancel.png");
-			BtnConfigPrj.Image = Image.FromFile(Settings.ImagesDir + "/configure.png");
+			MiNewFile.Image = BtnNewFile.Image = Globals.LoadImage("filenew.png");
+			MiPrjAddFile.Image = BtnAddFilePrj.Image = Globals.LoadImage("fileopen.png");
+			MiFileSave.Image = BtnSaveFile.Image = Globals.LoadImage("filesave.png");
+			MiPrjBuild.Image = BtnBuild.Image = Globals.LoadImage("exec.png");
+			MiPrjProgram.Image = BtnProgramMCU.Image = Globals.LoadImage("bottom.png");
+			MiPrjRun.Image = BtnRun.Image = Globals.LoadImage("play.png");
+			MiPrjStop.Image = BtnStop.Image = Globals.LoadImage("stop.png");
+			MiPrjClose.Image = BtnClosePrj.Image = Globals.LoadImage("cancel.png");
+			MiPrjSettings.Image = BtnPrjSettings.Image = Globals.LoadImage("configure.png");
+			MiPrjSaveAll.Image = BtnPrjSettings.Image = Globals.LoadImage("save_all.png");
+			MiFileClose.Image = BtnFileClose.Image = Globals.LoadImage("fileclose.png");
+			MiOpenExpl.Image = BtnProgramMCU.Image = Globals.LoadImage("wizard.png");
+			MiUndo.Image = BtnUndo.Image = Globals.LoadImage("undo.png");
+			MiRedo.Image = BtnRedo.Image = Globals.LoadImage("redo.png");
+			MiAbout.Image = Globals.LoadImage("CuruxaLogo_16x16.png");
+			MiWebsite.Image = Globals.LoadImage("gohome.png");
+			MiExit.Image = Globals.LoadImage("exit.png");
 			TabsSrc.TabPages.Clear(); //remove demo tab page
-
-			//TmrHighlight.Interval = 1000;
-			//TmrHighlight.Tick += new EventHandler(TmrHighlight_Tick);
-			//TmrHighlight.Start(); //syntax highlight doesn't work properly
 		}
-
-		/*private void InitSyntaxHighlight() {
-			TxtCode.Settings.Comment = "//";
-			TxtCode.Settings.Keywords.Clear();
-			TxtCode.Settings.Keywords.Add("auto");
-			TxtCode.Settings.Keywords.Add("_Bool");
-			TxtCode.Settings.Keywords.Add("break");
-			TxtCode.Settings.Keywords.Add("case");
-			TxtCode.Settings.Keywords.Add("char");
-			TxtCode.Settings.Keywords.Add("_Complex");
-			TxtCode.Settings.Keywords.Add("const");
-			TxtCode.Settings.Keywords.Add("continue");
-			TxtCode.Settings.Keywords.Add("default");
-			TxtCode.Settings.Keywords.Add("do");
-			TxtCode.Settings.Keywords.Add("double");
-			TxtCode.Settings.Keywords.Add("else");
-			TxtCode.Settings.Keywords.Add("enum");
-			TxtCode.Settings.Keywords.Add("extern");
-			TxtCode.Settings.Keywords.Add("float");
-			TxtCode.Settings.Keywords.Add("for");
-			TxtCode.Settings.Keywords.Add("goto");
-			TxtCode.Settings.Keywords.Add("if");
-			TxtCode.Settings.Keywords.Add("_Imaginary");
-			TxtCode.Settings.Keywords.Add("inline");
-			TxtCode.Settings.Keywords.Add("int");
-			TxtCode.Settings.Keywords.Add("long");
-			TxtCode.Settings.Keywords.Add("register");
-			TxtCode.Settings.Keywords.Add("restrict");
-			TxtCode.Settings.Keywords.Add("return");
-			TxtCode.Settings.Keywords.Add("short");
-			TxtCode.Settings.Keywords.Add("signed");
-			TxtCode.Settings.Keywords.Add("sizeof");
-			TxtCode.Settings.Keywords.Add("static");
-			TxtCode.Settings.Keywords.Add("struct");
-			TxtCode.Settings.Keywords.Add("switch");
-			TxtCode.Settings.Keywords.Add("typedef");
-			TxtCode.Settings.Keywords.Add("union");
-			TxtCode.Settings.Keywords.Add("unsigned");
-			TxtCode.Settings.Keywords.Add("void");
-			TxtCode.Settings.Keywords.Add("volatile");
-			TxtCode.Settings.Keywords.Add("while");
-			TxtCode.CompileKeywords();
-		}*/
-
-		/*void TmrHighlight_Tick(object sender, EventArgs e) {
-			if(TxtCode.Enabled) {
-				SyntaxHighlight();
-			}
-		}*/
 
 		private void UpdateLang() {
 			MiFile.Text = i18n.str("File");
 			MiNewPrj.Text = i18n.str("NewProject");
 			MiOpenExpl.Text = i18n.str("NewPrjFromEx");
-			MiSave.Text = i18n.str("Save");
+			MiFileSave.Text = i18n.str("Save");
 			MiExit.Text = i18n.str("Exit");
 			MiNewFile.Text = BtnNewFile.Text = i18n.str("NewFile");
-			MiAddFilePrj.Text = BtnAddFIlePrj.Text = i18n.str("AddExistingFile");
-			MiBuildPrj.Text = BtnBuild.Text = i18n.str("Build");
-			MiProgramPrj.Text = BtnProgramMCU.Text = i18n.str("Program");
-			MiRunPrj.Text = BtnRun.Text = i18n.str("Run");
-			MiStopPrj.Text = BtnStop.Text = i18n.str("Stop");
-			MiSettings.Text = i18n.str("Settings");
+			MiPrjAddFile.Text = BtnAddFilePrj.Text = i18n.str("AddExistingFile");
+			MiPrjBuild.Text = BtnBuild.Text = i18n.str("Build");
+			MiPrjProgram.Text = BtnProgramMCU.Text = i18n.str("Program");
+			MiPrjRun.Text = BtnRun.Text = i18n.str("Run");
+			MiPrjStop.Text = BtnStop.Text = i18n.str("Stop");
+			MiPrjSettings.Text = i18n.str("Settings");
 			MiHelp.Text = i18n.str("Help");
 			MiWebsite.Text = i18n.str("Website");
 			MiAbout.Text = i18n.str("About");
 			MiPrjClose.Text = i18n.str("Close");
+			MiFileClose.Text = BtnFileClose.Text = i18n.str("CloseFile");
+			MiPrint.Text = BtnPrint.Text = i18n.str("MenuPrint");
+			MiUndo.Text = BtnUndo.Text = i18n.str("MenuUndo");
+			MiRedo.Text = BtnRedo.Text = i18n.str("MenuRedo");
+			MiCut.Text = BtnCut.Text = i18n.str("MenuCut");
+			MiCopy.Text = BtnCopy.Text = i18n.str("MenuCopy");
+			MiPaste.Text = BtnPaste.Text = i18n.str("MenuPaste");
+			MiSelectAll.Text = i18n.str("MenuSelectAll");
+			MiPrjSaveAll.Text = i18n.str("MenuSaveAll");
+			MiLanguage.Text = i18n.str("MenuLanguage");
 			BtnSaveFile.Text = i18n.str("SaveFile");
 			BtnClosePrj.Text = i18n.str("ClosePrj");
-			BtnConfigPrj.Text = i18n.str("PrjSettings");
+			BtnPrjSettings.Text = i18n.str("PrjSettings");
 			MiOpenPrj.Text = i18n.str("OpenPrj");
 			UpdateActivePrj(Globals.ActiveProject);
-			//UpdateActiveSrc(Globals.ActiveSrcFile);
 			TabMsgIDE.Text = i18n.str("IdeLog");
 			TabBuildLog.Text = i18n.str("BuildLog");
 			TabProgLog.Text = i18n.str("ProgLog");
+			MiEdit.Text = i18n.str("MenuEdit");
 		}
 
 		string FormatLogText(string Text) {
@@ -431,80 +396,6 @@ namespace CuruxaIDE {
 			}
 		}
 
-		/*/// <summary>
-		/// Update the GUI to match the options available for the current active source file (if any)
-		/// </summary>
-		/// <param name="value">Active source file</param>
-		public void UpdateActiveSrc(SrcFile value) {
-			if(value == null) {
-				//TxtCode.Enabled = false;
-				//TxtCode.Text = i18n.str("NoSrcLoaded");
-			} else {
-				//TxtCode.Enabled = true;
-				//TxtCode.Text = value.Content;
-				//SetTitle(Globals.ActiveProject.Name + " -> " + Globals.ActiveSrcFile.FileName);
-				TabsSrc.OpenSrc(
-			}
-			TxtCode.ProcessAllLines();
-		}*/
-
-		//Regex RxKeyWords = new Regex("at|bool|break|byte|case|char|config|const|continue|decimal|default|do|double|else|enum|false|float|for|goto|if|int|long|null|return|sbyte|short|signed|sizeof|stackalloc|static|string|struct|switch|this|true|typedef|typeof|uint|ulong|unsigned|ushort|volatile|void|while|");
-		////Regex RxMultiLineComment = new Regex(@"/\*(.|[\r\n])*?\*/");
-		//Regex RxMultiLineComment = new Regex(@"/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/");
-
-		/*/// <summary>
-		/// Color for normal source code
-		/// </summary>
-		Color ColorCode = Color.Black;
-
-		/// <summary>
-		/// Color for keywords
-		/// </summary>
-		Color ColorKeywords = Color.Blue;
-
-		/// <summary>
-		/// Color for comments
-		/// </summary>
-		Color ColorComments = Color.Gray;
-
-		void SyntaxHighlight() {
-			int selPos = TxtCode.SelectionStart;
-
-			//clear color
-			TxtCode.SelectAll();
-			TxtCode.SelectionColor = ColorCode;
-
-			//put cursor at its original position
-			TxtCode.SelectionStart = selPos;
-			TxtCode.SelectionColor = ColorCode;
-
-			HighlightMatches(RxKeyWords, ColorKeywords);
-			HighlightMatches(RxMultiLineComment, ColorComments);
-		}
-
-		private void HighlightMatches(Regex regex, Color Color) {
-			int selPos = TxtCode.SelectionStart;
-
-			foreach(Match m in regex.Matches(TxtCode.Text)) {
-				TxtCode.Select(m.Index, m.Length);
-				TxtCode.SelectionColor = Color;
-			}
-
-			//put cursor at its original position
-			TxtCode.SelectionStart = selPos;
-			TxtCode.SelectionColor = ColorCode;
-		}*/
-
-		/*private void TxtCode_TextChanged(object sender, EventArgs e) {
-			if(TxtCode.Enabled && Globals.ActiveSrcFile != null) {
-				Globals.ActiveSrcFile.Modified = true;
-
-				//update object contents
-				Globals.ActiveSrcFile.Content = TxtCode.Text;
-			}
-			//TxtCode.ProcessChangedText();
-		}*/
-
 		private void MiSave_Click(object sender, EventArgs e) {
 			if(Globals.ActiveSrcFile != null) {
 				Globals.ActiveSrcFile.SaveFile();
@@ -544,23 +435,23 @@ namespace CuruxaIDE {
 		}
 
 		private void BtnAddFIlePrj_Click(object sender, EventArgs e) {
-			MiAddFilePrj.PerformClick();
+			MiPrjAddFile.PerformClick();
 		}
 
 		private void BtnSaveFile_Click(object sender, EventArgs e) {
-			MiSave.PerformClick();
+			MiFileSave.PerformClick();
 		}
 
 		private void BtnBuild_Click(object sender, EventArgs e) {
-			MiBuildPrj.PerformClick();
+			MiPrjBuild.PerformClick();
 		}
 
 		private void BtnRun_Click(object sender, EventArgs e) {
-			MiRunPrj.PerformClick();
+			MiPrjRun.PerformClick();
 		}
 
 		private void BtnStop_Click(object sender, EventArgs e) {
-			MiStopPrj.PerformClick();
+			MiPrjStop.PerformClick();
 		}
 
 		private void BtnClosePrj_Click(object sender, EventArgs e) {
@@ -568,17 +459,22 @@ namespace CuruxaIDE {
 		}
 
 		private void BtnConfigPrj_Click(object sender, EventArgs e) {
-			MiSettings.PerformClick();
+			MiPrjSettings.PerformClick();
 		}
 
 		private void MiBuildPrj_Click(object sender, EventArgs e) {
-			Globals.ActiveSrcFile.SaveFile();
-			if(Globals.ActiveProject.Build() == 0) {
-				LogIDE(i18n.str("BuildOk"));
-				LogBuild(i18n.str("BuildOk"));
+			if(Globals.ActiveProject == null) {
+				LogIDE(i18n.str("NoActivePrj"));
 			} else {
-				LogIDE(i18n.str("BuildFail"));
-				LogBuild(i18n.str("BuildFail"));
+				Globals.ActiveProject.Save();
+
+				if(Globals.ActiveProject.Build() == 0) {
+					LogIDE(i18n.str("BuildOk"));
+					LogBuild(i18n.str("BuildOk"));
+				} else {
+					LogIDE(i18n.str("BuildFail"));
+					LogBuild(i18n.str("BuildFail"));
+				}
 			}
 		}
 
@@ -594,7 +490,7 @@ namespace CuruxaIDE {
 		}
 
 		private void BtnProgramMCU_Click(object sender, EventArgs e) {
-			MiProgramPrj.PerformClick();
+			MiPrjProgram.PerformClick();
 		}
 
 		private void MiRunPrj_Click(object sender, EventArgs e) {
@@ -612,6 +508,24 @@ namespace CuruxaIDE {
 
 		private void MiClose_Click(object sender, EventArgs e) {
 			TabsSrc.CloseSrc(Globals.ActiveSrcFile);
+		}
+
+		private void nSSaveAllToolStripMenuItem_Click(object sender, EventArgs e) {
+			Globals.ActiveProject.Save();
+		}
+
+		private void BtnFileClose_Click(object sender, EventArgs e) {
+			MiFileClose.PerformClick();
+		}
+
+		private void MiLangSpanish_Click(object sender, EventArgs e) {
+			i18n.CurrentLanguage = "es";
+			UpdateLang();
+		}
+
+		private void MiLangEnglish_Click(object sender, EventArgs e) {
+			i18n.CurrentLanguage = "en";
+			UpdateLang();
 		}
 	}
 }
