@@ -52,7 +52,9 @@ namespace CuruxaIDE {
 				Environment.CurrentDirectory = OldDir;
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
-				Globals.LogIDE(i18n.str("NoApp", RealName));
+				string msg = i18n.str("NoApp", RealName);
+				Globals.LogIDE(msg);
+				Globals.LogBuild(msg);
 				Environment.CurrentDirectory = OldDir;
 				return 1;
 			}
