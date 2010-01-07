@@ -37,6 +37,7 @@ namespace CuruxaIDE {
 			TreePrj.ImageList = new ImageList();
 			TreePrj.ImageList.Images.Add("Project", Globals.LoadImage("CuruxaLogo_16x16.png"));
 			TreePrj.ImageList.Images.Add("Source", Globals.LoadImage("edit.png"));
+			TreePrj.ImageList.Images.Add("Library", Globals.LoadImage("contents.png"));
 			TreePrj.ImageList.Images.Add("Info", Globals.LoadImage("info.png"));
 			UpdatePrjList();
 			MiNewFile.Image = BtnNewFile.Image = Globals.LoadImage("filenew.png");
@@ -56,6 +57,7 @@ namespace CuruxaIDE {
 			MiPaste.Image = BtnPaste.Image = Globals.LoadImage("editpaste.png");
 			MiPrjSaveAll.Image = BtnSaveAll.Image = Globals.LoadImage("save_all.png");
 			MiFileClose.Image = BtnFileClose.Image = Globals.LoadImage("fileclose.png");
+			MiPrjBuildBurnRun.Image = BtnPrjBuildBurnRun.Image = Globals.LoadImage("launch.png");
 			MiOpenExpl.Image = Globals.LoadImage("wizard.png");
 			MiUndo.Image = BtnUndo.Image = Globals.LoadImage("undo.png");
 			MiRedo.Image = BtnRedo.Image = Globals.LoadImage("redo.png");
@@ -92,7 +94,7 @@ namespace CuruxaIDE {
 			MiCopy.Text = BtnCopy.Text = i18n.str("MenuCopy");
 			MiPaste.Text = BtnPaste.Text = i18n.str("MenuPaste");
 			MiSelectAll.Text = i18n.str("MenuSelectAll");
-			MiPrjSaveAll.Text = i18n.str("MenuSaveAll");
+			MiPrjSaveAll.Text = BtnSaveAll.Text = i18n.str("MenuSaveAll");
 			MiLanguage.Text = i18n.str("MenuLanguage");
 			BtnSaveFile.Text = i18n.str("SaveFile");
 			BtnClosePrj.Text = i18n.str("ClosePrj");
@@ -103,6 +105,9 @@ namespace CuruxaIDE {
 			TabBuildLog.Text = i18n.str("BuildLog");
 			TabProgLog.Text = i18n.str("ProgLog");
 			MiEdit.Text = i18n.str("MenuEdit");
+			MiPrjBuildBurnRun.Text = BtnPrjBuildBurnRun.Text = i18n.str("BuildBurnRun");
+			CursorLocationChanged(new CursorLocation(0, 0));
+			StatusProgrammer.Text = "";
 		}
 
 		string FormatLogText(string Text) {
@@ -121,6 +126,8 @@ namespace CuruxaIDE {
 				if(i == Text.Length) return;
 				if(Text[i] != ' ') break;
 			}
+
+			if(IsClosing) return;
 
 			TxtLogIDE.AppendText(FormatLogText(Text));
 			TxtLogIDE.SelectionStart = TxtLogIDE.Text.Length - 1;
@@ -150,6 +157,8 @@ namespace CuruxaIDE {
 				if(Text[i] != ' ') break;
 			}
 
+			if(IsClosing) return;
+
 			TxtLogBuild.AppendText(FormatLogText(Text));
 			TxtLogBuild.SelectionStart = TxtLogIDE.Text.Length - 1;
 			TxtLogBuild.ScrollToCaret();
@@ -174,6 +183,8 @@ namespace CuruxaIDE {
 				if(i == Text.Length) return;
 				if(Text[i] != ' ') break;
 			}
+
+			if(IsClosing) return;
 
 			TxtLogProgrammer.AppendText(FormatLogText(Text));
 			TxtLogProgrammer.SelectionStart = TxtLogIDE.Text.Length - 1;
@@ -244,11 +255,14 @@ namespace CuruxaIDE {
 				}
 
 				//libraries
-				TreeNode TnLib = new TreeNode("lib test");
-				TnLib.NodeFont = ChildrenFont;
-				TnLib.ForeColor = Settings.PrjListLibsColor;
-				TnLib.ImageKey = TnLib.SelectedImageKey = "Source";
-				Parent.Nodes.Add(TnLib);
+				foreach(SrcFile lib in prj.Libs) {
+					TreeNode TnLib = new TreeNode(lib.FileName);
+					TnLib.NodeFont = ChildrenFont;
+					TnLib.ForeColor = Settings.PrjListLibsColor;
+					TnLib.ImageKey = TnLib.SelectedImageKey = "Library";
+					TnLib.ToolTipText = lib.FullPath;
+					Parent.Nodes.Add(TnLib);
+				}
 
 				TreePrj.Nodes.Add(Parent);
 			}
@@ -315,7 +329,7 @@ namespace CuruxaIDE {
 			string FileName = FN.TxtFileName.Text;
 			if(string.IsNullOrEmpty(FileName)) FileName = "Undefined";
 			if(!FileName.EndsWith("." + NewProject.Language.GetExtension())) FileName += "." + NewProject.Language.GetExtension();
-			SrcFile MainFile = new SrcFile(NewProject, FileName, NewProject.MainBoard, NewProject.Language);
+			SrcFile MainFile = SrcFile.GetFromTemplate(NewProject, FileName, NewProject.MainBoard, NewProject.Language);
 			NewProject.AddSrcFile(MainFile);
 
 			//Add it to the list of open projects
@@ -383,11 +397,17 @@ namespace CuruxaIDE {
 				//a file has just been selected
 				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
 
-				//Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles[e.Node.Index];
+				//double click on source files
 				if(e.Node.Index >= LinesInfoPrjTree) {
 					if(Globals.ActiveProject.SrcFiles.ContainsFileName(e.Node.Text)) {
-						//Globals.ActiveSrcFile = Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text);
 						TabsSrc.OpenSrc(Globals.ActiveProject.SrcFiles.GetByFileName(e.Node.Text));
+					}
+				}
+
+				//double click on libraries
+				if(e.Node.Index >= LinesInfoPrjTree && e.Node.Index >= (LinesInfoPrjTree + Globals.ActiveProject.SrcFiles.Count)) {
+					if(Globals.ActiveProject.Libs.ContainsFileName(e.Node.Text)) {
+						TabsSrc.OpenSrc(Globals.ActiveProject.Libs.GetByFileName(e.Node.Text));
 					}
 				}
 			}
@@ -503,7 +523,13 @@ namespace CuruxaIDE {
 		}
 
 		private void MiProgramPrj_Click(object sender, EventArgs e) {
-			Globals.ActiveProject.Burn();
+			if(Globals.ActiveProject == null) {
+				LogIDE(i18n.str("NoActivePrj"));
+			} else {
+				if(Globals.ActiveProject.Burn() == 0) {
+					StatusProgrammer.Text = i18n.str("PrjProgrammed");
+				}
+			}
 		}
 
 		private void BtnProgramMCU_Click(object sender, EventArgs e) {
@@ -511,11 +537,23 @@ namespace CuruxaIDE {
 		}
 
 		private void MiRunPrj_Click(object sender, EventArgs e) {
-			Globals.ActiveProject.Run();
+			if(Globals.ActiveProject == null) {
+				LogIDE(i18n.str("NoActivePrj"));
+			} else {
+				if(Globals.ActiveProject.Run() == 0) {
+					StatusProgrammer.Text = i18n.str("PrjRun");
+				}
+			}
 		}
 
 		private void MiStopPrj_Click(object sender, EventArgs e) {
-			Globals.ActiveProject.Stop();
+			if(Globals.ActiveProject == null) {
+				LogIDE(i18n.str("NoActivePrj"));
+			} else {
+				if(Globals.ActiveProject.Stop() == 0) {
+					StatusProgrammer.Text = i18n.str("PrjStopped");
+				}
+			}
 		}
 
 		public void CursorLocationChanged(CursorLocation c) {
@@ -527,8 +565,11 @@ namespace CuruxaIDE {
 			TabsSrc.CloseSrc(Globals.ActiveSrcFile);
 		}
 
-		private void nSSaveAllToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void MiPrjSaveAll_Click(object sender, EventArgs e) {
 			Globals.ActiveProject.SaveAll();
+			foreach(KeyValuePair<SrcFile, SrcTabPage> pair in TabsSrc.Tabs) {
+				pair.Value.UpdateTitle();
+			}
 		}
 
 		private void BtnFileClose_Click(object sender, EventArgs e) {
@@ -596,6 +637,33 @@ namespace CuruxaIDE {
 		private void MiPaste_Click(object sender, EventArgs e) {
 			if(TabsSrc.SelectedTab != null) {
 				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.Paste();
+			}
+		}
+
+		private void BtnBuildBurnRun_Click(object sender, EventArgs e) {
+			MiPrjBuildBurnRun.PerformClick();
+		}
+
+		private void MiBuildBurnRun_Click(object sender, EventArgs e) {
+			Project p = Globals.ActiveProject;
+			if(p != null) {
+				MiPrjBuild.PerformClick();
+				if(p.IsCompiled) MiPrjProgram.PerformClick();
+				if(p.IsBurnt) MiPrjRun.PerformClick();
+			}
+		}
+
+		private void MiNewFile_Click(object sender, EventArgs e) {
+
+		}
+
+		private void MiPrjAddFile_Click(object sender, EventArgs e) {
+
+		}
+
+		private void MiSelectAll_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab != null) {
+				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.SelectAll();
 			}
 		}
 	}
