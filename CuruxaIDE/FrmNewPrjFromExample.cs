@@ -74,7 +74,6 @@ namespace CuruxaIDE {
 		private void UpdateLang() {
 			this.Text = i18n.str("NewPrjFromEx");
 			LblAvailEx.Text = i18n.str("ListAvailEx");
-			LblDescription.Text = i18n.str("Description:");
 			LblSaveAs.Text = i18n.str("SavePrjAs:");
 			BtnSave.Text = i18n.str("SaveExample");
 			LblFilter.Text = i18n.str("Filter:");
