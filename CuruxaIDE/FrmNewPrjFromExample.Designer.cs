@@ -23,16 +23,15 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("test");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("another test");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("test");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("another test");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("test");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("another test");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("test");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("another test");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
 			this.LstExamples = new System.Windows.Forms.ListBox();
 			this.LblAvailEx = new System.Windows.Forms.Label();
 			this.TxtDescription = new System.Windows.Forms.TextBox();
-			this.LblDescription = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.LblSaveAs = new System.Windows.Forms.Label();
 			this.TxtPrjFile = new System.Windows.Forms.TextBox();
@@ -78,15 +77,6 @@
 			this.TxtDescription.ReadOnly = true;
 			this.TxtDescription.Size = new System.Drawing.Size(570, 497);
 			this.TxtDescription.TabIndex = 0;
-			// 
-			// LblDescription
-			// 
-			this.LblDescription.AutoSize = true;
-			this.LblDescription.Location = new System.Drawing.Point(207, 9);
-			this.LblDescription.Name = "LblDescription";
-			this.LblDescription.Size = new System.Drawing.Size(84, 13);
-			this.LblDescription.TabIndex = 3;
-			this.LblDescription.Text = "NS (Description)";
 			// 
 			// tableLayoutPanel1
 			// 
@@ -154,13 +144,13 @@
 			this.LstFilterMB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LstFilterMB.CheckBoxes = true;
 			this.LstFilterMB.FullRowSelect = true;
-			listViewItem1.StateImageIndex = 0;
-			listViewItem2.StateImageIndex = 0;
-			listViewItem3.StateImageIndex = 0;
+			listViewItem7.StateImageIndex = 0;
+			listViewItem8.StateImageIndex = 0;
+			listViewItem9.StateImageIndex = 0;
 			this.LstFilterMB.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
 			this.LstFilterMB.Location = new System.Drawing.Point(12, 295);
 			this.LstFilterMB.MultiSelect = false;
 			this.LstFilterMB.Name = "LstFilterMB";
@@ -206,13 +196,13 @@
 			this.LstFilterModules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LstFilterModules.CheckBoxes = true;
 			this.LstFilterModules.FullRowSelect = true;
-			listViewItem4.StateImageIndex = 0;
-			listViewItem5.StateImageIndex = 0;
-			listViewItem6.StateImageIndex = 0;
+			listViewItem10.StateImageIndex = 0;
+			listViewItem11.StateImageIndex = 0;
+			listViewItem12.StateImageIndex = 0;
 			this.LstFilterModules.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.LstFilterModules.Location = new System.Drawing.Point(12, 420);
 			this.LstFilterModules.MultiSelect = false;
 			this.LstFilterModules.Name = "LstFilterModules";
@@ -236,7 +226,6 @@
 			this.Controls.Add(this.BtnSave);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.TxtDescription);
-			this.Controls.Add(this.LblDescription);
 			this.Controls.Add(this.LblAvailEx);
 			this.Controls.Add(this.LstExamples);
 			this.MinimumSize = new System.Drawing.Size(570, 500);
@@ -255,7 +244,6 @@
 		private System.Windows.Forms.ListBox LstExamples;
 		private System.Windows.Forms.Label LblAvailEx;
 		private System.Windows.Forms.TextBox TxtDescription;
-		private System.Windows.Forms.Label LblDescription;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label LblSaveAs;
 		public System.Windows.Forms.TextBox TxtPrjFile;
