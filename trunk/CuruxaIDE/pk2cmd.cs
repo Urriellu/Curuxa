@@ -27,6 +27,11 @@ namespace CuruxaIDE {
 				return 1;
 			}
 
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows) {
+				//add pk2cmd-win to the PATH
+				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Settings.Pk2cmdWinDir, EnvironmentVariableTarget.Process);
+			}
+
 			//pk2cmd -PPIC16Fxxx -M -F/home/my_user/my_program.hex
 			string args = "-P" + prj.MainBoard.GetMCU() + " -M -F" + HexFile;
 
@@ -182,7 +187,7 @@ namespace CuruxaIDE {
 
 		void proc_DataReceivedCheckMCU(object sender, DataReceivedEventArgs e) {
 			string StrToDetect = "Auto-Detect: Found part ";
-			if(e.Data.Contains(StrToDetect)) {
+			if(e != null && e.Data != null && e.Data.Contains(StrToDetect)) {
 				string MCU = e.Data.Remove(0, e.Data.IndexOf(StrToDetect) + StrToDetect.Length).TrimEnd(' ', '.');
 				try {
 					DetectedMB = (Microcontroller)Enum.Parse(typeof(Microcontroller), MCU);
