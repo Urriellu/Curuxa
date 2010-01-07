@@ -33,5 +33,15 @@ namespace CuruxaIDE {
 			for(int i=0;i<ms.Length;i++) ms[i]=M[i].GetRealName();
 			return ms.CommaSeparatedList();
 		}
+
+		/// <summary>
+		/// Checks if the collection contains a value
+		/// </summary>
+		public static bool Contains(this string[] strs, string value) {
+			foreach(string v in strs) {
+				if(v == value) return true;
+			}
+			return false;
+		}
 	}
 }
