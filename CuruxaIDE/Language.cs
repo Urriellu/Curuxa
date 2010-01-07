@@ -25,12 +25,13 @@ namespace CuruxaIDE {
 	}
 
 	public static class LanguageExtensions {
-		static Dictionary<Language, string> LangExtensions = new Dictionary<Language, string>();
+		static Dictionary<Language, string[]> LangExtensions = new Dictionary<Language, string[]>();
 
 		static LanguageExtensions() {
-			LangExtensions.Add(Language.Text, "txt");
-			LangExtensions.Add(Language.C, "c");
-			LangExtensions.Add(Language.PicAsm, "asm");
+			//DO NOT ADD EMPTY STRING ARRAYS
+			LangExtensions.Add(Language.Text, new string[]{"txt"});
+			LangExtensions.Add(Language.C, new string[]{"c", "h"});
+			LangExtensions.Add(Language.PicAsm, new string[]{"asm"});
 		}
 
 		/// <summary>
@@ -40,8 +41,8 @@ namespace CuruxaIDE {
 		/// <returns></returns>
 		public static Language GetFromExtension(string extension) {
 			extension = extension.ToLowerInvariant();
-			foreach(KeyValuePair<Language, string> pair in LangExtensions) {
-				if(pair.Value == extension) return pair.Key;
+			foreach(KeyValuePair<Language, string[]> pair in LangExtensions) {
+				if(pair.Value.Contains(extension)) return pair.Key;
 			}
 			return Language.Text;
 		}
@@ -50,7 +51,7 @@ namespace CuruxaIDE {
 		/// Gets the default extension for the given programming language (just the extension, without point)
 		/// </summary>
 		public static string GetExtension(this Language lang) {
-			return LangExtensions[lang];
+			return LangExtensions[lang][0];
 		}
 
 		/// <summary>
