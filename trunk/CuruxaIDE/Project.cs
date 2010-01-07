@@ -28,6 +28,24 @@ namespace CuruxaIDE {
 		public string Description;
 
 		/// <summary>
+		/// Indicates if this project has been properly compiled (and not modified since then)
+		/// </summary>
+		[XmlIgnore]
+		public bool IsCompiled { get; protected set; }
+
+		/// <summary>
+		/// Indicates if this project has been properly burnt into the microcontroller (and not modified since then)
+		/// </summary>
+		[XmlIgnore]
+		public bool IsBurnt { get; protected set; }
+
+		/// <summary>
+		/// Indicates if this project is running
+		/// </summary>
+		[XmlIgnore]
+		public bool IsRunning { get; protected set; }
+
+		/// <summary>
 		/// Full path to the project file
 		/// </summary>
 		[XmlIgnore]
@@ -47,6 +65,36 @@ namespace CuruxaIDE {
 		/// </summary>
 		[XmlIgnore]
 		public List<SrcFile> SrcFiles = new List<SrcFile>();
+
+		/// <summary>
+		/// List of libraries used in this project
+		/// </summary>
+		[XmlIgnore]
+		public List<SrcFile> Libs {
+			get {
+				_Libs.Clear();
+				foreach(SrcFile src in SrcFiles) {
+					foreach(SrcFile lib in src.RefLibs) {
+						ParseRefLib(lib);
+					}
+				}
+				return _Libs;
+			}
+		}
+		protected List<SrcFile> _Libs = new List<SrcFile>();
+
+		/// <summary>
+		/// Add a library and all its references to the list of referenced libraries, only if they don't exist yet
+		/// </summary>
+		/// <param name="lib">Library referenced by this project</param>
+		protected void ParseRefLib(SrcFile lib) {
+			if(!_Libs.Contains(lib)) {
+				_Libs.Add(lib);
+				foreach(SrcFile reflib in lib.RefLibs) {
+					ParseRefLib(reflib);
+				}
+			}
+		}
 
 		public void AddSrcFile(SrcFile src) {
 			SrcFiles.Add(src);
@@ -122,6 +170,25 @@ namespace CuruxaIDE {
 
 		public Programmer Programmer = Programmer.PICkit2;
 
+
+		/// <summary>
+		/// Indicates if this project has been modified
+		/// </summary>
+		[XmlIgnore]
+		public bool Modified {
+			get {
+				return _Modified;
+			}
+			set {
+				if(value == true) {
+					IsCompiled = false;
+					IsBurnt = false;
+				}
+				_Modified = value;
+			}
+		}
+		private bool _Modified = false;
+
 		/// <summary>
 		/// Save project and its source files
 		/// </summary>
@@ -139,6 +206,7 @@ namespace CuruxaIDE {
 			try {
 				sw = new StreamWriter(PrjFilePath);
 				xs.Serialize(sw, this);
+				Modified = false;
 				Globals.LogIDE(i18n.str("SavingFile", PrjFilePath));
 			} catch(IOException e) {
 				Globals.LogIDE(i18n.str("UnableSaveFile", PrjFilePath));
@@ -167,7 +235,9 @@ namespace CuruxaIDE {
 		/// </summary>
 		public int Build() {
 			Globals.LogIDE(i18n.str("BuildingPrj", Name));
-			return Language.GetToolsuite().Build(this);
+			int r = Language.GetToolsuite().Build(this);
+			if(r == 0) IsCompiled = true;
+			return r;
 		}
 
 		/// <summary>
@@ -176,7 +246,9 @@ namespace CuruxaIDE {
 		public int Burn() {
 			Globals.LogIDE(i18n.str("BurningPrj", Name));
 			Globals.SetupNewProgrammerLog();
-			return Programmer.GetProgrammerApp().Write(this);
+			int r = Programmer.GetProgrammerApp().Write(this);
+			if(r == 0) IsBurnt = true;
+			return r;
 		}
 
 		/// <summary>
@@ -185,7 +257,9 @@ namespace CuruxaIDE {
 		public int Run() {
 			Globals.LogIDE(i18n.str("RunningPrj", Name));
 			Globals.SetupNewProgrammerLog();
-			return Programmer.GetProgrammerApp().Run(this);
+			int r = Programmer.GetProgrammerApp().Run(this);
+			if(r == 0) IsRunning = true;
+			return r;
 		}
 
 		/// <summary>
@@ -194,7 +268,13 @@ namespace CuruxaIDE {
 		public int Stop() {
 			Globals.LogIDE(i18n.str("StoppingPrj", Name));
 			Globals.SetupNewProgrammerLog();
-			return Programmer.GetProgrammerApp().Stop(this);
+			int r = Programmer.GetProgrammerApp().Stop(this);
+			if(r == 0) IsRunning = false;
+			return r;
+		}
+
+		~Project() {
+			if(IsRunning) Stop();
 		}
 
 		#region static members
