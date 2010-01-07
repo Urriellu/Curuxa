@@ -37,8 +37,8 @@
 			this.MiOpenPrj = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiPrint = new System.Windows.Forms.ToolStripMenuItem();
-			this.MiFileClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiFileSave = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiFileClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +56,7 @@
 			this.MiPrjSaveAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+			this.MiPrjBuildBurnRun = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjBuild = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjProgram = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjRun = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +72,8 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.TabsSrc = new CuruxaIDE.SrcTabControl();
+			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.TabsMsg = new System.Windows.Forms.TabControl();
 			this.TabMsgIDE = new System.Windows.Forms.TabPage();
 			this.TxtLogIDE = new System.Windows.Forms.RichTextBox();
@@ -98,12 +101,11 @@
 			this.BtnClosePrj = new System.Windows.Forms.ToolStripButton();
 			this.BtnPrjSettings = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.BtnPrjBuildBurnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnBuild = new System.Windows.Forms.ToolStripButton();
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.TabsSrc = new CuruxaIDE.SrcTabControl();
-			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -112,13 +114,13 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.TabsSrc.SuspendLayout();
 			this.TabsMsg.SuspendLayout();
 			this.TabMsgIDE.SuspendLayout();
 			this.TabBuildLog.SuspendLayout();
 			this.TabProgLog.SuspendLayout();
 			this.MenuTabs.SuspendLayout();
 			this.StripPrj.SuspendLayout();
-			this.TabsSrc.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -231,14 +233,6 @@
 			this.MiPrint.Size = new System.Drawing.Size(242, 22);
 			this.MiPrint.Text = "NS (Print)";
 			// 
-			// MiFileClose
-			// 
-			this.MiFileClose.Name = "MiFileClose";
-			this.MiFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-			this.MiFileClose.Size = new System.Drawing.Size(242, 22);
-			this.MiFileClose.Text = "NS (Close)";
-			this.MiFileClose.Click += new System.EventHandler(this.MiClose_Click);
-			// 
 			// MiFileSave
 			// 
 			this.MiFileSave.Name = "MiFileSave";
@@ -246,6 +240,14 @@
 			this.MiFileSave.Size = new System.Drawing.Size(242, 22);
 			this.MiFileSave.Text = "NS (Save)";
 			this.MiFileSave.Click += new System.EventHandler(this.MiSave_Click);
+			// 
+			// MiFileClose
+			// 
+			this.MiFileClose.Name = "MiFileClose";
+			this.MiFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+			this.MiFileClose.Size = new System.Drawing.Size(242, 22);
+			this.MiFileClose.Text = "NS (Close)";
+			this.MiFileClose.Click += new System.EventHandler(this.MiClose_Click);
 			// 
 			// toolStripMenuItem2
 			// 
@@ -276,6 +278,7 @@
 			// 
 			// MiUndo
 			// 
+			this.MiUndo.Enabled = false;
 			this.MiUndo.Name = "MiUndo";
 			this.MiUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
 			this.MiUndo.Size = new System.Drawing.Size(202, 22);
@@ -284,6 +287,7 @@
 			// 
 			// MiRedo
 			// 
+			this.MiRedo.Enabled = false;
 			this.MiRedo.Name = "MiRedo";
 			this.MiRedo.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
 						| System.Windows.Forms.Keys.Z)));
@@ -337,6 +341,7 @@
 			this.MiSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
 			this.MiSelectAll.Size = new System.Drawing.Size(202, 22);
 			this.MiSelectAll.Text = "NS (Select All)";
+			this.MiSelectAll.Click += new System.EventHandler(this.MiSelectAll_Click);
 			// 
 			// MiProject
 			// 
@@ -346,6 +351,7 @@
             this.MiPrjSaveAll,
             this.MiPrjClose,
             this.toolStripMenuItem3,
+            this.MiPrjBuildBurnRun,
             this.MiPrjBuild,
             this.MiPrjProgram,
             this.MiPrjRun,
@@ -358,17 +364,21 @@
 			// 
 			// MiNewFile
 			// 
+			this.MiNewFile.Enabled = false;
 			this.MiNewFile.Name = "MiNewFile";
 			this.MiNewFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.MiNewFile.Size = new System.Drawing.Size(227, 22);
 			this.MiNewFile.Text = "NS (New File)";
+			this.MiNewFile.Click += new System.EventHandler(this.MiNewFile_Click);
 			// 
 			// MiPrjAddFile
 			// 
+			this.MiPrjAddFile.Enabled = false;
 			this.MiPrjAddFile.Name = "MiPrjAddFile";
 			this.MiPrjAddFile.ShortcutKeyDisplayString = "Ctrl+O";
 			this.MiPrjAddFile.Size = new System.Drawing.Size(227, 22);
 			this.MiPrjAddFile.Text = "NS (Add Existing File)";
+			this.MiPrjAddFile.Click += new System.EventHandler(this.MiPrjAddFile_Click);
 			// 
 			// MiPrjSaveAll
 			// 
@@ -377,7 +387,7 @@
 						| System.Windows.Forms.Keys.S)));
 			this.MiPrjSaveAll.Size = new System.Drawing.Size(227, 22);
 			this.MiPrjSaveAll.Text = "NS (Save All)";
-			this.MiPrjSaveAll.Click += new System.EventHandler(this.nSSaveAllToolStripMenuItem_Click);
+			this.MiPrjSaveAll.Click += new System.EventHandler(this.MiPrjSaveAll_Click);
 			// 
 			// MiPrjClose
 			// 
@@ -390,6 +400,14 @@
 			// 
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
 			this.toolStripMenuItem3.Size = new System.Drawing.Size(224, 6);
+			// 
+			// MiPrjBuildBurnRun
+			// 
+			this.MiPrjBuildBurnRun.Name = "MiPrjBuildBurnRun";
+			this.MiPrjBuildBurnRun.ShortcutKeys = System.Windows.Forms.Keys.F4;
+			this.MiPrjBuildBurnRun.Size = new System.Drawing.Size(227, 22);
+			this.MiPrjBuildBurnRun.Text = "NS (Build, Burn, Run)";
+			this.MiPrjBuildBurnRun.Click += new System.EventHandler(this.MiBuildBurnRun_Click);
 			// 
 			// MiPrjBuild
 			// 
@@ -538,6 +556,26 @@
 			this.splitContainer1.SplitterDistance = 361;
 			this.splitContainer1.TabIndex = 0;
 			// 
+			// TabsSrc
+			// 
+			this.TabsSrc.Controls.Add(this.TabDemo);
+			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
+			this.TabsSrc.Name = "TabsSrc";
+			this.TabsSrc.SelectedIndex = 0;
+			this.TabsSrc.Size = new System.Drawing.Size(606, 361);
+			this.TabsSrc.TabIndex = 1;
+			// 
+			// TabDemo
+			// 
+			this.TabDemo.Location = new System.Drawing.Point(4, 22);
+			this.TabDemo.Name = "TabDemo";
+			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
+			this.TabDemo.Size = new System.Drawing.Size(598, 335);
+			this.TabDemo.TabIndex = 0;
+			this.TabDemo.Text = "demo tab page";
+			this.TabDemo.UseVisualStyleBackColor = true;
+			// 
 			// TabsMsg
 			// 
 			this.TabsMsg.Controls.Add(this.TabMsgIDE);
@@ -658,6 +696,7 @@
             this.BtnClosePrj,
             this.BtnPrjSettings,
             this.toolStripSeparator2,
+            this.BtnPrjBuildBurnRun,
             this.BtnBuild,
             this.BtnProgramMCU,
             this.BtnRun,
@@ -751,6 +790,7 @@
 			// BtnUndo
 			// 
 			this.BtnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnUndo.Enabled = false;
 			this.BtnUndo.Image = ((System.Drawing.Image)(resources.GetObject("BtnUndo.Image")));
 			this.BtnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnUndo.Name = "BtnUndo";
@@ -761,6 +801,7 @@
 			// BtnRedo
 			// 
 			this.BtnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnRedo.Enabled = false;
 			this.BtnRedo.Image = ((System.Drawing.Image)(resources.GetObject("BtnRedo.Image")));
 			this.BtnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BtnRedo.Name = "BtnRedo";
@@ -808,6 +849,16 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
+			// BtnPrjBuildBurnRun
+			// 
+			this.BtnPrjBuildBurnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.BtnPrjBuildBurnRun.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrjBuildBurnRun.Image")));
+			this.BtnPrjBuildBurnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnPrjBuildBurnRun.Name = "BtnPrjBuildBurnRun";
+			this.BtnPrjBuildBurnRun.Size = new System.Drawing.Size(23, 22);
+			this.BtnPrjBuildBurnRun.Text = "toolStripButton1";
+			this.BtnPrjBuildBurnRun.Click += new System.EventHandler(this.BtnBuildBurnRun_Click);
+			// 
 			// BtnBuild
 			// 
 			this.BtnBuild.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -848,26 +899,6 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// TabsSrc
-			// 
-			this.TabsSrc.Controls.Add(this.TabDemo);
-			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
-			this.TabsSrc.Name = "TabsSrc";
-			this.TabsSrc.SelectedIndex = 0;
-			this.TabsSrc.Size = new System.Drawing.Size(606, 361);
-			this.TabsSrc.TabIndex = 1;
-			// 
-			// TabDemo
-			// 
-			this.TabDemo.Location = new System.Drawing.Point(4, 22);
-			this.TabDemo.Name = "TabDemo";
-			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
-			this.TabDemo.Size = new System.Drawing.Size(598, 335);
-			this.TabDemo.TabIndex = 0;
-			this.TabDemo.Text = "demo tab page";
-			this.TabDemo.UseVisualStyleBackColor = true;
-			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -894,6 +925,7 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
+			this.TabsSrc.ResumeLayout(false);
 			this.TabsMsg.ResumeLayout(false);
 			this.TabMsgIDE.ResumeLayout(false);
 			this.TabBuildLog.ResumeLayout(false);
@@ -901,7 +933,6 @@
 			this.MenuTabs.ResumeLayout(false);
 			this.StripPrj.ResumeLayout(false);
 			this.StripPrj.PerformLayout();
-			this.TabsSrc.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -988,6 +1019,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripButton BtnUndo;
 		private System.Windows.Forms.ToolStripButton BtnRedo;
+		private System.Windows.Forms.ToolStripMenuItem MiPrjBuildBurnRun;
+		private System.Windows.Forms.ToolStripButton BtnPrjBuildBurnRun;
 	}
 }
 
