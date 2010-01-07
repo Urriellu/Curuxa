@@ -73,6 +73,24 @@ namespace CuruxaIDE {
 		private static string _ExeLocation;
 
 		/// <summary>
+		/// Full path to the directory containing third party libraries and apps shipped along Curuxa IDE
+		/// </summary>
+		public static string ThirdPartyDir {
+			get {
+				return ExeLocation + "/ThirdParty";
+			}
+		}
+
+		/// <summary>
+		/// Path to pk2cmd-windows binaries
+		/// </summary>
+		public static string Pk2cmdWinDir {
+			get {
+				return ThirdPartyDir + "/pk2cmd-win";
+			}
+		}
+
+		/// <summary>
 		/// Full path to the directory containing the language files. Last character is NOT a slash ('/')
 		/// </summary>
 		public static string LanguageFilesDir {
