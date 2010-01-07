@@ -30,8 +30,8 @@ namespace CuruxaIDE {
 				case Language.C:
 					SetupLangC();
 					break;
-
-				default: throw new NotImplementedException("language not yet supported");
+				default:
+					throw new NotImplementedException("language not yet supported");
 			}
 		}
 
