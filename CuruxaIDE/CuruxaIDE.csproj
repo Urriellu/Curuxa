@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CursorLocation.cs" />
+    <Compile Include="IncludeType.cs" />
     <Compile Include="ListSrcFileExtensions.cs" />
     <Compile Include="ListViewGroupCollectionExtensions.cs" />
     <Compile Include="Programmer.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="FrmAbout.Designer.cs">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="IEnumerableOfStringExtensions.cs" />
     <Compile Include="FrmCrash.cs">
       <SubType>Form</SubType>
     </Compile>
