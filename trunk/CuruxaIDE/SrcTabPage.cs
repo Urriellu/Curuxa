@@ -20,6 +20,10 @@ namespace CuruxaIDE {
 			TxtCode = new SyntaxRichTextBox(src.Language);
 			TxtCode.Parent = this;
 			TxtCode.Dock = DockStyle.Fill;
+			if(src.IsReadOnly) {
+				TxtCode.ReadOnly = true;
+				TxtCode.BackColor = SystemColors.Window;
+			}
 			TxtCode.Text = src.Content;
 			TxtCode.ProcessAllLines();
 			TxtCode.TextChanged += new EventHandler(TxtCode_TextChanged);
