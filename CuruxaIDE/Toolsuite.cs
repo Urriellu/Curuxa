@@ -13,6 +13,14 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
+		/// List of include paths
+		/// </summary>
+		/// <remarks>
+		/// The ones on top are always checked first
+		/// </remarks>
+		public Queue<string> IncludePaths = new Queue<string>();
+
+		/// <summary>
 		/// Builds (compile or assemble) a project
 		/// </summary>
 		/// <param name="prj">Project being built</param>
