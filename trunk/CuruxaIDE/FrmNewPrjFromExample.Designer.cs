@@ -23,12 +23,12 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("test");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("another test");
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("test");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("another test");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("test");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("another test");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("test");
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("another test");
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("don\'t remove these tests!");
 			this.LstExamples = new System.Windows.Forms.ListBox();
 			this.LblAvailEx = new System.Windows.Forms.Label();
 			this.TxtDescription = new System.Windows.Forms.TextBox();
@@ -144,13 +144,13 @@
 			this.LstFilterMB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LstFilterMB.CheckBoxes = true;
 			this.LstFilterMB.FullRowSelect = true;
-			listViewItem7.StateImageIndex = 0;
-			listViewItem8.StateImageIndex = 0;
-			listViewItem9.StateImageIndex = 0;
+			listViewItem1.StateImageIndex = 0;
+			listViewItem2.StateImageIndex = 0;
+			listViewItem3.StateImageIndex = 0;
 			this.LstFilterMB.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.LstFilterMB.Location = new System.Drawing.Point(12, 295);
 			this.LstFilterMB.MultiSelect = false;
 			this.LstFilterMB.Name = "LstFilterMB";
@@ -196,13 +196,13 @@
 			this.LstFilterModules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LstFilterModules.CheckBoxes = true;
 			this.LstFilterModules.FullRowSelect = true;
-			listViewItem10.StateImageIndex = 0;
-			listViewItem11.StateImageIndex = 0;
-			listViewItem12.StateImageIndex = 0;
+			listViewItem4.StateImageIndex = 0;
+			listViewItem5.StateImageIndex = 0;
+			listViewItem6.StateImageIndex = 0;
 			this.LstFilterModules.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
 			this.LstFilterModules.Location = new System.Drawing.Point(12, 420);
 			this.LstFilterModules.MultiSelect = false;
 			this.LstFilterModules.Name = "LstFilterModules";
