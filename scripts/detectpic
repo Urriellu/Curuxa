@@ -1,3 +1,0 @@
-#!/bin/sh
-
-pk2cmd -P | sed 's/Auto-Detect: Found part //' | sed 's/\.//' | head -n 1
