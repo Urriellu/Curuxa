@@ -1,3 +1,0 @@
-#!/bin/sh
-
-MONO_THEME="clearlooks" mono [CURUXA_INSTALLATION_PATH]/curuxa.exe "$@"
