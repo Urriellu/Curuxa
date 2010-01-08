@@ -23,7 +23,7 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static readonly Encoding Charset = Encoding.UTF8;
 
-		public const string Version = "0.1-svn";
+		public const string Version = "0.1";
 
 		public static Color PrjListBackColor = Color.White;
 		public static Color PrjListSettingsColor = Color.Blue;
