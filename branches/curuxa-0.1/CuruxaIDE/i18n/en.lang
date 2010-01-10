@@ -101,3 +101,4 @@ PrjProgrammed=Microcontroller programmed
 PrjRun=Running
 PrjStopped=Microcontroller stopped
 LibNotFound=Library not found: {0}
+SaveExample=Save
