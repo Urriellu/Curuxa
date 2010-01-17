@@ -20,6 +20,7 @@ namespace CuruxaIDE {
 			TxtCode = new SyntaxRichTextBox(src.Language);
 			TxtCode.Parent = this;
 			TxtCode.Dock = DockStyle.Fill;
+			TxtCode.AcceptsTab = true;
 			if(src.IsReadOnly) {
 				TxtCode.ReadOnly = true;
 				TxtCode.BackColor = SystemColors.Window;
