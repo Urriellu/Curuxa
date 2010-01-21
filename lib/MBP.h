@@ -6,6 +6,12 @@
 #define int8 char
 #define int16 int
 
+#define bool unsigned int8
+#define true 1
+#define TRUE 1
+#define false 0
+#define FALSE 0
+
 #define DigitalInput 1
 #define DigitalOutput 0
 #define AllDigitalInputs 0xFF
