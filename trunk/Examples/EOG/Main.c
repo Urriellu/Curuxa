@@ -2,12 +2,12 @@
 * Electrooculograph
 *
 * Plug the EOG module to RA0/AN0 (pin 17), SISW-SPST to RB3 (pin 9), AO-SPK to RA1 (pin 18)
-* one LTIND-A to RA2 (pin 1) and the other LTIND-A to RA3 (pin 3).
+* one LTIND-A to RA2 (pin 1) and the other LTIND-A to RA3 (pin 2).
 *
 * Each LED will light up when the subject is looking to the left or right.
 *
 *=================================================================*/
- 
+
 #include <MBP18.h>
 
 #define OSC_8MHz
@@ -17,7 +17,7 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 
 #define Button RB3
 #define Pressed 0
-#define Released
+#define Released 1
 
 #define LED_R RA2
 #define LED_L RA3
@@ -26,8 +26,10 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 
 #define SquareOut RA1
 
+bool calibrating;
+
 static void isr(void) interrupt 0 {
-	SquareOut=!SquareOut;
+	if(!calibrating) SquareOut=!SquareOut;
 	TMR0IF=0;
 }
 
@@ -58,6 +60,7 @@ void main() {
 	unsigned int8 i;
         float center=0;
         float val=0;
+	calibrating=true;
         SetIntosc8MHz();
         EnableAN0();
 	TRISA1=DigitalOutput;
@@ -71,11 +74,19 @@ void main() {
 	TMR0IE=1;
 	SquareOut=0;
 
+	//wait for calibration
+	while(Button==Released) {
+		LED_R=LedON;
+		LED_L=LedON;
+	}
+
         while(1) {
 		//adjust center value while button is pressed
                 while(Button==Pressed) {
+			calibrating=true;
 			center=(center*0.99+AdcMeasure()*0.01);
 		}
+		calibrating=false;
 
 		//average of 200 measurements
 		val=0;
