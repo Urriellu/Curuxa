@@ -13,6 +13,9 @@ namespace CuruxaIDE {
 		[Description("SISW-SPST")]
 		SISW_SPST,
 
+		[Description("SIBW-1Y")]
+		SIBW_1Y,
+
 		[Description("LTIND-A")]
 		LTIND_A,
 
@@ -23,7 +26,14 @@ namespace CuruxaIDE {
 		AO_SPK,
 
 		[Description("CMIR-RC")]
-		CMIR_RC
+		CMIR_RC,
+
+		[Description("SIDST-GP2")]
+		SIDST_GP2,
+
+		MC2A,
+
+		MC2B
 	}
 
 	public static class ModuleExtensions {
