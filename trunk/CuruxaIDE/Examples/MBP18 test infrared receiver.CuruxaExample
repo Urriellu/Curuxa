@@ -12,7 +12,6 @@
   </Project>
   <UsedModules>
       <Module>LTIND_A</Module>
-      <Module>LTIL_A</Module>
       <Module>CMIR_RC</Module>
   </UsedModules>
 </Example>
