@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <Name>MBP18 distance sensor test</Name>
+    <Description>Example program for testing the SIDST-GP2 distance sensor using an MBP18 and an LTIND-A</Description>
+    <MainBoard>MBP18</MainBoard>
+    <Voltage>5</Voltage>
+    <Language>C</Language>
+    <SrcFileNames>
+      <string>MBP18 distance sensor test.c</string>
+    </SrcFileNames>
+  </Project>
+  <UsedModules>
+      <Module>LTIND_A</Module>
+      <Module>SIDST_GP2</Module>
+  </UsedModules>
+</Example>
