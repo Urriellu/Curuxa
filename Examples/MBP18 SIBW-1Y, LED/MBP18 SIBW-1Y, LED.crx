@@ -8,6 +8,6 @@
   <Language>C</Language>
   <Programmer>PICkit2</Programmer>
   <SrcFileNames>
-    <string>MBP18 button, LED test.c</string>
+    <string>MBP18 SIBW-1Y, LED.c</string>
   </SrcFileNames>
 </Project>
