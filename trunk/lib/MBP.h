@@ -19,3 +19,6 @@
 
 #define ConfigBits(bits) typedef unsigned int config; config at 0x2007 __CONFIG = bits
 #define ConfigBits1(bits) typedef unsigned int config; config at _CONFIG1 __CONFIG = bits
+
+#define SetBit(v,bit) v |= (1 << bit);
+#define ClearBit(v,bit) v &= ~(1 << bit);
