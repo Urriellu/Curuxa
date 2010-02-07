@@ -2,7 +2,8 @@
 * Sample program for LTIND-A and SIBW-1Y using an MBP18
 *
 * Plug SIBW-1Y to RB3 (pin 9) and LTIND-A to RB4 (pin 10).
-* The LED will light up when there is a white or reflective object very close to the sensor (less than 1cm, aprox
+* The LED will light up when there is a white or reflective object
+* very close to the sensor (less than 1cm, aprox)
 *
 * http://curuxa.org
 *=================================================================*/
