@@ -11,9 +11,72 @@ namespace CuruxaIDE {
 	public sealed class SDCC:Toolsuite {
 		public SDCC()
 			: base("SDCC", "sdcc") {
+			GetIncludePaths();
 		}
 
-		string LogBuild;
+		/// <summary>
+		/// Gets the list of global include paths
+		/// </summary>
+		/// <remarks>
+		/// This list is retrieved executing the command: "sdcc --print-search-dirs" 
+		/// </remarks>
+		private void GetIncludePaths() {
+			IncludePaths.Clear();
+			ProcessStartInfo ProcInfo;
+			Process proc;
+			try {
+				string args = "--print-search-dirs";
+				ProcInfo = new ProcessStartInfo(Command, args);
+				ProcInfo.CreateNoWindow = true;
+				ProcInfo.ErrorDialog = false;
+				ProcInfo.RedirectStandardOutput = true;
+				ProcInfo.UseShellExecute = false;
+				proc = new Process();
+				proc.StartInfo = ProcInfo;
+				//proc.OutputDataReceived += new DataReceivedEventHandler(proc_GetIncPathStdOut);
+				Globals.Debug("Executing: {0} {1}", Command, args);
+				proc.Start();
+				proc.WaitForExit(8000); //wait 8 seconds
+				Globals.Debug("Reading outputs");
+
+				bool ReadingIncludeDir = false;
+				foreach(string OutLine in proc.StandardOutput.ReadToEnd().Split('\n', '\r')) {
+					//detect begin of include paths
+					if(OutLine.Contains("includedir:")) {
+						ReadingIncludeDir = true;
+						continue;
+					}
+
+					//detect end of include paths
+					if(ReadingIncludeDir && OutLine.Contains(":") && (!OutLine.Contains("/") || !OutLine.Contains(@"\"))) {
+						return;
+					}
+
+					//parsing an include path
+					if(ReadingIncludeDir) {
+						Globals.Debug("New SDCC global include path: " + OutLine);
+						IncludePaths.Enqueue(OutLine);
+
+						string AnotherIncludeDir=(OutLine + System.IO.Path.DirectorySeparatorChar + "/pic").Replace("//", "/").Replace(@"\\", @"\");
+						Globals.Debug("New SDCC global include path: " + AnotherIncludeDir);
+						IncludePaths.Enqueue(AnotherIncludeDir);
+					}
+				}
+
+				Globals.LogBuild(LogBuild);
+			} catch(System.ComponentModel.Win32Exception) {
+				string msg = i18n.str("NoApp", RealName);
+				Globals.LogIDE(msg);
+				Globals.LogBuild(msg);
+			}
+		}
+
+		/*void proc_GetIncPathStdOut(object sender, DataReceivedEventArgs e) {
+			static int a=5;
+			a++;
+		}*/
+
+		private string LogBuild;
 
 		public override int Build(Project prj) {
 			ProcessStartInfo ProcInfo;
