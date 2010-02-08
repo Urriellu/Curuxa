@@ -45,6 +45,7 @@ void EnableAN0(){
 	CHS0=0;
 }
 
+//Synchcronously get the analog value on the active analog input. It waits doing nothing until the measurement is done
 unsigned int16 AdcMeasure(){
 	ADFM=1;
 	ADON=1;
