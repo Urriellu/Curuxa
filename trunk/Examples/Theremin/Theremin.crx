@@ -4,7 +4,7 @@
   <Description>Very simple digital Theremin</Description>
   <OutputPath>/bin</OutputPath>
   <MainBoard>MBP8</MainBoard>
-  <Voltage>5</Voltage>
+  <Voltage>4.8</Voltage>
   <Language>C</Language>
   <Programmer>PICkit2</Programmer>
   <SrcFileNames>
