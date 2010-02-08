@@ -5,6 +5,7 @@
 
 #define int8 char
 #define int16 int
+#define int32 long
 
 #define bool unsigned int8
 #define true 1
