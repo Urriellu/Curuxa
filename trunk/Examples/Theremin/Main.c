@@ -46,20 +46,29 @@ void Setup() {
 }
 
 
-
 void main() {
-	unsigned int16 ADC=0;
+	unsigned int16 i;
+	unsigned int32 ADC=0;
 	Setup();
 
 	while(1) {
-		ADC=AdcMeasure();
-		if(ADC<100) {
+		ADC=0;
+		for(i=0; i<128; i++){
+			//ADCf=ADCf*0.09+AdcMeasure()*0.01;
+			//ADC+=/*(unsigned int16)****(AdcMeasure()*0.05);
+			ADC+=AdcMeasure();
+		}
+		ADC>>=7;
+		if(ADC<200) {
 			//player's hand too far away, do nothing
 			TMR0=preload;
+			Spk=0;
 		} else {
-			ADC-=154;
+			//ADC=(unsigned int8)ADCf;
+			ADC-=80;
 			ADC>>=1;
-			ADC+=114;
+			//ADC*=0.56349;
+			//ADC+=114;
 			preload=(unsigned int8)ADC;
 		}
 	}
