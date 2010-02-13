@@ -1,0 +1,5 @@
+This directory contains Curuxa IDE projects for developing and testing examples for Main Boards and Modules.
+
+They are intended only for Curuxa developers.
+
+Once these examples are finished, they are copied to trunk/CuruxaIDE/Examples (so final users can use them from Curuxa IDE) and some of them are also published on the website.
