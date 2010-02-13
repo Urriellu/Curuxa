@@ -14,10 +14,16 @@ namespace CuruxaIDE {
 		MBP14,
 
 		[Description("PIC16F88")]
-		MBP18
+		MBP18,
+
+		[Description("PIC16F887")]
+		MBP40
 	}
 
 	public static class MainBoardsExtensions {
+		/// <summary>
+		/// Gets the Microcontroller used in this Main Board
+		/// </summary>
 		public static Microcontroller GetMCU(this MainBoard MainBoard) {
 			FieldInfo fi = MainBoard.GetType().GetField(MainBoard.ToString());
 
