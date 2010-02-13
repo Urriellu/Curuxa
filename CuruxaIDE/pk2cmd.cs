@@ -151,12 +151,12 @@ namespace CuruxaIDE {
 			}
 		}
 
-		private Microcontroller? DetectedMB;
+		private Microcontroller? DetectedMCU;
 
 		public override Microcontroller? Detect() {
 			ProcessStartInfo ProcInfo;
 			Process proc;
-			DetectedMB = null;
+			DetectedMCU = null;
 
 			//pk2cmd -P
 			string args = "-P";
@@ -182,7 +182,7 @@ namespace CuruxaIDE {
 			} catch(System.ComponentModel.Win32Exception) {
 				Globals.LogIDE(i18n.str("NoApp", RealName));
 			}
-			return DetectedMB;
+			return DetectedMCU;
 		}
 
 		void proc_DataReceivedCheckMCU(object sender, DataReceivedEventArgs e) {
@@ -190,9 +190,9 @@ namespace CuruxaIDE {
 			if(e != null && e.Data != null && e.Data.Contains(StrToDetect)) {
 				string MCU = e.Data.Remove(0, e.Data.IndexOf(StrToDetect) + StrToDetect.Length).TrimEnd(' ', '.');
 				try {
-					DetectedMB = (Microcontroller)Enum.Parse(typeof(Microcontroller), MCU);
+					DetectedMCU = (Microcontroller)Enum.Parse(typeof(Microcontroller), MCU);
 				} catch {
-					DetectedMB = null;
+					DetectedMCU = null;
 				}
 			}
 		}
