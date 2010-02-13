@@ -90,7 +90,7 @@ namespace CuruxaIDE {
 			string OldDir = Environment.CurrentDirectory;
 			Environment.CurrentDirectory = prj.Path;
 
-			string args = "-I " + Settings.IncludesDir;
+			string args = "-I " + Settings.IncludesDir + " --Werror";
 			string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
 			string GputilsInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils";
 
