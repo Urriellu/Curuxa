@@ -102,3 +102,6 @@ PrjRun=Running
 PrjStopped=Microcontroller stopped
 LibNotFound=Library not found: {0}
 SaveExample=Save
+NoMcuDetected=No microcontroller detected
+DetectedX=Detected: {0} (used in {1})
+CheckMB=Check Main Board
