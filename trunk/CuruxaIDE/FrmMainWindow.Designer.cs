@@ -106,6 +106,7 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
+			this.MiCheckMB = new System.Windows.Forms.ToolStripMenuItem();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -357,6 +358,7 @@
             this.MiPrjRun,
             this.MiPrjStop,
             this.toolStripMenuItem4,
+            this.MiCheckMB,
             this.MiPrjSettings});
 			this.MiProject.Name = "MiProject";
 			this.MiProject.Size = new System.Drawing.Size(77, 20);
@@ -899,6 +901,13 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
+			// MiCheckMB
+			// 
+			this.MiCheckMB.Name = "MiCheckMB";
+			this.MiCheckMB.Size = new System.Drawing.Size(227, 22);
+			this.MiCheckMB.Text = "NS (Check Main Board)";
+			this.MiCheckMB.Click += new System.EventHandler(this.MiCheckMB_Click);
+			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1021,6 +1030,7 @@
 		private System.Windows.Forms.ToolStripButton BtnRedo;
 		private System.Windows.Forms.ToolStripMenuItem MiPrjBuildBurnRun;
 		private System.Windows.Forms.ToolStripButton BtnPrjBuildBurnRun;
+		private System.Windows.Forms.ToolStripMenuItem MiCheckMB;
 	}
 }
 

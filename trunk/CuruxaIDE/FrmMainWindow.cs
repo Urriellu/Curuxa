@@ -100,6 +100,7 @@ namespace CuruxaIDE {
 			BtnClosePrj.Text = i18n.str("ClosePrj");
 			BtnPrjSettings.Text = i18n.str("PrjSettings");
 			MiOpenPrj.Text = i18n.str("OpenPrj");
+			MiCheckMB.Text = i18n.str("CheckMB");
 			UpdateActivePrj(Globals.ActiveProject);
 			TabMsgIDE.Text = i18n.str("IdeLog");
 			TabBuildLog.Text = i18n.str("BuildLog");
@@ -664,6 +665,15 @@ namespace CuruxaIDE {
 		private void MiSelectAll_Click(object sender, EventArgs e) {
 			if(TabsSrc.SelectedTab != null) {
 				(TabsSrc.SelectedTab as SrcTabPage).TxtCode.SelectAll();
+			}
+		}
+
+		private void MiCheckMB_Click(object sender, EventArgs e) {
+			Microcontroller? DetectedMCU = Globals.ActiveProject.Programmer.GetProgrammerApp().Detect();
+			TabsMsg.SelectedTab = TabMsgIDE;
+			if(!DetectedMCU.HasValue) Globals.LogIDE(i18n.str("NoMcuDetected"));
+			else {
+				Globals.LogIDE(i18n.str("DetectedX", DetectedMCU.Value, DetectedMCU.Value.GetMainBoard()));
 			}
 		}
 	}
