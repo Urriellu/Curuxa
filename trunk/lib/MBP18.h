@@ -8,6 +8,9 @@
 
 #define ADC_MAX_VALUE 1024
 
+#define Interrupt static void isr(void) interrupt 0
+#define ISR Interrupt
+
 //Set the internal oscillator to 31.25kHz
 void SetIntosc31kHz(){
 	IRCF2=0;
