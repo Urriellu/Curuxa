@@ -76,7 +76,8 @@ namespace CuruxaIDE {
 		/// Put some text in the Curuxa IDE log
 		/// </summary>
 		public static void LogIDE(string Text) {
-			if(MainWindow != null) MainWindow.LogIDE(Text);
+			Debug("[IDE] " + Text);
+			if(MainWindow != null) MainWindow.LogIDE(Text, false);
 		}
 
 		/// <summary>
