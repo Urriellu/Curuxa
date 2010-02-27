@@ -62,6 +62,7 @@
 			this.MiPrjRun = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjStop = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+			this.MiCheckMB = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiLanguage = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +107,6 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.MiCheckMB = new System.Windows.Forms.ToolStripMenuItem();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -230,6 +230,7 @@
 			// 
 			// MiPrint
 			// 
+			this.MiPrint.Enabled = false;
 			this.MiPrint.Name = "MiPrint";
 			this.MiPrint.Size = new System.Drawing.Size(242, 22);
 			this.MiPrint.Text = "NS (Print)";
@@ -449,6 +450,13 @@
 			// 
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(224, 6);
+			// 
+			// MiCheckMB
+			// 
+			this.MiCheckMB.Name = "MiCheckMB";
+			this.MiCheckMB.Size = new System.Drawing.Size(227, 22);
+			this.MiCheckMB.Text = "NS (Check Main Board)";
+			this.MiCheckMB.Click += new System.EventHandler(this.MiCheckMB_Click);
 			// 
 			// MiPrjSettings
 			// 
@@ -900,13 +908,6 @@
 			this.BtnStop.Size = new System.Drawing.Size(23, 22);
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
-			// 
-			// MiCheckMB
-			// 
-			this.MiCheckMB.Name = "MiCheckMB";
-			this.MiCheckMB.Size = new System.Drawing.Size(227, 22);
-			this.MiCheckMB.Text = "NS (Check Main Board)";
-			this.MiCheckMB.Click += new System.EventHandler(this.MiCheckMB_Click);
 			// 
 			// FrmMainWindow
 			// 
