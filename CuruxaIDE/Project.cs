@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace CuruxaIDE {
 	[Serializable]
@@ -296,7 +297,7 @@ namespace CuruxaIDE {
 		public static void Open(string PrjFile) {
 			if(File.Exists(PrjFile)) {
 				Project np = LoadFromFile(PrjFile);
-				Add(np);
+				if(np != null) Add(np);
 			} else {
 				Globals.LogIDE(i18n.str("FileNotFound", PrjFile));
 			}
@@ -322,14 +323,15 @@ namespace CuruxaIDE {
 			FileInfo fi = new FileInfo(PrjFile);
 			if(fi.Exists) {
 				Globals.Debug("Loading project file: " + PrjFile);
-				XmlSerializer xs = new XmlSerializer(typeof(Project));
-				NewPrj = (Project)xs.Deserialize(new StreamReader(PrjFile));
-				/*foreach(string PrjPath in s.OpenProjects) {
-					Project.Open(PrjPath);
-				}*/
-				NewPrj.PrjFilePath = PrjFile;
-				foreach(SrcFile src in NewPrj.SrcFiles) {
-					src.Modified = false;
+				try {
+					XmlSerializer xs = new XmlSerializer(typeof(Project));
+					NewPrj = (Project)xs.Deserialize(new StreamReader(PrjFile));
+					NewPrj.PrjFilePath = PrjFile;
+					foreach(SrcFile src in NewPrj.SrcFiles) {
+						src.Modified = false;
+					}
+				} catch(XmlException e) {
+					Globals.LogIDE(i18n.str("UnableLoadPrjFile", PrjFile, e.Message));
 				}
 			} else Globals.LogIDE(i18n.str("PrjFileNotExist", PrjFile));
 			return NewPrj;
