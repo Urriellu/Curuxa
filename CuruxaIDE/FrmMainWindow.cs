@@ -119,7 +119,14 @@ namespace CuruxaIDE {
 		/// Put some text into the Curuxa IDE log
 		/// </summary>
 		public void LogIDE(string Text) {
-			Globals.Debug("[IDE] " + Text);
+			LogIDE(Text, true);
+		}
+
+		/// <summary>
+		/// Put some text into the Curuxa IDE log
+		/// </summary>
+		public void LogIDE(string Text, bool LogDebug) {
+			if(LogDebug) Globals.Debug("[IDE] " + Text);
 
 			//avoid null, empty, or all-spaces texts
 			if(string.IsNullOrEmpty(Text)) return;
