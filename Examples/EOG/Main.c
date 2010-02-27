@@ -1,10 +1,20 @@
 ﻿/*==================================================================
 * Electrooculograph
 *
-* Plug the EOG module to RA0/AN0 (pin 17), SISW-SPST to RB3 (pin 9), AO-SPK to RA1 (pin 18)
-* one LTIND-A to RA2 (pin 1) and the other LTIND-A to RA3 (pin 2).
+* Connections:
+* EOG module: RA0/AN0 (pin 17)
+* SISW-SPST: RB3 (pin 9)
+* AO-SPK: RA1 (pin 18)
+* One LTIND-A: RA2 (pin 1)
+* Another LTIND-A: RA3 (pin 2)
 *
-* Each LED will light up when the subject is looking to the left or right.
+* Each LED will light up and a different sound will be generated
+* based on which direction the subject is looking to.
+*
+* While the button is pressed, both LEDs will be off, the speaker
+* will be muted, and the EOG will enter calibration-mode.
+*
+* http://curuxa.org
 *
 *=================================================================*/
 
@@ -28,7 +38,7 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 
 bool calibrating;
 
-static void isr(void) interrupt 0 {
+Interrupt {
 	if(!calibrating) SquareOut=!SquareOut;
 	TMR0IF=0;
 }
@@ -81,7 +91,7 @@ void main() {
 	}
 
         while(1) {
-		//adjust center value while button is pressed
+		//calibrate center voltage while button is pressed
                 while(Button==Pressed) {
 			calibrating=true;
 			center=(center*0.99+AdcMeasure()*0.01);
