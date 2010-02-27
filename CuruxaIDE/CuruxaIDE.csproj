@@ -134,6 +134,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="Examples\Electrooculograph.CuruxaExample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\MBP14 test 2.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -155,10 +158,19 @@
     <None Include="Examples\MBP18 SIBW-1Y, LED.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\MBP18 test 2.CuruxaExample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\MBP18 test infrared receiver.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Examples\MBP18 test.CuruxaExample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\MBP40 Flash LED.CuruxaExample">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\MBP40 test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Examples\MBP8 buzz.CuruxaExample">
@@ -220,6 +232,9 @@
     <Compile Include="Toolsuite.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Examples\Electrooculograph.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Examples\MBP14 test 2.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -241,10 +256,19 @@
     <Content Include="Examples\MBP18 SIBW-1Y, LED.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Examples\MBP18 test 2.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Examples\MBP18 test infrared receiver.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Examples\MBP18 test.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\MBP40 Flash LED.c">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Examples\MBP40 test.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Examples\MBP8 buzz.c">
