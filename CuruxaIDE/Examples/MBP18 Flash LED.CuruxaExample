@@ -12,6 +12,5 @@
   </Project>
   <UsedModules>
       <Module>LTIND_A</Module>
-      <Module>LTIL_A</Module>
   </UsedModules>
 </Example>
