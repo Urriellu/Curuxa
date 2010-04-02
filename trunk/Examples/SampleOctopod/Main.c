@@ -30,7 +30,7 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 #include "BaseMovement.h"
 
 void Setup(){
-        DisableADC();
+        AdcDisable();
 
         TRISA0=DigitalOutput;
         TRISA1=DigitalOutput;
@@ -44,26 +44,24 @@ void Setup(){
 }                   
 
 void main(){
+	int i=0;
+
         Setup();
 
+	Stop();
+
         while(1){
-                if(RC==0) {
-                        MvFwd();
-                        DelaySec(1);
-                }
-                else Stop();
-        }
+                if(RC==0) i++;
+		else i=0;
+		if(i>5){
+			MvFwd(); DelaySec(5);
+			RotateL(); DelaySec(3);
+			MvFwd(); DelaySec(6);
+			RotateR(); DelaySec(6);
+			MvFwd(); DelaySec(6);
+			RotateL(); DelaySec(3);
+			MvFwd(); DelaySec(7);
+			Stop();
+		}
+	}
 }
-
-//test everything works
-/*void main(){
-        Setup();
-
-        while(1){
-                if(RC==0) {
-                        MvFwd();
-                        DelaySec(1);
-                }
-                else Stop();
-        }
-}*/
