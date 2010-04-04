@@ -57,7 +57,7 @@ unsigned int16 AdcMeasure(){
 	return ADRESH << 8 | ADRESL;
 }
 
-//Enable ADC interrupt
+//Enable ADC interrupt. An interrupt will be thrown each time an analog-to-digital conversion is finished
 void AdcEnableInt(){
 	ADIF=0;
 	ADIE=1;
