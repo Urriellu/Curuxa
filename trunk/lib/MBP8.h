@@ -12,6 +12,7 @@
 #define interrupt Interrupt
 #define ISR Interrupt
 
+#define SetDigitalInput(pin) SetBit(TRISIO,pin)
 #define SetDigitalOutput(pin) ClearBit(TRISIO,pin)
 
 //Disable Analog-to-Digital converter
