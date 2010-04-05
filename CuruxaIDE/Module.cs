@@ -59,5 +59,28 @@ namespace CuruxaIDE {
 			}
 			throw new ArgumentException(string.Format("\"" + M + "\" is not the real name of any known Module"));
 		}
+
+		/// <summary>
+		/// Retrieves a list of compatible Modules to a given one, itself included
+		/// </summary>
+		public static Module[] GetCompatibleModules(Module M) {
+			List<Module> CM = new List<Module>();
+			CM.Add(M);
+			foreach(List<Module> L in CompatibleModules) {
+				if(L.Contains(M)) CM.AddRange(L);
+			}
+			return CM.ToArray();
+		}
+
+		static List<List<Module>> CompatibleModules;
+
+		static ModuleExtensions() {
+			CompatibleModules = new List<List<Module>>();
+
+			Module[] a = { Module.LTIND_A, Module.LTIL_A };
+			Module[] b = { Module.MC2A, Module.MC2B };
+			CompatibleModules.Add(new List<Module>(a));
+			CompatibleModules.Add(new List<Module>(b));
+		}
 	}
 }
