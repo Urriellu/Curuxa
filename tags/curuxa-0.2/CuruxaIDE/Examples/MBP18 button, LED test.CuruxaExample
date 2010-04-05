@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <Name>MBP18 button, LED test</Name>
+    <Description>Sample program for LTIND-A and SISW-SPST using an MBP18</Description>
+    <MainBoard>MBP18</MainBoard>
+    <Voltage>5</Voltage>
+    <Language>C</Language>
+    <SrcFileNames>
+      <string>MBP18 button, LED test.c</string>
+    </SrcFileNames>
+  </Project>
+  <UsedModules>
+      <Module>SISW_SPST</Module>
+      <Module>LTIND_A</Module>
+      <Module>LTIL_A</Module>
+  </UsedModules>
+</Example>
