@@ -922,7 +922,6 @@
 			this.MinimumSize = new System.Drawing.Size(400, 350);
 			this.Name = "FrmMainWindow";
 			this.Text = "NS (Title)";
-			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Load += new System.EventHandler(this.MainWindow_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMainWindow_FormClosing);
 			this.StatusStrip.ResumeLayout(false);

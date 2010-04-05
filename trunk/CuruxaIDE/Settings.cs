@@ -13,6 +13,7 @@ namespace CuruxaIDE {
 	public class Settings {
 		#region instance members
 		public List<string> OpenProjects = new List<string>();
+		public System.Windows.Forms.FormWindowState MainWinState = System.Windows.Forms.FormWindowState.Normal;
 		#endregion
 
 		#region static members
@@ -126,6 +127,15 @@ namespace CuruxaIDE {
 			}
 		}
 
+		public static System.Windows.Forms.FormWindowState MainWindowState {
+			get {
+				return s.MainWinState;
+			}
+			set {
+				s.MainWinState = value;
+			}
+		}
+
 		/// <summary>
 		/// Full path to the directory containing libraries used by final users. Last character is NOT a slash ('/')
 		/// </summary>
@@ -180,6 +190,9 @@ namespace CuruxaIDE {
 		private static string _SettingsFile;
 
 		public static void Save() {
+			Console.WriteLine("aaa"+Globals.MainWindow.WindowState);
+			if(Globals.MainWindow != null) s.MainWinState = Globals.MainWindow.WindowState;
+
 			Globals.Debug("Saving settings file: " + SettingsFile);
 			if(!Directory.Exists(AppDataPath)) {
 				try {

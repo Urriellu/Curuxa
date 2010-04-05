@@ -27,6 +27,7 @@ namespace CuruxaIDE {
 
 		public FrmMainWindow() {
 			InitializeComponent();
+			this.WindowState = Settings.MainWindowState;
 		}
 
 		private void MainWindow_Load(object sender, EventArgs e) {
