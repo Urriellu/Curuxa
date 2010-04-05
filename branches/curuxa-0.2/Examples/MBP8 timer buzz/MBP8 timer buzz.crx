@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>MBP8 timer buzz</Name>
+  <Description>Sample program for AO-SPK using MBP8 Timer0</Description>
+  <OutputPath>/bin</OutputPath>
+  <MainBoard>MBP8</MainBoard>
+  <Voltage>5</Voltage>
+  <Language>C</Language>
+  <Programmer>PICkit2</Programmer>
+  <SrcFileNames>
+    <string>MBP8 timer buzz.c</string>
+  </SrcFileNames>
+</Project>

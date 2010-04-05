@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>MBP18 Flash LED</Name>
+  <Description>Sample program for LTIND-A or LTIL-A using an MBP18. A LED will flash every second.</Description>
+  <OutputPath>/bin</OutputPath>
+  <MainBoard>MBP18</MainBoard>
+  <Voltage>5</Voltage>
+  <Language>C</Language>
+  <Programmer>PICkit2</Programmer>
+  <SrcFileNames>
+    <string>MBP18 Flash LED.c</string>
+  </SrcFileNames>
+</Project>

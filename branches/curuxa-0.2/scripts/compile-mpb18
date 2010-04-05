@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sdcc -I [CURUXA_INSTALLATION_PATH]/lib -mpic14 -p16f88 "$@"

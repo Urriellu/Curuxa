@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>MBP18 test 2</Name>
+  <Description>Example program for testing MBP18 with Curuxa libraries</Description>
+  <OutputPath>/bin</OutputPath>
+  <MainBoard>MBP18</MainBoard>
+  <Voltage>5</Voltage>
+  <Language>C</Language>
+  <Programmer>PICkit2</Programmer>
+  <SrcFileNames>
+    <string>MBP18 test 2.c</string>
+  </SrcFileNames>
+</Project>

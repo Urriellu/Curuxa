@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <Name>Electrooculograph</Name>
+    <Description>Electrooculograph application. Detect in which direction a person is looking to and show it using two LEDs and a speaker.</Description>
+    <MainBoard>MBP18</MainBoard>
+    <Voltage>5</Voltage>
+    <Language>C</Language>
+    <SrcFileNames>
+      <string>Electrooculograph.c</string>
+    </SrcFileNames>
+  </Project>
+  <UsedModules>
+      <Module>LTIND_A</Module>
+      <Module>SISW_SPST</Module>
+      <Module>AO_SPK</Module>
+  </UsedModules>
+</Example>
