@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +24,7 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static readonly Encoding Charset = Encoding.UTF8;
 
-		public const string Version = "0.2-svn";
+		public const string Version = "0.2";
 
 		public static Color PrjListBackColor = Color.White;
 		public static Color PrjListSettingsColor = Color.Blue;
