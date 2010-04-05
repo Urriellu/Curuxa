@@ -220,7 +220,7 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Update list of projects
 		/// </summary>
-		///NOTE FOR DEVELOPERS: if we set regulant fonts as default (for the treeview) and then we force the Parent Node to be bold, its text wouldn't be shown properly
+		///NOTE FOR DEVELOPERS: if we set regular fonts as default (for the treeview) and then we force the Parent Node to be bold, its text wouldn't be shown properly
 		public void UpdatePrjList() {
 			if(IsClosing) return;
 
