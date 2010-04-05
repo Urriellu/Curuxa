@@ -24,7 +24,7 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static readonly Encoding Charset = Encoding.UTF8;
 
-		public const string Version = "0.1-svn";
+		public const string Version = "0.2-svn";
 
 		public static Color PrjListBackColor = Color.White;
 		public static Color PrjListSettingsColor = Color.Blue;
@@ -144,7 +144,10 @@ namespace CuruxaIDE {
 				if(string.IsNullOrEmpty(_IncludesDir)) {
 					string[] PossibleLocations = {
 						"/usr/share/curuxa/lib", //default install path
-						ExeLocation+"/../../../lib" //relative path when debugging (running Curuxa IDE without installation)
+						ExeLocation + "/../../../lib", //relative path when debugging (running Curuxa IDE without installation)
+						ExeLocation + "/../lib", //non-standard install path
+						ExeLocation + "/lib", //non-standard install path
+						ExeLocation //aaaarrrrrgggggg!!!!!
 					};
 					foreach(string L in PossibleLocations) {
 						Globals.Debug("Looking for libraries in " + L);
@@ -190,7 +193,6 @@ namespace CuruxaIDE {
 		private static string _SettingsFile;
 
 		public static void Save() {
-			Console.WriteLine("aaa"+Globals.MainWindow.WindowState);
 			if(Globals.MainWindow != null) s.MainWinState = Globals.MainWindow.WindowState;
 
 			Globals.Debug("Saving settings file: " + SettingsFile);
