@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Project>
+    <Name>MBP18 MC2A test</Name>
+    <Description>Sample program for MC2A using an MBP18</Description>
+    <MainBoard>MBP18</MainBoard>
+    <Voltage>5</Voltage>
+    <Language>C</Language>
+    <SrcFileNames>
+      <string>MBP18 MC2A test.c</string>
+    </SrcFileNames>
+  </Project>
+  <UsedModules>
+      <Module>MC2A</Module>
+  </UsedModules>
+</Example>
