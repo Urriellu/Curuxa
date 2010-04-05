@@ -45,7 +45,13 @@ namespace CuruxaIDE {
 					if(MbItem.Checked && ex.Project.MainBoard != (MainBoard)Enum.Parse(typeof(MainBoard), MbItem.Text)) show = false;
 				}
 				foreach(ListViewItem ModItem in LstFilterModules.Items) {
-					if(ModItem.Checked && !ex.UsedModules.Contains(ModuleExtensions.GetModuleFromRealName(ModItem.Text))) show = false;
+					if(ModItem.Checked){
+						bool ExampleUsesMod = false;
+						foreach(Module CompatMod in ModuleExtensions.GetCompatibleModules(ModuleExtensions.GetModuleFromRealName(ModItem.Text))) {
+							if(ex.UsedModules.Contains(CompatMod)) ExampleUsesMod = true;
+						}
+						if(!ExampleUsesMod) show = false;
+					}
 				}
 				if(show) LstExamples.Items.Add(ex.Project.Name);
 			}
