@@ -3,3 +3,4 @@ Adrián Bulnes (bulnes@curuxa.org)
 
 Contributors:
 Patrik Svensson [syntax highlighter]
+Alfonso Zapico [logo]
