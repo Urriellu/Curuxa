@@ -25,10 +25,11 @@ Minimum system requirements:
 COMPILATION
 
 Compilation from the command-line (Linux, BSD...)
+	-Install Mono's xbuild (in Debian/Ubuntu it's called "mono-xbuild"
 	`xbuild CuruxaIDE.sln`
 
 Compilation from Visual Studio (Windows)
-	-Open CuruxaIDE.sln with Visual Studio 2008 or more
+	-Open CuruxaIDE.sln with Visual Studio 2008 or newer
 	-Choose "Release" configuration
 	-Build -> Build Solution (or press F6)
 
@@ -37,6 +38,9 @@ Now everything you need is in the "bin/Debug" or "bin/Release" directory
 ============================================================
 
 INSTALLATION
+
+Note: these instructions just install Curuxa IDE, but not the rest of scripts and required libraries.
+Visit http://curuxa.org/en/Downloads for more information.
 
 Linux and Unix-like:
 	-Copy all the files from "bin/Release" to /usr/share/curuxa or /usr/local/share/curuxa
@@ -51,8 +55,8 @@ Microsoft Windows:
 
 EXECUTION
 
-Linux and Unix-like:simply run:
-	`curuxa`
+Linux and Unix-like:
+	-Just execute: `curuxa`
 
 Microsoft Windows:
 	-Double click on the shortcut you've just created
