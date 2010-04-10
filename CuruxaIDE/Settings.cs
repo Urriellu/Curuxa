@@ -11,9 +11,11 @@ namespace CuruxaIDE {
 	/// Application settings
 	/// </summary>
 	public class Settings {
+		//instance members are the ones saved to the config file, with their default values
 		#region instance members
-		public List<string> OpenProjects = new List<string>();
-		public System.Windows.Forms.FormWindowState MainWinState = System.Windows.Forms.FormWindowState.Normal;
+		public List<string> _OpenProjects = new List<string>();
+		public System.Windows.Forms.FormWindowState _MainWinState = System.Windows.Forms.FormWindowState.Normal;
+		public bool _EnableSyntaxHighlight = (Environment.OSVersion.Platform == PlatformID.Unix) ? false : true;
 		#endregion
 
 		#region static members
@@ -36,9 +38,9 @@ namespace CuruxaIDE {
 		/// </summary>
 		/// <param name="path"></param>
 		public static void AddOpenProject(string path) {
-			if(!s.OpenProjects.Contains(path)) {
+			if(!s._OpenProjects.Contains(path)) {
 				Globals.Debug("Adding to the list of open projects: " + path);
-				s.OpenProjects.Add(path);
+				s._OpenProjects.Add(path);
 			}
 		}
 
@@ -48,7 +50,7 @@ namespace CuruxaIDE {
 		/// <param name="path"></param>
 		public static void RemoveOpenProject(string path) {
 			Globals.Debug("Removing path from the list of opened projects (at the settings file): " + path);
-			s.OpenProjects.Remove(path);
+			s._OpenProjects.Remove(path);
 		}
 
 		/// <summary>
@@ -129,10 +131,19 @@ namespace CuruxaIDE {
 
 		public static System.Windows.Forms.FormWindowState MainWindowState {
 			get {
-				return s.MainWinState;
+				return s._MainWinState;
 			}
 			set {
-				s.MainWinState = value;
+				s._MainWinState = value;
+			}
+		}
+
+		public static bool EnableSyntaxHighlight {
+			get {
+				return s._EnableSyntaxHighlight;
+			}
+			set {
+				s._EnableSyntaxHighlight = value;
 			}
 		}
 
@@ -193,7 +204,7 @@ namespace CuruxaIDE {
 		private static string _SettingsFile;
 
 		public static void Save() {
-			if(Globals.MainWindow != null) s.MainWinState = Globals.MainWindow.WindowState;
+			if(Globals.MainWindow != null) s._MainWinState = Globals.MainWindow.WindowState;
 
 			Globals.Debug("Saving settings file: " + SettingsFile);
 			if(!Directory.Exists(AppDataPath)) {
@@ -223,7 +234,7 @@ namespace CuruxaIDE {
 				try {
 					XmlSerializer xs = new XmlSerializer(s.GetType());
 					s = (Settings)xs.Deserialize(new StreamReader(SettingsFile));
-					foreach(string PrjPath in s.OpenProjects) {
+					foreach(string PrjPath in s._OpenProjects) {
 						Project.Open(PrjPath);
 					}
 				} catch(IOException e) {
