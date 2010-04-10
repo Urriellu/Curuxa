@@ -53,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CursorLocation.cs" />
+    <Compile Include="FrmIdeSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmIdeSettings.Designer.cs">
+      <DependentUpon>FrmIdeSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="IncludeType.cs" />
     <Compile Include="ListSrcFileExtensions.cs" />
     <Compile Include="ListViewGroupCollectionExtensions.cs" />
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmFileName.resx">
       <DependentUpon>FrmFileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmIdeSettings.resx">
+      <DependentUpon>FrmIdeSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMainWindow.resx">
       <DependentUpon>FrmMainWindow.cs</DependentUpon>
@@ -226,6 +235,7 @@
     <Compile Include="SrcTabPage.Designer.cs">
       <DependentUpon>SrcTabPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="SyntaxRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
