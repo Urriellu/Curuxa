@@ -30,6 +30,9 @@ namespace CuruxaIDE {
 				case Language.C:
 					SetupLangC();
 					break;
+				case Language.PicAsm:
+					SetupLangPicasm();
+					break;
 				default:
 					throw new NotImplementedException("language not yet supported");
 			}
@@ -78,6 +81,79 @@ namespace CuruxaIDE {
 			CompileKeywords();
 		}
 
+		protected void SetupLangPicasm() {
+			Settings.Comment = ";";
+			Settings.Keywords.Clear();
+			Settings.Keywords.Add("__badram");
+			Settings.Keywords.Add("__bardrom");
+			Settings.Keywords.Add("cblock");
+			Settings.Keywords.Add("config");
+			Settings.Keywords.Add("__config");
+			Settings.Keywords.Add("constant");
+			Settings.Keywords.Add("da");
+			Settings.Keywords.Add("data");
+			Settings.Keywords.Add("db");
+			Settings.Keywords.Add("de");
+			Settings.Keywords.Add("#define");
+			Settings.Keywords.Add("dt");
+			Settings.Keywords.Add("dw");
+			Settings.Keywords.Add("else");
+			Settings.Keywords.Add("end");
+			Settings.Keywords.Add("endc");
+			Settings.Keywords.Add("endif");
+			Settings.Keywords.Add("endw");
+			Settings.Keywords.Add("equ");
+			Settings.Keywords.Add("fill");
+			Settings.Keywords.Add("goto");
+			Settings.Keywords.Add("__idlocs");
+			Settings.Keywords.Add("if");
+			Settings.Keywords.Add("ifdef");
+			Settings.Keywords.Add("ifndef");
+			Settings.Keywords.Add("include");
+			Settings.Keywords.Add("#include");
+			Settings.Keywords.Add("list");
+			Settings.Keywords.Add("__maxram");
+			Settings.Keywords.Add("__maxrom");
+			Settings.Keywords.Add("org");
+			Settings.Keywords.Add("processor");
+			Settings.Keywords.Add("radix");
+			Settings.Keywords.Add("res");
+			Settings.Keywords.Add("set");
+			Settings.Keywords.Add("#undefine");
+			Settings.Keywords.Add("variable");
+			Settings.Keywords.Add("while");
+			Settings.Keywords.Add("error");
+			Settings.Keywords.Add("errorlevel");
+			Settings.Keywords.Add("list");
+			Settings.Keywords.Add("messg");
+			Settings.Keywords.Add("nolist");
+			Settings.Keywords.Add("page");
+			Settings.Keywords.Add("space");
+			Settings.Keywords.Add("subtitle");
+			Settings.Keywords.Add("title");
+			Settings.Keywords.Add("endm");
+			Settings.Keywords.Add("exitm");
+			Settings.Keywords.Add("expand");
+			Settings.Keywords.Add("local");
+			Settings.Keywords.Add("macro");
+			Settings.Keywords.Add("noexpand");
+			Settings.Keywords.Add("bankisel");
+			Settings.Keywords.Add("banksel");
+			Settings.Keywords.Add("code");
+			Settings.Keywords.Add("code_pack");
+			Settings.Keywords.Add("extern");
+			Settings.Keywords.Add("global");
+			Settings.Keywords.Add("idata");
+			Settings.Keywords.Add("idata_acs");
+			Settings.Keywords.Add("pagesel");
+			Settings.Keywords.Add("pageselw");
+			Settings.Keywords.Add("udata");
+			Settings.Keywords.Add("udata_acs");
+			Settings.Keywords.Add("udata_ovr");
+			Settings.Keywords.Add("udata_shr");
+			CompileKeywords();
+		}
+
 		/// <summary>
 		/// Syntax highlighter settings
 		/// </summary>
@@ -105,7 +181,9 @@ namespace CuruxaIDE {
 		/// ProcessChangedText
 		/// </summary>
 		public void ProcessChangedText() {
-			// Calculate shit here.
+			if(!Settings.EnableSyntaxHighlight) return;
+
+			// Calculate shit here
 			m_nContentLength = this.TextLength;
 
 			int nCurrentSelectionStart = SelectionStart;
@@ -113,20 +191,15 @@ namespace CuruxaIDE {
 
 			m_bPaint = false;
 
-			// Find the start of the current line.
 			m_nLineStart = nCurrentSelectionStart;
-			while((m_nLineStart > 0) && (Text[m_nLineStart - 1] != '\n'))
-				m_nLineStart--;
-			// Find the end of the current line.
+			while((m_nLineStart > 0) && (Text[m_nLineStart - 1] != '\n')) m_nLineStart--;
 			m_nLineEnd = nCurrentSelectionStart;
-			while((m_nLineEnd < Text.Length) && (Text[m_nLineEnd] != '\n'))
-				m_nLineEnd++;
-			// Calculate the length of the line.
+			while((m_nLineEnd < Text.Length) && (Text[m_nLineEnd] != '\n')) m_nLineEnd++;
 			m_nLineLength = m_nLineEnd - m_nLineStart;
+
 			// Get the current line.
 			m_strLine = Text.Substring(m_nLineStart, m_nLineLength);
 
-			// Process this line.
 			ProcessLine();
 
 			m_bPaint = true;
@@ -136,6 +209,8 @@ namespace CuruxaIDE {
 		/// Process a line.
 		/// </summary>
 		private void ProcessLine() {
+			if(!Settings.EnableSyntaxHighlight) return;
+
 			// Save the position and make the whole line black
 			int nPosition = SelectionStart;
 			SelectionStart = m_nLineStart;
@@ -205,6 +280,8 @@ namespace CuruxaIDE {
 		}
 
 		public void ProcessAllLines() {
+			if(!Settings.EnableSyntaxHighlight) return;
+
 			m_bPaint = false;
 
 			int nStartPos = 0;
@@ -296,6 +373,12 @@ namespace CuruxaIDE {
 		/// The color of preprocessor directives
 		/// </summary>
 		public Color PPDColor = Color.Green;
+
+		public bool EnableSyntaxHighlight {
+			get {
+				return Settings.EnableSyntaxHighlight;
+			}
+		}
 		#endregion
 	}
 }
