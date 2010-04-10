@@ -38,7 +38,7 @@ namespace CuruxaIDE {
 			Voltage.Value = (decimal)Prj.Voltage;
 			CmbLanguage.Items.Clear();
 			foreach(string lang in Enum.GetNames(typeof(Language))) {
-				CmbLanguage.Items.Add(lang);
+				if(lang != "Text") CmbLanguage.Items.Add(lang);
 			}
 			CmbLanguage.SelectedItem = Prj.Language.ToString();
 			TxtDescription.Text = Prj.Description;
