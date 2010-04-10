@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing.Printing;
 
 namespace CuruxaIDE {
 	public partial class FrmMainWindow:Form {
@@ -68,9 +69,11 @@ namespace CuruxaIDE {
 			TabsSrc.TabPages.Clear(); //remove demo tab page
 
 			CheckForIllegalCrossThreadCalls = false;
+
+			Globals.CheckVersion();
 		}
 
-		private void UpdateLang() {
+		public void UpdateLang() {
 			MiFile.Text = i18n.str("File");
 			MiNewPrj.Text = i18n.str("NewProject");
 			MiOpenExpl.Text = i18n.str("NewPrjFromEx");
@@ -110,6 +113,8 @@ namespace CuruxaIDE {
 			MiPrjBuildBurnRun.Text = BtnPrjBuildBurnRun.Text = i18n.str("BuildBurnRun");
 			CursorLocationChanged(new CursorLocation(0, 0));
 			StatusProgrammer.Text = "";
+			MiPreferences.Text = i18n.str("Preferences");
+			MiPrintPreview.Text = i18n.str("PrintPreview");
 		}
 
 		string FormatLogText(string Text) {
@@ -431,6 +436,7 @@ namespace CuruxaIDE {
 				MiProject.Text = i18n.str("Project");
 				MiProject.Enabled = false;
 				StripPrj.Enabled = false;
+				SetTitle("");
 			} else {
 				MiProject.Text = i18n.str("ProjectX", value.Name);
 				MiProject.Enabled = true;
@@ -522,7 +528,7 @@ namespace CuruxaIDE {
 			}
 		}
 
-		private void MiSettings_Click(object sender, EventArgs e) {
+		private void MiPrjSettings_Click(object sender, EventArgs e) {
 			if(Globals.ActiveProject != null) {
 				FrmProjectSettings frm = new FrmProjectSettings(Globals.ActiveProject);
 				frm.ShowDialog(this);
@@ -683,6 +689,107 @@ namespace CuruxaIDE {
 			else {
 				Globals.LogIDE(i18n.str("DetectedX", DetectedMCU.Value, DetectedMCU.Value.GetMainBoard()));
 			}
+		}
+
+		#region printing
+		string[] lines;
+		private PrintDialog printDialog1;
+		private PrintDocument printDocument1;
+		private PageSetupDialog pageSetupDialog1;
+		private PrintPreviewDialog printPreviewDialog1;
+		bool PrintSetup = false;
+
+		private void SetupPrint() {
+			printDialog1 = new PrintDialog();
+			printDocument1 = new PrintDocument();
+			pageSetupDialog1 = new PageSetupDialog();
+
+			printDialog1.Document = this.printDocument1;
+			printDocument1.BeginPrint += new PrintEventHandler(OnBeginPrint);
+			printDocument1.PrintPage += new PrintPageEventHandler(OnPrintPage);
+			pageSetupDialog1.Document = this.printDocument1;
+
+			printPreviewDialog1 = new PrintPreviewDialog();
+
+			printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+			printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+			printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+			printPreviewDialog1.Document = this.printDocument1;
+			printPreviewDialog1.Enabled = true;
+			//printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+			printPreviewDialog1.Location = new System.Drawing.Point(88, 116);
+			printPreviewDialog1.MaximumSize = new System.Drawing.Size(0, 0);
+			printPreviewDialog1.Name = i18n.str("PrintPreview");
+			printPreviewDialog1.Opacity = 1;
+			printPreviewDialog1.TransparencyKey = System.Drawing.Color.Empty;
+			printPreviewDialog1.Visible = false;
+
+			PrintSetup = true;
+		}
+
+		private void MiPrint_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab == null) {
+				LogIDE(i18n.str("NoSrcSelected"));
+				return;
+			}
+
+			if(!PrintSetup) SetupPrint();
+			
+			if(printDialog1.ShowDialog() == DialogResult.OK) {
+				printDocument1.Print();
+			}
+		}
+
+		private void OnBeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+			char[] param = { '\n' };
+
+			if(printDialog1.PrinterSettings.PrintRange == PrintRange.Selection) {
+				lines = ((SrcTabPage)TabsSrc.SelectedTab).TxtCode.SelectedText.Split(param);
+			} else {
+				lines = ((SrcTabPage)TabsSrc.SelectedTab).TxtCode.Text.Split(param);
+			}
+
+			int i = 0;
+			char[] trimParam = { '\r' };
+			foreach(string s in lines) {
+				lines[i++] = s.TrimEnd(trimParam);
+			}
+		}
+
+		private void OnPrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+			int linesPrinted = 0;
+			int x = e.MarginBounds.Left;
+			int y = e.MarginBounds.Top;
+			Brush brush = new SolidBrush(((SrcTabPage)TabsSrc.SelectedTab).TxtCode.ForeColor);
+
+			while(linesPrinted < lines.Length) {
+				e.Graphics.DrawString(lines[linesPrinted++], ((SrcTabPage)TabsSrc.SelectedTab).TxtCode.Font, brush, x, y);
+				y += 15;
+				if(y >= e.MarginBounds.Bottom) {
+					e.HasMorePages = true;
+					return;
+				}
+			}
+
+			linesPrinted = 0;
+			e.HasMorePages = false;
+		}
+
+		private void MiPrintPreview_Click(object sender, EventArgs e) {
+			if(TabsSrc.SelectedTab == null) {
+				LogIDE(i18n.str("NoSrcSelected"));
+				return;
+			}
+			
+			if(!PrintSetup) SetupPrint();
+			
+			printPreviewDialog1.ShowDialog();
+		}
+		#endregion
+
+		private void MiPreferences_Click(object sender, EventArgs e) {
+			FrmIdeSettings frm = new FrmIdeSettings();
+			frm.ShowDialog(this);
 		}
 	}
 }

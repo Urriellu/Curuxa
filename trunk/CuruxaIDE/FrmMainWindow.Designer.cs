@@ -37,6 +37,7 @@
 			this.MiOpenPrj = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiPrint = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiPrintPreview = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiFileSave = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiFileClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -50,6 +51,7 @@
 			this.MiPaste = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+			this.MiPreferences = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiProject = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiNewFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPrjAddFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,6 +192,7 @@
             this.MiOpenPrj,
             this.toolStripMenuItem1,
             this.MiPrint,
+            this.MiPrintPreview,
             this.MiFileSave,
             this.MiFileClose,
             this.toolStripMenuItem2,
@@ -230,10 +233,18 @@
 			// 
 			// MiPrint
 			// 
-			this.MiPrint.Enabled = false;
 			this.MiPrint.Name = "MiPrint";
 			this.MiPrint.Size = new System.Drawing.Size(242, 22);
 			this.MiPrint.Text = "NS (Print)";
+			this.MiPrint.Click += new System.EventHandler(this.MiPrint_Click);
+			// 
+			// MiPrintPreview
+			// 
+			this.MiPrintPreview.Enabled = false;
+			this.MiPrintPreview.Name = "MiPrintPreview";
+			this.MiPrintPreview.Size = new System.Drawing.Size(242, 22);
+			this.MiPrintPreview.Text = "NS (Print Preview)";
+			this.MiPrintPreview.Click += new System.EventHandler(this.MiPrintPreview_Click);
 			// 
 			// MiFileSave
 			// 
@@ -273,7 +284,8 @@
             this.MiCopy,
             this.MiPaste,
             this.toolStripSeparator8,
-            this.MiSelectAll});
+            this.MiSelectAll,
+            this.MiPreferences});
 			this.MiEdit.Name = "MiEdit";
 			this.MiEdit.Size = new System.Drawing.Size(61, 20);
 			this.MiEdit.Text = "NS (Edit)";
@@ -344,6 +356,13 @@
 			this.MiSelectAll.Size = new System.Drawing.Size(202, 22);
 			this.MiSelectAll.Text = "NS (Select All)";
 			this.MiSelectAll.Click += new System.EventHandler(this.MiSelectAll_Click);
+			// 
+			// MiPreferences
+			// 
+			this.MiPreferences.Name = "MiPreferences";
+			this.MiPreferences.Size = new System.Drawing.Size(202, 22);
+			this.MiPreferences.Text = "NS (Preferences)";
+			this.MiPreferences.Click += new System.EventHandler(this.MiPreferences_Click);
 			// 
 			// MiProject
 			// 
@@ -463,7 +482,7 @@
 			this.MiPrjSettings.Name = "MiPrjSettings";
 			this.MiPrjSettings.Size = new System.Drawing.Size(227, 22);
 			this.MiPrjSettings.Text = "NS (Settings)";
-			this.MiPrjSettings.Click += new System.EventHandler(this.MiSettings_Click);
+			this.MiPrjSettings.Click += new System.EventHandler(this.MiPrjSettings_Click);
 			// 
 			// MiHelp
 			// 
@@ -918,6 +937,7 @@
 			this.Controls.Add(this.StripPrj);
 			this.Controls.Add(this.StatusStrip);
 			this.Controls.Add(this.menuStrip1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.MinimumSize = new System.Drawing.Size(400, 350);
 			this.Name = "FrmMainWindow";
@@ -1031,6 +1051,8 @@
 		private System.Windows.Forms.ToolStripMenuItem MiPrjBuildBurnRun;
 		private System.Windows.Forms.ToolStripButton BtnPrjBuildBurnRun;
 		private System.Windows.Forms.ToolStripMenuItem MiCheckMB;
+		private System.Windows.Forms.ToolStripMenuItem MiPreferences;
+		private System.Windows.Forms.ToolStripMenuItem MiPrintPreview;
 	}
 }
 
