@@ -12,6 +12,16 @@ namespace CuruxaIDE {
 	public class pk2cmd:ProgrammerApp {
 		public pk2cmd()
 			: base("pk2cmd", "pk2cmd") {
+
+			SetupEnvironment();
+		}
+
+		private void SetupEnvironment() {
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows) {
+				//add pk2cmd-win to the PATH
+				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Settings.Pk2cmdWinDir, EnvironmentVariableTarget.Process);
+				string s = Environment.GetEnvironmentVariable("PATH");
+			}
 		}
 
 
@@ -25,11 +35,6 @@ namespace CuruxaIDE {
 				Globals.LogIDE(i18n.str("NoHex"));
 				Globals.LogProgrammer(i18n.str("NoHex"));
 				return 1;
-			}
-
-			if(Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows) {
-				//add pk2cmd-win to the PATH
-				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Settings.Pk2cmdWinDir, EnvironmentVariableTarget.Process);
 			}
 
 			//pk2cmd -PPIC16Fxxx -M -F/home/my_user/my_program.hex
@@ -145,7 +150,7 @@ namespace CuruxaIDE {
 				proc.WaitForExit();
 
 				return proc.ExitCode;
-			} catch(System.ComponentModel.Win32Exception) {
+			} catch(System.ComponentModel.Win32Exception e) {
 				Globals.LogIDE(i18n.str("NoApp", RealName));
 				return 1;
 			}

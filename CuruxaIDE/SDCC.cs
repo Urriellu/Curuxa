@@ -12,6 +12,35 @@ namespace CuruxaIDE {
 		public SDCC()
 			: base("SDCC", "sdcc") {
 			GetIncludePaths();
+
+			SetupEnvironment();
+		}
+
+		private void SetupEnvironment() {
+			string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
+			string GputilsInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils";
+
+			//on Windows, SDCCand GPUTILS binary directories are only set in the $PATH of the user who installed them. We try to fix it
+			if(Environment.OSVersion.Platform != PlatformID.Unix) {
+				//add "%ProgramFiles%\SDCC\bin" to the PATH
+				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC\bin", EnvironmentVariableTarget.Process);
+
+				//add "%ProgramFiles%\gputils\bin" to the PATH
+				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils\bin", EnvironmentVariableTarget.Process);
+
+				//SDCC can't find its own libraries by itself on Windows!! :-(
+				//args += " -I \"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\SDCC\\include\"";
+
+				//gpasm can't find its own header files
+				//args += " -Wa_I\"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\gputils\\header\"";
+
+				Environment.SetEnvironmentVariable("SDCC_HOME", SdccInstallPath);
+				//Environment.SetEnvironmentVariable("SDCC_INCLUDE", SdccInstallPath+@"\include");
+				//Environment.SetEnvironmentVariable("SDCC_LIB", ????);
+				Environment.SetEnvironmentVariable("GPUTILS_HEADER_PATH", GputilsInstallPath + @"\header");
+				Environment.SetEnvironmentVariable("GPUTILS_LKR_PATH", GputilsInstallPath + @"\lkr");
+				//Environment.SetEnvironmentVariable("GPUTILS_LIB_PATH", SdccInstallPath);
+			}
 		}
 
 		/// <summary>
@@ -91,30 +120,6 @@ namespace CuruxaIDE {
 			Environment.CurrentDirectory = prj.Path;
 
 			string args = "-I \"" + Settings.IncludesDir + "\" --Werror";
-			string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
-			string GputilsInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils";
-
-			//on Windows, SDCCand GPUTILS binary directories are only set in the $PATH of the user who installed them. We try to fix it
-			if(Environment.OSVersion.Platform != PlatformID.Unix) {
-				//add "%ProgramFiles%\SDCC\bin" to the PATH
-				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC\bin", EnvironmentVariableTarget.Process);
-
-				//add "%ProgramFiles%\gputils\bin" to the PATH
-				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils\bin", EnvironmentVariableTarget.Process);
-
-				//SDCC can't find its own libraries by itself on Windows!! :-(
-				//args += " -I \"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\SDCC\\include\"";
-
-				//gpasm can't find its own header files
-				//args += " -Wa_I\"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\gputils\\header\"";
-
-				Environment.SetEnvironmentVariable("SDCC_HOME", SdccInstallPath);
-				//Environment.SetEnvironmentVariable("SDCC_INCLUDE", SdccInstallPath+@"\include");
-				//Environment.SetEnvironmentVariable("SDCC_LIB", ????);
-				Environment.SetEnvironmentVariable("GPUTILS_HEADER_PATH", GputilsInstallPath + @"\header");
-				Environment.SetEnvironmentVariable("GPUTILS_LKR_PATH", GputilsInstallPath + @"\lkr");
-				//Environment.SetEnvironmentVariable("GPUTILS_LIB_PATH", SdccInstallPath);
-			}
 
 			args += " -mpic14 -" + prj.MainBoard.GetMCU().ToString().ToLowerInvariant().Replace("pic", "p") + " \"" + prj.MainFile.FullPath + "\" -o temp";
 			//SDCC segmentation fault when output file contains spaces
