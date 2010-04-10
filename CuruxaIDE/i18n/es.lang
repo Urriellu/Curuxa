@@ -104,5 +104,5 @@ LibNotFound=Librería no encontrada: {0}
 SaveExample=Guardar
 NoMcuDetected=No se detectó ningún microcontrolador
 DetectedX=Detectado: {0} (usado en {1})
-CheckMB=Comprobando Placa Principal
+CheckMB=Comprobar Placa Principal
 UnableLoadPrjFile=Imposible cargar archivo de proyecto "{0}": {1}
