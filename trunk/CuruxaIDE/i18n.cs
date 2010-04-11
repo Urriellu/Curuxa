@@ -79,6 +79,13 @@ namespace CuruxaIDE {
 			return TwoLetterName;
 		}
 
+		public static string GetNativeName(string LangID) {
+			foreach(CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures)) {
+				if(culture.TwoLetterISOLanguageName == LangID) return culture.NativeName;
+			}
+			throw new ArgumentException("Unknown LangID");
+		}
+
 		protected static Dictionary<string, string> LangStrings = new Dictionary<string, string>();
 
 		/// <summary>
