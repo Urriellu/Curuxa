@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="gpasm.cs" />
     <Compile Include="CursorLocation.cs" />
     <Compile Include="FrmIdeSettings.cs">
       <SubType>Form</SubType>
