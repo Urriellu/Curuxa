@@ -61,6 +61,8 @@ namespace CuruxaIDE {
 			switch(lang) {
 				case Language.C:
 					return Toolsuite.SDCC;
+				case Language.PicAsm:
+					return Toolsuite.GPASM;
 				default:
 					throw new NotImplementedException();
 			}
