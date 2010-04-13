@@ -27,5 +27,7 @@ namespace CuruxaIDE {
 		public abstract int Build(Project prj);
 
 		public static SDCC SDCC = new SDCC();
+
+		public static gpasm GPASM = new gpasm();
 	}
 }
