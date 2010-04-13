@@ -133,6 +133,11 @@ namespace CuruxaIDE {
 							if(src.Extension == "c") return src;
 						}
 						break;
+					case Language.PicAsm:
+						foreach(SrcFile src in SrcFiles) {
+							if(src.Extension == "asm") return src;
+						}
+						break;
 					default:
 						throw new NotImplementedException();
 				}
