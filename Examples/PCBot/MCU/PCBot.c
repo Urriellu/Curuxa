@@ -16,6 +16,7 @@
 // Lights
 #define LightFrontLeft RD0
 #define LightFrontRight RD1
+#define TestLed1 RD2
 #define ON 1
 #define OFF 0
 
@@ -69,6 +70,7 @@ void Setup(){
 	// Lights pinout
 	TRISD0=DigitalOutput;
 	TRISD1=DigitalOutput;
+	TRISD2=DigitalOutput;
 	
 	// Bumpers pinout
 	TRISB2=DigitalInput;
@@ -80,31 +82,29 @@ void Setup(){
 	LightFrontRight=OFF;
 }
 
+void ProcessSensors(){
+	if(BumperFrontLeft==Pressed) {
+		WriteSP(CcStatusBumper);
+		WriteSP(CccBumperFrontLeftPressed);
+	} else {
+		WriteSP(CcStatusBumper);
+		WriteSP(CccBumperFrontLeftReleased);
+	}
+	if(BumperFrontRight==Pressed) {
+		WriteSP(CcStatusBumper);
+		WriteSP(CccBumperFrontRightPressed);
+	} else {
+		WriteSP(CcStatusBumper);
+		WriteSP(CccBumperFrontRightReleased);
+	}
+}
+
 void main() {	
 	Setup();
 
-	WriteSP('\n');
-	WriteSP('I');
-	WriteSP('N');
-	WriteSP('I');
-	WriteSP('T');
-	WriteSP('\n');
-
 	while(1) {
 		ReceiveData();
-
-		//if(BumperFrontLeft==Pressed) BaseMvFwd();
-		//else BaseStop();
-
-		//if(BumperFrontLeft==Pressed) WriteSP(56);
-
-		//if(BumperFrontRight==Pressed) LightFrontLeft=ON;
-		//else LightFrontLeft=OFF;
-		
-		/*MvFwd();
-		DelaySec(1);
-		MvBck();
-		DelaySec(1);*/
+		ProcessSensors();
 	}
 }
 
