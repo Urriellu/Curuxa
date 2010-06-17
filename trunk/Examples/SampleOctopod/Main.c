@@ -1,12 +1,14 @@
-﻿/*==================================================================
+/*==================================================================
 * Main source code file for SampleOctopod
-*
-* http://curuxa.org
 *
 * Settings:
 * Left motor: Motor 1
 * Right motor: Motor 2
 * Infrared receiver: RB0 (pin 6)
+*
+* Adrian Bulnes
+*
+* http://community.curuxa.org
 *
 *=================================================================*/
 
@@ -16,8 +18,8 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 
 #define OSC_8MHz
 #include <Delays.h>
-                   
-//Pinout           
+
+//Pinout
 #define M1Enable RA2
 #define M1In1 RA3   
 #define M1In2 RA4   
@@ -32,15 +34,15 @@ ConfigBits1(_CP_OFF & _DEBUG_OFF & _WRT_PROTECT_OFF & _CPD_OFF & _LVP_OFF & _BOD
 void Setup(){
         AdcDisable();
 
-        TRISA0=DigitalOutput;
-        TRISA1=DigitalOutput;
-        TRISA2=DigitalOutput;
-        TRISA3=DigitalOutput;
-        TRISA4=DigitalOutput;
-        TRISA7=DigitalOutput;
-        TRISB0=DigitalInput; 
+	TRISA0=DigitalOutput;
+	TRISA1=DigitalOutput;
+	TRISA2=DigitalOutput;
+	TRISA3=DigitalOutput;
+	TRISA4=DigitalOutput;
+	TRISA7=DigitalOutput;
+	TRISB0=DigitalInput; 
 
-    SetIntosc8MHz();
+	SetIntosc8MHz();
 }                   
 
 void main(){
