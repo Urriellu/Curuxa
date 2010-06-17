@@ -31,6 +31,11 @@ namespace PCBot_PCApp {
 		/// Get the status of a light
 		/// </summary>
 		StatusLight = 100,
+
+		/// <summary>
+		/// Gets the status of a bumper
+		/// </summary>
+		StatusBumpers = 102,
 	}
 
 	public enum ControlByteLight {
@@ -40,8 +45,30 @@ namespace PCBot_PCApp {
 		FrontRightOff = 53
 	}
 
+	public enum ControlByteBumper {
+		FrontLeftPressed = 70,
+		FrontLeftReleased = 71,
+		FrontRightPressed = 72,
+		FrontRightReleased = 73
+	}
+
+	class Dummy {
+	}
+
 	public static class Communication {
-		public static Status Status { get; private set; }
+		static Dummy s = new Dummy();
+
+		public static Status Status {
+			get {
+				return _Status;
+			}
+			private set {
+				_Status = value;
+				if(Global.MainWindow != null) Global.MainWindow.SetConnectionStatus(value);
+			}
+		}
+		private static Status _Status = Status.Disconnected;
+
 		static SerialPort SP;
 
 		/// <summary>
@@ -61,7 +88,7 @@ namespace PCBot_PCApp {
 				Global.Log("Connected to " + Settings.SpName);
 				ThreadReceiver = new Thread(Communication.DataReceiver);
 				ThreadReceiver.Start();
-				Status = Status.Connected;
+				Check();
 			} catch(Exception e) {
 				Global.Log("Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
@@ -78,14 +105,17 @@ namespace PCBot_PCApp {
 				SP.Dispose();
 				SP = null;
 			}
+			Status = Status.Disconnected;
 			Global.Log("Disconnected");
 		}
 
+		//THIS ONE MUST NOT CONTAIN A LOCK
 		public static void Send(byte B) {
 			if(SP != null && SP.IsOpen) {
 				try {
 					SP.WriteByte(B);
 					Global.Log("Byte sent: " + B.ToString());
+					Thread.Sleep(10);
 				} catch(Exception e) {
 					Global.Log("Error while sending byte \"" + B.ToString() + "\": " + e.Message);
 				}
@@ -94,13 +124,23 @@ namespace PCBot_PCApp {
 			}
 		}
 
-		public static void Send(ControlByte CB) {
-			Send((byte)CB);
+		public static void Check() {
+			lock(s) {
+				Send(ControlByte.AuthID);
+			}
 		}
 
+		public static void Send(ControlByte CB) {
+			lock(s) {
+				Send((byte)CB);
+			}
+		}
+		
 		public static void SetLight(ControlByteLight CBL) {
-			Send(ControlByte.SetLight);
-			Send((byte)CBL);
+			lock(s) {
+				Send(ControlByte.SetLight);
+				Send((byte)CBL);
+			}
 		}
 
 		/// <summary>
@@ -108,73 +148,39 @@ namespace PCBot_PCApp {
 		/// </summary>
 		public static void DataReceiver() {
 			Global.Log("Starting receiver thread");
-			while(SP != null && Global.MainWindow != null) {
-				byte Rcv = (byte)SP.ReadByte();
-				Console.WriteLine(Rcv);
-				ControlByte BC = (ControlByte)Rcv;
+			while(SP != null && SP.IsOpen && Global.MainWindow != null) {
+				try {
+					byte Rcv = (byte)SP.ReadByte();
+					ControlByte BC = (ControlByte)Rcv;
 
-				switch(BC) {
-					/*case ControlByte.IdActual:
-						Log("Recibiendo ID del arrollamiento actual");
-						MiFormulario.ArroActID((byte)Global.Puerto.ReadByte());
-						break;
-					case ControlByte.NoArrollando:
-						Log("No se está arrollando ninguna bobina");
-						MiFormulario.ArroActEstado(false);
-						break;
-					case ControlByte.VelocidadActual:
-						Log("Recibiendo datos de la velocidad actual");
-						MiFormulario.ArroActV(Puerto.ReadUInt16());
-						break;
-					case ControlByte.TempActual:
-						Log("Recibiendo datos de la temperatura actual");
-						sbyte Temp = (sbyte)Global.Puerto.ReadByte();
-						MiFormulario.TempAct(Temp);
-						break;
-					case ControlByte.Duracion:
-						Log("Recibiendo la duración del arrollamiento actual");
-						MiFormulario.ArroActDuracion(new TimeSpan(0, 0, (int)Puerto.ReadUInt32()));
-						break;
-					case ControlByte.VelMedia:
-						Log("Recibiendo datos de la velocidad media");
-						MiFormulario.ArroActVmedia(Puerto.ReadUInt16());
-						break;
-					case ControlByte.VelMax:
-						Log("Recibiendo datos de la velocidad máxima");
-						MiFormulario.ArroActVmax(Puerto.ReadUInt16());
-						break;
-					case ControlByte.NumArros:
-						Log("Recibiendo el número de arrollamientos almacenados");
-						MiFormulario.SetNumArros(Puerto.ReadByte());
-						break;
-					case ControlByte.InfoArro:
-						Log("Recibiendo toda la información sobre cierto arrollamiento");
-						byte ArroID = Puerto.ReadByte();
-						UInt16 Vmax = Puerto.ReadUInt16();
-						UInt16 Vmedia = Puerto.ReadUInt16();
-						UInt32 Duracion = Puerto.ReadUInt32();
-						if(VentanasArros.ContainsKey(ArroID)) {
-							Log("ID={0}, Vmax={1}, Vmedia={2}, Duracion={3}seg", ArroID, Vmax, Vmedia, Duracion);
-							VentanasArros[ArroID].NuevaVmax(Vmax);
-							VentanasArros[ArroID].NuevaVmedia(Vmedia);
-							VentanasArros[ArroID].NuevaDuracion(new TimeSpan(0, 0, (int)Duracion));
-							VentanasArros[ArroID].BorrarVsInst();
-						}
-						UInt16 Vinst = 0;
-						do {
-							Vinst = Puerto.ReadUInt16();
-							Log(Vinst.ToString());
-							if(Vinst != 0xFFFF && VentanasArros.ContainsKey(ArroID)) {
-								VentanasArros[ArroID].NuevaVinst(Vinst);
+					switch(BC) {
+						case ControlByte.AuthID:
+							Rcv = (byte)SP.ReadByte();
+							if(Rcv == Settings.RobotID) {
+								// auth success
+								Status = Status.Connected;
+							} else {
+								Global.Log("Authentication failure");
+								Disconnect();
 							}
-						} while(Vinst != 0xFFFF);
-						break;*/
-					default:
-						Global.Log("Unknown control byte: " + BC.ToString());
-						break;
+							break;
+						case ControlByte.StatusBumpers:
+							Global.Log("Received bumper status...");
+							Rcv = (byte)SP.ReadByte();
+							ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
+							Global.Log("..." + BumperStatus.ToString());
+							if(Global.MainWindow != null) Global.MainWindow.SetBumperStatus(BumperStatus);
+							break;
+						default:
+							Global.Log("Unknown control byte: " + BC.ToString());
+							break;
+					}
+				} catch(Exception e) {
+					Global.Log("Error receiving data: " + e.Message);
 				}
 			}
 			Global.Log("Closing receiver thread");
+			Disconnect(); //avoid being connected with no DataReceiver
 		}
 	}
 }
