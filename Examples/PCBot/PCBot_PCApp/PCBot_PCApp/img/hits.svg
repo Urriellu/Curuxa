@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Documento nuevo 1">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       id="perspective3699" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       id="perspective2884" />
+    <inkscape:perspective
+       id="perspective10-7"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3461"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="398.9331"
+     inkscape:cy="521.56846"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="853"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path2891"
+       d="m 155.07882,285.97517 37.17434,-9.29358 -65.82956,-77.44654 92.16139,19.36163 0,-16.26377 34.07648,14.71484 -0.77447,-64.28062 48.01685,42.59559 24.78289,-92.93585 30.97862,99.90604 18.58716,-51.11471 16.26378,44.91899 31.75307,-106.101768 13.16592,98.357108 34.07647,-22.45949 2.3234,38.72327 48.01685,-43.37006 0,54.21258 102.22943,-56.53598 -60.4083,83.64226 37.17434,-1.54893 -15.48931,41.82113 102.22943,17.8127 -107.17931,37.814 c -435.69441,-0.32236 -209.3711,-0.95047 -434.54429,-0.33657 0,0 45.29131,-30.50723 42.19344,-32.05617 -3.09786,-1.54893 -33.30202,-18.58717 -30.97862,-20.1361 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.71683425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       sodipodi:nodetypes="cccccccccccccccccccccccccsc"
+       inkscape:export-filename="/home/compartido/curuxa-svn-rediris/trunk/Examples/PCBot/PCBot_PCApp/PCBot_PCApp/img/hit1.png"
+       inkscape:export-xdpi="24.110001"
+       inkscape:export-ydpi="24.110001" />
+    <g
+       inkscape:label="Calque 1"
+       id="layer1-6"
+       transform="translate(-42.184008,-75.41675)"
+       style="opacity:0.70967742;display:none">
+      <image
+         y="351.3248"
+         x="20.201519"
+         id="image2886"
+         height="565.18933"
+         width="843.56616"
+         xlink:href="file:///home/gaston/GNU/tableau-bang.jpg" />
+    </g>
+    <path
+       id="path2891-8"
+       d="m 196.17049,608.64939 53.72666,-23.38349 -31.04355,-31.7184 43.19103,-14.847 c 0,0 -38.46701,-72.2099 -35.76757,-72.2099 2.69944,0 57.36308,26.3195 57.36308,26.3195 l -14.17206,-78.95859 55.3385,78.95859 6.07375,-33.0682 28.34411,29.019 6.74859,-58.0379 29.01897,51.9642 14.84692,-20.2458 17.54635,24.9698 39.14187,-51.2894 6.7486,45.8905 50.61448,-16.8715 -3.3743,37.7922 c 0,0 63.43682,-58.038 62.76196,-53.9888 -0.67486,4.0492 -16.87149,83.0078 -16.87149,83.0078 l 50.61449,-12.8224 c 0,0 -39.14188,43.8659 -35.76758,45.2156 3.3743,1.3497 80.20851,15.60057 80.20851,15.60057 0,0 -74.13477,26.91563 -71.43533,28.26533 l -393.85599,0.43829 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.6246407px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       sodipodi:nodetypes="ccccscccccccccccccsccsccc" />
+  </g>
+</svg>
