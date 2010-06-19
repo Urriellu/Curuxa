@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using SWF = System.Windows.Forms;
 
 namespace PCBot_PCApp {
 	/// <summary>
@@ -28,9 +29,19 @@ namespace PCBot_PCApp {
 		SetLight = 10,
 
 		/// <summary>
+		/// Set the base movement status
+		/// </summary>
+		SetBaseMovement = 11,
+
+		/// <summary>
 		/// Get the status of a light
 		/// </summary>
 		StatusLight = 100,
+
+		/// <summary>
+		/// Get the base movement status
+		/// </summary>
+		StatusBaseMovement = 101,
 
 		/// <summary>
 		/// Gets the status of a bumper
@@ -45,6 +56,16 @@ namespace PCBot_PCApp {
 		FrontRightOff = 53
 	}
 
+	public enum ControlByteBaseMv {
+		Forward = 20,
+		Stop = 21,
+		Backwards = 22,
+		TurnLeft = 23,
+		TurnRight = 24,
+		RotateLeft = 25,
+		RotateRight = 26
+	}
+
 	public enum ControlByteBumper {
 		FrontLeftPressed = 70,
 		FrontLeftReleased = 71,
@@ -56,7 +77,10 @@ namespace PCBot_PCApp {
 	}
 
 	public static class Communication {
+		static SWF.Timer AuthTimer;
+		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
 		static Dummy s = new Dummy();
+		public static bool Authenticated { get; private set; }
 
 		public static Status Status {
 			get {
@@ -65,6 +89,7 @@ namespace PCBot_PCApp {
 			private set {
 				_Status = value;
 				if(Global.MainWindow != null) Global.MainWindow.SetConnectionStatus(value);
+				if(value == Status.Disconnected) Authenticated = false;
 			}
 		}
 		private static Status _Status = Status.Disconnected;
@@ -76,6 +101,13 @@ namespace PCBot_PCApp {
 		/// </summary>
 		static Thread ThreadReceiver;
 
+		static Communication() {
+			AuthTimer = new SWF.Timer();
+			AuthTimer.Tick += new EventHandler(AuthTimer_Tick);
+			AuthTimer.Interval = 1000;
+			AuthTimer.Start();
+		}
+
 		/// <summary>
 		/// Connect to the microcontroller
 		/// </summary>
@@ -86,13 +118,28 @@ namespace PCBot_PCApp {
 			try {
 				Communication.SP.Open();
 				Global.Log("Connected to " + Settings.SpName);
-				ThreadReceiver = new Thread(Communication.DataReceiver);
-				ThreadReceiver.Start();
-				Check();
+				if(ThreadReceiver == null) {
+					ThreadReceiver = new Thread(Communication.DataReceiver);
+					ThreadReceiver.Start();
+				}
+				//Check();
 			} catch(Exception e) {
 				Global.Log("Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
 			}
+		}
+
+		static void AuthTimer_Tick(object sender, EventArgs e) {
+			// ask for authentification
+			Check();
+
+			if((DateTime.Now - LastAuthentication).TotalSeconds > 2.5) {
+				Global.Log("Not authenticated for too long...");
+				//Disconnect();
+				Authenticated = false;
+			}
+
+			if(Status == Status.Disconnected) Connect();
 		}
 
 		public static void Disconnect() {
@@ -105,6 +152,7 @@ namespace PCBot_PCApp {
 				SP.Dispose();
 				SP = null;
 			}
+			Authenticated = false;
 			Status = Status.Disconnected;
 			Global.Log("Disconnected");
 		}
@@ -135,7 +183,7 @@ namespace PCBot_PCApp {
 				Send((byte)CB);
 			}
 		}
-		
+
 		public static void SetLight(ControlByteLight CBL) {
 			lock(s) {
 				Send(ControlByte.SetLight);
@@ -143,42 +191,73 @@ namespace PCBot_PCApp {
 			}
 		}
 
+		static DateTime LastBaseMvChange = DateTime.Now;
+
+		public static void SetBaseMv(ControlByteBaseMv CBB) {
+			//don't send changes too fast
+			if((DateTime.Now - LastBaseMvChange).TotalMilliseconds < 400) return;
+
+			lock(s) {
+				Send(ControlByte.SetBaseMovement);
+				Send((byte)CBB);
+			}
+			LastBaseMvChange = DateTime.Now;
+		}
+
 		/// <summary>
 		/// Función ejecutada en un segundo hilo que hace polling al puerto serie y procesa los datos recibidos
 		/// </summary>
 		public static void DataReceiver() {
 			Global.Log("Starting receiver thread");
-			while(SP != null && SP.IsOpen && Global.MainWindow != null) {
-				try {
-					byte Rcv = (byte)SP.ReadByte();
-					ControlByte BC = (ControlByte)Rcv;
-
-					switch(BC) {
-						case ControlByte.AuthID:
+			do {
+				while(SP != null && SP.IsOpen && Global.MainWindow != null) {
+					try {
+						byte Rcv = (byte)SP.ReadByte();
+						ControlByte BC = (ControlByte)Rcv;
+						if(BC == ControlByte.AuthID) {
 							Rcv = (byte)SP.ReadByte();
 							if(Rcv == Settings.RobotID) {
 								// auth success
 								Status = Status.Connected;
+								Authenticated = true;
+								LastAuthentication = DateTime.Now;
 							} else {
-								Global.Log("Authentication failure");
+								Global.Log("Authentication failure, disconnecting...");
 								Disconnect();
 							}
-							break;
-						case ControlByte.StatusBumpers:
-							Global.Log("Received bumper status...");
-							Rcv = (byte)SP.ReadByte();
-							ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
-							Global.Log("..." + BumperStatus.ToString());
-							if(Global.MainWindow != null) Global.MainWindow.SetBumperStatus(BumperStatus);
-							break;
-						default:
-							Global.Log("Unknown control byte: " + BC.ToString());
-							break;
+						}
+
+						if(Authenticated) {
+							switch(BC) {
+								case ControlByte.AuthID:
+									break;
+								case ControlByte.StatusBumpers:
+									Global.Log("Received bumper status...");
+									Rcv = (byte)SP.ReadByte();
+									ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
+									Global.Log("..." + BumperStatus.ToString());
+									if(Global.MainWindow != null) Global.MainWindow.SetBumperStatus(BumperStatus);
+									break;
+								case ControlByte.StatusBaseMovement:
+									Global.Log("Received base movement status...");
+									Rcv = (byte)SP.ReadByte();
+									ControlByteBaseMv BaseMvStatus = ((ControlByteBaseMv)Enum.Parse(typeof(ControlByteBaseMv), Rcv.ToString()));
+									Global.Log("..." + BaseMvStatus.ToString());
+									if(Global.MainWindow != null) Global.MainWindow.SetBaseMvStatus(BaseMvStatus);
+									break;
+								default:
+									Global.Log("Unknown control byte: " + BC.ToString());
+									break;
+							}
+						} else {
+							Global.Log("Not authenticated, ignoring received byte: " + Rcv);
+						}
+					} catch(Exception e) {
+						Global.Log("Error receiving data: " + e.Message);
 					}
-				} catch(Exception e) {
-					Global.Log("Error receiving data: " + e.Message);
 				}
-			}
+				Thread.Sleep(100);
+			} while(true);
 			Global.Log("Closing receiver thread");
 			Disconnect(); //avoid being connected with no DataReceiver
 		}
