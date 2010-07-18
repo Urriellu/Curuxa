@@ -21,6 +21,7 @@ namespace CuruxaIDE {
 			TxtCode.Parent = this;
 			TxtCode.Dock = DockStyle.Fill;
 			TxtCode.AcceptsTab = true;
+			TxtCode.Font = new Font("Courier New", 10f, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 			if(src.IsReadOnly) {
 				TxtCode.ReadOnly = true;
 				TxtCode.BackColor = SystemColors.Window;
@@ -54,8 +55,10 @@ namespace CuruxaIDE {
 		}
 
 		public void UpdateTitle() {
-			if(src.Modified) Text = src.Name + " *";
-			else Text = src.Name;
+			string title = src.Name;
+			if(src.IsReadOnly) title += i18n.str("TitleReadOnly");
+			if(src.Modified) title += " *";
+			Text = title;
 		}
 	}
 }
