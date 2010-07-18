@@ -7,10 +7,10 @@ using System.Globalization;
 
 namespace CuruxaIDE {
 	/// <summary>
-	/// Contains all the variables and methods required for showing internationalized strings. Before using any of it you must set CurrentLanguage and CurrentApp
+	/// Contains all the variables and methods required for showing internationalized strings. Before using any of it you must set CurrentLanguage
 	/// </summary>
 	/// <remarks>
-	/// Only one language will be loaded at a time. All the strings are loaded automatically by this class. All the strings are stored in flat files, called "CurrentApp.CurrentLanguage.lang". For examen if Pigmeo Compiler is showing messages in spanish, the file "pigmeo-compiler.es.lang" will be loaded.
+	/// Only one language will be loaded at a time. All the strings are loaded automatically by this class. All the strings are stored in flat files, called "CurrentLanguage.lang"
 	/// </remarks>
 	public class i18n {
 		/// <summary>
@@ -133,7 +133,7 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
-		/// Loads the language strings from a file, based on the configured CurrentApp and CurrentLanguage
+		/// Loads the language strings from a file, based on the configured CurrentLanguage
 		/// </summary>
 		/// <remarks>
 		/// It usually doesn't need to be called explicitly, language strings are loaded automatically when the first internatinalized string is used
