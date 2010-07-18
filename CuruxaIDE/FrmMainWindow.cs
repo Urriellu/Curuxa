@@ -272,7 +272,8 @@ namespace CuruxaIDE {
 				foreach(SrcFile lib in prj.Libs) {
 					TreeNode TnLib = new TreeNode(lib.FileName);
 					TnLib.NodeFont = ChildrenFont;
-					TnLib.ForeColor = Settings.PrjListLibsColor;
+					if(lib.IsReadOnly) TnLib.ForeColor = Settings.PrjListLibsColor;
+					else TnLib.ForeColor = Settings.PrjListSrcColor;
 					TnLib.ImageKey = TnLib.SelectedImageKey = "Library";
 					TnLib.ToolTipText = lib.FullPath;
 					Parent.Nodes.Add(TnLib);
