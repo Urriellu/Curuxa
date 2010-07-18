@@ -117,3 +117,5 @@ Restart=Restart
 Error=Error
 NoSrcSelected=No source file selected
 PrintPreview=Print Preview
+TitleReadOnly= (read-ony)
+CantSaveIsReadOnly=Unable to save read-only file: {0}
