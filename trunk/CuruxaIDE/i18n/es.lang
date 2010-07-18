@@ -106,3 +106,17 @@ NoMcuDetected=No se detectó ningún microcontrolador
 DetectedX=Detectado: {0} (usado en {1})
 CheckMB=Comprobar Placa Principal
 UnableLoadPrjFile=Imposible cargar archivo de proyecto "{0}": {1}
+UnableGetLatestVersion=Imposible detectar la última versión: {0}
+ThereIsNewVersion=Existe una nueva versión disponible: Curuxa {0} (actual: {1})
+EnableSyntaxHighlight=Activar resalto de sintaxis
+HumanLanguage:=Idioma:
+Preferences=Preferencias
+Ok=Aceptar
+Cancel=Cancelar
+Restart=Reiniciar
+Error=Error
+NoSrcSelected=No hay archivo seleccionado
+PrintPreview=Vista Preliminar
+TitleReadOnly= (sólo lectura)
+CantSaveIsReadOnly=No se puede guardar el archivo de sólo lectura: {0}
+
