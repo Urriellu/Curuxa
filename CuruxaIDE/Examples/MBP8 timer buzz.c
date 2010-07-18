@@ -30,7 +30,8 @@ void Setup() {
 	PSA=0; //assign prescaler to Timer0
 	T0CS=0; //clock source=internal oscillator
 	PS2=0;
- //prescaler... 	PS1=1;
+ //prescaler...
+ 	PS1=1;
 	PS0=0;
 	T0IF=0;
 	GIE=1; //enable global interrupts
