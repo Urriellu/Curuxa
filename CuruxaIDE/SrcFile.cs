@@ -21,7 +21,12 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Indicates if this source file is read-only
 		/// </summary>
-		public bool IsReadOnly { get; protected set; }
+		public bool IsReadOnly {
+			get {
+				if(!IsLocal || new FileInfo(FullPath).IsReadOnly) return true;
+				else return false;
+			}
+		}
 
 		/// <summary>
 		/// Indicates when the content of this file hasn't been save to disk yet
@@ -44,6 +49,19 @@ namespace CuruxaIDE {
 		}
 		private bool _Modified = false;
 
+		/// <summary>
+		/// This source file is local or not (same path as project)
+		/// </summary>
+		public bool IsLocal {
+			get {
+				if(ParentProject != null && ParentProject.Path == SrcPath) return true;
+				else return false;
+			}
+		}
+
+		/// <summary>
+		/// Full path to the source file (path to the directory + file name)
+		/// </summary>
 		public string FullPath {
 			get {
 				return Path.GetFullPath(SrcPath + "/" + FileName);
@@ -135,7 +153,7 @@ namespace CuruxaIDE {
 		/// </returns>
 		public static SrcFile GetFromLibrary(IncludeType type, string LibName, SrcFile RefFrom) {
 			SrcFile src = new SrcFile(RefFrom.ParentProject, LibName);
-			src.IsReadOnly = true;
+			//src.IsReadOnly = true;
 
 			//find lib path
 			Queue<string> PossiblePaths = new Queue<string>();
@@ -179,6 +197,7 @@ namespace CuruxaIDE {
 				foreach(string line in Content.Split('\n', '\r')) {
 					if(line.Length < 10) continue;
 					if(line.StartsWith("#include")) {
+						IncludeType type = IncludeType.Global;
 						string lib = "";
 						if(line.Contains('<') && line.Contains('>')) {
 							//this is a #include <lib.h> line
@@ -194,8 +213,9 @@ namespace CuruxaIDE {
 							lib = lib.TrimEnd(' ', '\t');
 							lib = lib.TrimStart('"');
 							lib = lib.TrimEnd('"');
+							type = IncludeType.Local;
 						}
-						SrcFile NewLib = SrcFile.GetFromLibrary(IncludeType.Global, lib, this);
+						SrcFile NewLib = SrcFile.GetFromLibrary(type, lib, this);
 						if(NewLib != null) libs.Add(NewLib);
 						else Globals.LogIDE(i18n.str("LibNotFound", lib));
 					}
@@ -236,10 +256,14 @@ namespace CuruxaIDE {
 		/// Saves the contents to disk
 		/// </summary>
 		public void SaveFile() {
-			Globals.LogIDE("Saving file " + FullPath);
-			File.WriteAllText(FullPath, Content, Settings.Charset);
-			Modified = false;
-			if(Globals.MainWindow != null) Globals.MainWindow.UpdatePrjList();
+			if(IsReadOnly) {
+				Globals.LogIDE(i18n.str("CantSaveIsReadOnly", FullPath));
+			} else {
+				Globals.LogIDE(i18n.str("SavingFile", FullPath));
+				File.WriteAllText(FullPath, Content, Settings.Charset);
+				Modified = false;
+				if(Globals.MainWindow != null) Globals.MainWindow.UpdatePrjList();
+			}
 		}
 
 		public static bool operator ==(SrcFile a, SrcFile b) {
