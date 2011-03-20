@@ -22,8 +22,14 @@ namespace CuruxaIDE {
 			TxtCode.Dock = DockStyle.Fill;
 			TxtCode.AcceptsTab = true;
 			TxtCode.Font = new Font("Courier New", 10f, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
 			if(src.IsReadOnly) {
+				//Read-only file
 				TxtCode.ReadOnly = true;
+				TxtCode.BackColor = Color.LightGray;
+			} else {
+				//Normal, writable file
+				TxtCode.ReadOnly = false;
 				TxtCode.BackColor = SystemColors.Window;
 			}
 			TxtCode.Text = src.Content;

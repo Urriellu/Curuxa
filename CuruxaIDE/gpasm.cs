@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
 
 namespace CuruxaIDE {
 	/// <summary>
@@ -17,16 +18,25 @@ namespace CuruxaIDE {
 			GetIncludePaths();
 		}
 
+		public static string GpasmWinInstallPath {
+			get {
+				return Settings.ThirdPartyDir + Path.DirectorySeparatorChar + Settings.GputilsWinBinVersion;
+			}
+		}
+
 		private void SetupEnvironment() {
-			string GputilsInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\gputils";
-
 			//on Windows, SDCCand GPUTILS binary directories are only set in the $PATH of the user who installed them. We try to fix it
-			if(Environment.OSVersion.Platform != PlatformID.Unix) {
+			if(Settings.IsWindows) {
 				//add "%ProgramFiles%\gputils\bin" to the PATH
-				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + GputilsInstallPath + @"\bin", EnvironmentVariableTarget.Process);
+				//Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + GputilsInstallPath + @"\bin", EnvironmentVariableTarget.Process);
 
-				Environment.SetEnvironmentVariable("GPUTILS_HEADER_PATH", GputilsInstallPath + @"\header");
-				Environment.SetEnvironmentVariable("GPUTILS_LKR_PATH", GputilsInstallPath + @"\lkr");
+
+				//add INSTALL_PATH/ThirdParty/sdcc-xxxxxxx/bin to the PATH
+				AddToPath(GpasmWinInstallPath + "/bin");
+				Globals.Debug("New PATH: " + Environment.GetEnvironmentVariable("PATH"));
+
+				Environment.SetEnvironmentVariable("GPUTILS_HEADER_PATH", GpasmWinInstallPath + @"\header");
+				Environment.SetEnvironmentVariable("GPUTILS_LKR_PATH", GpasmWinInstallPath + @"\lkr");
 				//Environment.SetEnvironmentVariable("GPUTILS_LIB_PATH", SdccInstallPath);
 			}
 		}
@@ -73,6 +83,14 @@ namespace CuruxaIDE {
 
 		private string LogBuild;
 
+		/// <summary>
+		/// Build a project using gpasm
+		/// </summary>
+		/// <remarks>
+		/// When SDCC is used, this method is NOT called
+		/// </remarks>
+		/// <param name="prj"></param>
+		/// <returns></returns>
 		public override int Build(Project prj) {
 			ProcessStartInfo ProcInfo;
 			Process proc;

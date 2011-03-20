@@ -88,6 +88,8 @@ namespace CuruxaIDE {
 		}
 
 		private void BtnSaveAs_Click(object sender, EventArgs e) {
+			MessageBox.Show(i18n.str("recommendCreateFolder"), i18n.str("NewPrjFromEx"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 			SaveFileDialog SaveProjectDialog = new SaveFileDialog();
 			SaveProjectDialog.AddExtension = true;
 			SaveProjectDialog.FileName = i18n.str("NewPrjName");

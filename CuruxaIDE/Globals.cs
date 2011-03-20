@@ -43,7 +43,6 @@ namespace CuruxaIDE {
 				Crash(ar.ExceptionObject);
 			};
 #endif
-
 			try {
 				Settings.Load();
 				Application.EnableVisualStyles();
@@ -141,42 +140,6 @@ namespace CuruxaIDE {
 				blank.SetPixel(0, 0, Color.White);
 				return blank;
 			}
-		}
-
-		public static void CheckVersion() {
-			WebClient wc = new WebClient();
-			wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted);
-			try {
-				wc.DownloadStringAsync(new Uri("http://curuxa.org/curuxa_latest"));
-			} catch(WebException we) {
-				LogIDE(i18n.str("UnableGetLatestVersion", we.Message));
-			}
-		}
-
-		static void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e) {
-			if(e.Cancelled == true) LogIDE(i18n.str("UnableGetLatestVersion", "Cancelled"));
-			else if(e.Error != null) LogIDE(i18n.str("UnableGetLatestVersion", e.Error.Message));
-			else {
-				string[] LatestVersion = e.Result.RemoveFrom('-').Split('.');
-				string[] CurrentVersion = Settings.Version.RemoveFrom('-').Split('.');
-				for(int i = 0 ; i < LatestVersion.Length ; i++) {
-					UInt32 LatestVersionX = 0;
-					UInt32.TryParse(LatestVersion[i], out LatestVersionX);
-					UInt32 CurrentVersionX = 0;
-					if(i < CurrentVersion.Length) UInt32.TryParse(CurrentVersion[i], out CurrentVersionX);
-					if(LatestVersionX > CurrentVersionX) {
-						ThereIsNewVersion(e.Result);
-						break;
-					}
-					if(LatestVersionX < CurrentVersionX) {
-						Debug("You are using a more recent version that the latest official release. Wow! You must be God or something.");
-					}
-				}
-			}
-		}
-
-		private static void ThereIsNewVersion(string NewVersion) {
-			LogIDE(i18n.str("ThereIsNewVersion", NewVersion, Settings.Version));
 		}
 	}
 }

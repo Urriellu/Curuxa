@@ -1,0 +1,4 @@
+﻿How to use a new SDCC version:
+	-download "sdcc-snapshot-i586-mingw32msvc-xxxxxxxx-xxxx.zip"
+	-copy binaries and libraries
+		-libs in non-free folder (only required ones) are merged manually into the other directories

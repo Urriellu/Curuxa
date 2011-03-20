@@ -148,14 +148,29 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Directory where output files (after compilation) are stored. It's relative to the project directory
 		/// </summary>
-		public string OutputPath = "/bin";
+		public const string OutputPath = "/";
 
 		/// <summary>
 		/// Full path to the directory where output files (after compilation) are stored
 		/// </summary>
 		public string OutputFullPath {
 			get {
-				return Path + OutputPath;
+				return Path + System.IO.Path.DirectorySeparatorChar + OutputPath;
+			}
+		}
+
+		public string OutputBin {
+			get {
+				return OutputFullPath + "/" + Name + ".hex";
+			}
+		}
+
+		/// <summary>
+		/// Temporary directory where files are stored while compiling/assembling. Full path
+		/// </summary>
+		public string TempPath {
+			get {
+				return Path + System.IO.Path.DirectorySeparatorChar + Settings.TempDir;
 			}
 		}
 

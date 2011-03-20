@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 using System.Drawing;
+using System.Deployment.Application;
 
 namespace CuruxaIDE {
 	/// <summary>
@@ -26,12 +27,30 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static readonly Encoding Charset = Encoding.UTF8;
 
-		public const string Version = "0.3-svn";
+		public static string Version {
+			get {
+				/*"0.3-svn";*/
+				string v = "";
+				if(ApplicationDeployment.IsNetworkDeployed) {
+					v += ApplicationDeployment.CurrentDeployment.CurrentVersion.Major;
+					v += ".";
+					v += ApplicationDeployment.CurrentDeployment.CurrentVersion.Minor;
+				} else v = "DEVELOPMENT";
+				return v;
+			}
+		}
+		public const string SdccWinBinVersion = "sdcc-win-20110320-6321";
+		public const string GputilsWinBinVersion = "gputils-win-0.13.7";
 
 		public static Color PrjListBackColor = Color.White;
 		public static Color PrjListSettingsColor = Color.Blue;
 		public static Color PrjListSrcColor = Color.Black;
 		public static Color PrjListLibsColor = Color.Gray;
+
+		/// <summary>
+		/// Temporary directory where files are stored while compiling/assembling
+		/// </summary>
+		public static string TempDir = "temp";
 
 		/// <summary>
 		/// Add the path of a project to the list of opened projects
@@ -76,11 +95,33 @@ namespace CuruxaIDE {
 		private static string _ExeLocation;
 
 		/// <summary>
+		/// Program running in debug mode
+		/// </summary>
+		public static bool IsDebug {
+			get {
+#if DEBUG
+				return true;
+#else
+				return false;
+#endif
+			}
+		}
+
+		public static bool IsWindows {
+			get {
+				if(Environment.OSVersion.Platform == PlatformID.Win32NT ||
+					Environment.OSVersion.Platform == PlatformID.Win32Windows)
+					return true;
+				else return false;
+			}
+		}
+
+		/// <summary>
 		/// Full path to the directory containing third party libraries and apps shipped along Curuxa IDE
 		/// </summary>
 		public static string ThirdPartyDir {
 			get {
-				return ExeLocation + "/ThirdParty";
+				return ExeLocation + Path.DirectorySeparatorChar + "ThirdParty";
 			}
 		}
 
@@ -89,7 +130,7 @@ namespace CuruxaIDE {
 		/// </summary>
 		public static string Pk2cmdWinDir {
 			get {
-				return ThirdPartyDir + "/pk2cmd-win";
+				return ThirdPartyDir + Path.DirectorySeparatorChar + "pk2cmd-win";
 			}
 		}
 
@@ -150,11 +191,12 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Full path to the directory containing Curuxa libraries used by final users. Last character is NOT a slash ('/')
 		/// </summary>
-		public static string IncludesDir {
+		public static string CuruxaIncludesDir {
 			get {
 				if(string.IsNullOrEmpty(_IncludesDir)) {
 					string[] PossibleLocations = {
 						"/usr/share/curuxa/lib", //default install path
+					 	ExeLocation + "/curuxa-includes",
 						ExeLocation + "/../../../lib", //relative path when debugging (running Curuxa IDE without installation)
 						ExeLocation + "/../lib", //non-standard install path
 						ExeLocation + "/lib", //non-standard install path
@@ -164,6 +206,8 @@ namespace CuruxaIDE {
 						Globals.Debug("Looking for libraries in " + L);
 						if(File.Exists(L + "/MBP.h")) {
 							_IncludesDir = L;
+							Globals.Debug("Curuxa libraries found at in " + _IncludesDir);
+							break;
 						}
 					}
 				}
