@@ -24,6 +24,8 @@ namespace CuruxaIDE {
 
 		public static FrmMainWindow MainWindow;
 
+		public static FrmDebugWindow DebugWindow;
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -46,6 +48,10 @@ namespace CuruxaIDE {
 				Settings.Load();
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(true);
+#if DEBUG
+				Globals.DebugWindow = new FrmDebugWindow();
+				Globals.DebugWindow.Show();
+#endif
 				Application.Run(MainWindow = new FrmMainWindow());
 			} catch(TypeInitializationException e) {
 				if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
@@ -97,6 +103,9 @@ namespace CuruxaIDE {
 
 		public static void Debug(string Text) {
 			Console.WriteLine(string.Format("[{0:00}:{1:00}:{2:00}.{3:000}] {4}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, Text));
+#if DEBUG
+			if(Globals.DebugWindow != null) Globals.DebugWindow.LogDebug(Text);
+#endif
 		}
 
 		public static void Debug(string Text, params object[] p) {
@@ -150,7 +159,7 @@ namespace CuruxaIDE {
 			else {
 				string[] LatestVersion = e.Result.RemoveFrom('-').Split('.');
 				string[] CurrentVersion = Settings.Version.RemoveFrom('-').Split('.');
-				for(int i = 0; i < LatestVersion.Length; i++) {
+				for(int i = 0 ; i < LatestVersion.Length ; i++) {
 					UInt32 LatestVersionX = 0;
 					UInt32.TryParse(LatestVersion[i], out LatestVersionX);
 					UInt32 CurrentVersionX = 0;

@@ -11,9 +11,10 @@ namespace CuruxaIDE {
 	public sealed class gpasm:Toolsuite {
 		public gpasm()
 			: base("GPASM", "gpasm") {
-			GetIncludePaths();
+			//GetIncludePaths();
 
 			SetupEnvironment();
+			GetIncludePaths();
 		}
 
 		private void SetupEnvironment() {
