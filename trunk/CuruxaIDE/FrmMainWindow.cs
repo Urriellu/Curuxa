@@ -67,10 +67,65 @@ namespace CuruxaIDE {
 			MiWebsite.Image = Globals.LoadImage("gohome.png");
 			MiExit.Image = Globals.LoadImage("exit.png");
 			TabsSrc.TabPages.Clear(); //remove demo tab page
+			lblLoadingSrc.Visible = false;
+
+			UpdateLabelPleaseWaitPosition();
 
 			CheckForIllegalCrossThreadCalls = false;
 
-			Globals.CheckVersion();
+			UpdateCuruxaWebsiteMenuLinks();
+			UpdateCommunityWebsiteMenuLinks();
+
+			//InstallManager.CheckVersionWeb();  Not used anymore. Now we use ClickOnce when available
+		}
+
+		/// <summary>
+		/// Download the list of links shown at Curuxa's website and add them to a menu
+		/// </summary>
+		private void UpdateCuruxaWebsiteMenuLinks() {
+			foreach(var section in HttpDownloader.CuruxaWebsiteMenu) {
+				ToolStripMenuItem newSectionMenu = new ToolStripMenuItem(section.Key);
+				foreach(var link in section.Value) {
+					string linkText = link.Key;
+					string linkUrl = link.Value;
+					ToolStripMenuItem newMenuLink = new ToolStripMenuItem(linkText);
+					newMenuLink.Click += delegate(object sender, EventArgs e) { OpenUrlExtern(linkUrl); };
+					newSectionMenu.DropDownItems.Insert(newSectionMenu.DropDownItems.Count, newMenuLink);
+				}
+				if(MiHelp.DropDownItems.ContainsKey(newSectionMenu.Text)) MiHelp.DropDownItems.Remove(MiHelp.DropDownItems[newSectionMenu.Text]);
+				MiHelp.DropDownItems.Insert(MiHelp.DropDownItems.IndexOf(tsSeparatorAfterCuruxa), newSectionMenu);
+			}
+		}
+
+		/// <summary>
+		/// Download the list of links shown at Curuxa Community website and add them to a menu
+		/// </summary>
+		private void UpdateCommunityWebsiteMenuLinks() {
+			foreach(var section in HttpDownloader.CommunityWebsiteMenu) {
+				if(section.Key == "Curuxa") continue;
+				ToolStripMenuItem newSectionMenu = new ToolStripMenuItem(section.Key);
+				foreach(var link in section.Value) {
+					string linkText = link.Key;
+					string linkUrl = link.Value;
+					ToolStripMenuItem newMenuLink = new ToolStripMenuItem(linkText);
+					newMenuLink.Click += delegate(object sender, EventArgs e) { OpenUrlExtern(linkUrl); };
+					newSectionMenu.DropDownItems.Insert(newSectionMenu.DropDownItems.Count, newMenuLink);
+				}
+				if(MiHelp.DropDownItems.ContainsKey(newSectionMenu.Text)) MiHelp.DropDownItems.Remove(MiHelp.DropDownItems[newSectionMenu.Text]);
+				MiHelp.DropDownItems.Insert(MiHelp.DropDownItems.IndexOf(tsSeparatorAfterCommunity), newSectionMenu);
+			}
+		}
+
+		private void UpdateLabelPleaseWaitPosition() {
+			lblLoadingSrc.Location = new Point(TabsSrc.Location.X + 150 + splitContainer2.SplitterDistance, TabsSrc.Location.Y + 200);
+		}
+
+		/// <summary>
+		/// Open a website with the default browser
+		/// </summary>
+		/// <param name="url"></param>
+		private void OpenUrlExtern(string url) {
+			System.Diagnostics.Process.Start(url);
 		}
 
 		public void UpdateLang() {
@@ -88,6 +143,7 @@ namespace CuruxaIDE {
 			MiPrjSettings.Text = i18n.str("Settings");
 			MiHelp.Text = i18n.str("Help");
 			MiWebsite.Text = i18n.str("Website");
+			MiCuruxaCommunityWebsite.Text = i18n.str("CuruxaCommunity");
 			MiAbout.Text = i18n.str("About");
 			MiPrjClose.Text = i18n.str("Close");
 			MiFileClose.Text = BtnFileClose.Text = i18n.str("CloseFile");
@@ -355,9 +411,11 @@ namespace CuruxaIDE {
 		}
 
 		private void MiOpenExpl_Click(object sender, EventArgs e) {
-			FrmNewPrjFromExample win = new FrmNewPrjFromExample();
-			if(win.ShowDialog(this) == DialogResult.OK) {
-				Example ex = win.ChosenExample;
+			FrmNewPrjFromExample newExWin = new FrmNewPrjFromExample();
+			if(newExWin.ShowDialog(this) == DialogResult.OK) {
+				MessageBox.Show(i18n.str("warnOldExamples"), i18n.str("NewPrjFromEx"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+				Example ex = newExWin.ChosenExample;
 				Globals.LogIDE(i18n.str("GeneratingExample", ex.Project.Name));
 
 				//load contents to memory so they get copied later
@@ -365,7 +423,7 @@ namespace CuruxaIDE {
 				foreach(SrcFile src in ex.Project.SrcFiles) temp = src.Content;
 
 				Project NewPrj = ex.Project;
-				NewPrj.PrjFilePath = win.TxtPrjFile.Text;
+				NewPrj.PrjFilePath = newExWin.TxtPrjFile.Text;
 				NewPrj.SaveAll();
 				Project.Add(NewPrj);
 			}
@@ -388,7 +446,7 @@ namespace CuruxaIDE {
 		}
 
 		private void MiWebsite_Click(object sender, EventArgs e) {
-			System.Diagnostics.Process.Start("http://curuxa.org/");
+			OpenUrlExtern("http://curuxa.org/");
 		}
 
 		private void FrmMainWindow_FormClosing(object sender, FormClosingEventArgs e) {
@@ -408,6 +466,7 @@ namespace CuruxaIDE {
 		}
 
 		private void TreePrj_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e) {
+			lblLoadingSrc.Visible = true; Update();
 			if(e.Node.Level == 1) {
 				//a file has just been selected
 				Globals.ActiveProject = Project.OpenProjects.GetByName(e.Node.Parent.Text);
@@ -426,6 +485,7 @@ namespace CuruxaIDE {
 					}
 				}
 			}
+			lblLoadingSrc.Visible = false;
 		}
 
 		/// <summary>
@@ -735,7 +795,7 @@ namespace CuruxaIDE {
 			}
 
 			if(!PrintSetup) SetupPrint();
-			
+
 			if(printDialog1.ShowDialog() == DialogResult.OK) {
 				printDocument1.Print();
 			}
@@ -781,9 +841,9 @@ namespace CuruxaIDE {
 				LogIDE(i18n.str("NoSrcSelected"));
 				return;
 			}
-			
+
 			if(!PrintSetup) SetupPrint();
-			
+
 			printPreviewDialog1.ShowDialog();
 		}
 		#endregion
@@ -791,6 +851,18 @@ namespace CuruxaIDE {
 		private void MiPreferences_Click(object sender, EventArgs e) {
 			FrmIdeSettings frm = new FrmIdeSettings();
 			frm.ShowDialog(this);
+		}
+
+		private void FrmMainWindow_Resize(object sender, EventArgs e) {
+			UpdateLabelPleaseWaitPosition();
+		}
+
+		private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e) {
+			UpdateLabelPleaseWaitPosition();
+		}
+
+		private void MiCuruxaCommunityWebsite_Click(object sender, EventArgs e) {
+			OpenUrlExtern("http://community.curuxa.org/");
 		}
 	}
 }

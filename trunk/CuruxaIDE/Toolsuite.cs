@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace CuruxaIDE {
 	/// <summary>
@@ -29,5 +30,15 @@ namespace CuruxaIDE {
 		public static SDCC SDCC = new SDCC();
 
 		public static gpasm GPASM = new gpasm();
+
+		protected void BuildSetup(string tempDir) {
+			if(!Directory.Exists(tempDir)) {
+				try {
+					Directory.CreateDirectory(tempDir);
+				} catch(IOException ex) {
+					Globals.LogBuild(i18n.str("exceptionCreateTempDir", ex.Message));
+				}
+			}
+		}
 	}
 }

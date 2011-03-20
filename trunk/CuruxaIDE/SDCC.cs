@@ -28,13 +28,23 @@ namespace CuruxaIDE {
 			}
 		}*/
 
-		string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
+		//string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
+
+		public static string SdccWinInstallPath {
+			get {
+				return Settings.ThirdPartyDir + Path.DirectorySeparatorChar + Settings.SdccWinBinVersion;
+			}
+		}
 
 		private void SetupEnvironment() {
 			//on Windows, SDCCand GPUTILS binary directories are only set in the $PATH of the user who installed them. We try to fix it
-			if(Environment.OSVersion.Platform != PlatformID.Unix) {
+			if(Settings.IsWindows) {
 				//add "%ProgramFiles%\SDCC\bin" to the PATH
-				Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC\bin", EnvironmentVariableTarget.Process);
+				//Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC\bin", EnvironmentVariableTarget.Process);
+
+				//add INSTALL_PATH/ThirdParty/sdcc-xxxxxxx/bin to the PATH
+				AddToPath(SdccWinInstallPath + "/bin");
+				Globals.Debug("New PATH: " + Environment.GetEnvironmentVariable("PATH"));
 
 				//SDCC can't find its own libraries by itself on Windows!! :-(
 				//args += " -I \"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\SDCC\\include\"";
@@ -42,7 +52,7 @@ namespace CuruxaIDE {
 				//gpasm can't find its own header files
 				//args += " -Wa_I\"" + Environment.GetEnvironmentVariable("ProgramFiles") + "\\gputils\\header\"";
 
-				Environment.SetEnvironmentVariable("SDCC_HOME", SdccInstallPath);
+				Environment.SetEnvironmentVariable("SDCC_HOME", SdccWinInstallPath);
 				//Environment.SetEnvironmentVariable("SDCC_INCLUDE", SdccInstallPath+@"\include");
 				//Environment.SetEnvironmentVariable("SDCC_LIB", ????);
 			}
@@ -90,10 +100,10 @@ namespace CuruxaIDE {
 						ParseNewIncludePath(OutLine);
 
 						//by default, SDCC doesn't include the path to non-free libraries, force it when we find it:
-						string possiblePath = OutLine+"/non-free/";
-						if(Directory.Exists() ParseNewIncludePath(possiblePath);
-						possiblePath=OutLine+"/../non-free/";
-						if(Directory.Exists() ParseNewIncludePath(possiblePath);
+						string possiblePath = OutLine + "/non-free/";
+						if(Directory.Exists(possiblePath)) ParseNewIncludePath(possiblePath);
+						possiblePath = OutLine + "/../non-free/";
+						if(Directory.Exists(possiblePath)) ParseNewIncludePath(possiblePath);
 					}
 				}
 
@@ -122,6 +132,8 @@ namespace CuruxaIDE {
 		private string LogBuild;
 
 		public override int Build(Project prj) {
+			BuildSetup(prj.TempPath);
+
 			ProcessStartInfo ProcInfo;
 			Process proc;
 
@@ -133,9 +145,13 @@ namespace CuruxaIDE {
 			string OldDir = Environment.CurrentDirectory;
 			Environment.CurrentDirectory = prj.Path;
 
-			string args = "-I \"" + Settings.IncludesDir + "\" --Werror";
+			string args = "-I \"" + Settings.CuruxaIncludesDir + "\" --Werror";
 
-			args += " -mpic14 -" + prj.MainBoard.GetMCU().ToString().ToLowerInvariant().Replace("pic", "p") + " \"" + prj.MainFile.FullPath + "\" -o temp";
+			//add SDCC libraries included in the binary distribution
+			args += " -I \"" + SdccWinInstallPath + "/include" + "\"";
+			args += " -I \"" + SdccWinInstallPath + "/include/pic14" + "\"";
+
+			args += " -mpic14 -" + prj.MainBoard.GetMCU().ToString().ToLowerInvariant().Replace("pic", "p") + " \"" + prj.MainFile.FullPath + "\" -o \"" + Settings.TempDir + "/" + prj.Name + "\"";
 			//SDCC segmentation fault when output file contains spaces
 
 			try {
@@ -161,6 +177,12 @@ namespace CuruxaIDE {
 				proc.WaitForExit();
 
 				Globals.LogBuild(LogBuild);
+
+				//copy HEX from temp dir to project dir
+				string SdccOutputBin = prj.TempPath + "/" + prj.Name + ".hex";
+				if(File.Exists(SdccOutputBin)) {
+					File.Copy(SdccOutputBin, prj.OutputBin, true);
+				}
 
 				Environment.CurrentDirectory = OldDir;
 				return proc.ExitCode;

@@ -23,8 +23,14 @@ namespace CuruxaIDE {
 		/// </summary>
 		public bool IsReadOnly {
 			get {
-				if(!IsLocal || new FileInfo(FullPath).IsReadOnly) return true;
-				else return false;
+				FileInfo theFile = new FileInfo(FullPath);
+				if(!IsLocal) return true;
+				else if(theFile.Exists) {
+					if(theFile.IsReadOnly) return true;
+					else return false;
+				} else {
+					return false;
+				}
 			}
 		}
 
@@ -158,7 +164,12 @@ namespace CuruxaIDE {
 			//find lib path
 			Queue<string> PossiblePaths = new Queue<string>();
 			if(type == IncludeType.Local) PossiblePaths.Enqueue(RefFrom.SrcPath);
-			PossiblePaths.Enqueue(Settings.IncludesDir);
+			else {
+				//add global include paths
+				PossiblePaths.Enqueue(SDCC.SdccWinInstallPath + "/include");
+				PossiblePaths.Enqueue(SDCC.SdccWinInstallPath + "/include/pic14");
+			}
+			PossiblePaths.Enqueue(Settings.CuruxaIncludesDir);
 			foreach(string path in RefFrom.ParentProject.Language.GetToolsuite().IncludePaths) {
 				PossiblePaths.Enqueue(path);
 			}

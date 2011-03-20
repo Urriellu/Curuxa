@@ -29,16 +29,14 @@ namespace CuruxaIDE {
 			ProcessStartInfo ProcInfo;
 			Process proc;
 
-			string HexFile = prj.Path + "/temp.hex"; //it has to be full path!!!
-
-			if(!File.Exists(HexFile)) {
+			if(!File.Exists(prj.OutputBin)) {
 				Globals.LogIDE(i18n.str("NoHex"));
 				Globals.LogProgrammer(i18n.str("NoHex"));
 				return 1;
 			}
 
 			//pk2cmd -PPIC16Fxxx -M -F/home/my_user/my_program.hex
-			string args = "-P" + prj.MainBoard.GetMCU() + " -M -F" + HexFile;
+			string args = "-P" + prj.MainBoard.GetMCU() + " -M -F" + prj.OutputBin;
 
 			try {
 				if(!CheckMB(prj)) Globals.LogIDE(i18n.str("WrongMB", prj.MainBoard));
