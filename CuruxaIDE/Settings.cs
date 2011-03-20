@@ -148,7 +148,7 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
-		/// Full path to the directory containing libraries used by final users. Last character is NOT a slash ('/')
+		/// Full path to the directory containing Curuxa libraries used by final users. Last character is NOT a slash ('/')
 		/// </summary>
 		public static string IncludesDir {
 			get {

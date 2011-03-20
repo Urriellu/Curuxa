@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{256F93E9-1EB1-4B40-B023-5154116B99B6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmDebugWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDebugWindow.Designer.cs">
+      <DependentUpon>FrmDebugWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="gpasm.cs" />
     <Compile Include="CursorLocation.cs" />
     <Compile Include="FrmIdeSettings.cs">
@@ -118,6 +124,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCrash.resx">
       <DependentUpon>FrmCrash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDebugWindow.resx">
+      <DependentUpon>FrmDebugWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmFileName.resx">
       <DependentUpon>FrmFileName.cs</DependentUpon>

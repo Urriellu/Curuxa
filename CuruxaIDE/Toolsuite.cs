@@ -13,7 +13,7 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
-		/// List of include paths
+		/// List of global include paths
 		/// </summary>
 		/// <remarks>
 		/// The ones on top are always checked first

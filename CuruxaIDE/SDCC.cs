@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
 
 namespace CuruxaIDE {
 	/// <summary>
@@ -11,14 +12,25 @@ namespace CuruxaIDE {
 	public sealed class SDCC:Toolsuite {
 		public SDCC()
 			: base("SDCC", "sdcc") {
-			GetIncludePaths();
+			//GetBinaryPath();
+
+			//GetIncludePaths();
 
 			SetupEnvironment();
+			GetIncludePaths();
 		}
 
-		private void SetupEnvironment() {
-			string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
+		/*private void GetBinaryPath() {
+			string pathBeingChecked;
+			foreach(string onePath in Environment.GetEnvironmentVariable("PATH").Split(':')) {
+				pathBeingChecked = onePath + "/sdcc";
+				CheckIfContainBinary(pathBeingChecked);
+			}
+		}*/
 
+		string SdccInstallPath = Environment.GetEnvironmentVariable("ProgramFiles") + @"\SDCC";
+
+		private void SetupEnvironment() {
 			//on Windows, SDCCand GPUTILS binary directories are only set in the $PATH of the user who installed them. We try to fix it
 			if(Environment.OSVersion.Platform != PlatformID.Unix) {
 				//add "%ProgramFiles%\SDCC\bin" to the PATH
@@ -37,11 +49,8 @@ namespace CuruxaIDE {
 		}
 
 		/// <summary>
-		/// Gets the list of global include paths
+		/// Gets the list of global include paths (given by command: "sdcc --print-search-dirs" )
 		/// </summary>
-		/// <remarks>
-		/// This list is retrieved executing the command: "sdcc --print-search-dirs" 
-		/// </remarks>
 		private void GetIncludePaths() {
 			IncludePaths.Clear();
 			ProcessStartInfo ProcInfo;
@@ -62,7 +71,9 @@ namespace CuruxaIDE {
 				Globals.Debug("Reading outputs");
 
 				bool ReadingIncludeDir = false;
-				foreach(string OutLine in proc.StandardOutput.ReadToEnd().Split('\n', '\r')) {
+				string cmdOutput = proc.StandardOutput.ReadToEnd();
+				string[] cmdOutLines = cmdOutput.Split('\n', '\r');
+				foreach(string OutLine in cmdOutLines) {
 					//detect begin of include paths
 					if(OutLine.Contains("includedir:")) {
 						ReadingIncludeDir = true;
@@ -76,12 +87,13 @@ namespace CuruxaIDE {
 
 					//parsing an include path
 					if(ReadingIncludeDir) {
-						Globals.Debug("New SDCC global include path: " + OutLine);
-						IncludePaths.Enqueue(OutLine);
+						ParseNewIncludePath(OutLine);
 
-						string AnotherIncludeDir=(OutLine + System.IO.Path.DirectorySeparatorChar + "/pic").Replace("//", "/").Replace(@"\\", @"\");
-						Globals.Debug("New SDCC global include path: " + AnotherIncludeDir);
-						IncludePaths.Enqueue(AnotherIncludeDir);
+						//by default, SDCC doesn't include the path to non-free libraries, force it when we find it:
+						string possiblePath = OutLine+"/non-free/";
+						if(Directory.Exists() ParseNewIncludePath(possiblePath);
+						possiblePath=OutLine+"/../non-free/";
+						if(Directory.Exists() ParseNewIncludePath(possiblePath);
 					}
 				}
 
@@ -91,6 +103,15 @@ namespace CuruxaIDE {
 				Globals.LogIDE(msg);
 				Globals.LogBuild(msg);
 			}
+		}
+
+		private void ParseNewIncludePath(string NewIncludePath) {
+			Globals.Debug("New SDCC global include path: " + NewIncludePath);
+			IncludePaths.Enqueue(NewIncludePath);
+
+			string AnotherIncludeDir = (NewIncludePath + System.IO.Path.DirectorySeparatorChar + "/pic").Replace("//", "/").Replace(@"\\", @"\");
+			Globals.Debug("New SDCC global include path: " + AnotherIncludeDir);
+			IncludePaths.Enqueue(AnotherIncludeDir);
 		}
 
 		/*void proc_GetIncPathStdOut(object sender, DataReceivedEventArgs e) {

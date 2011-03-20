@@ -166,7 +166,7 @@ namespace CuruxaIDE {
 			while(true) {
 				string NewLine = tr.ReadLine();
 				if(NewLine != null) {
-					ParseLine(NewLine, out ID, out text);
+					if(!string.IsNullOrEmpty(NewLine)) ParseLine(NewLine, out ID, out text);
 					if(!LangStrings.ContainsKey(ID)) throw new Exception(string.Format("The language {0} has an incorrect string ID: {1} (it doesn't exist in the English language file)", CurrentLanguage, ID));
 					LangStrings[ID] = text;
 					LangStrNotTranslated.Remove(ID);
