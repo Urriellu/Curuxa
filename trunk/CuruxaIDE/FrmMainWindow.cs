@@ -29,9 +29,7 @@ namespace CuruxaIDE {
 		public FrmMainWindow() {
 			InitializeComponent();
 			this.WindowState = Settings.MainWindowState;
-		}
 
-		private void MainWindow_Load(object sender, EventArgs e) {
 			UpdateLang();
 			SetTitle("");
 			LogIDE(i18n.str("AppInitialized"));
@@ -68,13 +66,15 @@ namespace CuruxaIDE {
 			MiExit.Image = Globals.LoadImage("exit.png");
 			TabsSrc.TabPages.Clear(); //remove demo tab page
 			lblLoadingSrc.Visible = false;
+		}
 
+		private void MainWindow_Load(object sender, EventArgs e) {
 			UpdateLabelPleaseWaitPosition();
 
 			CheckForIllegalCrossThreadCalls = false;
 
-			UpdateCuruxaWebsiteMenuLinks();
-			UpdateCommunityWebsiteMenuLinks();
+			//UpdateCuruxaWebsiteMenuLinks();
+			//UpdateCommunityWebsiteMenuLinks();
 
 			//InstallManager.CheckVersionWeb();  Not used anymore. Now we use ClickOnce when available
 		}
