@@ -73,8 +73,8 @@ namespace CuruxaIDE {
 
 			CheckForIllegalCrossThreadCalls = false;
 
-			//UpdateCuruxaWebsiteMenuLinks();
-			//UpdateCommunityWebsiteMenuLinks();
+			HttpDownloader.DownloadCuruxaWebsiteMenu();
+			HttpDownloader.DownloadCommunityWebsiteMenu();
 
 			//InstallManager.CheckVersionWeb();  Not used anymore. Now we use ClickOnce when available
 		}
@@ -82,7 +82,7 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Download the list of links shown at Curuxa's website and add them to a menu
 		/// </summary>
-		private void UpdateCuruxaWebsiteMenuLinks() {
+		public void UpdateCuruxaWebsiteMenuLinks() {
 			foreach(var section in HttpDownloader.CuruxaWebsiteMenu) {
 				ToolStripMenuItem newSectionMenu = new ToolStripMenuItem(section.Key);
 				foreach(var link in section.Value) {
@@ -100,7 +100,7 @@ namespace CuruxaIDE {
 		/// <summary>
 		/// Download the list of links shown at Curuxa Community website and add them to a menu
 		/// </summary>
-		private void UpdateCommunityWebsiteMenuLinks() {
+		public void UpdateCommunityWebsiteMenuLinks() {
 			foreach(var section in HttpDownloader.CommunityWebsiteMenu) {
 				if(section.Key == "Curuxa") continue;
 				ToolStripMenuItem newSectionMenu = new ToolStripMenuItem(section.Key);
@@ -117,7 +117,7 @@ namespace CuruxaIDE {
 		}
 
 		private void UpdateLabelPleaseWaitPosition() {
-			lblLoadingSrc.Location = new Point(TabsSrc.Location.X + 150 + splitContainer2.SplitterDistance, TabsSrc.Location.Y + 200);
+			lblLoadingSrc.Location = new Point(splitContainer2.SplitterDistance + TabsSrc.Width / 2 - lblLoadingSrc.Width / 2, splitContainer2.Location.Y + TabsSrc.Height / 2 - lblLoadingSrc.Height / 2);
 		}
 
 		/// <summary>
@@ -167,10 +167,12 @@ namespace CuruxaIDE {
 			TabProgLog.Text = i18n.str("ProgLog");
 			MiEdit.Text = i18n.str("MenuEdit");
 			MiPrjBuildBurnRun.Text = BtnPrjBuildBurnRun.Text = i18n.str("BuildBurnRun");
+			miInfoHelpIde.Text = i18n.str("infoHelpIde");
 			CursorLocationChanged(new CursorLocation(0, 0));
 			StatusProgrammer.Text = "";
 			MiPreferences.Text = i18n.str("Preferences");
 			MiPrintPreview.Text = i18n.str("PrintPreview");
+			lblLoadingSrc.Text = i18n.str("loadingSrc");
 		}
 
 		string FormatLogText(string Text) {
@@ -573,7 +575,7 @@ namespace CuruxaIDE {
 			MiPrjSettings.PerformClick();
 		}
 
-		private void MiBuildPrj_Click(object sender, EventArgs e) {
+		private void MiPrjBuild_Click(object sender, EventArgs e) {
 			if(Globals.ActiveProject == null) {
 				LogIDE(i18n.str("NoActivePrj"));
 			} else {
@@ -585,6 +587,11 @@ namespace CuruxaIDE {
 				} else {
 					LogIDE(i18n.str("BuildFail"));
 					LogBuild(i18n.str("BuildFail"));
+					if(Globals.ActiveProject.Language.GetToolsuite().IsNotInstalled) {
+						if(MessageBox.Show(i18n.str("reqAppNotInstalledNeedHelp"), "Curuxa IDE", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes) {
+							OpenUrlExtern("http://curuxa.org/en/Downloads");
+						}
+					}
 				}
 			}
 		}
@@ -863,6 +870,10 @@ namespace CuruxaIDE {
 
 		private void MiCuruxaCommunityWebsite_Click(object sender, EventArgs e) {
 			OpenUrlExtern("http://community.curuxa.org/");
+		}
+
+		private void miInfoHelpIde_Click(object sender, EventArgs e) {
+			OpenUrlExtern("http://curuxa.org/en/Curuxa_IDE");
 		}
 	}
 }

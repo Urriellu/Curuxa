@@ -30,12 +30,14 @@ namespace CuruxaIDE {
 		public static string Version {
 			get {
 				/*"0.3-svn";*/
-				string v = "";
-				if(ApplicationDeployment.IsNetworkDeployed) {
+				string v = "unknown";
+				if(IsDebug) v = "DEVELOPMENT";
+				if(IsWindows && ApplicationDeployment.IsNetworkDeployed) {
+					v = "";
 					v += ApplicationDeployment.CurrentDeployment.CurrentVersion.Major;
 					v += ".";
 					v += ApplicationDeployment.CurrentDeployment.CurrentVersion.Minor;
-				} else v = "DEVELOPMENT";
+				}
 				return v;
 			}
 		}

@@ -119,4 +119,10 @@ NoSrcSelected=No hay archivo seleccionado
 PrintPreview=Vista Preliminar
 TitleReadOnly= (sólo lectura)
 CantSaveIsReadOnly=No se puede guardar el archivo de sólo lectura: {0}
+loadingSrc=Cargando archivo. Por favor, espera...
+warnOldExamples=Algunos viejos ejemplos quizás utilicen las librerías de Curuxa (MBP18.h, MBP40.h, Delays.h, GP2.h...). Se recomienda que de ahora en adelante se incluya la librería del PIC directamente (#include <pic16fxxx.h>) y se usen snippets (http://curuxa.org/en/Snippets) en lugar de librerías
+recommendCreateFolder=Se recomienda guardar el proyecto en un nuevo directorio vacío
+CuruxaCommunity=Comunidad de Curuxa
+reqAppNotInstalledNeedHelp=Un programa necesario no se encuentra instalador. ¿Quieres obtener más información acerca de cómo instalarlo?
+infoHelpIde=Ayuda sobre Curuxa IDE
 
