@@ -106,12 +106,13 @@ namespace CuruxaIDE {
 						if(Directory.Exists(possiblePath)) ParseNewIncludePath(possiblePath);
 					}
 				}
-
+				IsNotInstalled = false;
 				Globals.LogBuild(LogBuild);
 			} catch(System.ComponentModel.Win32Exception) {
 				string msg = i18n.str("NoApp", RealName);
 				Globals.LogIDE(msg);
 				Globals.LogBuild(msg);
+				IsNotInstalled = true;
 			}
 		}
 
@@ -183,13 +184,14 @@ namespace CuruxaIDE {
 				if(File.Exists(SdccOutputBin)) {
 					File.Copy(SdccOutputBin, prj.OutputBin, true);
 				}
-
+				IsNotInstalled = false;
 				Environment.CurrentDirectory = OldDir;
 				return proc.ExitCode;
 			} catch(System.ComponentModel.Win32Exception) {
 				string msg = i18n.str("NoApp", RealName);
 				Globals.LogIDE(msg);
 				Globals.LogBuild(msg);
+				IsNotInstalled = true;
 				Environment.CurrentDirectory = OldDir;
 				return 1;
 			}

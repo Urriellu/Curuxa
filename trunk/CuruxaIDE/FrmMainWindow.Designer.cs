@@ -70,11 +70,18 @@
 			this.MiLanguage = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiLangSpanish = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiLangEnglish = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
 			this.MiWebsite = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsSeparatorAfterCuruxa = new System.Windows.Forms.ToolStripSeparator();
+			this.MiCuruxaCommunityWebsite = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsSeparatorAfterCommunity = new System.Windows.Forms.ToolStripSeparator();
+			this.miInfoHelpIde = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.TabsSrc = new CuruxaIDE.SrcTabControl();
+			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.TabsMsg = new System.Windows.Forms.TabControl();
 			this.TabMsgIDE = new System.Windows.Forms.TabPage();
 			this.TxtLogIDE = new System.Windows.Forms.RichTextBox();
@@ -108,12 +115,6 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
-			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsSeparatorAfterCuruxa = new System.Windows.Forms.ToolStripSeparator();
-			this.tsSeparatorAfterCommunity = new System.Windows.Forms.ToolStripSeparator();
-			this.MiCuruxaCommunityWebsite = new System.Windows.Forms.ToolStripMenuItem();
-			this.TabsSrc = new CuruxaIDE.SrcTabControl();
-			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -122,13 +123,13 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			this.TabsSrc.SuspendLayout();
 			this.TabsMsg.SuspendLayout();
 			this.TabMsgIDE.SuspendLayout();
 			this.TabBuildLog.SuspendLayout();
 			this.TabProgLog.SuspendLayout();
 			this.MenuTabs.SuspendLayout();
 			this.StripPrj.SuspendLayout();
-			this.TabsSrc.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -442,7 +443,7 @@
 			this.MiPrjBuild.ShortcutKeys = System.Windows.Forms.Keys.F5;
 			this.MiPrjBuild.Size = new System.Drawing.Size(227, 22);
 			this.MiPrjBuild.Text = "NS (Build)";
-			this.MiPrjBuild.Click += new System.EventHandler(this.MiBuildPrj_Click);
+			this.MiPrjBuild.Click += new System.EventHandler(this.MiPrjBuild_Click);
 			// 
 			// MiPrjProgram
 			// 
@@ -498,6 +499,7 @@
             this.tsSeparatorAfterCuruxa,
             this.MiCuruxaCommunityWebsite,
             this.tsSeparatorAfterCommunity,
+            this.miInfoHelpIde,
             this.MiAbout});
 			this.MiHelp.Name = "MiHelp";
 			this.MiHelp.Size = new System.Drawing.Size(64, 20);
@@ -526,6 +528,11 @@
 			this.MiLangEnglish.Text = "English";
 			this.MiLangEnglish.Click += new System.EventHandler(this.MiLangEnglish_Click);
 			// 
+			// toolStripMenuItem5
+			// 
+			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+			this.toolStripMenuItem5.Size = new System.Drawing.Size(239, 6);
+			// 
 			// MiWebsite
 			// 
 			this.MiWebsite.Name = "MiWebsite";
@@ -533,6 +540,30 @@
 			this.MiWebsite.Size = new System.Drawing.Size(242, 22);
 			this.MiWebsite.Text = "NS (Curuxa Website)";
 			this.MiWebsite.Click += new System.EventHandler(this.MiWebsite_Click);
+			// 
+			// tsSeparatorAfterCuruxa
+			// 
+			this.tsSeparatorAfterCuruxa.Name = "tsSeparatorAfterCuruxa";
+			this.tsSeparatorAfterCuruxa.Size = new System.Drawing.Size(239, 6);
+			// 
+			// MiCuruxaCommunityWebsite
+			// 
+			this.MiCuruxaCommunityWebsite.Name = "MiCuruxaCommunityWebsite";
+			this.MiCuruxaCommunityWebsite.Size = new System.Drawing.Size(242, 22);
+			this.MiCuruxaCommunityWebsite.Text = "NS (Curuxa Community Website)";
+			this.MiCuruxaCommunityWebsite.Click += new System.EventHandler(this.MiCuruxaCommunityWebsite_Click);
+			// 
+			// tsSeparatorAfterCommunity
+			// 
+			this.tsSeparatorAfterCommunity.Name = "tsSeparatorAfterCommunity";
+			this.tsSeparatorAfterCommunity.Size = new System.Drawing.Size(239, 6);
+			// 
+			// miInfoHelpIde
+			// 
+			this.miInfoHelpIde.Name = "miInfoHelpIde";
+			this.miInfoHelpIde.Size = new System.Drawing.Size(242, 22);
+			this.miInfoHelpIde.Text = "NS (Info/Help IDE)";
+			this.miInfoHelpIde.Click += new System.EventHandler(this.miInfoHelpIde_Click);
 			// 
 			// MiAbout
 			// 
@@ -594,6 +625,26 @@
 			this.splitContainer1.Size = new System.Drawing.Size(550, 496);
 			this.splitContainer1.SplitterDistance = 355;
 			this.splitContainer1.TabIndex = 0;
+			// 
+			// TabsSrc
+			// 
+			this.TabsSrc.Controls.Add(this.TabDemo);
+			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
+			this.TabsSrc.Name = "TabsSrc";
+			this.TabsSrc.SelectedIndex = 0;
+			this.TabsSrc.Size = new System.Drawing.Size(550, 355);
+			this.TabsSrc.TabIndex = 1;
+			// 
+			// TabDemo
+			// 
+			this.TabDemo.Location = new System.Drawing.Point(4, 22);
+			this.TabDemo.Name = "TabDemo";
+			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
+			this.TabDemo.Size = new System.Drawing.Size(542, 329);
+			this.TabDemo.TabIndex = 0;
+			this.TabDemo.Text = "demo tab page";
+			this.TabDemo.UseVisualStyleBackColor = true;
 			// 
 			// TabsMsg
 			// 
@@ -679,14 +730,15 @@
 			// lblLoadingSrc
 			// 
 			this.lblLoadingSrc.AutoSize = true;
-			this.lblLoadingSrc.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.lblLoadingSrc.BackColor = System.Drawing.Color.RoyalBlue;
 			this.lblLoadingSrc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.lblLoadingSrc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblLoadingSrc.Location = new System.Drawing.Point(423, 209);
+			this.lblLoadingSrc.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblLoadingSrc.ForeColor = System.Drawing.Color.White;
+			this.lblLoadingSrc.Location = new System.Drawing.Point(439, 206);
 			this.lblLoadingSrc.Name = "lblLoadingSrc";
-			this.lblLoadingSrc.Size = new System.Drawing.Size(190, 22);
+			this.lblLoadingSrc.Size = new System.Drawing.Size(168, 28);
 			this.lblLoadingSrc.TabIndex = 0;
-			this.lblLoadingSrc.Text = "Loading, please wait...";
+			this.lblLoadingSrc.Text = "NS (loading...)";
 			// 
 			// MenuTabs
 			// 
@@ -930,48 +982,6 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
-			// toolStripMenuItem5
-			// 
-			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(239, 6);
-			// 
-			// tsSeparatorAfterCuruxa
-			// 
-			this.tsSeparatorAfterCuruxa.Name = "tsSeparatorAfterCuruxa";
-			this.tsSeparatorAfterCuruxa.Size = new System.Drawing.Size(239, 6);
-			// 
-			// tsSeparatorAfterCommunity
-			// 
-			this.tsSeparatorAfterCommunity.Name = "tsSeparatorAfterCommunity";
-			this.tsSeparatorAfterCommunity.Size = new System.Drawing.Size(239, 6);
-			// 
-			// MiCuruxaCommunityWebsite
-			// 
-			this.MiCuruxaCommunityWebsite.Name = "MiCuruxaCommunityWebsite";
-			this.MiCuruxaCommunityWebsite.Size = new System.Drawing.Size(242, 22);
-			this.MiCuruxaCommunityWebsite.Text = "NS (Curuxa Community Website)";
-			this.MiCuruxaCommunityWebsite.Click += new System.EventHandler(this.MiCuruxaCommunityWebsite_Click);
-			// 
-			// TabsSrc
-			// 
-			this.TabsSrc.Controls.Add(this.TabDemo);
-			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
-			this.TabsSrc.Name = "TabsSrc";
-			this.TabsSrc.SelectedIndex = 0;
-			this.TabsSrc.Size = new System.Drawing.Size(550, 355);
-			this.TabsSrc.TabIndex = 1;
-			// 
-			// TabDemo
-			// 
-			this.TabDemo.Location = new System.Drawing.Point(4, 22);
-			this.TabDemo.Name = "TabDemo";
-			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
-			this.TabDemo.Size = new System.Drawing.Size(542, 329);
-			this.TabDemo.TabIndex = 0;
-			this.TabDemo.Text = "demo tab page";
-			this.TabDemo.UseVisualStyleBackColor = true;
-			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1000,6 +1010,7 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
+			this.TabsSrc.ResumeLayout(false);
 			this.TabsMsg.ResumeLayout(false);
 			this.TabMsgIDE.ResumeLayout(false);
 			this.TabBuildLog.ResumeLayout(false);
@@ -1007,7 +1018,6 @@
 			this.MenuTabs.ResumeLayout(false);
 			this.StripPrj.ResumeLayout(false);
 			this.StripPrj.PerformLayout();
-			this.TabsSrc.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1104,6 +1114,7 @@
 		private System.Windows.Forms.ToolStripSeparator tsSeparatorAfterCuruxa;
 		private System.Windows.Forms.ToolStripSeparator tsSeparatorAfterCommunity;
 		private System.Windows.Forms.ToolStripMenuItem MiCuruxaCommunityWebsite;
+		private System.Windows.Forms.ToolStripMenuItem miInfoHelpIde;
 	}
 }
 

@@ -7,6 +7,11 @@ using System.IO;
 
 namespace CuruxaIDE {
 	public static class HttpDownloader {
+		public enum AsyncDownloadId {
+			GetCuruxaWebsiteMenu,
+			GetCommunityWebsiteMenu
+		}
+
 		public static string GetUrlContent(string URL) {
 			try {
 				HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(URL);
@@ -22,9 +27,53 @@ namespace CuruxaIDE {
 			}
 		}
 
-		public static Dictionary<string, List<KeyValuePair<string, string>>> CuruxaWebsiteMenu {
+		/*public static string GetUrlContentAsync(string URL, AsyncDownloadId id) {
+			try {
+				HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(URL);
+				req.Timeout = 15000;
+				req.UserAgent = "CuruxaIDE, " + Environment.MachineName;
+				WebResponse response = req.GetResponse();
+				req.BeginGetResponse(new AsyncCallback(EndGetResponseCallback), id);
+				Stream stream = response.GetResponseStream();
+				StreamReader sr = new StreamReader(stream);
+				string content = sr.ReadToEnd();
+				return content;
+			} catch {
+				return "";
+			}
+		}
+
+		static void EndGetResponseCallback(IAsyncResult ar) {
+			AsyncDownloadId id = (AsyncDownloadId)ar.AsyncState;
+			switch(id) {
+				case AsyncDownloadId.GetCuruxaWebsiteMenu:
+					ParseMediaWikiMenu(ar "http://curuxa.org/en/", "http://curuxa.org/w/index.php?title=MediaWiki:Sidebar&action=edit"
+					break;
+				default:
+					Globals.Debug("Unknown Async HTTP response: " + id);
+					break;
+			}
+		}*/
+
+		private static void GetUrlContentAsync(string URL, AsyncDownloadId id) {
+			WebClient webClient = new WebClient();
+			webClient.DownloadDataCompleted += new DownloadDataCompletedEventHandler(AsyncDownloadCompleted);
+			webClient.DownloadDataAsync(new Uri(URL), id);
+		}
+
+		private static void AsyncDownloadCompleted(object sender, DownloadDataCompletedEventArgs e) {
+			AsyncDownloadId id = (AsyncDownloadId)e.UserState;
+			if(id == AsyncDownloadId.GetCuruxaWebsiteMenu || id == AsyncDownloadId.GetCommunityWebsiteMenu) {
+				ParseMediaWikiMenu(System.Text.Encoding.UTF8.GetString(e.Result), id);
+			} else throw new NotImplementedException("Unknown async HTTP download type");
+		}
+
+		public static Dictionary<string, List<KeyValuePair<string, string>>> CuruxaWebsiteMenu { get; private set; }
+		public static Dictionary<string, List<KeyValuePair<string, string>>> CommunityWebsiteMenu { get; private set; }
+
+		/*public static Dictionary<string, List<KeyValuePair<string, string>>> CuruxaWebsiteMenu {
 			get {
-				if(_CuruxaWebsiteMenu == null) _CuruxaWebsiteMenu = GetMediaWikiMenu("http://curuxa.org/en/", "http://curuxa.org/w/index.php?title=MediaWiki:Sidebar&action=edit");
+				//if(_CuruxaWebsiteMenu == null) _CuruxaWebsiteMenu = GetMediaWikiMenu("http://curuxa.org/en/", "http://curuxa.org/w/index.php?title=MediaWiki:Sidebar&action=edit");
 				return _CuruxaWebsiteMenu;
 			}
 		}
@@ -32,17 +81,51 @@ namespace CuruxaIDE {
 
 		public static Dictionary<string, List<KeyValuePair<string, string>>> CommunityWebsiteMenu {
 			get {
-				if(_CommunityWebsiteMenu == null) _CommunityWebsiteMenu = GetMediaWikiMenu("http://community.curuxa.org/en/", "http://community.curuxa.org/w_en/index.php?title=MediaWiki:Sidebar&action=edit");
+				//if(_CommunityWebsiteMenu == null) _CommunityWebsiteMenu = GetMediaWikiMenu("http://community.curuxa.org/en/", "http://community.curuxa.org/w_en/index.php?title=MediaWiki:Sidebar&action=edit");
+				if(_CommunityWebsiteMenu == null) GetUrlContentAsync
 				return _CommunityWebsiteMenu;
 			}
 		}
-		private static Dictionary<string, List<KeyValuePair<string, string>>> _CommunityWebsiteMenu;
+		private static Dictionary<string, List<KeyValuePair<string, string>>> _CommunityWebsiteMenu;*/
 
-		static Dictionary<string, List<KeyValuePair<string, string>>> GetMediaWikiMenu(string linkBase, string menuEditUrl) {
+		/// <summary>
+		/// Download a parse asynchronously the links on the Curuxa Website
+		/// </summary>
+		public static void DownloadCuruxaWebsiteMenu() {
+			GetUrlContentAsync("http://curuxa.org/w/index.php?title=MediaWiki:Sidebar&action=edit", AsyncDownloadId.GetCuruxaWebsiteMenu);
+		}
+
+		/// <summary>
+		/// Download a parse asynchronously the links on the Curuxa Community Website
+		/// </summary>
+		public static void DownloadCommunityWebsiteMenu() {
+			GetUrlContentAsync("http://community.curuxa.org/w_en/index.php?title=MediaWiki:Sidebar&action=edit", AsyncDownloadId.GetCommunityWebsiteMenu);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="originalMenu"></param>
+		/// <param name="linkBase"></param>
+		/// <param name="menuEditUrl"></param>
+		/// <param name="id"></param>
+		static void ParseMediaWikiMenu(string originalMenu, AsyncDownloadId id) {
+			string linkBase;
+			switch(id) {
+				case AsyncDownloadId.GetCuruxaWebsiteMenu:
+					linkBase = "http://curuxa.org/en/";
+					break;
+				case AsyncDownloadId.GetCommunityWebsiteMenu:
+					linkBase = "http://community.curuxa.org/en/";
+					break;
+				default:
+					throw new NotImplementedException("Unkown website ID");
+					break;
+			}
 			Dictionary<string, List<KeyValuePair<string, string>>> menu = new Dictionary<string, List<KeyValuePair<string, string>>>();
 			string currentSectionName = "";
 			List<KeyValuePair<string, string>> section = null;
-			string originalMenu = GetUrlContent(menuEditUrl);
+			//string originalMenu = GetUrlContent(menuEditUrl);
 			if(!string.IsNullOrEmpty(originalMenu)) {
 				originalMenu = originalMenu.Remove(0, originalMenu.IndexOf("<textarea id=\"wpTextbox1\"") + 1);
 				originalMenu = originalMenu.Remove(0, originalMenu.IndexOf('>') + 1);
@@ -70,7 +153,16 @@ namespace CuruxaIDE {
 					}
 				}
 			}
-			return menu;
+			switch(id) {
+				case AsyncDownloadId.GetCuruxaWebsiteMenu:
+					CuruxaWebsiteMenu = menu;
+					Globals.MainWindow.UpdateCuruxaWebsiteMenuLinks();
+					break;
+				case AsyncDownloadId.GetCommunityWebsiteMenu:
+					CommunityWebsiteMenu = menu;
+					Globals.MainWindow.UpdateCommunityWebsiteMenuLinks();
+					break;
+			}
 		}
 	}
 }

@@ -11,6 +11,8 @@ namespace CuruxaIDE {
 		public readonly string RealName;
 		public readonly string Command;
 
+		public bool IsNotInstalled { get; protected set; }
+
 		protected SoftApp(string RealName, string Command) {
 			this.RealName=RealName;
 			this.Command=Command;
