@@ -66,7 +66,7 @@
 			this.Logo.Location = new System.Drawing.Point(3, 3);
 			this.Logo.Name = "Logo";
 			this.tableLayoutPanel.SetRowSpan(this.Logo, 6);
-			this.Logo.Size = new System.Drawing.Size(228, 259);
+			this.Logo.Size = new System.Drawing.Size(229, 259);
 			this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.Logo.TabIndex = 12;
 			this.Logo.TabStop = false;
@@ -74,11 +74,11 @@
 			// labelProductName
 			// 
 			this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labelProductName.Location = new System.Drawing.Point(240, 0);
+			this.labelProductName.Location = new System.Drawing.Point(241, 0);
 			this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
 			this.labelProductName.MaximumSize = new System.Drawing.Size(0, 17);
 			this.labelProductName.Name = "labelProductName";
-			this.labelProductName.Size = new System.Drawing.Size(259, 17);
+			this.labelProductName.Size = new System.Drawing.Size(258, 17);
 			this.labelProductName.TabIndex = 19;
 			this.labelProductName.Text = "Curuxa IDE";
 			this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -86,11 +86,11 @@
 			// LblVersion
 			// 
 			this.LblVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LblVersion.Location = new System.Drawing.Point(240, 26);
+			this.LblVersion.Location = new System.Drawing.Point(241, 26);
 			this.LblVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
 			this.LblVersion.MaximumSize = new System.Drawing.Size(0, 17);
 			this.LblVersion.Name = "LblVersion";
-			this.LblVersion.Size = new System.Drawing.Size(259, 17);
+			this.LblVersion.Size = new System.Drawing.Size(258, 17);
 			this.LblVersion.TabIndex = 0;
 			this.LblVersion.Text = "NS (Version)";
 			this.LblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -98,13 +98,13 @@
 			// TxtDescription
 			// 
 			this.TxtDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TxtDescription.Location = new System.Drawing.Point(240, 107);
+			this.TxtDescription.Location = new System.Drawing.Point(241, 107);
 			this.TxtDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
 			this.TxtDescription.Multiline = true;
 			this.TxtDescription.Name = "TxtDescription";
 			this.TxtDescription.ReadOnly = true;
 			this.TxtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.TxtDescription.Size = new System.Drawing.Size(259, 126);
+			this.TxtDescription.Size = new System.Drawing.Size(258, 126);
 			this.TxtDescription.TabIndex = 23;
 			this.TxtDescription.TabStop = false;
 			this.TxtDescription.Text = "NS (Description)";
@@ -123,11 +123,11 @@
 			// LblLicense
 			// 
 			this.LblLicense.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.LblLicense.Location = new System.Drawing.Point(240, 52);
+			this.LblLicense.Location = new System.Drawing.Point(241, 52);
 			this.LblLicense.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
 			this.LblLicense.MaximumSize = new System.Drawing.Size(0, 17);
 			this.LblLicense.Name = "LblLicense";
-			this.LblLicense.Size = new System.Drawing.Size(259, 17);
+			this.LblLicense.Size = new System.Drawing.Size(258, 17);
 			this.LblLicense.TabIndex = 21;
 			this.LblLicense.Text = "GNU General Public License v3.0";
 			this.LblLicense.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -135,7 +135,7 @@
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(237, 78);
+			this.linkLabel1.Location = new System.Drawing.Point(238, 78);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(88, 13);
 			this.linkLabel1.TabIndex = 25;
