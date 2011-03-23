@@ -228,6 +228,7 @@
 			this.Controls.Add(this.TxtDescription);
 			this.Controls.Add(this.LblAvailEx);
 			this.Controls.Add(this.LstExamples);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MinimumSize = new System.Drawing.Size(570, 500);
 			this.Name = "FrmNewPrjFromExample";
 			this.Text = "NS (New Project From Example)";
