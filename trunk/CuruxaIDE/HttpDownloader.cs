@@ -56,15 +56,25 @@ namespace CuruxaIDE {
 		}*/
 
 		private static void GetUrlContentAsync(string URL, AsyncDownloadId id) {
-			WebClient webClient = new WebClient();
-			webClient.DownloadDataCompleted += new DownloadDataCompletedEventHandler(AsyncDownloadCompleted);
-			webClient.DownloadDataAsync(new Uri(URL), id);
+			try {
+				WebClient webClient = new WebClient();
+				webClient.DownloadDataCompleted += new DownloadDataCompletedEventHandler(AsyncDownloadCompleted);
+				webClient.DownloadDataAsync(new Uri(URL), id);
+			} catch(Exception ex) {
+				Globals.DebugExceptionIgnored(ex);
+			}
 		}
 
 		private static void AsyncDownloadCompleted(object sender, DownloadDataCompletedEventArgs e) {
 			AsyncDownloadId id = (AsyncDownloadId)e.UserState;
 			if(id == AsyncDownloadId.GetCuruxaWebsiteMenu || id == AsyncDownloadId.GetCommunityWebsiteMenu) {
-				ParseMediaWikiMenu(System.Text.Encoding.UTF8.GetString(e.Result), id);
+				string originalMenu;
+				try {
+					originalMenu = System.Text.Encoding.UTF8.GetString(e.Result);
+					ParseMediaWikiMenu(originalMenu, id);
+				} catch(Exception ex) {
+					Globals.DebugExceptionIgnored(ex);
+				}
 			} else throw new NotImplementedException("Unknown async HTTP download type");
 		}
 

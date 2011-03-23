@@ -125,3 +125,5 @@ recommendCreateFolder=It's recommended that you save your project in a new, empt
 CuruxaCommunity=Curuxa Community
 reqAppNotInstalledNeedHelp=A required program is not installed. Do you need information about how to install it?
 infoHelpIde=Help about Curuxa IDE
+CrashInfo1=The execution cannot continue, Curuxa IDE has suffered an unrecoverable error:
+showDebugWin=Show Debug Window

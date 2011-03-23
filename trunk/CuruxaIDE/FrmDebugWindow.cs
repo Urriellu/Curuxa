@@ -20,5 +20,10 @@ namespace CuruxaIDE {
 		private void FrmDebugWindow_Load(object sender, EventArgs e) {
 
 		}
+
+		private void FrmDebugWindow_FormClosing(object sender, FormClosingEventArgs e) {
+			e.Cancel = true;
+			Hide();
+		}
 	}
 }

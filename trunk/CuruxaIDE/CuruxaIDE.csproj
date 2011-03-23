@@ -16,20 +16,32 @@
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>62E5846D99C74AA5A65419BCD16D8EB45BAAB2AE</ManifestCertificateThumbprint>
+    <ManifestKeyFile>CuruxaIDE_TemporaryKey.pfx</ManifestKeyFile>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>O:\curuxa-svn-rediris\tags\curuxa-windows\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://curuxa.org/downloads/windows/</InstallUrl>
+    <SupportUrl>http://curuxa.org/</SupportUrl>
+    <ProductName>Curuxa IDE</ProductName>
+    <PublisherName>Curuxa</PublisherName>
+    <MinimumRequiredVersion>0.3.0.0</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.3.0.0</ApplicationVersion>
+    <ApplicationVersion>0.4.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -171,104 +183,105 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="Examples\Electrooculograph.CuruxaExample">
+    <None Include="CuruxaIDE_TemporaryKey.pfx" />
+    <Content Include="Examples\Electrooculograph.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP14 test 2.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP14 test 2.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP14 test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP14 test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 button, LED test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 button, LED test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 buzz.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 buzz.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 distance sensor test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 distance sensor test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 Flash LED.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 Flash LED.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 MC2A test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 MC2A test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 SIBW-1Y, LED.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 SIBW-1Y, LED.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 test 2.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 test 2.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 test infrared receiver.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 test infrared receiver.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP18 test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP18 test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP40 Flash LED.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP40 Flash LED.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP40 test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP40 test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP8 buzz.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP8 buzz.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP8 test 2.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP8 test 2.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP8 test.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP8 test.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\MBP8 timer buzz.CuruxaExample">
+    </Content>
+    <Content Include="Examples\MBP8 timer buzz.CuruxaExample">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="i18n\en.lang">
+    </Content>
+    <Content Include="i18n\en.lang">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="i18n\es.lang">
+    </Content>
+    <Content Include="i18n\es.lang">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="ThirdParty\gputils-win-0.13.7\lkr\12f683.lkr">
+    <Content Include="ThirdParty\gputils-win-0.13.7\lkr\12f683.lkr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\gputils-win-0.13.7\lkr\16f688.lkr">
+    </Content>
+    <Content Include="ThirdParty\gputils-win-0.13.7\lkr\16f688.lkr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\gputils-win-0.13.7\lkr\16f88.lkr">
+    </Content>
+    <Content Include="ThirdParty\gputils-win-0.13.7\lkr\16f88.lkr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\gputils-win-0.13.7\lkr\16f887.lkr">
+    </Content>
+    <Content Include="ThirdParty\gputils-win-0.13.7\lkr\16f887.lkr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\pk2cmd-win\PK2DeviceFile.dat">
+    </Content>
+    <Content Include="ThirdParty\pk2cmd-win\PK2DeviceFile.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\pk2cmd-win\PK2V023200.hex">
+    </Content>
+    <Content Include="ThirdParty\pk2cmd-win\PK2V023200.hex">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\libsdcc.lib">
+    </Content>
+    <Content Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\libsdcc.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic12f683.lib">
+    </Content>
+    <Content Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic12f683.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f688.lib">
+    </Content>
+    <Content Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f688.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f88.lib">
+    </Content>
+    <Content Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f88.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f887.lib">
+    </Content>
+    <Content Include="ThirdParty\sdcc-win-20110320-6321\lib\pic14\pic16f887.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -324,6 +337,7 @@
     <Content Include="curuxa-includes\MBP8.h">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Examples\adding_new_examples.txt" />
     <Content Include="Examples\Electrooculograph.c">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -543,7 +557,7 @@
     <Content Include="ThirdParty\gputils-win-0.13.7\header\p16f887.inc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ThirdParty\notes.txt" />
+    <None Include="ThirdParty\notes.txt" />
     <Content Include="ThirdParty\pk2cmd-win\pk2cmd.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -664,7 +678,7 @@
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
-      <Install>false</Install>
+      <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
       <Visible>False</Visible>
@@ -674,7 +688,7 @@
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
+      <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>

@@ -47,10 +47,8 @@ namespace CuruxaIDE {
 				Settings.Load();
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(true);
-#if DEBUG
 				Globals.DebugWindow = new FrmDebugWindow();
-				Globals.DebugWindow.Show();
-#endif
+				if(Settings.IsDebug) Globals.DebugWindow.Show();
 				Application.Run(MainWindow = new FrmMainWindow());
 			} catch(TypeInitializationException e) {
 				if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
@@ -102,13 +100,19 @@ namespace CuruxaIDE {
 
 		public static void Debug(string Text) {
 			Console.WriteLine(string.Format("[{0:00}:{1:00}:{2:00}.{3:000}] {4}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, Text));
-#if DEBUG
 			if(Globals.DebugWindow != null) Globals.DebugWindow.LogDebug(Text);
-#endif
 		}
 
 		public static void Debug(string Text, params object[] p) {
 			Debug(string.Format(Text, p));
+		}
+
+		/// <summary>
+		/// Show information about an exception which is ignored
+		/// </summary>
+		/// <param name="ex"></param>
+		public static void DebugExceptionIgnored(Exception ex) {
+			Debug("Ignored Exception: " + ex.ToString());
 		}
 
 		/// <summary>

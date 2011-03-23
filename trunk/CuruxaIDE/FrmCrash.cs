@@ -17,8 +17,13 @@ namespace CuruxaIDE {
 		}
 
 		private void FrmCrash_Load(object sender, EventArgs e) {
-			TxtError.Clear();
-			TxtError.AppendText(Error.ToString());
+			lblInfo.Text = i18n.str("CrashInfo1");
+			if(Error is Exception) {
+				Exception ex = (Exception)Error;
+				TxtError.Text = ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace;
+			} else {
+				TxtError.Text = Error.ToString();
+			}
 		}
 
 		private void BtnClose_Click(object sender, EventArgs e) {
