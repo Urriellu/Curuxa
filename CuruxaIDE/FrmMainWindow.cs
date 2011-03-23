@@ -15,6 +15,7 @@ namespace CuruxaIDE {
 	public partial class FrmMainWindow:Form {
 		FrmAbout AboutWindow = new FrmAbout();
 		Timer TmrHighlight = new Timer();
+		Timer TmrExecBackgroundOnce = new Timer();
 
 		/// <summary>
 		/// Indicates if the forms is currently being closed
@@ -73,10 +74,21 @@ namespace CuruxaIDE {
 
 			CheckForIllegalCrossThreadCalls = false;
 
-			HttpDownloader.DownloadCuruxaWebsiteMenu();
-			HttpDownloader.DownloadCommunityWebsiteMenu();
+			TmrExecBackgroundOnce.Tick += new EventHandler(TmrExecBackgroundOnce_Tick);
+			TmrExecBackgroundOnce.Interval = 3000;
+			TmrExecBackgroundOnce.Start();
 
 			//InstallManager.CheckVersionWeb();  Not used anymore. Now we use ClickOnce when available
+		}
+
+		/// <summary>
+		/// Execute stuff (only once) in the background a few seconds after starting the program
+		/// </summary>
+		void TmrExecBackgroundOnce_Tick(object sender, EventArgs e) {
+			TmrExecBackgroundOnce.Stop();
+			TmrExecBackgroundOnce = null;
+			HttpDownloader.DownloadCuruxaWebsiteMenu();
+			HttpDownloader.DownloadCommunityWebsiteMenu();
 		}
 
 		/// <summary>
@@ -173,6 +185,7 @@ namespace CuruxaIDE {
 			MiPreferences.Text = i18n.str("Preferences");
 			MiPrintPreview.Text = i18n.str("PrintPreview");
 			lblLoadingSrc.Text = i18n.str("loadingSrc");
+			miShowDebugWin.Text = i18n.str("showDebugWin");
 		}
 
 		string FormatLogText(string Text) {
@@ -874,6 +887,10 @@ namespace CuruxaIDE {
 
 		private void miInfoHelpIde_Click(object sender, EventArgs e) {
 			OpenUrlExtern("http://curuxa.org/en/Curuxa_IDE");
+		}
+
+		private void miShowDebugWin_Click(object sender, EventArgs e) {
+			Globals.DebugWindow.Show();
 		}
 	}
 }

@@ -80,8 +80,6 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.TreePrj = new System.Windows.Forms.TreeView();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.TabsSrc = new CuruxaIDE.SrcTabControl();
-			this.TabDemo = new System.Windows.Forms.TabPage();
 			this.TabsMsg = new System.Windows.Forms.TabControl();
 			this.TabMsgIDE = new System.Windows.Forms.TabPage();
 			this.TxtLogIDE = new System.Windows.Forms.RichTextBox();
@@ -115,6 +113,9 @@
 			this.BtnProgramMCU = new System.Windows.Forms.ToolStripButton();
 			this.BtnRun = new System.Windows.Forms.ToolStripButton();
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
+			this.TabsSrc = new CuruxaIDE.SrcTabControl();
+			this.TabDemo = new System.Windows.Forms.TabPage();
+			this.miShowDebugWin = new System.Windows.Forms.ToolStripMenuItem();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -123,13 +124,13 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.TabsSrc.SuspendLayout();
 			this.TabsMsg.SuspendLayout();
 			this.TabMsgIDE.SuspendLayout();
 			this.TabBuildLog.SuspendLayout();
 			this.TabProgLog.SuspendLayout();
 			this.MenuTabs.SuspendLayout();
 			this.StripPrj.SuspendLayout();
+			this.TabsSrc.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -286,11 +287,12 @@
             this.MiUndo,
             this.MiRedo,
             this.toolStripSeparator7,
+            this.MiSelectAll,
             this.MiCut,
             this.MiCopy,
             this.MiPaste,
             this.toolStripSeparator8,
-            this.MiSelectAll,
+            this.miShowDebugWin,
             this.MiPreferences});
 			this.MiEdit.Name = "MiEdit";
 			this.MiEdit.Size = new System.Drawing.Size(61, 20);
@@ -301,7 +303,7 @@
 			this.MiUndo.Enabled = false;
 			this.MiUndo.Name = "MiUndo";
 			this.MiUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-			this.MiUndo.Size = new System.Drawing.Size(202, 22);
+			this.MiUndo.Size = new System.Drawing.Size(207, 22);
 			this.MiUndo.Text = "NS (Undo)";
 			this.MiUndo.Click += new System.EventHandler(this.MiUndo_Click);
 			// 
@@ -311,14 +313,14 @@
 			this.MiRedo.Name = "MiRedo";
 			this.MiRedo.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
 						| System.Windows.Forms.Keys.Z)));
-			this.MiRedo.Size = new System.Drawing.Size(202, 22);
+			this.MiRedo.Size = new System.Drawing.Size(207, 22);
 			this.MiRedo.Text = "NS (Redo)";
 			this.MiRedo.Click += new System.EventHandler(this.MiRedo_Click);
 			// 
 			// toolStripSeparator7
 			// 
 			this.toolStripSeparator7.Name = "toolStripSeparator7";
-			this.toolStripSeparator7.Size = new System.Drawing.Size(199, 6);
+			this.toolStripSeparator7.Size = new System.Drawing.Size(204, 6);
 			// 
 			// MiCut
 			// 
@@ -326,7 +328,7 @@
 			this.MiCut.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.MiCut.Name = "MiCut";
 			this.MiCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-			this.MiCut.Size = new System.Drawing.Size(202, 22);
+			this.MiCut.Size = new System.Drawing.Size(207, 22);
 			this.MiCut.Text = "NS (Cut)";
 			this.MiCut.Click += new System.EventHandler(this.MiCut_Click);
 			// 
@@ -336,7 +338,7 @@
 			this.MiCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.MiCopy.Name = "MiCopy";
 			this.MiCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.MiCopy.Size = new System.Drawing.Size(202, 22);
+			this.MiCopy.Size = new System.Drawing.Size(207, 22);
 			this.MiCopy.Text = "NS (Copy)";
 			this.MiCopy.Click += new System.EventHandler(this.MiCopy_Click);
 			// 
@@ -346,27 +348,27 @@
 			this.MiPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.MiPaste.Name = "MiPaste";
 			this.MiPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-			this.MiPaste.Size = new System.Drawing.Size(202, 22);
+			this.MiPaste.Size = new System.Drawing.Size(207, 22);
 			this.MiPaste.Text = "NS (Paste)";
 			this.MiPaste.Click += new System.EventHandler(this.MiPaste_Click);
 			// 
 			// toolStripSeparator8
 			// 
 			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(199, 6);
+			this.toolStripSeparator8.Size = new System.Drawing.Size(204, 6);
 			// 
 			// MiSelectAll
 			// 
 			this.MiSelectAll.Name = "MiSelectAll";
 			this.MiSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-			this.MiSelectAll.Size = new System.Drawing.Size(202, 22);
+			this.MiSelectAll.Size = new System.Drawing.Size(207, 22);
 			this.MiSelectAll.Text = "NS (Select All)";
 			this.MiSelectAll.Click += new System.EventHandler(this.MiSelectAll_Click);
 			// 
 			// MiPreferences
 			// 
 			this.MiPreferences.Name = "MiPreferences";
-			this.MiPreferences.Size = new System.Drawing.Size(202, 22);
+			this.MiPreferences.Size = new System.Drawing.Size(207, 22);
 			this.MiPreferences.Text = "NS (Preferences)";
 			this.MiPreferences.Click += new System.EventHandler(this.MiPreferences_Click);
 			// 
@@ -625,26 +627,6 @@
 			this.splitContainer1.Size = new System.Drawing.Size(550, 496);
 			this.splitContainer1.SplitterDistance = 355;
 			this.splitContainer1.TabIndex = 0;
-			// 
-			// TabsSrc
-			// 
-			this.TabsSrc.Controls.Add(this.TabDemo);
-			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
-			this.TabsSrc.Name = "TabsSrc";
-			this.TabsSrc.SelectedIndex = 0;
-			this.TabsSrc.Size = new System.Drawing.Size(550, 355);
-			this.TabsSrc.TabIndex = 1;
-			// 
-			// TabDemo
-			// 
-			this.TabDemo.Location = new System.Drawing.Point(4, 22);
-			this.TabDemo.Name = "TabDemo";
-			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
-			this.TabDemo.Size = new System.Drawing.Size(542, 329);
-			this.TabDemo.TabIndex = 0;
-			this.TabDemo.Text = "demo tab page";
-			this.TabDemo.UseVisualStyleBackColor = true;
 			// 
 			// TabsMsg
 			// 
@@ -982,6 +964,33 @@
 			this.BtnStop.Text = "NS (Stop)";
 			this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
 			// 
+			// TabsSrc
+			// 
+			this.TabsSrc.Controls.Add(this.TabDemo);
+			this.TabsSrc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabsSrc.Location = new System.Drawing.Point(0, 0);
+			this.TabsSrc.Name = "TabsSrc";
+			this.TabsSrc.SelectedIndex = 0;
+			this.TabsSrc.Size = new System.Drawing.Size(550, 355);
+			this.TabsSrc.TabIndex = 1;
+			// 
+			// TabDemo
+			// 
+			this.TabDemo.Location = new System.Drawing.Point(4, 22);
+			this.TabDemo.Name = "TabDemo";
+			this.TabDemo.Padding = new System.Windows.Forms.Padding(3);
+			this.TabDemo.Size = new System.Drawing.Size(542, 329);
+			this.TabDemo.TabIndex = 0;
+			this.TabDemo.Text = "demo tab page";
+			this.TabDemo.UseVisualStyleBackColor = true;
+			// 
+			// miShowDebugWin
+			// 
+			this.miShowDebugWin.Name = "miShowDebugWin";
+			this.miShowDebugWin.Size = new System.Drawing.Size(207, 22);
+			this.miShowDebugWin.Text = "NS (Show debug window)";
+			this.miShowDebugWin.Click += new System.EventHandler(this.miShowDebugWin_Click);
+			// 
 			// FrmMainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -997,6 +1006,7 @@
 			this.MinimumSize = new System.Drawing.Size(400, 350);
 			this.Name = "FrmMainWindow";
 			this.Text = "NS (Title)";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Load += new System.EventHandler(this.MainWindow_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMainWindow_FormClosing);
 			this.Resize += new System.EventHandler(this.FrmMainWindow_Resize);
@@ -1010,7 +1020,6 @@
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			this.splitContainer1.ResumeLayout(false);
-			this.TabsSrc.ResumeLayout(false);
 			this.TabsMsg.ResumeLayout(false);
 			this.TabMsgIDE.ResumeLayout(false);
 			this.TabBuildLog.ResumeLayout(false);
@@ -1018,6 +1027,7 @@
 			this.MenuTabs.ResumeLayout(false);
 			this.StripPrj.ResumeLayout(false);
 			this.StripPrj.PerformLayout();
+			this.TabsSrc.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1115,6 +1125,7 @@
 		private System.Windows.Forms.ToolStripSeparator tsSeparatorAfterCommunity;
 		private System.Windows.Forms.ToolStripMenuItem MiCuruxaCommunityWebsite;
 		private System.Windows.Forms.ToolStripMenuItem miInfoHelpIde;
+		private System.Windows.Forms.ToolStripMenuItem miShowDebugWin;
 	}
 }
 
