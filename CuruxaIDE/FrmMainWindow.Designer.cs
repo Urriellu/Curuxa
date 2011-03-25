@@ -46,11 +46,12 @@
 			this.MiUndo = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiRedo = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+			this.MiSelectAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiCut = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiCopy = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPaste = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-			this.MiSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+			this.miShowDebugWin = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiPreferences = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiProject = new System.Windows.Forms.ToolStripMenuItem();
 			this.MiNewFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,7 +116,7 @@
 			this.BtnStop = new System.Windows.Forms.ToolStripButton();
 			this.TabsSrc = new CuruxaIDE.SrcTabControl();
 			this.TabDemo = new System.Windows.Forms.TabPage();
-			this.miShowDebugWin = new System.Windows.Forms.ToolStripMenuItem();
+			this.miCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
 			this.StatusStrip.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -322,6 +323,14 @@
 			this.toolStripSeparator7.Name = "toolStripSeparator7";
 			this.toolStripSeparator7.Size = new System.Drawing.Size(204, 6);
 			// 
+			// MiSelectAll
+			// 
+			this.MiSelectAll.Name = "MiSelectAll";
+			this.MiSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+			this.MiSelectAll.Size = new System.Drawing.Size(207, 22);
+			this.MiSelectAll.Text = "NS (Select All)";
+			this.MiSelectAll.Click += new System.EventHandler(this.MiSelectAll_Click);
+			// 
 			// MiCut
 			// 
 			this.MiCut.Image = ((System.Drawing.Image)(resources.GetObject("MiCut.Image")));
@@ -357,13 +366,12 @@
 			this.toolStripSeparator8.Name = "toolStripSeparator8";
 			this.toolStripSeparator8.Size = new System.Drawing.Size(204, 6);
 			// 
-			// MiSelectAll
+			// miShowDebugWin
 			// 
-			this.MiSelectAll.Name = "MiSelectAll";
-			this.MiSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-			this.MiSelectAll.Size = new System.Drawing.Size(207, 22);
-			this.MiSelectAll.Text = "NS (Select All)";
-			this.MiSelectAll.Click += new System.EventHandler(this.MiSelectAll_Click);
+			this.miShowDebugWin.Name = "miShowDebugWin";
+			this.miShowDebugWin.Size = new System.Drawing.Size(207, 22);
+			this.miShowDebugWin.Text = "NS (Show debug window)";
+			this.miShowDebugWin.Click += new System.EventHandler(this.miShowDebugWin_Click);
 			// 
 			// MiPreferences
 			// 
@@ -495,6 +503,7 @@
 			// MiHelp
 			// 
 			this.MiHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCheckUpdates,
             this.MiLanguage,
             this.toolStripMenuItem5,
             this.MiWebsite,
@@ -984,12 +993,12 @@
 			this.TabDemo.Text = "demo tab page";
 			this.TabDemo.UseVisualStyleBackColor = true;
 			// 
-			// miShowDebugWin
+			// miCheckUpdates
 			// 
-			this.miShowDebugWin.Name = "miShowDebugWin";
-			this.miShowDebugWin.Size = new System.Drawing.Size(207, 22);
-			this.miShowDebugWin.Text = "NS (Show debug window)";
-			this.miShowDebugWin.Click += new System.EventHandler(this.miShowDebugWin_Click);
+			this.miCheckUpdates.Name = "miCheckUpdates";
+			this.miCheckUpdates.Size = new System.Drawing.Size(242, 22);
+			this.miCheckUpdates.Text = "NS (Check for updates)";
+			this.miCheckUpdates.Click += new System.EventHandler(this.miCheckUpdates_Click);
 			// 
 			// FrmMainWindow
 			// 
@@ -1126,6 +1135,7 @@
 		private System.Windows.Forms.ToolStripMenuItem MiCuruxaCommunityWebsite;
 		private System.Windows.Forms.ToolStripMenuItem miInfoHelpIde;
 		private System.Windows.Forms.ToolStripMenuItem miShowDebugWin;
+		private System.Windows.Forms.ToolStripMenuItem miCheckUpdates;
 	}
 }
 

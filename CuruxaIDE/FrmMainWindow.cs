@@ -186,6 +186,7 @@ namespace CuruxaIDE {
 			MiPrintPreview.Text = i18n.str("PrintPreview");
 			lblLoadingSrc.Text = i18n.str("loadingSrc");
 			miShowDebugWin.Text = i18n.str("showDebugWin");
+			miCheckUpdates.Text = i18n.str("btnCheckUpdate");
 		}
 
 		string FormatLogText(string Text) {
@@ -891,6 +892,10 @@ namespace CuruxaIDE {
 
 		private void miShowDebugWin_Click(object sender, EventArgs e) {
 			Globals.DebugWindow.Show();
+		}
+
+		private void miCheckUpdates_Click(object sender, EventArgs e) {
+			InstallManager.CheckUpdates();
 		}
 	}
 }

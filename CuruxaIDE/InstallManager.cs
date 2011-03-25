@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using System.Deployment.Application;
+using System.Windows.Forms;
 
 namespace CuruxaIDE {
 	public static class InstallManager {
@@ -39,6 +41,28 @@ namespace CuruxaIDE {
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Checks for update and install it
+		/// </summary>
+		public static void CheckUpdates() {
+			try {
+				Globals.LogIDE(i18n.str("checkingUpdates"));
+				if(ApplicationDeployment.IsNetworkDeployed) {
+					if(ApplicationDeployment.CurrentDeployment.CheckForUpdate()) {
+						//there is an update
+						ApplicationDeployment.CurrentDeployment.UpdateCompleted += new System.ComponentModel.AsyncCompletedEventHandler(CurrentDeployment_UpdateCompleted);
+						ApplicationDeployment.CurrentDeployment.UpdateAsync();
+					} else Globals.LogIDE(i18n.str("noUpdates"));
+				} else Globals.LogIDE(i18n.str("cantUpdateAuto"));
+			} catch(Exception ex) {
+				Globals.LogIDE(i18n.str("errorWhileUpdate", ex.Message));
+			}
+		}
+
+		static void CurrentDeployment_UpdateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
+			Globals.LogIDE(i18n.str("updateCompleted"));
 		}
 	}
 }
