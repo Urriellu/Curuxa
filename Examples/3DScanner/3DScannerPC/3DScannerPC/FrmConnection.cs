@@ -29,6 +29,8 @@ namespace _3DScannerPC {
 		}
 
 		public void UpdateStatus() {
+			btnConnect.Enabled = (Communication.Status == Status.Disconnected);
+			btnDisconnect.Enabled = (Communication.Status == Status.Connected);
 			if(Communication.Status == Status.Connected) {
 				lblStatus.Text = i18n.str("Connected");
 				lblStatus.ForeColor = Color.Green;
