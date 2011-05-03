@@ -65,6 +65,10 @@ namespace _3DScannerPC {
 			miMode.Text = i18n.str("Mode");
 			miModeManual.Text = i18n.str("ManualControl");
 			miModeScan.Text = i18n.str("Scan");
+			miEdit.Text = i18n.str("Edit");
+			miView.Text = i18n.str("View");
+			miLanguage.Text = i18n.str("Language");
+			miHelp.Text = i18n.str("Help");
 
 			foreach(Form f in MdiChildren) {
 				if(f is ILocalizable) {
@@ -204,6 +208,10 @@ namespace _3DScannerPC {
 
 		private void miConnection_Click(object sender, EventArgs e) {
 			frmConnection.Show();
+		}
+
+		private void miWindowsDefaultPos_Click(object sender, EventArgs e) {
+			SetMdiChildrenDefaultLocations();
 		}
 	}
 }
