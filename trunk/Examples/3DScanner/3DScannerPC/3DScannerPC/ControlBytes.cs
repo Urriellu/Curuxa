@@ -21,11 +21,16 @@ namespace _3DScannerPC {
 		/// <summary>
 		/// Set horizontal position (manual mode)
 		/// </summary>
-		SetPosH = 101,
+		ManualSetPosH = 101,
 
 		/// <summary>
 		/// Set vertial position (manual mode)
 		/// </summary>
-		SetPosV=102
+		ManualSetPosV = 102,
+
+		/// <summary>
+		/// Send MCU->PC measured value (by distance sensor) in manual mode
+		/// </summary>
+		ManualTxValue = 103,
 	}
 }

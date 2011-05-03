@@ -14,6 +14,7 @@ namespace _3DScannerPC {
 		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
 		static Dummy s = new Dummy();
 		public static bool Authenticated { get; private set; }
+		public static ScannerMode ScannerMode = ScannerMode.Inactive;
 
 		public static Status Status {
 			get {
@@ -21,7 +22,7 @@ namespace _3DScannerPC {
 			}
 			private set {
 				_Status = value;
-				if(Globals.MainWindow != null) Globals.MainWindow.SetConnectionStatus(value);
+				if(Globals.MainWindow != null) Globals.MainWindow.UpdateStatus();
 				if(value == Status.Disconnected) Authenticated = false;
 			}
 		}
@@ -44,35 +45,40 @@ namespace _3DScannerPC {
 		/// <summary>
 		/// Connect to the microcontroller
 		/// </summary>
-		public static void Connect() {
+		public static void Connect(string portName, int baudRate) {
 			Globals.Log("Trying to connect");
 			if(Communication.SP != null && Communication.SP.IsOpen) Communication.SP.Close();
-			Communication.SP = new SerialPort(Settings.SpName, Settings.BaudRate, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
+			SP = new SerialPort(portName, baudRate, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
 			try {
-				Communication.SP.Open();
-				Globals.Log("Connected to " + Settings.SpName);
+				//SP.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(SP_DataReceived);
+				SP.Open();
+				Globals.Log("Connected to " + portName);
 				if(ThreadReceiver == null) {
 					ThreadReceiver = new Thread(Communication.DataReceiver);
 					ThreadReceiver.Start();
 				}
 				//Check();
+				Status = Status.Connected;
 			} catch(Exception e) {
 				Globals.Log("Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
 			}
+			Globals.MainWindow.UpdateStatus();
 		}
 
 		static void AuthTimer_Tick(object sender, EventArgs e) {
 			// ask for authentification
-			Check();
+			/*if(Status == Status.Connected) {
+				Check();
 
-			if((DateTime.Now - LastAuthentication).TotalSeconds > 2.5) {
-				Globals.Log("Not authenticated for too long...");
-				//Disconnect();
-				Authenticated = false;
-			}
+				if((DateTime.Now - LastAuthentication).TotalSeconds > 2.5) {
+					Globals.Log("Not authenticated for too long...");
+					//Disconnect();
+					Authenticated = false;
+				}
+			}*/
 
-			if(Status == Status.Disconnected) Connect();
+			//if(Status == Status.Disconnected) Connect();
 		}
 
 		public static void Disconnect() {
@@ -87,21 +93,26 @@ namespace _3DScannerPC {
 			}
 			Authenticated = false;
 			Status = Status.Disconnected;
+			ScannerMode = ScannerMode.Inactive;
 			Globals.Log("Disconnected");
+			Globals.MainWindow.UpdateStatus();
 		}
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
-		public static void Send(byte B) {
+		public static bool Send(byte B) {
 			if(SP != null && SP.IsOpen) {
 				try {
 					SP.WriteByte(B);
 					Globals.Log("Byte sent: " + B.ToString());
 					Thread.Sleep(10);
+					return true;
 				} catch(Exception e) {
 					Globals.Log("Error while sending byte \"" + B.ToString() + "\": " + e.Message);
+					return false;
 				}
 			} else {
 				Globals.Log("Unable to send byte: " + B.ToString());
+				return false;
 			}
 		}
 
@@ -111,9 +122,9 @@ namespace _3DScannerPC {
 			}
 		}
 
-		public static void Send(ControlByte CB) {
+		public static bool Send(ControlByte CB) {
 			lock(s) {
-				Send((byte)CB);
+				return Send((byte)CB);
 			}
 		}
 
@@ -141,6 +152,7 @@ namespace _3DScannerPC {
 		/// Method run on a separate thread which maked polling to the serial port and processes received data
 		/// </summary>
 		public static void DataReceiver() {
+		//public static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
 			Globals.Log("Starting receiver thread");
 			do {
 				while(SP != null && SP.IsOpen && Globals.MainWindow != null) {
@@ -149,50 +161,64 @@ namespace _3DScannerPC {
 						ControlByte BC = (ControlByte)Rcv;
 						if(BC == ControlByte.AuthID) {
 							Rcv = (byte)SP.ReadByte();
-							if(Rcv == Settings.RobotID) {
+							if(Rcv == Settings.ScannerID) {
 								// auth success
 								Status = Status.Connected;
 								Authenticated = true;
 								LastAuthentication = DateTime.Now;
 							} else {
-								Globals.Log("Authentication failure, disconnecting...");
+								Globals.Log("Authentication failure (received ID: " + Rcv + "), disconnecting...");
 								Disconnect();
 							}
 						}
 
-						if(Authenticated) {
-							switch(BC) {
-								case ControlByte.AuthID:
-									break;
-								/*case ControlByte.StatusBumpers:
-									Globals.Log("Received bumper status...");
-									Rcv = (byte)SP.ReadByte();
-									ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
-									Globals.Log("..." + BumperStatus.ToString());
-									if(Globals.MainWindow != null) Globals.MainWindow.SetBumperStatus(BumperStatus);
-									break;
-								case ControlByte.StatusBaseMovement:
-									Globals.Log("Received base movement status...");
-									Rcv = (byte)SP.ReadByte();
-									ControlByteBaseMv BaseMvStatus = ((ControlByteBaseMv)Enum.Parse(typeof(ControlByteBaseMv), Rcv.ToString()));
-									Globals.Log("..." + BaseMvStatus.ToString());
-									if(Globals.MainWindow != null) Globals.MainWindow.SetBaseMvStatus(BaseMvStatus);
-									break;*/
-								default:
-									Globals.Log("Unknown control byte: " + BC.ToString());
-									break;
-							}
-						} else {
-							Globals.Log("Not authenticated, ignoring received byte: " + Rcv);
+						//if(Authenticated) {
+						switch(BC) {
+							case ControlByte.AuthID:
+								break;
+							/*case ControlByte.StatusBumpers:
+								Globals.Log("Received bumper status...");
+								Rcv = (byte)SP.ReadByte();
+								ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
+								Globals.Log("..." + BumperStatus.ToString());
+								if(Globals.MainWindow != null) Globals.MainWindow.SetBumperStatus(BumperStatus);
+								break;
+							case ControlByte.StatusBaseMovement:
+								Globals.Log("Received base movement status...");
+								Rcv = (byte)SP.ReadByte();
+								ControlByteBaseMv BaseMvStatus = ((ControlByteBaseMv)Enum.Parse(typeof(ControlByteBaseMv), Rcv.ToString()));
+								Globals.Log("..." + BaseMvStatus.ToString());
+								if(Globals.MainWindow != null) Globals.MainWindow.SetBaseMvStatus(BaseMvStatus);
+								break;*/
+							case ControlByte.ManualTxValue:
+								UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
+								receivedValue += (byte)SP.ReadByte();
+								Globals.MainWindow.SetReceivedManualValue(receivedValue);
+								Globals.Log("Received manual value: " + receivedValue);
+								break;
+							default:
+								Globals.Log("Unknown control byte: " + BC.ToString());
+								break;
 						}
-					} catch(Exception e) {
-						Globals.Log("Error receiving data: " + e.Message);
+						/*} else {
+							Globals.Log("Not authenticated, ignoring received byte: " + Rcv);
+						}*/
+					} catch(Exception ex) {
+						Globals.Log("Error receiving data: " + ex.Message);
 					}
 				}
 				Thread.Sleep(100);
 			} while(true);
 			Globals.Log("Closing receiver thread");
 			Disconnect(); //avoid being connected with no DataReceiver
+		}
+
+		public static void SetMode(ScannerMode scannerMode) {
+			lock(s) {
+				Globals.Log("Activating manual mode");
+				if(Send(ControlByte.ActivateManualMode)) ScannerMode = ScannerMode.Manual;
+				Globals.MainWindow.UpdateStatus();
+			}
 		}
 	}
 }

@@ -11,9 +11,11 @@ namespace _3DScannerPC {
 	public partial class FrmMdiParent:Form, ILocalizable {
 		FrmAbout frmAbout = new FrmAbout();
 		FrmManualControl frmManualControl;
+		FrmConnection frmConnection;
 		public FrmLog frmLog;
 
 		public FrmMdiParent() {
+			Control.CheckForIllegalCrossThreadCalls = false;
 			InitializeComponent();
 		}
 
@@ -24,17 +26,23 @@ namespace _3DScannerPC {
 			frmLog = new FrmLog();
 			frmLog.MdiParent = this;
 
+			frmConnection = new FrmConnection();
+			frmConnection.MdiParent = this;
+
 			SetMdiChildrenDefaultLocations();
 
 			UpdateLang();
 
 			frmManualControl.Show();
 			frmLog.Show();
+			frmConnection.Show();
 
 			Globals.Log(i18n.str("init"));
 
-			SetConnectionStatus(Status.Disconnected);
-			Communication.Connect();
+			//ShowConnectionStatus(Status.Disconnected);
+			UpdateStatus();
+
+			//Communication.Connect();
 		}
 
 		private void SetMdiChildrenDefaultLocations() {
@@ -43,14 +51,20 @@ namespace _3DScannerPC {
 			frmManualControl.StartPosition = FormStartPosition.Manual;
 			frmManualControl.Location = new Point(Width - frmManualControl.Width - t, 0);
 
+			frmConnection.StartPosition = FormStartPosition.Manual;
+			frmConnection.Location = new Point(Width - frmConnection.Width - t, Height - frmConnection.Height - statusStrip.Height - 2 * t);
+
 			frmLog.StartPosition = FormStartPosition.Manual;
-			frmLog.Width = Width - t;
-			frmLog.Location = new Point(0, Height - frmLog.Height - statusStrip.Height - 2*t);
+			frmLog.Width = Width - frmConnection.Width - 2 * t;
+			frmLog.Location = new Point(0, Height - frmLog.Height - statusStrip.Height - 2 * t);
 		}
 
 		public void UpdateLang() {
 			miFile.Text = i18n.str("File");
 			miExit.Text = i18n.str("Exit");
+			miMode.Text = i18n.str("Mode");
+			miModeManual.Text = i18n.str("ManualControl");
+			miModeScan.Text = i18n.str("Scan");
 
 			foreach(Form f in MdiChildren) {
 				if(f is ILocalizable) {
@@ -143,7 +157,10 @@ namespace _3DScannerPC {
 			frmLog.Show();
 		}
 
-		public void SetConnectionStatus(Status st) {
+		/*/// <summary>
+		/// Update GUI to show connection status
+		/// </summary>
+		public void ShowConnectionStatus(Status st) {
 			if(st == Status.Connected) {
 				tsStatus.Text = i18n.str("Connected");
 				tsStatus.ForeColor = Color.Green;
@@ -151,13 +168,42 @@ namespace _3DScannerPC {
 				tsStatus.Text = i18n.str("Disconnected");
 				tsStatus.ForeColor = Color.Red;
 			}
+		}*/
+
+		/// <summary>
+		/// Update GUI to show connection status and current scanner mode
+		/// </summary>
+		public void UpdateStatus() {
+			if(Communication.Status == Status.Connected) {
+				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Communication.ScannerMode) + ")";
+				tsStatus.ForeColor = Color.Green;
+			} else {
+				tsStatus.Text = i18n.str("Disconnected");
+				tsStatus.ForeColor = Color.Red;
+			}
+			frmConnection.UpdateStatus();
+			frmManualControl.Enabled = (Communication.Status == Status.Connected && Communication.ScannerMode == ScannerMode.Manual);
+			miMode.Enabled = (Communication.Status == Status.Connected);
 		}
 
 		private void FrmMdiParent_FormClosing(object sender, FormClosingEventArgs e) {
+			Communication.Disconnect();
 			foreach(Form childForm in MdiChildren) {
 				childForm.Close();
 			}
 			Environment.Exit(0);
+		}
+
+		public void SetReceivedManualValue(UInt16 value) {
+			frmManualControl.SetReceivedManualValue(value);
+		}
+
+		private void miModeManual_Click(object sender, EventArgs e) {
+			Communication.SetMode(ScannerMode.Manual);
+		}
+
+		private void miConnection_Click(object sender, EventArgs e) {
+			frmConnection.Show();
 		}
 	}
 }

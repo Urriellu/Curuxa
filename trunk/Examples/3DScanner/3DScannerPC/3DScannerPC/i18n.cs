@@ -39,6 +39,21 @@ namespace _3DScannerPC {
 			langEn.Add("init", "Initializing application...");
 			langEn.Add("Connected", "Connected");
 			langEn.Add("Disconnected", "Disconnected");
+			langEn.Add("Mode", "Mode");
+			langEn.Add("Mode" + ScannerMode.Inactive, "Inactive");
+			langEn.Add("Mode" + ScannerMode.Manual, "Manual");
+			langEn.Add("Mode" + ScannerMode.Scan, "Scanning");
+			langEn.Add("ManualControl", "Manual Control");
+			langEn.Add("Scan", "Scan");
+			langEn.Add("recManualTitle", "Latest Received Value:");
+			langEn.Add("recManualValue", "Value: {0} ({1}-{2})");
+			langEn.Add("recManualVoltage", "Voltage: {0}V (0V={1}, {2}V={3})");
+			langEn.Add("recManualDistance", "Distance: {0}mm (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linear)");
+			langEn.Add("Connection", "Connection");
+			langEn.Add("UpdateList", "Update List");
+			langEn.Add("bauds", "bauds");
+			langEn.Add("Connect", "Connect");
+			langEn.Add("Disconnect", "Disconnect");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

@@ -77,6 +77,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.miConnection = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -114,8 +115,8 @@
             this.miExit});
 			this.miFile.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
 			this.miFile.Name = "miFile";
-			this.miFile.Size = new System.Drawing.Size(35, 20);
-			this.miFile.Text = "&File";
+			this.miFile.Size = new System.Drawing.Size(59, 20);
+			this.miFile.Text = "NS (File)";
 			// 
 			// newToolStripMenuItem
 			// 
@@ -135,7 +136,7 @@
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
 			this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.openToolStripMenuItem.Text = "&Open";
+			this.openToolStripMenuItem.Text = "NS (Open)";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenFile);
 			// 
 			// toolStripSeparator3
@@ -151,14 +152,14 @@
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.saveToolStripMenuItem.Text = "&Save";
+			this.saveToolStripMenuItem.Text = "NS (Save)";
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Enabled = false;
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
 			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.saveAsToolStripMenuItem.Text = "Save &As";
+			this.saveAsToolStripMenuItem.Text = "NS (Save As)";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
@@ -174,7 +175,7 @@
 			this.printToolStripMenuItem.Name = "printToolStripMenuItem";
 			this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
 			this.printToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.printToolStripMenuItem.Text = "&Print";
+			this.printToolStripMenuItem.Text = "NS (Print)";
 			// 
 			// printPreviewToolStripMenuItem
 			// 
@@ -183,14 +184,14 @@
 			this.printPreviewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
 			this.printPreviewToolStripMenuItem.Name = "printPreviewToolStripMenuItem";
 			this.printPreviewToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.printPreviewToolStripMenuItem.Text = "Print Pre&view";
+			this.printPreviewToolStripMenuItem.Text = "NS (Print Pre&view)";
 			// 
 			// printSetupToolStripMenuItem
 			// 
 			this.printSetupToolStripMenuItem.Enabled = false;
 			this.printSetupToolStripMenuItem.Name = "printSetupToolStripMenuItem";
 			this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
-			this.printSetupToolStripMenuItem.Text = "Print Setup";
+			this.printSetupToolStripMenuItem.Text = "NS (Print Setup)";
 			// 
 			// toolStripSeparator5
 			// 
@@ -201,7 +202,7 @@
 			// 
 			this.miExit.Name = "miExit";
 			this.miExit.Size = new System.Drawing.Size(224, 22);
-			this.miExit.Text = "E&xit";
+			this.miExit.Text = "NS (E&xit)";
 			this.miExit.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
 			// 
 			// miEdit
@@ -216,8 +217,8 @@
             this.toolStripSeparator7,
             this.selectAllToolStripMenuItem});
 			this.miEdit.Name = "miEdit";
-			this.miEdit.Size = new System.Drawing.Size(37, 20);
-			this.miEdit.Text = "&Edit";
+			this.miEdit.Size = new System.Drawing.Size(61, 20);
+			this.miEdit.Text = "NS (&Edit)";
 			// 
 			// undoToolStripMenuItem
 			// 
@@ -300,6 +301,7 @@
 			this.miModeManual.Name = "miModeManual";
 			this.miModeManual.Size = new System.Drawing.Size(172, 22);
 			this.miModeManual.Text = "NOT SET (Manual)";
+			this.miModeManual.Click += new System.EventHandler(this.miModeManual_Click);
 			// 
 			// miModeScan
 			// 
@@ -310,13 +312,14 @@
 			// viewMenu
 			// 
 			this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miConnection,
             this.miManualControl,
             this.miLog,
             this.toolStripMenuItem1,
             this.statusBarToolStripMenuItem});
 			this.viewMenu.Name = "viewMenu";
-			this.viewMenu.Size = new System.Drawing.Size(41, 20);
-			this.viewMenu.Text = "&View";
+			this.viewMenu.Size = new System.Drawing.Size(65, 20);
+			this.viewMenu.Text = "NS (&View)";
 			// 
 			// miManualControl
 			// 
@@ -344,7 +347,7 @@
 			this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
 			this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-			this.statusBarToolStripMenuItem.Text = "&Status Bar";
+			this.statusBarToolStripMenuItem.Text = "NS (&Status Bar)";
 			this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
 			// 
 			// toolsMenu
@@ -352,8 +355,8 @@
 			this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
 			this.toolsMenu.Name = "toolsMenu";
-			this.toolsMenu.Size = new System.Drawing.Size(44, 20);
-			this.toolsMenu.Text = "&Tools";
+			this.toolsMenu.Size = new System.Drawing.Size(68, 20);
+			this.toolsMenu.Text = "NS (&Tools)";
 			// 
 			// optionsToolStripMenuItem
 			// 
@@ -509,6 +512,13 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
+			// miConnection
+			// 
+			this.miConnection.Name = "miConnection";
+			this.miConnection.Size = new System.Drawing.Size(210, 22);
+			this.miConnection.Text = "NOT SET (Connection)";
+			this.miConnection.Click += new System.EventHandler(this.miConnection_Click);
+			// 
 			// FrmMdiParent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -586,6 +596,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miFrench;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem miLog;
+		private System.Windows.Forms.ToolStripMenuItem miConnection;
 	}
 }
 
