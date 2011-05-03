@@ -46,14 +46,18 @@ namespace _3DScannerPC {
 			langEn.Add("ManualControl", "Manual Control");
 			langEn.Add("Scan", "Scan");
 			langEn.Add("recManualTitle", "Latest Received Value:");
-			langEn.Add("recManualValue", "Value: {0} ({1}-{2})");
-			langEn.Add("recManualVoltage", "Voltage: {0}V (0V={1}, {2}V={3})");
+			langEn.Add("recManualValue", "Value: {0} (0-{1})");
+			langEn.Add("recManualVoltage", "Voltage: {0}V (0V=0, {1}V={2})");
 			langEn.Add("recManualDistance", "Distance: {0}mm (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linear)");
 			langEn.Add("Connection", "Connection");
 			langEn.Add("UpdateList", "Update List");
 			langEn.Add("bauds", "bauds");
 			langEn.Add("Connect", "Connect");
 			langEn.Add("Disconnect", "Disconnect");
+			langEn.Add("Edit", "Edit");
+			langEn.Add("View", "View");
+			langEn.Add("Language", "Language");
+			langEn.Add("Help", "Help");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 
@@ -70,7 +74,28 @@ namespace _3DScannerPC {
 			Dictionary<string, string> langFr = new Dictionary<string, string>();
 			langFr.Add("File", "Fichier");
 			langFr.Add("Exit", "Sortir");
-			langFr.Add("About", "About...");
+			langFr.Add("About", "À propos de...");
+			langFr.Add("init", "Debut du programme...");
+			langFr.Add("Connected", "Connecté");
+			langFr.Add("Disconnected", "Déconnecté");
+			langFr.Add("Mode", "Mode");
+			langFr.Add("Mode" + ScannerMode.Inactive, "Inactif");
+			langFr.Add("Mode" + ScannerMode.Manual, "Manuel");
+			langFr.Add("Mode" + ScannerMode.Scan, "Numérisation");
+			langFr.Add("ManualControl", "Contrôle Manuel");
+			langFr.Add("Scan", "Scan");
+			langFr.Add("recManualTitle", "Dernière Valeur Reçu :");
+			langFr.Add("recManualValue", "Valeur: {0} (0-{1})");
+			langFr.Add("recManualVoltage", "Tension: {0}V (0V=0, {1}V={2})");
+			langFr.Add("recManualDistance", "Distance: {0}mm (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linéaire)");
+			langFr.Add("Connection", "Connexion");
+			langFr.Add("UpdateList", "Mise à jour");
+			langFr.Add("bauds", "bauds");
+			langFr.Add("Connect", "Connecter");
+			langFr.Add("Disconnect", "Déconnecter");
+			langFr.Add("Edit", "Modifier");
+			langFr.Add("View", "Affichage");
+			langFr.Add("Language", "Langage");
 			langs.Add("fr", langFr);
 		}
 
