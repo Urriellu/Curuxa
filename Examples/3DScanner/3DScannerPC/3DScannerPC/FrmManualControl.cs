@@ -53,10 +53,10 @@ namespace _3DScannerPC {
 		}
 
 		private void UpdateReceivedValues() {
-			lblReceivedValue.Text = i18n.str("recManualValue", value, Settings.AdcMin, Settings.AdcMax);
-			float voltage = 3.25f;
-			lblReceivedVoltage.Text = i18n.str("recManualVoltage", voltage, Settings.AdcMin, numVRefMax.Value, Settings.AdcMax);
-			float distance = 57.9f;
+			lblReceivedValue.Text = i18n.str("recManualValue", value, Settings.AdcMax);
+			float voltage = Measure.AdcValueToVoltage(value, Settings.AdcMax, (float)numVRefMax.Value);
+			lblReceivedVoltage.Text = i18n.str("recManualVoltage", voltage, numVRefMax.Value, Settings.AdcMax);
+			float distance = Measure.VoltageToDistance(voltage);
 			lblReceivedDistance.Text = i18n.str("recManualDistance", distance);
 		}
 
