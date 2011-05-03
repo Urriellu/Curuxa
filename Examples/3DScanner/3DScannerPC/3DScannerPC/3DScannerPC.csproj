@@ -90,6 +90,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="i18n.cs" />
     <Compile Include="ILocalizable.cs" />
+    <Compile Include="Measure.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAbout.resx">
