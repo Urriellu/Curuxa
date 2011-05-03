@@ -178,20 +178,20 @@ namespace _3DScannerPC {
 		/// Update GUI to show connection status and current scanner mode
 		/// </summary>
 		public void UpdateStatus() {
-			if(Communication.Status == Status.Connected) {
-				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Communication.ScannerMode) + ")";
+			if(Scanner.Status == Status.Connected) {
+				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Scanner.ScannerMode) + ")";
 				tsStatus.ForeColor = Color.Green;
 			} else {
 				tsStatus.Text = i18n.str("Disconnected");
 				tsStatus.ForeColor = Color.Red;
 			}
 			frmConnection.UpdateStatus();
-			frmManualControl.Enabled = (Communication.Status == Status.Connected && Communication.ScannerMode == ScannerMode.Manual);
-			miMode.Enabled = (Communication.Status == Status.Connected);
+			frmManualControl.Enabled = (Scanner.Status == Status.Connected && Scanner.ScannerMode == ScannerMode.Manual);
+			miMode.Enabled = (Scanner.Status == Status.Connected);
 		}
 
 		private void FrmMdiParent_FormClosing(object sender, FormClosingEventArgs e) {
-			Communication.Disconnect();
+			Scanner.Disconnect();
 			foreach(Form childForm in MdiChildren) {
 				childForm.Close();
 			}
@@ -203,7 +203,7 @@ namespace _3DScannerPC {
 		}
 
 		private void miModeManual_Click(object sender, EventArgs e) {
-			Communication.SetMode(ScannerMode.Manual);
+			Scanner.SetMode(ScannerMode.Manual);
 		}
 
 		private void miConnection_Click(object sender, EventArgs e) {

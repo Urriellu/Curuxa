@@ -10,6 +10,9 @@ namespace _3DScannerPC {
 		/// </summary>
 		public float VRef;
 
+		public float ServoHOffset;
+		public float ServoVOffset;
+
 		public byte ServoH_0deg;
 		public byte ServoH_180deg;
 		public byte ServoV_0deg;
