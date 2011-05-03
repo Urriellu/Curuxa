@@ -29,9 +29,9 @@ namespace _3DScannerPC {
 		}
 
 		public void UpdateStatus() {
-			btnConnect.Enabled = (Communication.Status == Status.Disconnected);
-			btnDisconnect.Enabled = (Communication.Status == Status.Connected);
-			if(Communication.Status == Status.Connected) {
+			btnConnect.Enabled = (Scanner.Status == Status.Disconnected);
+			btnDisconnect.Enabled = (Scanner.Status == Status.Connected);
+			if(Scanner.Status == Status.Connected) {
 				lblStatus.Text = i18n.str("Connected");
 				lblStatus.ForeColor = Color.Green;
 			} else {
@@ -55,11 +55,11 @@ namespace _3DScannerPC {
 		}
 
 		private void btnConnect_Click(object sender, EventArgs e) {
-			Communication.Connect(cmbPort.Text, int.Parse(cmbBaud.Text));
+			Scanner.Connect(cmbPort.Text, int.Parse(cmbBaud.Text));
 		}
 
 		private void btnDisconnect_Click(object sender, EventArgs e) {
-			Communication.Disconnect();
+			Scanner.Disconnect();
 		}
 
 		private void FrmConnection_FormClosing(object sender, FormClosingEventArgs e) {

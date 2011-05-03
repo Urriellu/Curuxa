@@ -6,13 +6,13 @@ using System.Threading;
 using SWF = System.Windows.Forms;
 
 namespace _3DScannerPC {
-	class Dummy {
+	class DummyLocker {
 	}
 
-	public static class Communication {
+	public static class Scanner {
 		static SWF.Timer AuthTimer;
 		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
-		static Dummy s = new Dummy();
+		static DummyLocker s = new DummyLocker();
 		public static bool Authenticated { get; private set; }
 		public static ScannerMode ScannerMode = ScannerMode.Inactive;
 
@@ -35,7 +35,7 @@ namespace _3DScannerPC {
 		/// </summary>
 		static Thread ThreadReceiver;
 
-		static Communication() {
+		static Scanner() {
 			AuthTimer = new SWF.Timer();
 			AuthTimer.Tick += new EventHandler(AuthTimer_Tick);
 			AuthTimer.Interval = 1000;
@@ -47,14 +47,14 @@ namespace _3DScannerPC {
 		/// </summary>
 		public static void Connect(string portName, int baudRate) {
 			Globals.Log("Trying to connect");
-			if(Communication.SP != null && Communication.SP.IsOpen) Communication.SP.Close();
+			if(Scanner.SP != null && Scanner.SP.IsOpen) Scanner.SP.Close();
 			SP = new SerialPort(portName, baudRate, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
 			try {
 				//SP.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(SP_DataReceived);
 				SP.Open();
 				Globals.Log("Connected to " + portName);
 				if(ThreadReceiver == null) {
-					ThreadReceiver = new Thread(Communication.DataReceiver);
+					ThreadReceiver = new Thread(Scanner.DataReceiver);
 					ThreadReceiver.Start();
 				}
 				//Check();
