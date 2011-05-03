@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>3DScannerMCU</Name>
+  <Description />
+  <MainBoard>MBP40</MainBoard>
+  <Voltage>5</Voltage>
+  <Language>C</Language>
+  <Programmer>PICkit2</Programmer>
+  <SrcFileNames>
+    <string>3DScannerMCU.c</string>
+  </SrcFileNames>
+</Project>
