@@ -35,7 +35,7 @@
 			this.txtLog.Name = "txtLog";
 			this.txtLog.ReadOnly = true;
 			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtLog.Size = new System.Drawing.Size(629, 126);
+			this.txtLog.Size = new System.Drawing.Size(629, 188);
 			this.txtLog.TabIndex = 0;
 			this.txtLog.WordWrap = false;
 			// 
@@ -43,7 +43,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(629, 126);
+			this.ClientSize = new System.Drawing.Size(629, 188);
 			this.Controls.Add(this.txtLog);
 			this.Name = "FrmLog";
 			this.ShowIcon = false;
