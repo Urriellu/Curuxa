@@ -17,11 +17,24 @@ namespace _3DScannerPC {
 
 		private void FrmManualControl_Load(object sender, EventArgs e) {
 			UpdateLang();
+
+			//set ranges for servos
+			manualControlH.SetRange(Servo.ServoRanges[ServoID.H].Duty0deg, Servo.ServoRanges[ServoID.H].Duty180deg);
+			manualNumControlH.Minimum = Servo.ServoRanges[ServoID.H].Duty0deg;
+			manualNumControlH.Maximum = Servo.ServoRanges[ServoID.H].Duty180deg;
+			manualNumControlH.Value = manualControlH.Value = (Servo.ServoRanges[ServoID.H].Duty180deg + Servo.ServoRanges[ServoID.H].Duty0deg) / 2;
+
+			manualControlV.SetRange(Servo.ServoRanges[ServoID.V].Duty0deg, Servo.ServoRanges[ServoID.V].Duty180deg);
+			manualNumControlV.Minimum = Servo.ServoRanges[ServoID.V].Duty0deg;
+			manualNumControlV.Maximum = Servo.ServoRanges[ServoID.V].Duty180deg;
+			manualNumControlV.Value = manualControlV.Value = (Servo.ServoRanges[ServoID.V].Duty180deg + Servo.ServoRanges[ServoID.V].Duty0deg) / 2;
 		}
 
 		public void UpdateLang() {
 			this.Text = i18n.str("ManualControl");
 			lblRecvTitle.Text = i18n.str("recManualTitle");
+			lblTitleH.Text = i18n.str("ManualControlHtitle");
+			lblTitleV.Text = i18n.str("ManualControlVtitle");
 			SetReceivedManualValue(0);
 		}
 
@@ -32,6 +45,7 @@ namespace _3DScannerPC {
 
 		private void manualNumControlH_ValueChanged(object sender, EventArgs e) {
 			manualControlH.Value = (int)manualNumControlH.Value;
+			manualControlH_Scroll(null, null);
 		}
 
 		private void manualControlH_Scroll(object sender, EventArgs e) {
@@ -41,6 +55,7 @@ namespace _3DScannerPC {
 
 		private void manualNumControlV_ValueChanged(object sender, EventArgs e) {
 			manualControlV.Value = (int)manualNumControlV.Value;
+			manualControlV_Scroll(null, null);
 		}
 
 		private void manualControlV_Scroll(object sender, EventArgs e) {
