@@ -64,7 +64,7 @@ namespace _3DScannerPC {
 			miExit.Text = i18n.str("Exit");
 			miMode.Text = i18n.str("Mode");
 			miModeManual.Text = i18n.str("ManualControl");
-			miModeScan.Text = i18n.str("Scan");
+			miModeInactive.Text = i18n.str("MenuModeInactiveReadyScan");
 			miEdit.Text = i18n.str("Edit");
 			miView.Text = i18n.str("View");
 			miLanguage.Text = i18n.str("Language");
@@ -212,6 +212,10 @@ namespace _3DScannerPC {
 
 		private void miWindowsDefaultPos_Click(object sender, EventArgs e) {
 			SetMdiChildrenDefaultLocations();
+		}
+
+		private void miModeInactive_Click(object sender, EventArgs e) {
+			Scanner.SetMode(ScannerMode.Inactive);
 		}
 	}
 }
