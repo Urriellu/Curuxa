@@ -4,6 +4,21 @@ using System.Linq;
 using System.Text;
 
 namespace _3DScannerPC {
+	public struct ServoRange {
+		public UInt16 Duty0deg;
+		public UInt16 Duty180deg;
+
+		public ServoRange(UInt16 duty0deg, UInt16 duty180deg){
+			this.Duty0deg=duty0deg;
+			this.Duty180deg=duty180deg;
+		}
+	}
+
+	public enum ServoID {
+		H,
+		V
+	}
+
 	/// <summary>
 	/// Servomotor-related operations
 	/// </summary>
@@ -20,6 +35,21 @@ namespace _3DScannerPC {
 		/// Duty cycle (microseconds) for 180º
 		/// </summary>
 		const UInt16 Deg180 = 2100;
+
+		/// <summary>
+		/// List of hard-coded ranges for each servo
+		/// </summary>
+		public static Dictionary<ServoID, ServoRange> ServoRanges {
+			get {
+				if(_servoRanges==null){
+					_servoRanges = new Dictionary<ServoID, ServoRange>();
+					_servoRanges.Add(ServoID.H, new ServoRange(700, 2100));
+					_servoRanges.Add(ServoID.V, new ServoRange(900, 2000));
+				}
+				return _servoRanges;
+			}
+		}
+		static Dictionary<ServoID, ServoRange> _servoRanges;
 
 		/// <summary>
 		/// Get the amount of microseconds of duty cycle based on desired servo position (degrees)
