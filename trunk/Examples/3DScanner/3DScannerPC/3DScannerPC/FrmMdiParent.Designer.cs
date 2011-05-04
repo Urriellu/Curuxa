@@ -49,7 +49,7 @@
 			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miMode = new System.Windows.Forms.ToolStripMenuItem();
 			this.miModeManual = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModeScan = new System.Windows.Forms.ToolStripMenuItem();
+			this.miModeInactive = new System.Windows.Forms.ToolStripMenuItem();
 			this.miView = new System.Windows.Forms.ToolStripMenuItem();
 			this.miConnection = new System.Windows.Forms.ToolStripMenuItem();
 			this.miManualControl = new System.Windows.Forms.ToolStripMenuItem();
@@ -292,7 +292,7 @@
 			// 
 			this.miMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miModeManual,
-            this.miModeScan});
+            this.miModeInactive});
 			this.miMode.Name = "miMode";
 			this.miMode.Size = new System.Drawing.Size(98, 20);
 			this.miMode.Text = "NOT SET (Mode)";
@@ -304,11 +304,12 @@
 			this.miModeManual.Text = "NOT SET (Manual)";
 			this.miModeManual.Click += new System.EventHandler(this.miModeManual_Click);
 			// 
-			// miModeScan
+			// miModeInactive
 			// 
-			this.miModeScan.Name = "miModeScan";
-			this.miModeScan.Size = new System.Drawing.Size(172, 22);
-			this.miModeScan.Text = "NOT SET (Scan)";
+			this.miModeInactive.Name = "miModeInactive";
+			this.miModeInactive.Size = new System.Drawing.Size(254, 22);
+			this.miModeInactive.Text = "NOT SET (Inactive: Ready to Scan)";
+			this.miModeInactive.Click += new System.EventHandler(this.miModeInactive_Click);
 			// 
 			// miView
 			// 
@@ -454,20 +455,20 @@
 			// miEnglish
 			// 
 			this.miEnglish.Name = "miEnglish";
-			this.miEnglish.Size = new System.Drawing.Size(152, 22);
+			this.miEnglish.Size = new System.Drawing.Size(125, 22);
 			this.miEnglish.Text = "English";
 			this.miEnglish.Click += new System.EventHandler(this.miEnglish_Click);
 			// 
 			// miSpanish
 			// 
 			this.miSpanish.Name = "miSpanish";
-			this.miSpanish.Size = new System.Drawing.Size(152, 22);
+			this.miSpanish.Size = new System.Drawing.Size(125, 22);
 			this.miSpanish.Text = "Español";
 			// 
 			// miFrench
 			// 
 			this.miFrench.Name = "miFrench";
-			this.miFrench.Size = new System.Drawing.Size(152, 22);
+			this.miFrench.Size = new System.Drawing.Size(125, 22);
 			this.miFrench.Text = "Français";
 			this.miFrench.Click += new System.EventHandler(this.miFrench_Click);
 			// 
@@ -599,7 +600,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem miMode;
 		private System.Windows.Forms.ToolStripMenuItem miModeManual;
-		private System.Windows.Forms.ToolStripMenuItem miModeScan;
+		private System.Windows.Forms.ToolStripMenuItem miModeInactive;
 		private System.Windows.Forms.ToolStripMenuItem miLanguage;
 		private System.Windows.Forms.ToolStripMenuItem miEnglish;
 		private System.Windows.Forms.ToolStripMenuItem miSpanish;
