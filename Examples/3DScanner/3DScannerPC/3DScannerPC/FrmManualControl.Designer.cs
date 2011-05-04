@@ -34,6 +34,12 @@
 			this.lblRecvTitle = new System.Windows.Forms.Label();
 			this.lblReceivedDistance = new System.Windows.Forms.Label();
 			this.lblReceivedVoltage = new System.Windows.Forms.Label();
+			this.lblDegH = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.lblDegV = new System.Windows.Forms.Label();
+			this.lblTitleH = new System.Windows.Forms.Label();
+			this.lblTitleV = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualControlV)).BeginInit();
@@ -44,31 +50,31 @@
 			// manualNumControlV
 			// 
 			this.manualNumControlV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.manualNumControlV.Location = new System.Drawing.Point(445, 12);
+			this.manualNumControlV.Location = new System.Drawing.Point(424, 25);
 			this.manualNumControlV.Name = "manualNumControlV";
 			this.manualNumControlV.Size = new System.Drawing.Size(64, 20);
 			this.manualNumControlV.TabIndex = 11;
-			this.manualNumControlV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.manualNumControlV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.manualNumControlV.ValueChanged += new System.EventHandler(this.manualNumControlV_ValueChanged);
 			// 
 			// manualNumControlH
 			// 
-			this.manualNumControlH.Location = new System.Drawing.Point(12, 58);
+			this.manualNumControlH.Location = new System.Drawing.Point(15, 25);
 			this.manualNumControlH.Name = "manualNumControlH";
 			this.manualNumControlH.Size = new System.Drawing.Size(68, 20);
 			this.manualNumControlH.TabIndex = 10;
-			this.manualNumControlH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.manualNumControlH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.manualNumControlH.ValueChanged += new System.EventHandler(this.manualNumControlH_ValueChanged);
 			// 
 			// manualControlV
 			// 
 			this.manualControlV.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.manualControlV.Location = new System.Drawing.Point(460, 38);
+			this.manualControlV.Location = new System.Drawing.Point(460, 67);
 			this.manualControlV.Maximum = 100;
 			this.manualControlV.Name = "manualControlV";
 			this.manualControlV.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.manualControlV.Size = new System.Drawing.Size(42, 230);
+			this.manualControlV.Size = new System.Drawing.Size(42, 211);
 			this.manualControlV.TabIndex = 9;
 			this.manualControlV.Value = 50;
 			this.manualControlV.Scroll += new System.EventHandler(this.manualControlV_Scroll);
@@ -77,10 +83,10 @@
 			// 
 			this.manualControlH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.manualControlH.Location = new System.Drawing.Point(92, 51);
+			this.manualControlH.Location = new System.Drawing.Point(110, 25);
 			this.manualControlH.Maximum = 100;
 			this.manualControlH.Name = "manualControlH";
-			this.manualControlH.Size = new System.Drawing.Size(346, 42);
+			this.manualControlH.Size = new System.Drawing.Size(281, 42);
 			this.manualControlH.TabIndex = 8;
 			this.manualControlH.Value = 50;
 			this.manualControlH.Scroll += new System.EventHandler(this.manualControlH_Scroll);
@@ -170,11 +176,73 @@
 			this.lblReceivedVoltage.TabIndex = 18;
 			this.lblReceivedVoltage.Text = "Voltage: UNDEFINED (0V=xxxx, 5V=xxxx)";
 			// 
+			// lblDegH
+			// 
+			this.lblDegH.AutoSize = true;
+			this.lblDegH.Location = new System.Drawing.Point(58, 48);
+			this.lblDegH.Name = "lblDegH";
+			this.lblDegH.Size = new System.Drawing.Size(25, 13);
+			this.lblDegH.TabIndex = 19;
+			this.lblDegH.Text = "XXº";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(86, 27);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(18, 13);
+			this.label4.TabIndex = 20;
+			this.label4.Text = "µs";
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(491, 27);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(18, 13);
+			this.label5.TabIndex = 21;
+			this.label5.Text = "µs";
+			// 
+			// lblDegV
+			// 
+			this.lblDegV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDegV.AutoSize = true;
+			this.lblDegV.Location = new System.Drawing.Point(463, 51);
+			this.lblDegV.Name = "lblDegV";
+			this.lblDegV.Size = new System.Drawing.Size(25, 13);
+			this.lblDegV.TabIndex = 22;
+			this.lblDegV.Text = "XXº";
+			// 
+			// lblTitleH
+			// 
+			this.lblTitleH.AutoSize = true;
+			this.lblTitleH.Location = new System.Drawing.Point(12, 9);
+			this.lblTitleH.Name = "lblTitleH";
+			this.lblTitleH.Size = new System.Drawing.Size(281, 13);
+			this.lblTitleH.TabIndex = 23;
+			this.lblTitleH.Text = "NOT SET [Horizontal movement (duty cycle and degrees)]";
+			// 
+			// lblTitleV
+			// 
+			this.lblTitleV.AutoSize = true;
+			this.lblTitleV.Location = new System.Drawing.Point(421, 9);
+			this.lblTitleV.Name = "lblTitleV";
+			this.lblTitleV.Size = new System.Drawing.Size(69, 13);
+			this.lblTitleV.TabIndex = 24;
+			this.lblTitleV.Text = "NS [Vertical:]";
+			// 
 			// FrmManualControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(521, 280);
+			this.Controls.Add(this.lblTitleV);
+			this.Controls.Add(this.lblTitleH);
+			this.Controls.Add(this.lblDegV);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.lblDegH);
 			this.Controls.Add(this.lblReceivedVoltage);
 			this.Controls.Add(this.lblReceivedDistance);
 			this.Controls.Add(this.lblRecvTitle);
@@ -215,5 +283,11 @@
 		private System.Windows.Forms.Label lblRecvTitle;
 		private System.Windows.Forms.Label lblReceivedDistance;
 		private System.Windows.Forms.Label lblReceivedVoltage;
+		private System.Windows.Forms.Label lblDegH;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label lblDegV;
+		private System.Windows.Forms.Label lblTitleH;
+		private System.Windows.Forms.Label lblTitleV;
 	}
 }
