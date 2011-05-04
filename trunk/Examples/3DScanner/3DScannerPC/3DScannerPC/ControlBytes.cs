@@ -16,7 +16,7 @@ namespace _3DScannerPC {
 		/// <summary>
 		/// Set the base movement status
 		/// </summary>
-		ActivateManualMode = 100,
+		SetModeManual = 100,
 
 		/// <summary>
 		/// Set horizontal position (manual mode)
@@ -32,5 +32,7 @@ namespace _3DScannerPC {
 		/// Send MCU->PC measured value (by distance sensor) in manual mode
 		/// </summary>
 		ManualTxValue = 103,
+
+		SetModeInactive = 115,
 	}
 }
