@@ -57,8 +57,8 @@ namespace _3DScannerPC {
 					ThreadReceiver = new Thread(Scanner.DataReceiver);
 					ThreadReceiver.Start();
 				}
-				//Check();
 				Status = Status.Connected;
+				Check();
 			} catch(Exception e) {
 				Globals.Log("Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
@@ -82,14 +82,15 @@ namespace _3DScannerPC {
 		}
 
 		public static void Disconnect() {
+			SetMode(ScannerMode.Inactive);
 			if(ThreadReceiver != null) {
 				ThreadReceiver.Abort();
-				ThreadReceiver = null;
+				//ThreadReceiver = null;
 			}
 			if(SP != null) {
 				SP.Close();
-				SP.Dispose();
-				SP = null;
+				//SP.Dispose();
+				//SP = null;
 			}
 			Authenticated = false;
 			Status = Status.Disconnected;
@@ -100,6 +101,10 @@ namespace _3DScannerPC {
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
 		public static bool Send(byte B) {
+			if(!Authenticated && B != (byte)ControlByte.AuthID) {
+				Globals.Log("Unable to send byte: " + B.ToString() + ". Not authenticated");
+				return false;
+			}
 			if(SP != null && SP.IsOpen) {
 				try {
 					SP.WriteByte(B);
@@ -152,12 +157,13 @@ namespace _3DScannerPC {
 		/// Method run on a separate thread which maked polling to the serial port and processes received data
 		/// </summary>
 		public static void DataReceiver() {
-		//public static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
+			//public static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
 			Globals.Log("Starting receiver thread");
 			do {
 				while(SP != null && SP.IsOpen && Globals.MainWindow != null) {
 					try {
 						byte Rcv = (byte)SP.ReadByte();
+						Globals.Log("Received byte: " + Rcv);
 						ControlByte BC = (ControlByte)Rcv;
 						if(BC == ControlByte.AuthID) {
 							Rcv = (byte)SP.ReadByte();
@@ -166,43 +172,44 @@ namespace _3DScannerPC {
 								Status = Status.Connected;
 								Authenticated = true;
 								LastAuthentication = DateTime.Now;
+								Globals.Log("Authentication successful");
 							} else {
 								Globals.Log("Authentication failure (received ID: " + Rcv + "), disconnecting...");
 								Disconnect();
 							}
 						}
 
-						//if(Authenticated) {
-						switch(BC) {
-							case ControlByte.AuthID:
-								break;
-							/*case ControlByte.StatusBumpers:
-								Globals.Log("Received bumper status...");
-								Rcv = (byte)SP.ReadByte();
-								ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
-								Globals.Log("..." + BumperStatus.ToString());
-								if(Globals.MainWindow != null) Globals.MainWindow.SetBumperStatus(BumperStatus);
-								break;
-							case ControlByte.StatusBaseMovement:
-								Globals.Log("Received base movement status...");
-								Rcv = (byte)SP.ReadByte();
-								ControlByteBaseMv BaseMvStatus = ((ControlByteBaseMv)Enum.Parse(typeof(ControlByteBaseMv), Rcv.ToString()));
-								Globals.Log("..." + BaseMvStatus.ToString());
-								if(Globals.MainWindow != null) Globals.MainWindow.SetBaseMvStatus(BaseMvStatus);
-								break;*/
-							case ControlByte.ManualTxValue:
-								UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
-								receivedValue += (byte)SP.ReadByte();
-								Globals.MainWindow.SetReceivedManualValue(receivedValue);
-								Globals.Log("Received manual value: " + receivedValue);
-								break;
-							default:
-								Globals.Log("Unknown control byte: " + BC.ToString());
-								break;
-						}
-						/*} else {
+						if(Authenticated) {
+							switch(BC) {
+								case ControlByte.AuthID:
+									break;
+								/*case ControlByte.StatusBumpers:
+									Globals.Log("Received bumper status...");
+									Rcv = (byte)SP.ReadByte();
+									ControlByteBumper BumperStatus = ((ControlByteBumper)Enum.Parse(typeof(ControlByteBumper), Rcv.ToString()));
+									Globals.Log("..." + BumperStatus.ToString());
+									if(Globals.MainWindow != null) Globals.MainWindow.SetBumperStatus(BumperStatus);
+									break;
+								case ControlByte.StatusBaseMovement:
+									Globals.Log("Received base movement status...");
+									Rcv = (byte)SP.ReadByte();
+									ControlByteBaseMv BaseMvStatus = ((ControlByteBaseMv)Enum.Parse(typeof(ControlByteBaseMv), Rcv.ToString()));
+									Globals.Log("..." + BaseMvStatus.ToString());
+									if(Globals.MainWindow != null) Globals.MainWindow.SetBaseMvStatus(BaseMvStatus);
+									break;*/
+								case ControlByte.ManualTxValue:
+									UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
+									receivedValue += (byte)SP.ReadByte();
+									Globals.MainWindow.SetReceivedManualValue(receivedValue);
+									Globals.Log("Received manual value: " + receivedValue);
+									break;
+								default:
+									Globals.Log("Unknown control byte: " + BC.ToString());
+									break;
+							}
+						} else {
 							Globals.Log("Not authenticated, ignoring received byte: " + Rcv);
-						}*/
+						}
 					} catch(Exception ex) {
 						Globals.Log("Error receiving data: " + ex.Message);
 					}
@@ -215,8 +222,21 @@ namespace _3DScannerPC {
 
 		public static void SetMode(ScannerMode scannerMode) {
 			lock(s) {
-				Globals.Log("Activating manual mode");
-				if(Send(ControlByte.ActivateManualMode)) ScannerMode = ScannerMode.Manual;
+				bool ok;
+				switch(scannerMode) {
+					case ScannerMode.Manual:
+						Globals.Log("Activating manual mode");
+						ok = Send(ControlByte.SetModeManual);
+						if(ok) ScannerMode = ScannerMode.Manual;
+						break;
+					case ScannerMode.Inactive:
+						Globals.Log("Setting scanner in inactive mode");
+						ok = Send(ControlByte.SetModeInactive);
+						if(ok) ScannerMode = ScannerMode.Inactive;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
 				Globals.MainWindow.UpdateStatus();
 			}
 		}
