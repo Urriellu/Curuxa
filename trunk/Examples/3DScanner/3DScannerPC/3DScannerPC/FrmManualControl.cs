@@ -10,6 +10,7 @@ using System.Windows.Forms;
 namespace _3DScannerPC {
 	public partial class FrmManualControl:FormChild {
 		UInt16 value;
+		DateTime lastPosChange = DateTime.Now;
 
 		public FrmManualControl() {
 			InitializeComponent();
@@ -50,6 +51,11 @@ namespace _3DScannerPC {
 
 		private void manualControlH_Scroll(object sender, EventArgs e) {
 			manualNumControlH.Value = manualControlH.Value;
+			if((DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
+				if(manualControlH.Value <= 0 || manualControlH.Value > UInt16.MaxValue || manualControlH.Value > 12000) throw new Exception("Wrong implementation");
+				Scanner.SetManualPosHduty((UInt16)manualControlH.Value);
+				lastPosChange = DateTime.Now;
+			}
 		}
 
 
