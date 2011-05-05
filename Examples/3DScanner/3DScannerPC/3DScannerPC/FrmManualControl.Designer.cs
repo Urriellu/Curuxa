@@ -225,6 +225,7 @@
 			// 
 			// lblTitleV
 			// 
+			this.lblTitleV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblTitleV.AutoSize = true;
 			this.lblTitleV.Location = new System.Drawing.Point(421, 9);
 			this.lblTitleV.Name = "lblTitleV";
