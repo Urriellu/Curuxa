@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace _3DScannerPC {
-	public partial class FrmMdiParent:Form, ILocalizable {
+	public partial class FrmMdiParent:FormChild {
 		FrmAbout frmAbout = new FrmAbout();
 		FrmManualControl frmManualControl;
 		FrmConnection frmConnection;
@@ -59,7 +59,7 @@ namespace _3DScannerPC {
 			frmLog.Location = new Point(0, Height - frmLog.Height - statusStrip.Height - 2 * t);
 		}
 
-		public void UpdateLang() {
+		public override void UpdateLang() {
 			miFile.Text = i18n.str("File");
 			miExit.Text = i18n.str("Exit");
 			miMode.Text = i18n.str("Mode");
@@ -71,9 +71,9 @@ namespace _3DScannerPC {
 			miHelp.Text = i18n.str("Help");
 
 			foreach(Form f in MdiChildren) {
-				if(f is ILocalizable) {
-					(f as ILocalizable).UpdateLang();
-				} else throw new NotImplementedException("Form not ILocalizable: " + f.Text + " - " + f.GetType().FullName);
+				if(f is FormChild) {
+					(f as FormChild).UpdateLang();
+				} else throw new NotImplementedException("Form not localizable: " + f.Text + " - " + f.GetType().FullName);
 			}
 		}
 
@@ -186,7 +186,7 @@ namespace _3DScannerPC {
 				tsStatus.ForeColor = Color.Red;
 			}
 			frmConnection.UpdateStatus();
-			frmManualControl.Enabled = (Scanner.Status == Status.Connected && Scanner.ScannerMode == ScannerMode.Manual);
+			frmManualControl.Usable = (Scanner.Status == Status.Connected && Scanner.ScannerMode == ScannerMode.Manual);
 			miMode.Enabled = (Scanner.Status == Status.Connected);
 		}
 

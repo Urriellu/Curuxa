@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace _3DScannerPC {
-	public partial class FrmLog:Form,ILocalizable {
+	public partial class FrmLog:FormChild {
 		public FrmLog() {
 			InitializeComponent();	
 		}
@@ -17,7 +17,7 @@ namespace _3DScannerPC {
 			UpdateLang();
 		}
 
-		public void UpdateLang() {
+		public override void UpdateLang() {
 		}
 
 		public void Log(string format, params object[] p) {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace _3DScannerPC {
-	public partial class FrmManualControl:Form, ILocalizable {
+	public partial class FrmManualControl:FormChild {
 		UInt16 value;
 
 		public FrmManualControl() {
@@ -30,7 +30,7 @@ namespace _3DScannerPC {
 			manualNumControlV.Value = manualControlV.Value = (Servo.ServoRanges[ServoID.V].Duty180deg + Servo.ServoRanges[ServoID.V].Duty0deg) / 2;
 		}
 
-		public void UpdateLang() {
+		public override void UpdateLang() {
 			this.Text = i18n.str("ManualControl");
 			lblRecvTitle.Text = i18n.str("recManualTitle");
 			lblTitleH.Text = i18n.str("ManualControlHtitle");

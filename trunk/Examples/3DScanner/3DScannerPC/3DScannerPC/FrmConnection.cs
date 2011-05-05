@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace _3DScannerPC {
-	public partial class FrmConnection:Form,ILocalizable {
+	public partial class FrmConnection:FormChild {
 		public FrmConnection() {
 			InitializeComponent();
 		}
@@ -19,7 +19,7 @@ namespace _3DScannerPC {
 			btnUpdateListPorts.PerformClick();
 		}
 
-		public void UpdateLang() {
+		public override void UpdateLang() {
 			this.Text = i18n.str("Connection");
 			btnUpdateListPorts.Text = i18n.str("UpdateList");
 			lblBauds.Text = i18n.str("bauds");
