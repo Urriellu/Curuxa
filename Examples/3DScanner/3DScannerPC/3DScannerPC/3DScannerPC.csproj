@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormChild.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Scanner.cs" />
     <Compile Include="ControlBytes.cs" />
     <Compile Include="Extensions.cs" />
@@ -89,7 +92,6 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="i18n.cs" />
-    <Compile Include="ILocalizable.cs" />
     <Compile Include="Measure.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
