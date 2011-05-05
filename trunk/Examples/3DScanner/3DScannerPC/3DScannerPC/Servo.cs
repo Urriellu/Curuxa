@@ -37,7 +37,7 @@ namespace _3DScannerPC {
 		const UInt16 Deg180 = 2100;
 
 		/// <summary>
-		/// List of hard-coded ranges for each servo
+		/// List of hard-coded ranges for each servo (duty, microseconds)
 		/// </summary>
 		public static Dictionary<ServoID, ServoRange> ServoRanges {
 			get {
@@ -67,7 +67,7 @@ namespace _3DScannerPC {
 		}
 
 		/// <summary>
-		/// Get the required Timer 1 preload based on the desired doty (in microseconds)
+		/// Get the required Timer 1 preload based on the desired duty (in microseconds)
 		/// </summary>
 		/// <param name="duty"></param>
 		/// <returns></returns>
@@ -82,6 +82,12 @@ namespace _3DScannerPC {
 		/// <returns></returns>
 		public static UInt16 DegToT1preload(float deg) {
 			return DutyToT1preload(DegToDutyUs(deg));
+		}
+
+		public static UInt16 DutyToCcp(UInt16 duty) {
+			int r = Settings.T1preload + 2 * duty;
+			if(r < Settings.T1preload || r > UInt16.MaxValue) throw new Exception("Wrong implementation");
+			return (UInt16)r;
 		}
 	}
 }
