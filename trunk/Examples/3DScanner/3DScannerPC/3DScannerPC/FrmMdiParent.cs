@@ -179,14 +179,15 @@ namespace _3DScannerPC {
 		/// </summary>
 		public void UpdateStatus() {
 			if(Scanner.Status == Status.Connected) {
-				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Scanner.ScannerMode) + ")";
+				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Scanner.Mode) + ")";
 				tsStatus.ForeColor = Color.Green;
 			} else {
 				tsStatus.Text = i18n.str("Disconnected");
 				tsStatus.ForeColor = Color.Red;
 			}
 			frmConnection.UpdateStatus();
-			frmManualControl.Usable = (Scanner.Status == Status.Connected && Scanner.ScannerMode == ScannerMode.Manual);
+			frmManualControl.UpdateActivDeactivButtons();
+			frmManualControl.Usable = (Scanner.Status == Status.Connected && Scanner.Mode == ScannerMode.Manual);
 			miMode.Enabled = (Scanner.Status == Status.Connected);
 		}
 
@@ -216,6 +217,14 @@ namespace _3DScannerPC {
 
 		private void miModeInactive_Click(object sender, EventArgs e) {
 			Scanner.SetMode(ScannerMode.Inactive);
+		}
+
+		private void miLogClearAll_Click(object sender, EventArgs e) {
+			frmLog.txtLog.Clear();
+		}
+
+		private void miLogClearAlmostAll_Click(object sender, EventArgs e) {
+
 		}
 	}
 }

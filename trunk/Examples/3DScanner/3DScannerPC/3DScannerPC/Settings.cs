@@ -17,5 +17,7 @@ namespace _3DScannerPC {
 		public static bool RequireAuthentication = false;
 
 		public static UInt16 T1preload = 0xA23F;
+
+		public static bool PrintDebugLogs = false;
 	}
 }

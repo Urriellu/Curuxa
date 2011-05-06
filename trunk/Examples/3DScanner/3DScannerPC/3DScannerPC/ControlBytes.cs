@@ -18,6 +18,8 @@ namespace _3DScannerPC {
 		/// </summary>
 		Error = 2,
 
+		Test = 3,
+
 		/// <summary>
 		/// Set the base movement status
 		/// </summary>

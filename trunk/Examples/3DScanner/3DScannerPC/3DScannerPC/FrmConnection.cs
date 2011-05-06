@@ -66,5 +66,9 @@ namespace _3DScannerPC {
 			e.Cancel = true;
 			Hide();
 		}
+
+		private void btnAuth_Click(object sender, EventArgs e) {
+			Scanner.AskAuth();
+		}
 	}
 }

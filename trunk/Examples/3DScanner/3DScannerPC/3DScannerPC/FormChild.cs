@@ -6,13 +6,15 @@ using System.Windows.Forms;
 
 namespace _3DScannerPC {
 	public class FormChild:Form {
+		protected List<Control> ignoreUsableControls = new List<Control>();
+
 		public virtual void UpdateLang() {
 		}
 
 		public bool Usable {
 			set {
 				foreach(Control c in Controls) {
-					c.Enabled = value;
+					if(!ignoreUsableControls.Contains(c)) c.Enabled = value;
 				}
 			}
 		}

@@ -21,14 +21,23 @@ namespace _3DScannerPC {
 		}
 
 		public void Log(Color color, string format, params object[] p) {
+			/* ADD AT THE END */
 			int start = txtLog.TextLength;
 			txtLog.AppendText(string.Format(format, p) + Environment.NewLine);
 			int end = txtLog.TextLength;
 
-			// Textbox may transform chars, so (end-start) != text.Length
 			txtLog.Select(start, end - start);
-			txtLog.SelectionColor = color; // could set box.SelectionBackColor, box.SelectionFont too.
-			txtLog.SelectionLength = 0; // clear
+			txtLog.SelectionColor = color;
+
+			txtLog.Select();
+			txtLog.SelectionStart = txtLog.GetFirstCharIndexFromLine(txtLog.Lines.Length - 1);
+
+			/* ADD AT THE BEGINNING (problem: no color)
+			string newText = string.Format(format, p);
+			txtLog.Text = newText + Environment.NewLine + txtLog.Text;
+			txtLog.Select(0, newText.Length);
+			txtLog.SelectionColor = color;
+			txtLog.SelectionLength = 0;*/
 		}
 
 		private void FrmLog_FormClosing(object sender, FormClosingEventArgs e) {

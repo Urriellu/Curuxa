@@ -14,7 +14,7 @@ namespace _3DScannerPC {
 		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
 		static DummyLocker s = new DummyLocker();
 		public static bool Authenticated { get; private set; }
-		public static ScannerMode ScannerMode = ScannerMode.Inactive;
+		public static ScannerMode Mode = ScannerMode.Inactive;
 
 		public static Status Status {
 			get {
@@ -58,7 +58,7 @@ namespace _3DScannerPC {
 					//ThreadReceiver.Start();
 				}
 				Status = Status.Connected;
-				Check();
+				AskAuth();
 			} catch(Exception e) {
 				Globals.Log(LogType.Error, "Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
@@ -66,13 +66,18 @@ namespace _3DScannerPC {
 			Globals.MainWindow.UpdateStatus();
 		}
 
+		static byte ReadByte() {
+			byte Rcv = SP.ReadByte();
+			Globals.Log(LogType.Debug, "Received byte: " + Rcv);
+			return Rcv;
+		}
+
 		static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
 			while(SP.IsOpen && SP.BytesToRead > 0) {
-				byte Rcv = (byte)SP.ReadByte();
-				Globals.Log(LogType.Debug, "Received byte: " + Rcv);
+				byte Rcv = ReadByte();
 				ControlByte BC = (ControlByte)Rcv;
 				if(BC == ControlByte.AuthID) {
-					Rcv = (byte)SP.ReadByte();
+					Rcv = (byte)ReadByte();
 					if(Rcv == Settings.ScannerID) {
 						// auth success
 						Status = Status.Connected;
@@ -90,12 +95,12 @@ namespace _3DScannerPC {
 						case ControlByte.AuthID:
 							break;
 						case ControlByte.Error:
-							ControlByteError error = (ControlByteError)SP.ReadByte();
+							ControlByteError error = (ControlByteError)ReadByte();
 							Globals.Log(LogType.Error, "Microcontroller error: " + error);
 							break;
 						case ControlByte.ManualTxValue:
-							UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
-							receivedValue += (byte)SP.ReadByte();
+							UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
+							receivedValue += (byte)ReadByte();
 							Globals.MainWindow.SetReceivedManualValue(receivedValue);
 							Globals.Log(LogType.Information, "Received manual value: " + receivedValue);
 							break;
@@ -137,7 +142,7 @@ namespace _3DScannerPC {
 			}
 			Authenticated = false;
 			Status = Status.Disconnected;
-			ScannerMode = ScannerMode.Inactive;
+			Mode = ScannerMode.Inactive;
 			Globals.Log(LogType.Information, "Disconnected");
 			Globals.MainWindow.UpdateStatus();
 		}
@@ -164,7 +169,7 @@ namespace _3DScannerPC {
 			}
 		}
 
-		public static void Check() {
+		public static void AskAuth() {
 			lock(s) {
 				Send(ControlByte.AuthID);
 			}
@@ -204,11 +209,11 @@ namespace _3DScannerPC {
 			do {
 				while(SP != null && SP.IsOpen && Globals.MainWindow != null) {
 					try {
-						byte Rcv = (byte)SP.ReadByte();
+						byte Rcv = (byte)ReadByte();
 						Globals.Log("Received byte: " + Rcv);
 						ControlByte BC = (ControlByte)Rcv;
 						if(BC == ControlByte.AuthID) {
-							Rcv = (byte)SP.ReadByte();
+							Rcv = (byte)ReadByte();
 							if(Rcv == Settings.ScannerID) {
 								// auth success
 								Status = Status.Connected;
@@ -226,8 +231,8 @@ namespace _3DScannerPC {
 								case ControlByte.AuthID:
 									break;
 								case ControlByte.ManualTxValue:
-									UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
-									receivedValue += (byte)SP.ReadByte();
+									UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
+									receivedValue += (byte)ReadByte();
 									Globals.MainWindow.SetReceivedManualValue(receivedValue);
 									Globals.Log("Received manual value: " + receivedValue);
 									break;
@@ -255,12 +260,12 @@ namespace _3DScannerPC {
 					case ScannerMode.Manual:
 						Globals.Log(LogType.Information, "Activating manual mode");
 						ok = Send(ControlByte.SetModeManual);
-						if(ok) ScannerMode = ScannerMode.Manual;
+						if(ok) Mode = ScannerMode.Manual;
 						break;
 					case ScannerMode.Inactive:
 						Globals.Log(LogType.Information, "Setting scanner in inactive mode");
 						ok = Send(ControlByte.SetModeInactive);
-						if(ok) ScannerMode = ScannerMode.Inactive;
+						if(ok) Mode = ScannerMode.Inactive;
 						break;
 					default:
 						throw new NotImplementedException();
@@ -275,6 +280,16 @@ namespace _3DScannerPC {
 
 		public static void SetManualPosHccp(UInt16 pos) {
 			Send(ControlByte.ManualSetPosH); //Control code
+			Send(pos.GetBytes()[1]); //MSByte
+			Send(pos.GetBytes()[0]); //LSByte
+		}
+
+		public static void SetManualPosVduty(UInt16 pos) {
+			SetManualPosVccp(Servo.DutyToCcp(pos));
+		}
+
+		public static void SetManualPosVccp(UInt16 pos) {
+			Send(ControlByte.ManualSetPosV); //Control code
 			Send(pos.GetBytes()[1]); //MSByte
 			Send(pos.GetBytes()[0]); //LSByte
 		}

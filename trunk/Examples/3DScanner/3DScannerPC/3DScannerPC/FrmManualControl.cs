@@ -14,6 +14,9 @@ namespace _3DScannerPC {
 
 		public FrmManualControl() {
 			InitializeComponent();
+
+			ignoreUsableControls.Add(btnActivateManual);
+			ignoreUsableControls.Add(btnDeactManual);
 		}
 
 		private void FrmManualControl_Load(object sender, EventArgs e) {
@@ -29,6 +32,13 @@ namespace _3DScannerPC {
 			manualNumControlV.Minimum = Servo.ServoRanges[ServoID.V].Duty0deg;
 			manualNumControlV.Maximum = Servo.ServoRanges[ServoID.V].Duty180deg;
 			manualNumControlV.Value = manualControlV.Value = (Servo.ServoRanges[ServoID.V].Duty180deg + Servo.ServoRanges[ServoID.V].Duty0deg) / 2;
+
+			UpdateActivDeactivButtons();
+		}
+
+		public void UpdateActivDeactivButtons() {
+			btnActivateManual.Enabled = Scanner.Mode == ScannerMode.Inactive;
+			btnDeactManual.Enabled = Scanner.Mode == ScannerMode.Manual;
 		}
 
 		public override void UpdateLang() {
@@ -51,7 +61,10 @@ namespace _3DScannerPC {
 
 		private void manualControlH_Scroll(object sender, EventArgs e) {
 			manualNumControlH.Value = manualControlH.Value;
-			if((DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
+			lblDegH.Text=Servo.
+
+			//send info
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
 				if(manualControlH.Value <= 0 || manualControlH.Value > UInt16.MaxValue || manualControlH.Value > 12000) throw new Exception("Wrong implementation");
 				Scanner.SetManualPosHduty((UInt16)manualControlH.Value);
 				lastPosChange = DateTime.Now;
@@ -66,6 +79,13 @@ namespace _3DScannerPC {
 
 		private void manualControlV_Scroll(object sender, EventArgs e) {
 			manualNumControlV.Value = manualControlV.Value;
+
+			//send info
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
+				if(manualControlV.Value <= 0 || manualControlV.Value > UInt16.MaxValue || manualControlV.Value > 12000) throw new Exception("Wrong implementation");
+				Scanner.SetManualPosVduty((UInt16)manualControlV.Value);
+				lastPosChange = DateTime.Now;
+			}
 		}
 
 		public void SetReceivedManualValue(UInt16 value) {
@@ -83,6 +103,14 @@ namespace _3DScannerPC {
 
 		private void numVRefMax_ValueChanged(object sender, EventArgs e) {
 			UpdateReceivedValues();
+		}
+
+		private void btnActivateManual_Click(object sender, EventArgs e) {
+			Scanner.SetMode(ScannerMode.Manual);
+		}
+
+		private void btnDeactManual_Click(object sender, EventArgs e) {
+			Scanner.SetMode(ScannerMode.Inactive);
 		}
 	}
 }
