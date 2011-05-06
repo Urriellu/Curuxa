@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	public struct ServoRange {
@@ -85,8 +86,8 @@ namespace _3DScannerPC {
 		}
 
 		public static UInt16 DutyToCcp(UInt16 duty) {
-			int r = Settings.T1preload + 2 * duty;
-			if(r < Settings.T1preload || r > UInt16.MaxValue) throw new Exception("Wrong implementation");
+			int r = Settings.Default.T1preload + 2 * duty;
+			if(r < Settings.Default.T1preload || r > UInt16.MaxValue) throw new Exception("Wrong implementation");
 			return (UInt16)r;
 		}
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using SWF = System.Windows.Forms;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	class DummyLocker {
@@ -78,7 +79,7 @@ namespace _3DScannerPC {
 				ControlByte BC = (ControlByte)Rcv;
 				if(BC == ControlByte.AuthID) {
 					Rcv = (byte)ReadByte();
-					if(Rcv == Settings.ScannerID) {
+					if(Rcv == Settings.Default.ScannerID) {
 						// auth success
 						Status = Status.Connected;
 						Authenticated = true;
@@ -90,7 +91,7 @@ namespace _3DScannerPC {
 					}
 				}
 
-				if(Authenticated || !Settings.RequireAuthentication) {
+				if(Authenticated || !Settings.Default.RequireAuthentication) {
 					switch(BC) {
 						case ControlByte.AuthID:
 							break;
@@ -149,7 +150,7 @@ namespace _3DScannerPC {
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
 		public static bool Send(byte B) {
-			if(Settings.RequireAuthentication && !Authenticated && B != (byte)ControlByte.AuthID) {
+			if(Settings.Default.RequireAuthentication && !Authenticated && B != (byte)ControlByte.AuthID) {
 				Globals.Log(LogType.Error, "Unable to send byte: " + B.ToString() + ". Not authenticated");
 				return false;
 			}

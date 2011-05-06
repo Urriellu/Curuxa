@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	class Globals {
@@ -25,7 +26,7 @@ namespace _3DScannerPC {
 		}
 
 		public static void Log(LogType type, string format, params object[] p) {
-			if(type == LogType.Debug && Settings.PrintDebugLogs == false) return;
+			if(type == LogType.Debug && Settings.Default.PrintDebugLogs == false) return;
 
 			string LogText = string.Format(format, p);
 			if(LogText[0] != '[') LogText = string.Format("[{0:00}:{1:00}:{2:00}.{3:000}] {4}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, LogText);

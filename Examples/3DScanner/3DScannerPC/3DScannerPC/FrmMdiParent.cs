@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	public partial class FrmMdiParent:FormChild {
@@ -192,6 +193,7 @@ namespace _3DScannerPC {
 		}
 
 		private void FrmMdiParent_FormClosing(object sender, FormClosingEventArgs e) {
+			Properties.Settings.Default.Save();
 			Scanner.Disconnect();
 			foreach(Form childForm in MdiChildren) {
 				childForm.Close();
@@ -265,7 +267,7 @@ namespace _3DScannerPC {
 		}
 
 		private void miShowHideDebug_Click(object sender, EventArgs e) {
-			Settings.PrintDebugLogs = !Settings.PrintDebugLogs;
+			Settings.Default.PrintDebugLogs = !Settings.Default.PrintDebugLogs;
 		}
 	}
 }
