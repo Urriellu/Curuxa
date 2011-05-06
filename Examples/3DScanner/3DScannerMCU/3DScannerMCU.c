@@ -2,7 +2,10 @@
 
 #include <pic16f887.h>
 
-typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & _WDT_OFF & _INTOSCIO & _DEBUG_OFF & _FCMEN_OFF & _IESO_OFF & _BOR_ON & _CPD_OFF & _MCLRE_OFF & _PWRTE_ON;
+typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & _WDT_OFF & _INTOSCIO & _DEBUG_OFF & _FCMEN_OFF & _IESO_OFF & _BOR_OFF & _CPD_OFF & _MCLRE_OFF & _PWRTE_ON;
+
+// Variable types
+#define int8 char
 
 // list of control codes. This is the first byte transmitted through the serial port and indicates the operation being executed
 //#define CcRESERVED 0
@@ -11,20 +14,25 @@ typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & 
 #define CcManualSetPosH 101
 #define CcManualSetPosV 102
 #define CcManualTxValue 103
+#define CcSetModeInactive 115
 
 // CcAuthID - Identification (ID must be unique)
 #define CccAuthID 97
 
 // Lights
-#define TestLed1 RD2
-#define TestLed2 RD3
-#define TestLed3 RD4
-#define TestLed4 RA4
+#define TestLedY RD0
+#define TestLedR RD1
+#define TestLedG RD2
 #define ON 1
 #define OFF 0
 
-// Variable types
-#define int8 char
+// Servomotors
+#define ServoHpin RC2
+#define ServoVpin RC1
+unsigned int8 ServoH_ccpH;
+unsigned int8 ServoH_ccpL;
+unsigned int8 ServoV_ccpH;
+unsigned int8 ServoV_ccpL;
 
 //Scanner mode
 #define ModeInactive 0
@@ -105,23 +113,10 @@ void WriteSP(unsigned int8 value) {
 }
 
 void Authenticate(){
+	//Delay(50);
 	WriteSP(CcAuthID);
+	//Delay(50);
 	WriteSP(CccAuthID);
-}
-
-// Parse any kind of data received
-void ReceiveData() {
-	Rcv=ReadSP();
-	if(Rcv != 0xFF) {
-		switch(Rcv) {
-			case CcAuthID:
-				Authenticate();
-				break;
-			//case CcSomething:
-				//SetLight();
-			//	break;
-		}
-	}
 }
 
 void Setup(){
@@ -162,32 +157,114 @@ void Setup(){
 	SPEN=1; // (register RCSTA) set TX/CK as output, RX/DT as input
 	//...by default: 8 bits, no interrupts
 	
-	// Motor control pinout
-	/*TRISE0=DigitalOutput;
-	TRISE1=DigitalOutput;
-	TRISE2=DigitalOutput;
-	TRISD7=DigitalOutput;
-	TRISD6=DigitalOutput;
-	TRISD5=DigitalOutput;*/
+	//setup PWM
+	TRISC2=0;
+	TRISC1=0;
+	RC2=1;
+	RC1=1;
+	//CPP1, compare mode, clear bit on match
+	CCP1M3=1;
+	CCP1M2=0;
+	CCP1M1=0;
+	CCP1M0=1;
+	//CPP2, compare mode, clear bit on match
+	CCP2M3=1;
+	CCP2M2=0;
+	CCP2M1=0;
+	CCP2M0=1;
+	//default servo position
+	/* 90º*/
+	ServoH_ccpH=0xAD;
+	ServoH_ccpL=0x2F;
+	ServoV_ccpH=0xAD;
+	ServoV_ccpL=0x2F;
+	/* 0º (looks like 30º)
+	ServoH_ccpH=0xA9;
+	ServoH_ccpL=0x47;
+	ServoV_ccpH=0xA9;
+	ServoV_ccpL=0x47;*/
+	/* 0º
+	ServoH_ccpH=0xA7;
+	ServoH_ccpL=0xB7;
+	ServoV_ccpH=0xA7;
+	ServoV_ccpL=0xB7;*/
+	/* 180º
+	ServoH_ccpH=0xB4;
+	ServoH_ccpL=0x37;
+	ServoV_ccpH=0xB4;
+	ServoV_ccpL=0x37;*/
+	//prescaler by default to 1:1
+	//Timer1 by default using internal clock
+	TMR1IF=0;
+	TMR1IE=1;
+	PEIE=1;
+	GIE=1;
+	TMR1ON=1;
 	
 	// Lights pinout
-	/*TRISD0=DigitalOutput;
-	TRISD1=DigitalOutput;
-	TRISD2=DigitalOutput;
-	TRISD3=DigitalOutput;
-	TRISD4=DigitalOutput;
-	TRISA4=DigitalOutput;*/
+	TRISD0=0;
+	TRISD1=0;
+	TRISD2=0;	
+	TestLedY=OFF;
+	TestLedR=OFF;
+	TestLedG=OFF;
 	
 	// Buttons pinout
 	//TRISB2=DigitalInput;
 	//TRISB1=DigitalInput;
 	
-	//default status
-	TestLed1=OFF;
-	TestLed2=OFF;
-	TestLed3=OFF;
-	TestLed4=OFF;
-	Mode=ModeManual;
+	//default mode
+	Mode=ModeInactive;
+}
+
+// Parse any kind of data received
+void ReceiveData() {
+	Rcv=ReadSP();
+	if(Rcv != 0xFF) {
+		switch(Rcv) {
+			case CcAuthID:
+				Authenticate();
+				break;
+			case CcActivateManualMode:
+				Mode=ModeManual;
+				break;
+			case CcSetModeInactive:
+				Mode=ModeInactive;
+				break;
+			case CcManualSetPosH:
+				Rcv=ReadSPWait();
+				ServoH_ccpH=ReadSPWait();
+				ServoH_ccpL=ReadSPWait();
+				break;
+		}
+	}
+}
+
+static void isr(void) __interrupt 0 {
+	if(TMR1IF) {
+		//start PWM high level
+		TMR1ON=0;
+		TMR1L=0x3F; //pre-load  Timer1
+		TMR1H=0xA2;
+		CCP1M3=0; //hack: deactivate CCP1/2 so we can control the pins manually
+		CCP2M3=0;
+		ServoHpin=1; //set high level of PWM
+		ServoVpin=1;
+		TMR1ON=1; //start Timer1 count
+		CCP1M3=1; //hack: activate CCP1/2 again
+		CCP2M3=1;
+		TMR1IF=0;
+
+		//set servo position (time at which the CCP modules
+		//will set PWM pins to low (Compare Mode)
+		CCPR1H=ServoH_ccpH;
+		CCPR1L=ServoH_ccpL;
+		CCPR2H=ServoV_ccpH;
+		CCPR2L=ServoV_ccpL;
+	} else {
+		//unknown interrupt
+		TestLedR=ON;
+	}
 }
 
 void RunModeManual() {
@@ -199,7 +276,7 @@ void RunModeManual() {
 	WriteSP(ADRESH); // 2 - Send ADC result (high byte)
 	WriteSP(ADRESL); // 3 - Send ADC result (low byte)
 
-	Delay(50);
+	Delay(50); Delay(50); Delay(50); Delay(50);
 }
 
 void RunModeScan() {
@@ -210,7 +287,7 @@ void main() {
 	Setup();
 
 	while(1) {
-		//ReceiveData();
+		ReceiveData();
 		//do something...
 		switch(Mode){
 			case ModeInactive:
