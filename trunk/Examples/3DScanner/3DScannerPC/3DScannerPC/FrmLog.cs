@@ -26,11 +26,13 @@ namespace _3DScannerPC {
 			txtLog.AppendText(string.Format(format, p) + Environment.NewLine);
 			int end = txtLog.TextLength;
 
-			txtLog.Select(start, end - start);
-			txtLog.SelectionColor = color;
-
-			txtLog.Select();
-			txtLog.SelectionStart = txtLog.GetFirstCharIndexFromLine(txtLog.Lines.Length - 1);
+			int lines = txtLog.Lines.Length;
+			if(lines > 0) {
+				txtLog.Select(start, end - start);
+				txtLog.SelectionColor = color;
+				txtLog.Select();
+				txtLog.SelectionStart = txtLog.GetFirstCharIndexFromLine(lines - 1);
+			}
 
 			/* ADD AT THE BEGINNING (problem: no color)
 			string newText = string.Format(format, p);

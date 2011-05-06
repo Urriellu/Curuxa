@@ -14,10 +14,10 @@ namespace _3DScannerPC {
 		/// </summary>
 		public static int SendDelayThreshold = 10;
 
-		public static bool RequireAuthentication = false;
+		public static bool RequireAuthentication = true;
 
 		public static UInt16 T1preload = 0xA23F;
 
-		public static bool PrintDebugLogs = false;
+		public static bool PrintDebugLogs = true;
 	}
 }

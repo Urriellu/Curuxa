@@ -9,12 +9,19 @@ using System.Windows.Forms;
 
 namespace _3DScannerPC {
 	public partial class FrmManualControl:FormChild {
-		UInt16 value;
+		UInt16 lastValueAdc;
+		float lastVoltage;
+		float lastDistance_mm;
+		float lastDistance_cm;
+		double lastDistance_cm_2dig;
+		float lastDegH;
+		float lastDegV;
 		DateTime lastPosChange = DateTime.Now;
 
 		public FrmManualControl() {
 			InitializeComponent();
 
+			ignoreUsableControls.Add(grpSetup);
 			ignoreUsableControls.Add(btnActivateManual);
 			ignoreUsableControls.Add(btnDeactManual);
 		}
@@ -43,9 +50,9 @@ namespace _3DScannerPC {
 
 		public override void UpdateLang() {
 			this.Text = i18n.str("ManualControl");
-			lblRecvTitle.Text = i18n.str("recManualTitle");
-			lblTitleH.Text = i18n.str("ManualControlHtitle");
-			lblTitleV.Text = i18n.str("ManualControlVtitle");
+			grpInstantValue.Text = i18n.str("recManualTitle");
+			grpControlH.Text = i18n.str("ManualControlHtitle");
+			grpControlV.Text = i18n.str("ManualControlVtitle");
 			SetReceivedManualValue(0);
 		}
 
@@ -61,7 +68,8 @@ namespace _3DScannerPC {
 
 		private void manualControlH_Scroll(object sender, EventArgs e) {
 			manualNumControlH.Value = manualControlH.Value;
-			lblDegH.Text=Servo.
+			lastDegH = Servo.DutyToDeg((UInt16)manualControlH.Value, ServoID.H);
+			lblDegH.Text = i18n.str("DegreesN", lastDegH);
 
 			//send info
 			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
@@ -79,6 +87,8 @@ namespace _3DScannerPC {
 
 		private void manualControlV_Scroll(object sender, EventArgs e) {
 			manualNumControlV.Value = manualControlV.Value;
+			lastDegV = Servo.DutyToDeg((UInt16)manualControlV.Value, ServoID.V);
+			lblDegV.Text = lastDegV + "º";
 
 			//send info
 			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
@@ -88,17 +98,29 @@ namespace _3DScannerPC {
 			}
 		}
 
-		public void SetReceivedManualValue(UInt16 value) {
-			this.value = value;
+		public void SetReceivedManualValue(UInt16 adcValue) {
+			lastValueAdc = adcValue;
 			UpdateReceivedValues();
 		}
 
 		private void UpdateReceivedValues() {
-			lblReceivedValue.Text = i18n.str("recManualValue", value, Settings.AdcMax);
-			float voltage = Measure.AdcValueToVoltage(value, Settings.AdcMax, (float)numVRefMax.Value);
-			lblReceivedVoltage.Text = i18n.str("recManualVoltage", voltage, numVRefMax.Value, Settings.AdcMax);
-			float distance = Measure.VoltageToDistance(voltage);
-			lblReceivedDistance.Text = i18n.str("recManualDistance", distance);
+			lastVoltage = Measure.AdcValueToVoltage(lastValueAdc, Settings.AdcMax, (float)numVRefMax.Value);
+			lastDistance_mm = Measure.VoltageToDistance(lastVoltage);
+			lastDistance_cm = lastDistance_mm / 10;
+			lastDistance_cm_2dig = Math.Round(lastDistance_cm, 2);
+
+			lblReceivedValue.Text = i18n.str("recManualValue", lastValueAdc, Settings.AdcMax);
+			lblReceivedVoltage.Text = i18n.str("recManualVoltage", lastVoltage, numVRefMax.Value, Settings.AdcMax);
+			lblReceivedDistance.Text = i18n.str("recManualDistance", lastDistance_mm);
+
+			// change position of object drawn on screen
+			int picObjBorders = 10;
+			int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
+			int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
+			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
+			float distancePorc = lastDistance_cm / 70;
+			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
+			picObject.Location = new Point(picObjMinPosX+picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
 		}
 
 		private void numVRefMax_ValueChanged(object sender, EventArgs e) {
