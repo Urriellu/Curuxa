@@ -223,8 +223,49 @@ namespace _3DScannerPC {
 			frmLog.txtLog.Clear();
 		}
 
-		private void miLogClearAlmostAll_Click(object sender, EventArgs e) {
+		private void miLogShow_Click(object sender, EventArgs e) {
+			miLog_Click(null, null);
+		}
 
+		private void miLogHide_Click(object sender, EventArgs e) {
+			frmLog.Hide();
+		}
+
+		private void miLogSaveRTF_Click(object sender, EventArgs e) {
+			SaveFileDialog svf = new SaveFileDialog();
+
+			svf.DefaultExt = "*.rtf";
+			svf.Filter = "RTF Files|*.rtf";
+
+			if(svf.ShowDialog() == System.Windows.Forms.DialogResult.OK && svf.FileName.Length > 0) {
+				frmLog.txtLog.SaveFile(svf.FileName, RichTextBoxStreamType.RichText);
+			}
+		}
+
+		private void miLogSaveTxt_Click(object sender, EventArgs e) {
+			SaveFileDialog svf = new SaveFileDialog();
+
+			svf.DefaultExt = "*.txt";
+			svf.Filter = "Plain Text Files|*.txt";
+
+			if(svf.ShowDialog() == System.Windows.Forms.DialogResult.OK && svf.FileName.Length > 0) {
+				frmLog.txtLog.SaveFile(svf.FileName, RichTextBoxStreamType.PlainText);
+			}
+		}
+
+		private void miLogSaveUnicode_Click(object sender, EventArgs e) {
+			SaveFileDialog svf = new SaveFileDialog();
+
+			svf.DefaultExt = "*.txt";
+			svf.Filter = "Plain Text Files|*.txt";
+
+			if(svf.ShowDialog() == System.Windows.Forms.DialogResult.OK && svf.FileName.Length > 0) {
+				frmLog.txtLog.SaveFile(svf.FileName, RichTextBoxStreamType.UnicodePlainText);
+			}
+		}
+
+		private void miShowHideDebug_Click(object sender, EventArgs e) {
+			Settings.PrintDebugLogs = !Settings.PrintDebugLogs;
 		}
 	}
 }

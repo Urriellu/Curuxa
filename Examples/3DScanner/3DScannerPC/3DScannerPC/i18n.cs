@@ -61,6 +61,7 @@ namespace _3DScannerPC {
 			langEn.Add("MenuModeInactiveReadyScan", "Inactive: Ready to Scan");
 			langEn.Add("ManualControlHtitle", "Horizontal movement (duty cycle and degrees):");
 			langEn.Add("ManualControlVtitle", "Vertical:");
+			langEn.Add("DegreesN", "Degrees: {0}º");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

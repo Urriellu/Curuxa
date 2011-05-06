@@ -102,7 +102,7 @@ namespace _3DScannerPC {
 							UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
 							receivedValue += (byte)ReadByte();
 							Globals.MainWindow.SetReceivedManualValue(receivedValue);
-							Globals.Log(LogType.Information, "Received manual value: " + receivedValue);
+							Globals.Log(LogType.Debug, "Received manual value: " + receivedValue);
 							break;
 						default:
 							Globals.Log(LogType.Error, "Unknown control byte: " + BC.ToString());
