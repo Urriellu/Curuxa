@@ -51,6 +51,7 @@
     <Compile Include="FormChild.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogType.cs" />
     <Compile Include="Scanner.cs" />
     <Compile Include="ControlBytes.cs" />
     <Compile Include="Extensions.cs" />

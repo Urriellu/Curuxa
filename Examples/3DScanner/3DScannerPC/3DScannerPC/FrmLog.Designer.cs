@@ -23,7 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.txtLog = new System.Windows.Forms.TextBox();
+			this.txtLog = new System.Windows.Forms.RichTextBox();
 			this.SuspendLayout();
 			// 
 			// txtLog
@@ -34,7 +34,7 @@
 			this.txtLog.Multiline = true;
 			this.txtLog.Name = "txtLog";
 			this.txtLog.ReadOnly = true;
-			this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
 			this.txtLog.Size = new System.Drawing.Size(629, 188);
 			this.txtLog.TabIndex = 0;
 			this.txtLog.WordWrap = false;
@@ -57,6 +57,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox txtLog;
+		private System.Windows.Forms.RichTextBox txtLog;
 	}
 }

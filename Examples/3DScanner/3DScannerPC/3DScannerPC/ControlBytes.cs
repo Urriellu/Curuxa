@@ -14,6 +14,11 @@ namespace _3DScannerPC {
 		AuthID = 1,
 
 		/// <summary>
+		/// An error occurred on the microcontroller
+		/// </summary>
+		Error = 2,
+
+		/// <summary>
 		/// Set the base movement status
 		/// </summary>
 		SetModeManual = 100,
@@ -34,5 +39,14 @@ namespace _3DScannerPC {
 		ManualTxValue = 103,
 
 		SetModeInactive = 115,
+	}
+
+	public enum ControlByteError {
+		Unknown = 5,
+
+		/// <summary>
+		/// Serial Port receive overrun
+		/// </summary>
+		OERR = 7,
 	}
 }
