@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	public partial class FrmManualControl:FormChild {
 		UInt16 lastValueAdc;
 		float lastVoltage;
 		float lastDistance_mm;
+		float lastDistance_mm_slowChange;
 		float lastDistance_cm;
 		double lastDistance_cm_2dig;
 		float lastDegH;
@@ -72,7 +74,7 @@ namespace _3DScannerPC {
 			lblDegH.Text = i18n.str("DegreesN", lastDegH);
 
 			//send info
-			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
 				if(manualControlH.Value <= 0 || manualControlH.Value > UInt16.MaxValue || manualControlH.Value > 12000) throw new Exception("Wrong implementation");
 				Scanner.SetManualPosHduty((UInt16)manualControlH.Value);
 				lastPosChange = DateTime.Now;
@@ -91,7 +93,7 @@ namespace _3DScannerPC {
 			lblDegV.Text = lastDegV + "º";
 
 			//send info
-			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.SendDelayThreshold) {
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
 				if(manualControlV.Value <= 0 || manualControlV.Value > UInt16.MaxValue || manualControlV.Value > 12000) throw new Exception("Wrong implementation");
 				Scanner.SetManualPosVduty((UInt16)manualControlV.Value);
 				lastPosChange = DateTime.Now;
@@ -104,13 +106,15 @@ namespace _3DScannerPC {
 		}
 
 		private void UpdateReceivedValues() {
-			lastVoltage = Measure.AdcValueToVoltage(lastValueAdc, Settings.AdcMax, (float)numVRefMax.Value);
+			lastVoltage = Measure.AdcValueToVoltage(lastValueAdc, Settings.Default.AdcMax, (float)numVRefMax.Value);
 			lastDistance_mm = Measure.VoltageToDistance(lastVoltage);
 			lastDistance_cm = lastDistance_mm / 10;
 			lastDistance_cm_2dig = Math.Round(lastDistance_cm, 2);
+			if(float.IsInfinity(lastDistance_mm_slowChange)) lastDistance_mm_slowChange = lastDistance_mm;
+			lastDistance_mm_slowChange = (float)(lastDistance_mm_slowChange * 0.2 + lastDistance_mm * 0.8);
 
-			lblReceivedValue.Text = i18n.str("recManualValue", lastValueAdc, Settings.AdcMax);
-			lblReceivedVoltage.Text = i18n.str("recManualVoltage", lastVoltage, numVRefMax.Value, Settings.AdcMax);
+			lblReceivedValue.Text = i18n.str("recManualValue", lastValueAdc, Settings.Default.AdcMax);
+			lblReceivedVoltage.Text = i18n.str("recManualVoltage", lastVoltage, numVRefMax.Value, Settings.Default.AdcMax);
 			lblReceivedDistance.Text = i18n.str("recManualDistance", lastDistance_mm);
 
 			// change position of object drawn on screen
@@ -118,7 +122,7 @@ namespace _3DScannerPC {
 			int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
 			int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
 			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
-			float distancePorc = lastDistance_cm / 70;
+			float distancePorc = lastDistance_mm_slowChange / 700;
 			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
 			picObject.Location = new Point(picObjMinPosX+picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
 		}
