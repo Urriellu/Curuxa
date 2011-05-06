@@ -6,10 +6,14 @@ typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & 
 
 // Variable types
 #define int8 char
+#define true 1
+#define false 0
 
 // list of control codes. This is the first byte transmitted through the serial port and indicates the operation being executed
 //#define CcRESERVED 0
 #define CcAuthID 1
+#define CcError 2
+#define CcTest 3
 #define CcActivateManualMode 100
 #define CcManualSetPosH 101
 #define CcManualSetPosV 102
@@ -18,6 +22,10 @@ typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & 
 
 // CcAuthID - Identification (ID must be unique)
 #define CccAuthID 97
+
+// CcError
+#define CccErrorUnknown 5
+#define CccErrorOerr 7
 
 // Lights
 #define TestLedY RD0
@@ -88,7 +96,7 @@ void ClearErrors(){
 //Reads a byte from the serial port. If there is no data on the receiver buffer, wait indefinitely for the next incoming byte
 unsigned int8 ReadSPWait(){
 	while(!RCIF) {
-		ClearErrors();
+		//ClearErrors();
 	}
 	return RCREG;
 }
@@ -105,18 +113,12 @@ unsigned int8 ReadSP() {
 //Writes a byte to the serial port
 void WriteSP(unsigned int8 value) {
 	//wait for previous transmission to end
-	while(!TXIF) {
-		//do nothing
+	while(!TRMT) {
+		//wait to transmit
 	}
 	TXREG=value;
-	Delay10us();
-}
-
-void Authenticate(){
-	//Delay(50);
-	WriteSP(CcAuthID);
-	//Delay(50);
-	WriteSP(CccAuthID);
+	//Delay10us();
+	//Delay(1);
 }
 
 void Setup(){
@@ -151,11 +153,14 @@ void Setup(){
 	SPBRGH=0;
 	SPBRG=51;
 	BRGH=1; //high speed
+	SPEN=0; CREN=0; TXEN=0; RCIE=0; OERR=0; FERR=0; //reset to default to avoid problem on some restarts
 	CREN=1; //enable receiver
 	TXEN=1; // (register TXSTA) enable transmitter
 	SYNC=0; // (register TXSTA) asynchronous operation
+	RCIF=0;
+	RCIE=1; //enable receiver interrupt
 	SPEN=1; // (register RCSTA) set TX/CK as output, RX/DT as input
-	//...by default: 8 bits, no interrupts
+	//...by default: 8 bits, reciver interrupt
 	
 	//setup PWM
 	TRISC2=0;
@@ -197,8 +202,6 @@ void Setup(){
 	//Timer1 by default using internal clock
 	TMR1IF=0;
 	TMR1IE=1;
-	PEIE=1;
-	GIE=1;
 	TMR1ON=1;
 	
 	// Lights pinout
@@ -209,34 +212,21 @@ void Setup(){
 	TestLedR=OFF;
 	TestLedG=OFF;
 	
-	// Buttons pinout
-	//TRISB2=DigitalInput;
-	//TRISB1=DigitalInput;
-	
 	//default mode
 	Mode=ModeInactive;
+
+	//begin interrupts
+	PEIE=1;
+	GIE=1;
 }
 
-// Parse any kind of data received
-void ReceiveData() {
-	Rcv=ReadSP();
-	if(Rcv != 0xFF) {
-		switch(Rcv) {
-			case CcAuthID:
-				Authenticate();
-				break;
-			case CcActivateManualMode:
-				Mode=ModeManual;
-				break;
-			case CcSetModeInactive:
-				Mode=ModeInactive;
-				break;
-			case CcManualSetPosH:
-				Rcv=ReadSPWait();
-				ServoH_ccpH=ReadSPWait();
-				ServoH_ccpL=ReadSPWait();
-				break;
-		}
+// An error occurred. Send info to PC, turn on red LED and stop program
+void Error(unsigned int8 ID){
+	while(true) {
+		GIE=0;
+		WriteSP(CcError);
+		WriteSP(ID);
+		TestLedR=ON;
 	}
 }
 
@@ -261,6 +251,33 @@ static void isr(void) __interrupt 0 {
 		CCPR1L=ServoH_ccpL;
 		CCPR2H=ServoV_ccpH;
 		CCPR2L=ServoV_ccpL;
+	} else if(RCIF) {
+		//byte received
+		Rcv=RCREG;
+		switch(Rcv) {
+			case CcAuthID:
+				WriteSP(CcAuthID);
+				WriteSP(CccAuthID);
+				break;
+			case CcTest:
+				WriteSP(CcTest);
+				WriteSP(51);
+			case CcActivateManualMode:
+				Mode=ModeManual;
+				break;
+			case CcSetModeInactive:
+				Mode=ModeInactive;
+				break;
+			case CcManualSetPosH:
+				ServoH_ccpH=ReadSPWait();
+				ServoH_ccpL=ReadSPWait();
+				break;
+			case CcManualSetPosV:
+				ServoV_ccpH=ReadSPWait();
+				ServoV_ccpL=ReadSPWait();
+				break;
+		}
+		if(OERR) Error(CccErrorOerr);
 	} else {
 		//unknown interrupt
 		TestLedR=ON;
@@ -286,8 +303,8 @@ void RunModeScan() {
 void main() {
 	Setup();
 
-	while(1) {
-		ReceiveData();
+	while(true) {
+		//ReceiveData();
 		//do something...
 		switch(Mode){
 			case ModeInactive:
