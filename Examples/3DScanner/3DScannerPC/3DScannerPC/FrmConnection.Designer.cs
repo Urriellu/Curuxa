@@ -30,6 +30,7 @@
 			this.btnConnect = new System.Windows.Forms.Button();
 			this.btnDisconnect = new System.Windows.Forms.Button();
 			this.lblBauds = new System.Windows.Forms.Label();
+			this.btnAuth = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// cmbPort
@@ -84,9 +85,9 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.btnConnect.Location = new System.Drawing.Point(15, 95);
 			this.btnConnect.Name = "btnConnect";
-			this.btnConnect.Size = new System.Drawing.Size(137, 23);
+			this.btnConnect.Size = new System.Drawing.Size(67, 23);
 			this.btnConnect.TabIndex = 4;
-			this.btnConnect.Text = "NS (Connect)";
+			this.btnConnect.Text = "NSConnect";
 			this.btnConnect.UseVisualStyleBackColor = true;
 			this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
 			// 
@@ -111,11 +112,23 @@
 			this.lblBauds.TabIndex = 6;
 			this.lblBauds.Text = "NS (bauds)";
 			// 
+			// btnAuth
+			// 
+			this.btnAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnAuth.Location = new System.Drawing.Point(88, 95);
+			this.btnAuth.Name = "btnAuth";
+			this.btnAuth.Size = new System.Drawing.Size(63, 23);
+			this.btnAuth.TabIndex = 7;
+			this.btnAuth.Text = "NS (Auth)";
+			this.btnAuth.UseVisualStyleBackColor = true;
+			this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);
+			// 
 			// FrmConnection
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(266, 134);
+			this.Controls.Add(this.btnAuth);
 			this.Controls.Add(this.lblBauds);
 			this.Controls.Add(this.cmbBaud);
 			this.Controls.Add(this.btnUpdateListPorts);
@@ -144,5 +157,6 @@
 		private System.Windows.Forms.Button btnConnect;
 		private System.Windows.Forms.Button btnDisconnect;
 		private System.Windows.Forms.Label lblBauds;
+		private System.Windows.Forms.Button btnAuth;
 	}
 }

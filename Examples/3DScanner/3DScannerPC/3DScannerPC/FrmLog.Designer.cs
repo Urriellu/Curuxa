@@ -31,12 +31,11 @@
 			this.txtLog.BackColor = System.Drawing.SystemColors.Window;
 			this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtLog.Location = new System.Drawing.Point(0, 0);
-			this.txtLog.Multiline = true;
 			this.txtLog.Name = "txtLog";
 			this.txtLog.ReadOnly = true;
-			this.txtLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
 			this.txtLog.Size = new System.Drawing.Size(629, 188);
 			this.txtLog.TabIndex = 0;
+			this.txtLog.Text = "";
 			this.txtLog.WordWrap = false;
 			// 
 			// FrmLog
@@ -51,12 +50,12 @@
 			this.Load += new System.EventHandler(this.FrmLog_Load);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLog_FormClosing);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.RichTextBox txtLog;
+		public System.Windows.Forms.RichTextBox txtLog;
+
 	}
 }

@@ -40,6 +40,8 @@
 			this.lblDegV = new System.Windows.Forms.Label();
 			this.lblTitleH = new System.Windows.Forms.Label();
 			this.lblTitleV = new System.Windows.Forms.Label();
+			this.btnActivateManual = new System.Windows.Forms.Button();
+			this.btnDeactManual = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualControlV)).BeginInit();
@@ -59,7 +61,7 @@
 			// 
 			// manualNumControlH
 			// 
-			this.manualNumControlH.Location = new System.Drawing.Point(15, 25);
+			this.manualNumControlH.Location = new System.Drawing.Point(15, 71);
 			this.manualNumControlH.Name = "manualNumControlH";
 			this.manualNumControlH.Size = new System.Drawing.Size(68, 20);
 			this.manualNumControlH.TabIndex = 10;
@@ -83,7 +85,7 @@
 			// 
 			this.manualControlH.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.manualControlH.Location = new System.Drawing.Point(110, 25);
+			this.manualControlH.Location = new System.Drawing.Point(110, 71);
 			this.manualControlH.Maximum = 100;
 			this.manualControlH.Name = "manualControlH";
 			this.manualControlH.Size = new System.Drawing.Size(281, 42);
@@ -94,7 +96,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 127);
+			this.label1.Location = new System.Drawing.Point(12, 137);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(27, 13);
 			this.label1.TabIndex = 12;
@@ -109,7 +111,7 @@
             0,
             0,
             65536});
-			this.numVRefMax.Location = new System.Drawing.Point(45, 125);
+			this.numVRefMax.Location = new System.Drawing.Point(45, 135);
 			this.numVRefMax.Maximum = new decimal(new int[] {
             12,
             0,
@@ -133,7 +135,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(114, 127);
+			this.label2.Location = new System.Drawing.Point(114, 137);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(25, 13);
 			this.label2.TabIndex = 14;
@@ -143,7 +145,7 @@
 			// lblReceivedValue
 			// 
 			this.lblReceivedValue.AutoSize = true;
-			this.lblReceivedValue.Location = new System.Drawing.Point(45, 188);
+			this.lblReceivedValue.Location = new System.Drawing.Point(45, 202);
 			this.lblReceivedValue.Name = "lblReceivedValue";
 			this.lblReceivedValue.Size = new System.Drawing.Size(103, 13);
 			this.lblReceivedValue.TabIndex = 15;
@@ -152,7 +154,7 @@
 			// lblRecvTitle
 			// 
 			this.lblRecvTitle.AutoSize = true;
-			this.lblRecvTitle.Location = new System.Drawing.Point(12, 168);
+			this.lblRecvTitle.Location = new System.Drawing.Point(12, 182);
 			this.lblRecvTitle.Name = "lblRecvTitle";
 			this.lblRecvTitle.Size = new System.Drawing.Size(183, 13);
 			this.lblRecvTitle.TabIndex = 16;
@@ -161,7 +163,7 @@
 			// lblReceivedDistance
 			// 
 			this.lblReceivedDistance.AutoSize = true;
-			this.lblReceivedDistance.Location = new System.Drawing.Point(45, 231);
+			this.lblReceivedDistance.Location = new System.Drawing.Point(45, 245);
 			this.lblReceivedDistance.Name = "lblReceivedDistance";
 			this.lblReceivedDistance.Size = new System.Drawing.Size(137, 13);
 			this.lblReceivedDistance.TabIndex = 17;
@@ -170,7 +172,7 @@
 			// lblReceivedVoltage
 			// 
 			this.lblReceivedVoltage.AutoSize = true;
-			this.lblReceivedVoltage.Location = new System.Drawing.Point(45, 210);
+			this.lblReceivedVoltage.Location = new System.Drawing.Point(45, 224);
 			this.lblReceivedVoltage.Name = "lblReceivedVoltage";
 			this.lblReceivedVoltage.Size = new System.Drawing.Size(205, 13);
 			this.lblReceivedVoltage.TabIndex = 18;
@@ -179,7 +181,7 @@
 			// lblDegH
 			// 
 			this.lblDegH.AutoSize = true;
-			this.lblDegH.Location = new System.Drawing.Point(58, 48);
+			this.lblDegH.Location = new System.Drawing.Point(58, 94);
 			this.lblDegH.Name = "lblDegH";
 			this.lblDegH.Size = new System.Drawing.Size(25, 13);
 			this.lblDegH.TabIndex = 19;
@@ -188,7 +190,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(86, 27);
+			this.label4.Location = new System.Drawing.Point(86, 73);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(18, 13);
 			this.label4.TabIndex = 20;
@@ -217,7 +219,7 @@
 			// lblTitleH
 			// 
 			this.lblTitleH.AutoSize = true;
-			this.lblTitleH.Location = new System.Drawing.Point(12, 9);
+			this.lblTitleH.Location = new System.Drawing.Point(12, 55);
 			this.lblTitleH.Name = "lblTitleH";
 			this.lblTitleH.Size = new System.Drawing.Size(281, 13);
 			this.lblTitleH.TabIndex = 23;
@@ -233,11 +235,33 @@
 			this.lblTitleV.TabIndex = 24;
 			this.lblTitleV.Text = "NS [Vertical:]";
 			// 
+			// btnActivateManual
+			// 
+			this.btnActivateManual.Location = new System.Drawing.Point(12, 12);
+			this.btnActivateManual.Name = "btnActivateManual";
+			this.btnActivateManual.Size = new System.Drawing.Size(127, 23);
+			this.btnActivateManual.TabIndex = 25;
+			this.btnActivateManual.Text = "NS (Activate manual)";
+			this.btnActivateManual.UseVisualStyleBackColor = true;
+			this.btnActivateManual.Click += new System.EventHandler(this.btnActivateManual_Click);
+			// 
+			// btnDeactManual
+			// 
+			this.btnDeactManual.Location = new System.Drawing.Point(145, 12);
+			this.btnDeactManual.Name = "btnDeactManual";
+			this.btnDeactManual.Size = new System.Drawing.Size(127, 23);
+			this.btnDeactManual.TabIndex = 26;
+			this.btnDeactManual.Text = "NS (Deactivate manual)";
+			this.btnDeactManual.UseVisualStyleBackColor = true;
+			this.btnDeactManual.Click += new System.EventHandler(this.btnDeactManual_Click);
+			// 
 			// FrmManualControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(521, 280);
+			this.Controls.Add(this.btnDeactManual);
+			this.Controls.Add(this.btnActivateManual);
 			this.Controls.Add(this.lblTitleV);
 			this.Controls.Add(this.lblTitleH);
 			this.Controls.Add(this.lblDegV);
@@ -290,5 +314,7 @@
 		private System.Windows.Forms.Label lblDegV;
 		private System.Windows.Forms.Label lblTitleH;
 		private System.Windows.Forms.Label lblTitleV;
+		private System.Windows.Forms.Button btnActivateManual;
+		private System.Windows.Forms.Button btnDeactManual;
 	}
 }
