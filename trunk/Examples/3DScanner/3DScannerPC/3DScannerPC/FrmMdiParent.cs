@@ -37,7 +37,7 @@ namespace _3DScannerPC {
 			frmLog.Show();
 			frmConnection.Show();
 
-			Globals.Log(i18n.str("init"));
+			Globals.Log(LogType.Information, i18n.str("init"));
 
 			//ShowConnectionStatus(Status.Disconnected);
 			UpdateStatus();

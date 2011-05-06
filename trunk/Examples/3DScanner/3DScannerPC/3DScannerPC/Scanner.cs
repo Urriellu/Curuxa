@@ -46,13 +46,13 @@ namespace _3DScannerPC {
 		/// Connect to the microcontroller
 		/// </summary>
 		public static void Connect(string portName, int baudRate) {
-			Globals.Log("Trying to connect");
+			Globals.Log(LogType.Information, "Trying to connect");
 			if(Scanner.SP != null && Scanner.SP.IsOpen) Scanner.SP.Close();
 			SP = new SerialPort(portName, baudRate, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
 			try {
 				SP.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(SP_DataReceived);
 				SP.Open();
-				Globals.Log("Connected to " + portName);
+				Globals.Log(LogType.Success, "Connected to " + portName);
 				if(ThreadReceiver == null) {
 					//ThreadReceiver = new Thread(Scanner.DataReceiver);
 					//ThreadReceiver.Start();
@@ -60,7 +60,7 @@ namespace _3DScannerPC {
 				Status = Status.Connected;
 				Check();
 			} catch(Exception e) {
-				Globals.Log("Unable to connect: " + e.Message);
+				Globals.Log(LogType.Error, "Unable to connect: " + e.Message);
 				Status = Status.Disconnected;
 			}
 			Globals.MainWindow.UpdateStatus();
@@ -69,7 +69,7 @@ namespace _3DScannerPC {
 		static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
 			while(SP.IsOpen && SP.BytesToRead > 0) {
 				byte Rcv = (byte)SP.ReadByte();
-				Globals.Log("Received byte: " + Rcv);
+				Globals.Log(LogType.Debug, "Received byte: " + Rcv);
 				ControlByte BC = (ControlByte)Rcv;
 				if(BC == ControlByte.AuthID) {
 					Rcv = (byte)SP.ReadByte();
@@ -78,9 +78,9 @@ namespace _3DScannerPC {
 						Status = Status.Connected;
 						Authenticated = true;
 						LastAuthentication = DateTime.Now;
-						Globals.Log("Authentication successful");
+						Globals.Log(LogType.Success, "Authentication successful");
 					} else {
-						Globals.Log("Authentication failure (received ID: " + Rcv + "), disconnecting...");
+						Globals.Log(LogType.Error, "Authentication failure (received ID: " + Rcv + "), disconnecting...");
 						Disconnect();
 					}
 				}
@@ -89,18 +89,22 @@ namespace _3DScannerPC {
 					switch(BC) {
 						case ControlByte.AuthID:
 							break;
+						case ControlByte.Error:
+							ControlByteError error = (ControlByteError)SP.ReadByte();
+							Globals.Log(LogType.Error, "Microcontroller error: " + error);
+							break;
 						case ControlByte.ManualTxValue:
 							UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
 							receivedValue += (byte)SP.ReadByte();
 							Globals.MainWindow.SetReceivedManualValue(receivedValue);
-							Globals.Log("Received manual value: " + receivedValue);
+							Globals.Log(LogType.Information, "Received manual value: " + receivedValue);
 							break;
 						default:
-							Globals.Log("Unknown control byte: " + BC.ToString());
+							Globals.Log(LogType.Error, "Unknown control byte: " + BC.ToString());
 							break;
 					}
 				} else {
-					Globals.Log("Not authenticated, ignoring received byte: " + Rcv);
+					Globals.Log(LogType.Error, "Not authenticated, ignoring received byte: " + Rcv);
 				}
 			}
 		}
@@ -134,28 +138,28 @@ namespace _3DScannerPC {
 			Authenticated = false;
 			Status = Status.Disconnected;
 			ScannerMode = ScannerMode.Inactive;
-			Globals.Log("Disconnected");
+			Globals.Log(LogType.Information, "Disconnected");
 			Globals.MainWindow.UpdateStatus();
 		}
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
 		public static bool Send(byte B) {
 			if(Settings.RequireAuthentication && !Authenticated && B != (byte)ControlByte.AuthID) {
-				Globals.Log("Unable to send byte: " + B.ToString() + ". Not authenticated");
+				Globals.Log(LogType.Error, "Unable to send byte: " + B.ToString() + ". Not authenticated");
 				return false;
 			}
 			if(SP != null && SP.IsOpen) {
 				try {
 					SP.WriteByte(B);
-					Globals.Log("Byte sent: " + B.ToString());
+					Globals.Log(LogType.Debug, "Byte sent: " + B.ToString());
 					Thread.Sleep(10);
 					return true;
 				} catch(Exception e) {
-					Globals.Log("Error while sending byte \"" + B.ToString() + "\": " + e.Message);
+					Globals.Log(LogType.Error, "Error while sending byte \"" + B.ToString() + "\": " + e.Message);
 					return false;
 				}
 			} else {
-				Globals.Log("Unable to send byte: " + B.ToString());
+				Globals.Log(LogType.Error, "Unable to send byte: " + B.ToString());
 				return false;
 			}
 		}
@@ -249,12 +253,12 @@ namespace _3DScannerPC {
 				bool ok;
 				switch(scannerMode) {
 					case ScannerMode.Manual:
-						Globals.Log("Activating manual mode");
+						Globals.Log(LogType.Information, "Activating manual mode");
 						ok = Send(ControlByte.SetModeManual);
 						if(ok) ScannerMode = ScannerMode.Manual;
 						break;
 					case ScannerMode.Inactive:
-						Globals.Log("Setting scanner in inactive mode");
+						Globals.Log(LogType.Information, "Setting scanner in inactive mode");
 						ok = Send(ControlByte.SetModeInactive);
 						if(ok) ScannerMode = ScannerMode.Inactive;
 						break;
