@@ -20,5 +20,17 @@
     <Setting Name="ScannerID" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">97</Value>
     </Setting>
+    <Setting Name="ServoHduty0Deg" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">700</Value>
+    </Setting>
+    <Setting Name="ServoHduty180Deg" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">2100</Value>
+    </Setting>
+    <Setting Name="ServoVduty0Deg" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">700</Value>
+    </Setting>
+    <Setting Name="ServoVduty180Deg" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">2100</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

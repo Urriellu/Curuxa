@@ -5,15 +5,15 @@ using System.Text;
 using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
-	public struct ServoRange {
-		public UInt16 Duty0deg;
+	/*public struct ServoRange {
+		/*public UInt16 Duty0deg;
 		public UInt16 Duty180deg;
 
 		public ServoRange(UInt16 duty0deg, UInt16 duty180deg) {
 			this.Duty0deg = duty0deg;
 			this.Duty180deg = duty180deg;
-		}
-	}
+		}*
+	}*/
 
 	public enum ServoID {
 		H,
@@ -26,8 +26,8 @@ namespace _3DScannerPC {
 	/// <remarks>
 	/// Hardcoded for Tosc=8MHz
 	/// </remarks>
-	public struct Servo {
-		/// <summary>
+	public class Servo {
+		/*/// <summary>
 		/// Duty cycle (microseconds) for 0º
 		/// </summary>
 		const UInt16 OBSOLETEDeg0 = 900;
@@ -35,9 +35,9 @@ namespace _3DScannerPC {
 		/// <summary>
 		/// Duty cycle (microseconds) for 180º
 		/// </summary>
-		const UInt16 OBSOLETEDeg180 = 2100;
+		const UInt16 OBSOLETEDeg180 = 2100;*/
 
-		/// <summary>
+		/*/// <summary>
 		/// List of hard-coded ranges for each servo (duty, microseconds)
 		/// </summary>
 		public static Dictionary<ServoID, ServoRange> ServoRanges {
@@ -50,9 +50,20 @@ namespace _3DScannerPC {
 				return _servoRanges;
 			}
 		}
-		static Dictionary<ServoID, ServoRange> _servoRanges;
+		static Dictionary<ServoID, ServoRange> _servoRanges;*/
 
-		/// <summary>
+		/*public static class GetRange {
+			public static ServoRange this[ServoID id]{
+				get {
+					return null;
+				}
+			}
+		}*/
+
+		/*public static ServoRange RangeServoH = new ServoRange(ServoID.H);
+		public static ServoRange RangeServoV = new ServoRange(ServoID.V);*/
+
+		/*/// <summary>
 		/// Get the amount of microseconds of duty cycle based on desired servo position (degrees)
 		/// </summary>
 		/// <remarks>
@@ -83,6 +94,68 @@ namespace _3DScannerPC {
 		/// <returns></returns>
 		public static UInt16 OBSOLETEDegToT1preload(float deg) {
 			return OBSOLETEDutyToT1preload(OBSOLETEDegToDutyUs(deg));
+		}*/
+
+		public readonly ServoID ID;
+
+		public Servo(ServoID id) {
+			ID = id;
+		}
+
+		/// <summary>
+		/// Duty time (in microseconds) for 0º
+		/// </summary>
+		public UInt16 Duty0deg {
+			get {
+				switch(ID) {
+					case ServoID.H:
+						return Settings.Default.ServoHduty0Deg;
+					case ServoID.V:
+						return Settings.Default.ServoVduty0Deg;
+					default:
+						throw new NotImplementedException();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Duty time (in microseconds) for 180º
+		/// </summary>
+		public UInt16 Duty180deg {
+			get {
+				switch(ID) {
+					case ServoID.H:
+						return Settings.Default.ServoHduty180Deg;
+					case ServoID.V:
+						return Settings.Default.ServoVduty180Deg;
+					default:
+						throw new NotImplementedException();
+				}
+			}
+		}
+
+		public UInt16 Ccp0deg {
+			get {
+				return DutyToCcp(Duty0deg);
+			}
+		}
+
+		public UInt16 Ccp180deg {
+			get {
+				return DutyToCcp(Duty180deg);
+			}
+		}
+
+		#region STATIC
+		public static Servo H = new Servo(ServoID.H);
+		public static Servo V = new Servo(ServoID.V);
+
+		public static Dictionary<ServoID, Servo> All;
+
+		static Servo() {
+			All = new Dictionary<ServoID, Servo>();
+			All.Add(ServoID.H, H);
+			All.Add(ServoID.V, V);
 		}
 
 		public static UInt16 DutyToCcp(UInt16 duty) {
@@ -92,9 +165,10 @@ namespace _3DScannerPC {
 		}
 
 		public static float DutyToDeg(UInt16 duty, ServoID servo) {
-			float val = duty - ServoRanges[servo].Duty0deg;
-			float val180 = ServoRanges[servo].Duty180deg - ServoRanges[servo].Duty0deg;
+			float val = duty - All[servo].Duty0deg;
+			float val180 = All[servo].Duty180deg - All[servo].Duty0deg;
 			return (float)val * 180f / val180;
 		}
+		#endregion
 	}
 }

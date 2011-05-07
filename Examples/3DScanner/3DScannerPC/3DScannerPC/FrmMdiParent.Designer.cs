@@ -51,11 +51,11 @@
 			this.miModeManual = new System.Windows.Forms.ToolStripMenuItem();
 			this.miModeInactive = new System.Windows.Forms.ToolStripMenuItem();
 			this.miView = new System.Windows.Forms.ToolStripMenuItem();
-			this.miConnection = new System.Windows.Forms.ToolStripMenuItem();
-			this.miManualControl = new System.Windows.Forms.ToolStripMenuItem();
-			this.miLog = new System.Windows.Forms.ToolStripMenuItem();
+			this.miViewConnection = new System.Windows.Forms.ToolStripMenuItem();
+			this.miViewManualControl = new System.Windows.Forms.ToolStripMenuItem();
+			this.miViewLog = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miViewStatus = new System.Windows.Forms.ToolStripMenuItem();
 			this.nSLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogShow = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogHide = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +90,8 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.nSManualControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlActivate = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -99,16 +101,17 @@
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miFile,
             this.miEdit,
-            this.miMode,
             this.miView,
-            this.nSLogToolStripMenuItem,
+            this.miMode,
+            this.nSManualControlToolStripMenuItem,
             this.toolsMenu,
+            this.nSLogToolStripMenuItem,
             this.windowsMenu,
             this.miHelp});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.MdiWindowListItem = this.windowsMenu;
 			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new System.Drawing.Size(632, 24);
+			this.menuStrip.Size = new System.Drawing.Size(778, 24);
 			this.menuStrip.TabIndex = 0;
 			this.menuStrip.Text = "MenuStrip";
 			// 
@@ -326,50 +329,50 @@
 			// miView
 			// 
 			this.miView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miConnection,
-            this.miManualControl,
-            this.miLog,
+            this.miViewConnection,
+            this.miViewManualControl,
+            this.miViewLog,
             this.toolStripMenuItem1,
-            this.statusBarToolStripMenuItem});
+            this.miViewStatus});
 			this.miView.Name = "miView";
 			this.miView.Size = new System.Drawing.Size(65, 20);
 			this.miView.Text = "NS (&View)";
 			// 
-			// miConnection
+			// miViewConnection
 			// 
-			this.miConnection.Name = "miConnection";
-			this.miConnection.Size = new System.Drawing.Size(210, 22);
-			this.miConnection.Text = "NOT SET (Connection)";
-			this.miConnection.Click += new System.EventHandler(this.miConnection_Click);
+			this.miViewConnection.Name = "miViewConnection";
+			this.miViewConnection.Size = new System.Drawing.Size(210, 22);
+			this.miViewConnection.Text = "NOT SET (Connection)";
+			this.miViewConnection.Click += new System.EventHandler(this.miConnection_Click);
 			// 
-			// miManualControl
+			// miViewManualControl
 			// 
-			this.miManualControl.Name = "miManualControl";
-			this.miManualControl.Size = new System.Drawing.Size(210, 22);
-			this.miManualControl.Text = "NOT SET (Manual Control)";
-			this.miManualControl.Click += new System.EventHandler(this.miManualControl_Click);
+			this.miViewManualControl.Name = "miViewManualControl";
+			this.miViewManualControl.Size = new System.Drawing.Size(210, 22);
+			this.miViewManualControl.Text = "NOT SET (Manual Control)";
+			this.miViewManualControl.Click += new System.EventHandler(this.miManualControl_Click);
 			// 
-			// miLog
+			// miViewLog
 			// 
-			this.miLog.Name = "miLog";
-			this.miLog.Size = new System.Drawing.Size(210, 22);
-			this.miLog.Text = "NOT SET (Log)";
-			this.miLog.Click += new System.EventHandler(this.miLog_Click);
+			this.miViewLog.Name = "miViewLog";
+			this.miViewLog.Size = new System.Drawing.Size(210, 22);
+			this.miViewLog.Text = "NOT SET (Log)";
+			this.miViewLog.Click += new System.EventHandler(this.miLog_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(207, 6);
 			// 
-			// statusBarToolStripMenuItem
+			// miViewStatus
 			// 
-			this.statusBarToolStripMenuItem.Checked = true;
-			this.statusBarToolStripMenuItem.CheckOnClick = true;
-			this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-			this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-			this.statusBarToolStripMenuItem.Text = "NS (&Status Bar)";
-			this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
+			this.miViewStatus.Checked = true;
+			this.miViewStatus.CheckOnClick = true;
+			this.miViewStatus.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.miViewStatus.Name = "miViewStatus";
+			this.miViewStatus.Size = new System.Drawing.Size(210, 22);
+			this.miViewStatus.Text = "NS (&Status Bar)";
+			this.miViewStatus.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
 			// 
 			// nSLogToolStripMenuItem
 			// 
@@ -610,9 +613,9 @@
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsStatus});
-			this.statusStrip.Location = new System.Drawing.Point(0, 431);
+			this.statusStrip.Location = new System.Drawing.Point(0, 460);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(632, 22);
+			this.statusStrip.Size = new System.Drawing.Size(778, 22);
 			this.statusStrip.TabIndex = 2;
 			this.statusStrip.Text = "StatusStrip";
 			// 
@@ -624,11 +627,26 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
+			// nSManualControlToolStripMenuItem
+			// 
+			this.nSManualControlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miManualControlActivate});
+			this.nSManualControlToolStripMenuItem.Name = "nSManualControlToolStripMenuItem";
+			this.nSManualControlToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
+			this.nSManualControlToolStripMenuItem.Text = "NS (Manual Control)";
+			// 
+			// miManualControlActivate
+			// 
+			this.miManualControlActivate.Name = "miManualControlActivate";
+			this.miManualControlActivate.Size = new System.Drawing.Size(152, 22);
+			this.miManualControlActivate.Text = "NS (Activate)";
+			this.miManualControlActivate.Click += new System.EventHandler(this.miManualControlActivate_Click);
+			// 
 			// FrmMdiParent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(632, 453);
+			this.ClientSize = new System.Drawing.Size(778, 482);
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.menuStrip);
 			this.IsMdiContainer = true;
@@ -677,7 +695,7 @@
 		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem miView;
-		private System.Windows.Forms.ToolStripMenuItem statusBarToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem miViewStatus;
 		private System.Windows.Forms.ToolStripMenuItem toolsMenu;
 		private System.Windows.Forms.ToolStripMenuItem miOptions;
 		private System.Windows.Forms.ToolStripMenuItem windowsMenu;
@@ -690,7 +708,7 @@
 		private System.Windows.Forms.ToolStripMenuItem indexToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
 		private System.Windows.Forms.ToolTip toolTip;
-		private System.Windows.Forms.ToolStripMenuItem miManualControl;
+		private System.Windows.Forms.ToolStripMenuItem miViewManualControl;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem miMode;
 		private System.Windows.Forms.ToolStripMenuItem miModeManual;
@@ -700,8 +718,8 @@
 		private System.Windows.Forms.ToolStripMenuItem miSpanish;
 		private System.Windows.Forms.ToolStripMenuItem miFrench;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem miLog;
-		private System.Windows.Forms.ToolStripMenuItem miConnection;
+		private System.Windows.Forms.ToolStripMenuItem miViewLog;
+		private System.Windows.Forms.ToolStripMenuItem miViewConnection;
 		private System.Windows.Forms.ToolStripMenuItem miWindowsDefaultPos;
 		private System.Windows.Forms.ToolStripMenuItem nSLogToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem miLogClearAll;
@@ -714,6 +732,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
 		private System.Windows.Forms.ToolStripMenuItem miShowHideDebug;
+		private System.Windows.Forms.ToolStripMenuItem nSManualControlToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem miManualControlActivate;
 	}
 }
 
