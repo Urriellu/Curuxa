@@ -11,8 +11,10 @@ using _3DScannerPC.Properties;
 namespace _3DScannerPC {
 	public partial class FrmMdiParent:FormChild {
 		FrmAbout frmAbout = new FrmAbout();
+
 		FrmManualControl frmManualControl;
 		FrmConnection frmConnection;
+		FrmSettings frmSettings;
 		public FrmLog frmLog;
 
 		public FrmMdiParent() {
@@ -29,6 +31,9 @@ namespace _3DScannerPC {
 
 			frmConnection = new FrmConnection();
 			frmConnection.MdiParent = this;
+
+			frmSettings = new FrmSettings();
+			frmSettings.MdiParent = this;
 
 			SetMdiChildrenDefaultLocations();
 
@@ -268,6 +273,10 @@ namespace _3DScannerPC {
 
 		private void miShowHideDebug_Click(object sender, EventArgs e) {
 			Settings.Default.PrintDebugLogs = !Settings.Default.PrintDebugLogs;
+		}
+
+		private void miOptions_Click(object sender, EventArgs e) {
+			frmSettings.Show();
 		}
 	}
 }
