@@ -148,6 +148,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Servo.cs" />
+    <Compile Include="ServoID.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Vector3.cs" />
   </ItemGroup>
