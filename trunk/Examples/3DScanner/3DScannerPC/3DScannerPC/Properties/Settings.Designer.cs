@@ -94,5 +94,53 @@ namespace _3DScannerPC.Properties {
                 this["ScannerID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("700")]
+        public ushort ServoHduty0Deg {
+            get {
+                return ((ushort)(this["ServoHduty0Deg"]));
+            }
+            set {
+                this["ServoHduty0Deg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2100")]
+        public ushort ServoHduty180Deg {
+            get {
+                return ((ushort)(this["ServoHduty180Deg"]));
+            }
+            set {
+                this["ServoHduty180Deg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("700")]
+        public ushort ServoVduty0Deg {
+            get {
+                return ((ushort)(this["ServoVduty0Deg"]));
+            }
+            set {
+                this["ServoVduty0Deg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2100")]
+        public ushort ServoVduty180Deg {
+            get {
+                return ((ushort)(this["ServoVduty180Deg"]));
+            }
+            set {
+                this["ServoVduty180Deg"] = value;
+            }
+        }
     }
 }

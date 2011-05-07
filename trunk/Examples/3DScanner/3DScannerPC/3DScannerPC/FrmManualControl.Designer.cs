@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManualControl));
 			this.manualNumControlV = new System.Windows.Forms.NumericUpDown();
 			this.manualNumControlH = new System.Windows.Forms.NumericUpDown();
@@ -48,6 +49,8 @@
 			this.grpControlH = new System.Windows.Forms.GroupBox();
 			this.lblDuty = new System.Windows.Forms.Label();
 			this.grpControlV = new System.Windows.Forms.GroupBox();
+			this.grpGraph = new System.Windows.Forms.GroupBox();
+			this.graph = new ZedGraph.ZedGraphControl();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualControlV)).BeginInit();
@@ -60,6 +63,7 @@
 			this.grpSetup.SuspendLayout();
 			this.grpControlH.SuspendLayout();
 			this.grpControlV.SuspendLayout();
+			this.grpGraph.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// manualNumControlV
@@ -89,7 +93,7 @@
 			this.manualControlV.Maximum = 100;
 			this.manualControlV.Name = "manualControlV";
 			this.manualControlV.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.manualControlV.Size = new System.Drawing.Size(42, 487);
+			this.manualControlV.Size = new System.Drawing.Size(42, 508);
 			this.manualControlV.TabIndex = 9;
 			this.manualControlV.Value = 50;
 			this.manualControlV.Scroll += new System.EventHandler(this.manualControlV_Scroll);
@@ -101,7 +105,7 @@
 			this.manualControlH.Location = new System.Drawing.Point(146, 26);
 			this.manualControlH.Maximum = 100;
 			this.manualControlH.Name = "manualControlH";
-			this.manualControlH.Size = new System.Drawing.Size(375, 42);
+			this.manualControlH.Size = new System.Drawing.Size(262, 42);
 			this.manualControlH.TabIndex = 8;
 			this.manualControlH.Value = 50;
 			this.manualControlH.Scroll += new System.EventHandler(this.manualControlH_Scroll);
@@ -268,7 +272,7 @@
 			this.grpClosestObj.Controls.Add(this.picObject);
 			this.grpClosestObj.Location = new System.Drawing.Point(12, 312);
 			this.grpClosestObj.Name = "grpClosestObj";
-			this.grpClosestObj.Size = new System.Drawing.Size(527, 94);
+			this.grpClosestObj.Size = new System.Drawing.Size(414, 94);
 			this.grpClosestObj.TabIndex = 29;
 			this.grpClosestObj.TabStop = false;
 			this.grpClosestObj.Text = "NS (closest object)";
@@ -283,7 +287,7 @@
 			this.grpInstantValue.Enabled = false;
 			this.grpInstantValue.Location = new System.Drawing.Point(12, 206);
 			this.grpInstantValue.Name = "grpInstantValue";
-			this.grpInstantValue.Size = new System.Drawing.Size(527, 100);
+			this.grpInstantValue.Size = new System.Drawing.Size(414, 100);
 			this.grpInstantValue.TabIndex = 30;
 			this.grpInstantValue.TabStop = false;
 			this.grpInstantValue.Text = "NS (latest received value)";
@@ -299,7 +303,7 @@
 			this.grpSetup.Controls.Add(this.label2);
 			this.grpSetup.Location = new System.Drawing.Point(12, 12);
 			this.grpSetup.Name = "grpSetup";
-			this.grpSetup.Size = new System.Drawing.Size(527, 100);
+			this.grpSetup.Size = new System.Drawing.Size(414, 100);
 			this.grpSetup.TabIndex = 31;
 			this.grpSetup.TabStop = false;
 			this.grpSetup.Text = "NS (Setup)";
@@ -315,7 +319,7 @@
 			this.grpControlH.Controls.Add(this.label4);
 			this.grpControlH.Location = new System.Drawing.Point(12, 118);
 			this.grpControlH.Name = "grpControlH";
-			this.grpControlH.Size = new System.Drawing.Size(527, 82);
+			this.grpControlH.Size = new System.Drawing.Size(414, 82);
 			this.grpControlH.TabIndex = 32;
 			this.grpControlH.TabStop = false;
 			this.grpControlH.Text = "NS (Horizontal Control)";
@@ -337,24 +341,55 @@
 			this.grpControlV.Controls.Add(this.manualControlV);
 			this.grpControlV.Controls.Add(this.label5);
 			this.grpControlV.Controls.Add(this.lblDegV);
-			this.grpControlV.Location = new System.Drawing.Point(545, 12);
+			this.grpControlV.Location = new System.Drawing.Point(432, 12);
 			this.grpControlV.Name = "grpControlV";
-			this.grpControlV.Size = new System.Drawing.Size(121, 571);
+			this.grpControlV.Size = new System.Drawing.Size(121, 592);
 			this.grpControlV.TabIndex = 33;
 			this.grpControlV.TabStop = false;
 			this.grpControlV.Text = "NS (Vertical Control)";
+			// 
+			// grpGraph
+			// 
+			this.grpGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.grpGraph.Controls.Add(this.graph);
+			this.grpGraph.Location = new System.Drawing.Point(12, 412);
+			this.grpGraph.Name = "grpGraph";
+			this.grpGraph.Size = new System.Drawing.Size(414, 192);
+			this.grpGraph.TabIndex = 34;
+			this.grpGraph.TabStop = false;
+			this.grpGraph.Text = "groupBox1";
+			// 
+			// graph
+			// 
+			this.graph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.graph.Location = new System.Drawing.Point(6, 68);
+			this.graph.Name = "graph";
+			this.graph.ScrollGrace = 0;
+			this.graph.ScrollMaxX = 0;
+			this.graph.ScrollMaxY = 0;
+			this.graph.ScrollMaxY2 = 0;
+			this.graph.ScrollMinX = 0;
+			this.graph.ScrollMinY = 0;
+			this.graph.ScrollMinY2 = 0;
+			this.graph.Size = new System.Drawing.Size(402, 118);
+			this.graph.TabIndex = 0;
 			// 
 			// FrmManualControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(678, 595);
+			this.ClientSize = new System.Drawing.Size(565, 616);
+			this.Controls.Add(this.grpGraph);
 			this.Controls.Add(this.grpControlV);
 			this.Controls.Add(this.grpControlH);
 			this.Controls.Add(this.grpSetup);
 			this.Controls.Add(this.grpInstantValue);
 			this.Controls.Add(this.grpClosestObj);
-			this.MinimumSize = new System.Drawing.Size(529, 475);
+			this.MinimumSize = new System.Drawing.Size(573, 643);
 			this.Name = "FrmManualControl";
 			this.ShowIcon = false;
 			this.Text = "NOT SET (Manual Control)";
@@ -377,6 +412,7 @@
 			this.grpControlH.PerformLayout();
 			this.grpControlV.ResumeLayout(false);
 			this.grpControlV.PerformLayout();
+			this.grpGraph.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -407,5 +443,7 @@
 		private System.Windows.Forms.GroupBox grpControlH;
 		private System.Windows.Forms.GroupBox grpControlV;
 		private System.Windows.Forms.Label lblDuty;
+		private System.Windows.Forms.GroupBox grpGraph;
+		private ZedGraph.ZedGraphControl graph;
 	}
 }

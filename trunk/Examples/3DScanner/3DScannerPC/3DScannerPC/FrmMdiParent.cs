@@ -115,7 +115,7 @@ namespace _3DScannerPC {
 		}
 
 		private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e) {
-			statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+			statusStrip.Visible = miViewStatus.Checked;
 		}
 
 		private void CascadeToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -197,7 +197,7 @@ namespace _3DScannerPC {
 				tsStatus.ForeColor = Color.Red;
 			}
 			frmConnection.UpdateStatus();
-			frmManualControl.UpdateActivDeactivButtons();
+			frmManualControl.UpdateStatus();
 			frmManualControl.Usable = (Scanner.Status == Status.Connected && Scanner.Mode == ScannerMode.Manual);
 			miMode.Enabled = (Scanner.Status == Status.Connected);
 		}
@@ -282,6 +282,10 @@ namespace _3DScannerPC {
 
 		private void miOptions_Click(object sender, EventArgs e) {
 			frmSettings.Show();
+		}
+
+		private void miManualControlActivate_Click(object sender, EventArgs e) {
+			miModeManual_Click(null, null);
 		}
 	}
 }

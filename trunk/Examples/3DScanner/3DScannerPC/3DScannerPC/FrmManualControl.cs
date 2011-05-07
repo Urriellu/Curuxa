@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using _3DScannerPC.Properties;
+using ZedGraph;
 
 namespace _3DScannerPC {
 	public partial class FrmManualControl:FormChild {
@@ -20,6 +21,12 @@ namespace _3DScannerPC {
 		float lastDegV;
 		DateTime lastPosChange = DateTime.Now;
 
+		bool graphModified = false;
+		PointPairList graphPtInst = new PointPairList();
+		LineItem curveInst;
+		Timer tmrUpdtGraph;
+		DateTime graphStartTime = DateTime.Now;
+
 		public FrmManualControl() {
 			InitializeComponent();
 
@@ -32,22 +39,52 @@ namespace _3DScannerPC {
 			UpdateLang();
 
 			//set ranges for servos
-			manualControlH.SetRange(Servo.ServoRanges[ServoID.H].Duty0deg, Servo.ServoRanges[ServoID.H].Duty180deg);
-			manualNumControlH.Minimum = Servo.ServoRanges[ServoID.H].Duty0deg;
-			manualNumControlH.Maximum = Servo.ServoRanges[ServoID.H].Duty180deg;
-			manualNumControlH.Value = manualControlH.Value = (Servo.ServoRanges[ServoID.H].Duty180deg + Servo.ServoRanges[ServoID.H].Duty0deg) / 2;
+			manualControlH.SetRange(Servo.H.Duty0deg, Servo.H.Duty180deg);
+			manualNumControlH.Minimum = Servo.H.Duty0deg;
+			manualNumControlH.Maximum = Servo.H.Duty180deg;
+			manualNumControlH.Value = manualControlH.Value = (Servo.H.Duty180deg + Servo.H.Duty0deg) / 2;
 
-			manualControlV.SetRange(Servo.ServoRanges[ServoID.V].Duty0deg, Servo.ServoRanges[ServoID.V].Duty180deg);
-			manualNumControlV.Minimum = Servo.ServoRanges[ServoID.V].Duty0deg;
-			manualNumControlV.Maximum = Servo.ServoRanges[ServoID.V].Duty180deg;
-			manualNumControlV.Value = manualControlV.Value = (Servo.ServoRanges[ServoID.V].Duty180deg + Servo.ServoRanges[ServoID.V].Duty0deg) / 2;
+			manualControlV.SetRange(Servo.V.Duty0deg, Servo.V.Duty180deg);
+			manualNumControlV.Minimum = Servo.V.Duty0deg;
+			manualNumControlV.Maximum = Servo.V.Duty180deg;
+			manualNumControlV.Value = manualControlV.Value = (Servo.V.Duty180deg + Servo.V.Duty0deg) / 2;
 
-			UpdateActivDeactivButtons();
+			UpdateStatus();
+
+			//setup graph
+			graph.GraphPane.Title.Text = "TITLE NOT SET";
+			graph.GraphPane.XAxis.Title.Text = "TITLE AXIS X";
+			graph.GraphPane.XAxis.Scale.Min = 0;
+			graph.GraphPane.YAxis.Title.Text = "TITLE AXIS Y [cm]";
+			graph.GraphPane.YAxis.Scale.Min = 0;
+			graph.GraphPane.YAxis.Scale.Max = 80;
+			curveInst = graph.GraphPane.AddCurve("NS (Instant Value)", graphPtInst, Color.Blue, SymbolType.Circle);
+			UpdateGraph();
+
+			//setup timer for updating the graph
+			tmrUpdtGraph = new Timer();
+			tmrUpdtGraph.Interval = 1000;
+			tmrUpdtGraph.Tick += new EventHandler(tmrUpdtGraph_Tick);
+			tmrUpdtGraph.Start();
 		}
 
-		public void UpdateActivDeactivButtons() {
+		void tmrUpdtGraph_Tick(object sender, EventArgs e) {
+			if(graphModified) UpdateGraph();
+		}
+
+		ScannerMode prevStatus = ScannerMode.Inactive;
+
+		public void UpdateStatus() {
 			btnActivateManual.Enabled = Scanner.Mode == ScannerMode.Inactive;
 			btnDeactManual.Enabled = Scanner.Mode == ScannerMode.Manual;
+
+			if(prevStatus != ScannerMode.Manual && Scanner.Mode == ScannerMode.Manual) {
+				//we just entered manual mode
+				graphPtInst.Clear();
+				graphStartTime = DateTime.Now;
+			}
+
+			prevStatus = Scanner.Mode;
 		}
 
 		public override void UpdateLang() {
@@ -103,6 +140,10 @@ namespace _3DScannerPC {
 		public void SetReceivedManualValue(UInt16 adcValue) {
 			lastValueAdc = adcValue;
 			UpdateReceivedValues();
+
+			//add instant position to graph
+			graphPtInst.Add((DateTime.Now-graphStartTime).TotalSeconds, lastDistance_cm);
+			graphModified = true;
 		}
 
 		private void UpdateReceivedValues() {
@@ -137,6 +178,16 @@ namespace _3DScannerPC {
 
 		private void btnDeactManual_Click(object sender, EventArgs e) {
 			Scanner.SetMode(ScannerMode.Inactive);
+		}
+
+		/// <summary>
+		/// Redibuja la gráfica (debe llamarse tras modificar cualquier dato)
+		/// </summary>
+		private void UpdateGraph() {
+			graph.Invalidate();
+			graph.AxisChange();
+			graph.Update();
+			graphModified = false;
 		}
 	}
 }
