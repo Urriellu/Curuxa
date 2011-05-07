@@ -14,8 +14,18 @@ namespace _3DScannerPC {
 		static SWF.Timer AuthTimer;
 		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
 		static DummyLocker s = new DummyLocker();
-		public static bool Authenticated { get; private set; }
 		public static ScannerMode Mode = ScannerMode.Inactive;
+
+		public static bool Authenticated {
+			get {
+				return _Authenticated;
+			}
+			private set {
+				_Authenticated = value;
+				Globals.MainWindow.UpdateStatus();
+			}
+		}
+		public static bool _Authenticated;
 
 		public static Status Status {
 			get {
@@ -23,8 +33,8 @@ namespace _3DScannerPC {
 			}
 			private set {
 				_Status = value;
-				if(Globals.MainWindow != null) Globals.MainWindow.UpdateStatus();
 				if(value == Status.Disconnected) Authenticated = false;
+				Globals.MainWindow.UpdateStatus();
 			}
 		}
 		private static Status _Status = Status.Disconnected;
@@ -145,7 +155,7 @@ namespace _3DScannerPC {
 			Status = Status.Disconnected;
 			Mode = ScannerMode.Inactive;
 			Globals.Log(LogType.Information, "Disconnected");
-			Globals.MainWindow.UpdateStatus();
+			//Globals.MainWindow.UpdateStatus();
 		}
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
