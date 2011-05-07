@@ -61,18 +61,21 @@
 			this.miLogHide = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.miLogClearAll = new System.Windows.Forms.ToolStripMenuItem();
+			this.miShowHideDebug = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
 			this.nSSaveLogAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveTxt = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveRTF = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miOptions = new System.Windows.Forms.ToolStripMenuItem();
 			this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.miWindowsDefaultPos = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
 			this.miWindowsCascade = new System.Windows.Forms.ToolStripMenuItem();
 			this.miTileVertical = new System.Windows.Forms.ToolStripMenuItem();
 			this.miTileHz = new System.Windows.Forms.ToolStripMenuItem();
 			this.miCloseAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.miArrangeIcons = new System.Windows.Forms.ToolStripMenuItem();
-			this.miWindowsDefaultPos = new System.Windows.Forms.ToolStripMenuItem();
 			this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLanguage = new System.Windows.Forms.ToolStripMenuItem();
 			this.miEnglish = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,9 +90,6 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-			this.miShowHideDebug = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -411,6 +411,18 @@
 			this.miLogClearAll.Text = "NS Clear All";
 			this.miLogClearAll.Click += new System.EventHandler(this.miLogClearAll_Click);
 			// 
+			// miShowHideDebug
+			// 
+			this.miShowHideDebug.Name = "miShowHideDebug";
+			this.miShowHideDebug.Size = new System.Drawing.Size(186, 22);
+			this.miShowHideDebug.Text = "NS Show/Hide Debug";
+			this.miShowHideDebug.Click += new System.EventHandler(this.miShowHideDebug_Click);
+			// 
+			// toolStripMenuItem4
+			// 
+			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+			this.toolStripMenuItem4.Size = new System.Drawing.Size(183, 6);
+			// 
 			// nSSaveLogAsToolStripMenuItem
 			// 
 			this.nSSaveLogAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -423,30 +435,31 @@
 			// miLogSaveTxt
 			// 
 			this.miLogSaveTxt.Name = "miLogSaveTxt";
-			this.miLogSaveTxt.Size = new System.Drawing.Size(152, 22);
+			this.miLogSaveTxt.Size = new System.Drawing.Size(104, 22);
 			this.miLogSaveTxt.Text = "TXT";
 			this.miLogSaveTxt.Click += new System.EventHandler(this.miLogSaveTxt_Click);
 			// 
 			// miLogSaveRTF
 			// 
 			this.miLogSaveRTF.Name = "miLogSaveRTF";
-			this.miLogSaveRTF.Size = new System.Drawing.Size(152, 22);
+			this.miLogSaveRTF.Size = new System.Drawing.Size(104, 22);
 			this.miLogSaveRTF.Text = "RTF";
 			this.miLogSaveRTF.Click += new System.EventHandler(this.miLogSaveRTF_Click);
 			// 
 			// toolsMenu
 			// 
 			this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.miOptions});
 			this.toolsMenu.Name = "toolsMenu";
 			this.toolsMenu.Size = new System.Drawing.Size(68, 20);
 			this.toolsMenu.Text = "NS (&Tools)";
 			// 
-			// optionsToolStripMenuItem
+			// miOptions
 			// 
-			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.optionsToolStripMenuItem.Text = "&Options";
+			this.miOptions.Name = "miOptions";
+			this.miOptions.Size = new System.Drawing.Size(152, 22);
+			this.miOptions.Text = "NS (Options)";
+			this.miOptions.Click += new System.EventHandler(this.miOptions_Click);
 			// 
 			// windowsMenu
 			// 
@@ -461,6 +474,18 @@
 			this.windowsMenu.Name = "windowsMenu";
 			this.windowsMenu.Size = new System.Drawing.Size(62, 20);
 			this.windowsMenu.Text = "&Windows";
+			// 
+			// miWindowsDefaultPos
+			// 
+			this.miWindowsDefaultPos.Name = "miWindowsDefaultPos";
+			this.miWindowsDefaultPos.Size = new System.Drawing.Size(184, 22);
+			this.miWindowsDefaultPos.Text = "NS (Default Position)";
+			this.miWindowsDefaultPos.Click += new System.EventHandler(this.miWindowsDefaultPos_Click);
+			// 
+			// toolStripMenuItem5
+			// 
+			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+			this.toolStripMenuItem5.Size = new System.Drawing.Size(181, 6);
 			// 
 			// miWindowsCascade
 			// 
@@ -496,13 +521,6 @@
 			this.miArrangeIcons.Size = new System.Drawing.Size(184, 22);
 			this.miArrangeIcons.Text = "&Arrange Icons";
 			this.miArrangeIcons.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItem_Click);
-			// 
-			// miWindowsDefaultPos
-			// 
-			this.miWindowsDefaultPos.Name = "miWindowsDefaultPos";
-			this.miWindowsDefaultPos.Size = new System.Drawing.Size(184, 22);
-			this.miWindowsDefaultPos.Text = "NS (Default Position)";
-			this.miWindowsDefaultPos.Click += new System.EventHandler(this.miWindowsDefaultPos_Click);
 			// 
 			// miHelp
 			// 
@@ -606,23 +624,6 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
-			// toolStripMenuItem4
-			// 
-			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(183, 6);
-			// 
-			// toolStripMenuItem5
-			// 
-			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(181, 6);
-			// 
-			// miShowHideDebug
-			// 
-			this.miShowHideDebug.Name = "miShowHideDebug";
-			this.miShowHideDebug.Size = new System.Drawing.Size(186, 22);
-			this.miShowHideDebug.Text = "NS Show/Hide Debug";
-			this.miShowHideDebug.Click += new System.EventHandler(this.miShowHideDebug_Click);
-			// 
 			// FrmMdiParent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,7 +679,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miView;
 		private System.Windows.Forms.ToolStripMenuItem statusBarToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolsMenu;
-		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem miOptions;
 		private System.Windows.Forms.ToolStripMenuItem windowsMenu;
 		private System.Windows.Forms.ToolStripMenuItem miWindowsCascade;
 		private System.Windows.Forms.ToolStripMenuItem miTileVertical;
