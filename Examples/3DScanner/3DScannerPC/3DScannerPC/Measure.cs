@@ -13,8 +13,6 @@ namespace _3DScannerPC {
 	/// 50-80cm - low resolution
 	/// </remarks>
 	public struct Measure {
-		float distance;
-
 		static List<KeyValuePair<float,float>> knownPoints;
 
 		static Measure() {

@@ -31,10 +31,10 @@ namespace _3DScannerPC {
 
 		static SerialPort SP;
 
-		/// <summary>
+		/*/// <summary>
 		/// Thread to do Serial Port polling looking for new received data
 		/// </summary>
-		static Thread ThreadReceiver;
+		static Thread ThreadReceiver;*/
 
 		static Scanner() {
 			AuthTimer = new SWF.Timer();
@@ -54,10 +54,10 @@ namespace _3DScannerPC {
 				SP.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(SP_DataReceived);
 				SP.Open();
 				Globals.Log(LogType.Success, "Connected to " + portName);
-				if(ThreadReceiver == null) {
-					//ThreadReceiver = new Thread(Scanner.DataReceiver);
-					//ThreadReceiver.Start();
-				}
+				/*if(ThreadReceiver == null) {
+					ThreadReceiver = new Thread(Scanner.DataReceiver);
+					ThreadReceiver.Start();
+				}*/
 				Status = Status.Connected;
 				AskAuth();
 			} catch(Exception e) {
@@ -132,10 +132,10 @@ namespace _3DScannerPC {
 
 		public static void Disconnect() {
 			SetMode(ScannerMode.Inactive);
-			if(ThreadReceiver != null) {
+			/*if(ThreadReceiver != null) {
 				ThreadReceiver.Abort();
 				//ThreadReceiver = null;
-			}
+			}*/
 			if(SP != null) {
 				SP.Close();
 				//SP.Dispose();
