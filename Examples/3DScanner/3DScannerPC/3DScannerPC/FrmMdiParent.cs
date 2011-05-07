@@ -185,8 +185,13 @@ namespace _3DScannerPC {
 		/// </summary>
 		public void UpdateStatus() {
 			if(Scanner.Status == Status.Connected) {
-				tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Scanner.Mode) + ")";
-				tsStatus.ForeColor = Color.Green;
+				if(Scanner.Authenticated) {
+					tsStatus.Text = i18n.str("Connected") + " (" + i18n.str("Mode" + Scanner.Mode) + ")";
+					tsStatus.ForeColor = Color.Green;
+				} else {
+					tsStatus.Text = i18n.str("ConnectedNotAuth");
+					tsStatus.ForeColor = Color.Magenta;
+				}
 			} else {
 				tsStatus.Text = i18n.str("Disconnected");
 				tsStatus.ForeColor = Color.Red;
