@@ -38,16 +38,7 @@ namespace _3DScannerPC {
 		private void FrmManualControl_Load(object sender, EventArgs e) {
 			UpdateLang();
 
-			//set ranges for servos
-			manualControlH.SetRange(Servo.H.Duty0deg, Servo.H.Duty180deg);
-			manualNumControlH.Minimum = Servo.H.Duty0deg;
-			manualNumControlH.Maximum = Servo.H.Duty180deg;
-			manualNumControlH.Value = manualControlH.Value = (Servo.H.Duty180deg + Servo.H.Duty0deg) / 2;
-
-			manualControlV.SetRange(Servo.V.Duty0deg, Servo.V.Duty180deg);
-			manualNumControlV.Minimum = Servo.V.Duty0deg;
-			manualNumControlV.Maximum = Servo.V.Duty180deg;
-			manualNumControlV.Value = manualControlV.Value = (Servo.V.Duty180deg + Servo.V.Duty0deg) / 2;
+			UpdateServoRanges();
 
 			UpdateStatus();
 
@@ -68,6 +59,19 @@ namespace _3DScannerPC {
 			tmrUpdtGraph.Start();
 		}
 
+		public void UpdateServoRanges() {
+			//set ranges for servos
+			manualControlH.SetRange(Servo.H.Duty0deg, Servo.H.Duty180deg);
+			manualNumControlH.Minimum = Servo.H.Duty0deg;
+			manualNumControlH.Maximum = Servo.H.Duty180deg;
+			manualNumControlH.Value = manualControlH.Value = Servo.H.Duty90deg;
+
+			manualControlV.SetRange(Servo.V.Duty0deg, Servo.V.Duty180deg);
+			manualNumControlV.Minimum = Servo.V.Duty0deg;
+			manualNumControlV.Maximum = Servo.V.Duty180deg;
+			manualNumControlV.Value = manualControlV.Value = Servo.V.Duty90deg;
+		}
+
 		void tmrUpdtGraph_Tick(object sender, EventArgs e) {
 			if(graphModified) UpdateGraph();
 		}
@@ -82,6 +86,7 @@ namespace _3DScannerPC {
 				//we just entered manual mode
 				graphPtInst.Clear();
 				graphStartTime = DateTime.Now;
+				UpdateServoRanges();
 			}
 
 			prevStatus = Scanner.Mode;

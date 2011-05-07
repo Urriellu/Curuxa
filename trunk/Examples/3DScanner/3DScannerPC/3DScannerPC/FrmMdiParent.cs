@@ -12,7 +12,7 @@ namespace _3DScannerPC {
 	public partial class FrmMdiParent:FormChild {
 		FrmAbout frmAbout = new FrmAbout();
 
-		FrmManualControl frmManualControl;
+		public FrmManualControl frmManualControl;
 		FrmConnection frmConnection;
 		FrmSettings frmSettings;
 		public FrmLog frmLog;

@@ -16,6 +16,7 @@ namespace _3DScannerPC {
 
 		private void btnOk_Click(object sender, EventArgs e) {
 			Hide();
+			Settings.Default.Save();
 		}
 
 		private void FrmSettings_FormClosing(object sender, FormClosingEventArgs e) {
@@ -34,6 +35,10 @@ namespace _3DScannerPC {
 			nbTimeChangesThres.Value = Settings.Default.SendDelayThreshold;
 			nbAdcMaxVal.Value = Settings.Default.AdcMax;
 			nbT1preload.Value = Settings.Default.T1preload;
+			numDutyH0.Value = Servo.H.Duty0deg;
+			numDutyH180.Value = Servo.H.Duty180deg;
+			numDutyV0.Value = Servo.V.Duty0deg;
+			numDutyV180.Value = Servo.V.Duty180deg;
 		}
 
 		private void checkBox1_CheckedChanged(object sender, EventArgs e) {
@@ -58,6 +63,22 @@ namespace _3DScannerPC {
 
 		private void nbT1preload_ValueChanged(object sender, EventArgs e) {
 			Settings.Default.T1preload = (UInt16)nbT1preload.Value;
+		}
+
+		private void numDutyH0_ValueChanged(object sender, EventArgs e) {
+			Servo.H.Duty0deg = (UInt16)numDutyH0.Value;
+		}
+
+		private void numDutyH180_ValueChanged(object sender, EventArgs e) {
+			Servo.H.Duty180deg = (UInt16)numDutyH180.Value;
+		}
+
+		private void numDutyV0_ValueChanged(object sender, EventArgs e) {
+			Servo.V.Duty0deg = (UInt16)numDutyV0.Value;
+		}
+
+		private void numDutyV180_ValueChanged(object sender, EventArgs e) {
+			Servo.V.Duty180deg = (UInt16)numDutyV180.Value;
 		}
 	}
 }

@@ -83,6 +83,9 @@ namespace _3DScannerPC {
 			return Rcv;
 		}
 
+		/// <summary>
+		/// Method called when a new byte is received
+		/// </summary>
 		static void SP_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
 			while(SP.IsOpen && SP.BytesToRead > 0) {
 				byte Rcv = ReadByte();

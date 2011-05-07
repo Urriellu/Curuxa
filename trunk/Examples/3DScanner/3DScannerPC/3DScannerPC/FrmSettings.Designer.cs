@@ -35,13 +35,25 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.nbAdcMaxVal = new System.Windows.Forms.NumericUpDown();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.numDutyV180 = new System.Windows.Forms.NumericUpDown();
+			this.numDutyV0 = new System.Windows.Forms.NumericUpDown();
+			this.numDutyH180 = new System.Windows.Forms.NumericUpDown();
+			this.numDutyH0 = new System.Windows.Forms.NumericUpDown();
+			this.lblDutyV180 = new System.Windows.Forms.Label();
+			this.lblDutyV0 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label4 = new System.Windows.Forms.Label();
+			this.lblDutyH0 = new System.Windows.Forms.Label();
+			this.lblDutyH180 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.nbT1preload)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nbTimeChangesThres)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nbScannerId)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nbAdcMaxVal)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyV180)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyV0)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyH180)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyH0)).BeginInit();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -59,7 +71,7 @@
 			// btnOk
 			// 
 			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOk.Location = new System.Drawing.Point(418, 177);
+			this.btnOk.Location = new System.Drawing.Point(362, 301);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(106, 23);
 			this.btnOk.TabIndex = 1;
@@ -206,6 +218,12 @@
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.Controls.Add(this.numDutyV180, 1, 9);
+			this.tableLayoutPanel1.Controls.Add(this.numDutyV0, 1, 8);
+			this.tableLayoutPanel1.Controls.Add(this.numDutyH180, 1, 7);
+			this.tableLayoutPanel1.Controls.Add(this.numDutyH0, 1, 6);
+			this.tableLayoutPanel1.Controls.Add(this.lblDutyV180, 0, 9);
+			this.tableLayoutPanel1.Controls.Add(this.lblDutyV0, 0, 8);
 			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
 			this.tableLayoutPanel1.Controls.Add(this.cbReqAuth, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.nbT1preload, 1, 5);
@@ -216,17 +234,134 @@
 			this.tableLayoutPanel1.Controls.Add(this.nbScannerId, 1, 2);
 			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.lblDutyH0, 0, 6);
+			this.tableLayoutPanel1.Controls.Add(this.lblDutyH180, 0, 7);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 6;
+			this.tableLayoutPanel1.RowCount = 11;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(512, 159);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(456, 283);
 			this.tableLayoutPanel1.TabIndex = 12;
+			// 
+			// numDutyV180
+			// 
+			this.numDutyV180.Location = new System.Drawing.Point(265, 237);
+			this.numDutyV180.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numDutyV180.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyV180.Name = "numDutyV180";
+			this.numDutyV180.Size = new System.Drawing.Size(126, 20);
+			this.numDutyV180.TabIndex = 14;
+			this.numDutyV180.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyV180.ValueChanged += new System.EventHandler(this.numDutyV180_ValueChanged);
+			// 
+			// numDutyV0
+			// 
+			this.numDutyV0.Location = new System.Drawing.Point(265, 211);
+			this.numDutyV0.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numDutyV0.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyV0.Name = "numDutyV0";
+			this.numDutyV0.Size = new System.Drawing.Size(126, 20);
+			this.numDutyV0.TabIndex = 14;
+			this.numDutyV0.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyV0.ValueChanged += new System.EventHandler(this.numDutyV0_ValueChanged);
+			// 
+			// numDutyH180
+			// 
+			this.numDutyH180.Location = new System.Drawing.Point(265, 185);
+			this.numDutyH180.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numDutyH180.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyH180.Name = "numDutyH180";
+			this.numDutyH180.Size = new System.Drawing.Size(126, 20);
+			this.numDutyH180.TabIndex = 14;
+			this.numDutyH180.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyH180.ValueChanged += new System.EventHandler(this.numDutyH180_ValueChanged);
+			// 
+			// numDutyH0
+			// 
+			this.numDutyH0.Location = new System.Drawing.Point(265, 159);
+			this.numDutyH0.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numDutyH0.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyH0.Name = "numDutyH0";
+			this.numDutyH0.Size = new System.Drawing.Size(126, 20);
+			this.numDutyH0.TabIndex = 13;
+			this.numDutyH0.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numDutyH0.ValueChanged += new System.EventHandler(this.numDutyH0_ValueChanged);
+			// 
+			// lblDutyV180
+			// 
+			this.lblDutyV180.AutoSize = true;
+			this.lblDutyV180.Location = new System.Drawing.Point(3, 234);
+			this.lblDutyV180.Name = "lblDutyV180";
+			this.lblDutyV180.Size = new System.Drawing.Size(162, 13);
+			this.lblDutyV180.TabIndex = 16;
+			this.lblDutyV180.Text = "NS (Duty for 180º, vertical servo)";
+			// 
+			// lblDutyV0
+			// 
+			this.lblDutyV0.AutoSize = true;
+			this.lblDutyV0.Location = new System.Drawing.Point(3, 208);
+			this.lblDutyV0.Name = "lblDutyV0";
+			this.lblDutyV0.Size = new System.Drawing.Size(150, 13);
+			this.lblDutyV0.TabIndex = 16;
+			this.lblDutyV0.Text = "NS (Duty for 0º, vertical servo)";
 			// 
 			// tableLayoutPanel2
 			// 
@@ -253,13 +388,32 @@
 			this.label4.TabIndex = 13;
 			this.label4.Text = "ms";
 			// 
+			// lblDutyH0
+			// 
+			this.lblDutyH0.AutoSize = true;
+			this.lblDutyH0.Location = new System.Drawing.Point(3, 156);
+			this.lblDutyH0.Name = "lblDutyH0";
+			this.lblDutyH0.Size = new System.Drawing.Size(161, 13);
+			this.lblDutyH0.TabIndex = 15;
+			this.lblDutyH0.Text = "NS (Duty for 0º, horizontal servo)";
+			// 
+			// lblDutyH180
+			// 
+			this.lblDutyH180.AutoSize = true;
+			this.lblDutyH180.Location = new System.Drawing.Point(3, 182);
+			this.lblDutyH180.Name = "lblDutyH180";
+			this.lblDutyH180.Size = new System.Drawing.Size(173, 13);
+			this.lblDutyH180.TabIndex = 16;
+			this.lblDutyH180.Text = "NS (Duty for 180º, horizontal servo)";
+			// 
 			// FrmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(536, 212);
+			this.ClientSize = new System.Drawing.Size(480, 336);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.btnOk);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimumSize = new System.Drawing.Size(486, 239);
 			this.Name = "FrmSettings";
 			this.Text = "NOT SET (Settings)";
@@ -271,6 +425,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.nbAdcMaxVal)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyV180)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyV0)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyH180)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numDutyH0)).EndInit();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			this.ResumeLayout(false);
@@ -293,5 +451,13 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label lblDutyH0;
+		private System.Windows.Forms.Label lblDutyH180;
+		private System.Windows.Forms.Label lblDutyV0;
+		private System.Windows.Forms.Label lblDutyV180;
+		private System.Windows.Forms.NumericUpDown numDutyV180;
+		private System.Windows.Forms.NumericUpDown numDutyV0;
+		private System.Windows.Forms.NumericUpDown numDutyH180;
+		private System.Windows.Forms.NumericUpDown numDutyH0;
 	}
 }
