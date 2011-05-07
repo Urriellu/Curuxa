@@ -32,6 +32,19 @@ namespace _3DScannerPC {
 						throw new NotImplementedException();
 				}
 			}
+			set {
+				switch(ID) {
+					case ServoID.H:
+						Settings.Default.ServoHduty0Deg = value;
+						break;
+					case ServoID.V:
+						Settings.Default.ServoVduty0Deg = value;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+				Globals.MainWindow.frmManualControl.UpdateServoRanges(); //force update ranges in manual mode
+			}
 		}
 
 		/// <summary>
@@ -47,6 +60,25 @@ namespace _3DScannerPC {
 					default:
 						throw new NotImplementedException();
 				}
+			}
+			set {
+				switch(ID) {
+					case ServoID.H:
+						Settings.Default.ServoHduty180Deg = value;
+						break;
+					case ServoID.V:
+						Settings.Default.ServoVduty180Deg = value;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+				Globals.MainWindow.frmManualControl.UpdateServoRanges(); //force update ranges in manual mode
+			}
+		}
+
+		public UInt16 Duty90deg {
+			get {
+				return (UInt16)((Duty0deg + Duty180deg) / 2);
 			}
 		}
 
