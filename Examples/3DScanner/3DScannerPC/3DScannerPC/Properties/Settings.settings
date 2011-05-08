@@ -14,9 +14,6 @@
     <Setting Name="RequireAuthentication" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AdcMax" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1024</Value>
-    </Setting>
     <Setting Name="ScannerID" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">97</Value>
     </Setting>
@@ -31,6 +28,12 @@
     </Setting>
     <Setting Name="ServoVduty180Deg" Type="System.UInt16" Scope="User">
       <Value Profile="(Default)">2100</Value>
+    </Setting>
+    <Setting Name="RawMsmExtension" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3draw</Value>
+    </Setting>
+    <Setting Name="RawMsmFileFilter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3D Scanner Raw Measurement (*.3draw)|*.3draw</Value>
     </Setting>
   </Settings>
 </SettingsFile>

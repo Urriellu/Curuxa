@@ -39,8 +39,8 @@ namespace _3DScannerPC {
 
 			UpdateLang();
 
-			frmManualControl.Show();
 			frmLog.Show();
+			frmManualControl.Show();
 			frmConnection.Show();
 
 			Globals.Log(LogType.Information, i18n.str("init"));
@@ -286,6 +286,38 @@ namespace _3DScannerPC {
 
 		private void miManualControlActivate_Click(object sender, EventArgs e) {
 			miModeManual_Click(null, null);
+		}
+
+		private void miManualControlDeactivate_Click(object sender, EventArgs e) {
+			miModeInactive_Click(null, null);
+		}
+
+		private void nSStartNewSeriesToolStripMenuItem_Click(object sender, EventArgs e) {
+			frmManualControl.SetupNewSeries();
+		}
+
+		private void miManualControlSaveSeries_Click(object sender, EventArgs e) {
+			SaveRawMsm(frmManualControl.rawMsm);
+		}
+
+		/// <summary>
+		/// Ask where to save a raw measurement and save it
+		/// </summary>
+		/// <param name="rawMeasurement">The RAW Measurement</param>
+		public void SaveRawMsm(RawMeasurement rawMeasurement) {
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.FileName = rawMeasurement.Name + "." + Settings.Default.RawMsmExtension;
+			sfd.Filter = Settings.Default.RawMsmFileFilter;
+			sfd.Title = rawMeasurement.Name;
+
+			if(sfd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
+				rawMeasurement.Save(sfd.FileName);
+				RawMeasurement test = RawMeasurement.Load(sfd.FileName);
+			}
+		}
+
+		private void miManualControlSaveSeriesAvg_Click(object sender, EventArgs e) {
+			SaveRawMsm(frmManualControl.rawMsmAvg);
 		}
 	}
 }

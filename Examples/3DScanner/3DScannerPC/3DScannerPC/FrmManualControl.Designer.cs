@@ -46,10 +46,15 @@
 			this.grpClosestObj = new System.Windows.Forms.GroupBox();
 			this.grpInstantValue = new System.Windows.Forms.GroupBox();
 			this.grpSetup = new System.Windows.Forms.GroupBox();
+			this.lblAdcMax = new System.Windows.Forms.Label();
+			this.numAdcMax = new System.Windows.Forms.NumericUpDown();
 			this.grpControlH = new System.Windows.Forms.GroupBox();
 			this.lblDuty = new System.Windows.Forms.Label();
 			this.grpControlV = new System.Windows.Forms.GroupBox();
 			this.grpGraph = new System.Windows.Forms.GroupBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.numAvg = new System.Windows.Forms.NumericUpDown();
+			this.lnlPoints = new System.Windows.Forms.Label();
 			this.graph = new ZedGraph.ZedGraphControl();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlH)).BeginInit();
@@ -61,9 +66,11 @@
 			this.grpClosestObj.SuspendLayout();
 			this.grpInstantValue.SuspendLayout();
 			this.grpSetup.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).BeginInit();
 			this.grpControlH.SuspendLayout();
 			this.grpControlV.SuspendLayout();
 			this.grpGraph.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numAvg)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// manualNumControlV
@@ -142,6 +149,7 @@
 			this.numVRefMax.Name = "numVRefMax";
 			this.numVRefMax.Size = new System.Drawing.Size(63, 20);
 			this.numVRefMax.TabIndex = 13;
+			this.numVRefMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.numVRefMax.Value = new decimal(new int[] {
             500,
             0,
@@ -296,6 +304,8 @@
 			// 
 			this.grpSetup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.grpSetup.Controls.Add(this.lblAdcMax);
+			this.grpSetup.Controls.Add(this.numAdcMax);
 			this.grpSetup.Controls.Add(this.btnActivateManual);
 			this.grpSetup.Controls.Add(this.btnDeactManual);
 			this.grpSetup.Controls.Add(this.label1);
@@ -307,6 +317,44 @@
 			this.grpSetup.TabIndex = 31;
 			this.grpSetup.TabStop = false;
 			this.grpSetup.Text = "NS (Setup)";
+			// 
+			// lblAdcMax
+			// 
+			this.lblAdcMax.AutoSize = true;
+			this.lblAdcMax.Location = new System.Drawing.Point(218, 31);
+			this.lblAdcMax.Name = "lblAdcMax";
+			this.lblAdcMax.Size = new System.Drawing.Size(55, 13);
+			this.lblAdcMax.TabIndex = 27;
+			this.lblAdcMax.Tag = "";
+			this.lblAdcMax.Text = "ADC Max:";
+			// 
+			// numAdcMax
+			// 
+			this.numAdcMax.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+			this.numAdcMax.Location = new System.Drawing.Point(279, 29);
+			this.numAdcMax.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.numAdcMax.Minimum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+			this.numAdcMax.Name = "numAdcMax";
+			this.numAdcMax.Size = new System.Drawing.Size(63, 20);
+			this.numAdcMax.TabIndex = 28;
+			this.numAdcMax.Value = new decimal(new int[] {
+            1023,
+            0,
+            0,
+            0});
+			this.numAdcMax.ValueChanged += new System.EventHandler(this.numAdcMax_ValueChanged);
 			// 
 			// grpControlH
 			// 
@@ -353,20 +401,71 @@
 			this.grpGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.grpGraph.Controls.Add(this.label3);
+			this.grpGraph.Controls.Add(this.numAvg);
+			this.grpGraph.Controls.Add(this.lnlPoints);
 			this.grpGraph.Controls.Add(this.graph);
 			this.grpGraph.Location = new System.Drawing.Point(12, 412);
 			this.grpGraph.Name = "grpGraph";
 			this.grpGraph.Size = new System.Drawing.Size(414, 192);
 			this.grpGraph.TabIndex = 34;
 			this.grpGraph.TabStop = false;
-			this.grpGraph.Text = "groupBox1";
+			this.grpGraph.Text = "NS (Measured points)";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(13, 28);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(100, 13);
+			this.label3.TabIndex = 15;
+			this.label3.Tag = "";
+			this.label3.Text = "NS (Average every)";
+			// 
+			// numAvg
+			// 
+			this.numAvg.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+			this.numAvg.Location = new System.Drawing.Point(119, 26);
+			this.numAvg.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+			this.numAvg.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numAvg.Name = "numAvg";
+			this.numAvg.Size = new System.Drawing.Size(63, 20);
+			this.numAvg.TabIndex = 16;
+			this.numAvg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numAvg.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+			// 
+			// lnlPoints
+			// 
+			this.lnlPoints.AutoSize = true;
+			this.lnlPoints.Location = new System.Drawing.Point(188, 28);
+			this.lnlPoints.Name = "lnlPoints";
+			this.lnlPoints.Size = new System.Drawing.Size(59, 13);
+			this.lnlPoints.TabIndex = 17;
+			this.lnlPoints.Tag = "Voltage reference";
+			this.lnlPoints.Text = "NS (points)";
 			// 
 			// graph
 			// 
 			this.graph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.graph.Location = new System.Drawing.Point(6, 68);
+			this.graph.Location = new System.Drawing.Point(6, 52);
 			this.graph.Name = "graph";
 			this.graph.ScrollGrace = 0;
 			this.graph.ScrollMaxX = 0;
@@ -375,7 +474,7 @@
 			this.graph.ScrollMinX = 0;
 			this.graph.ScrollMinY = 0;
 			this.graph.ScrollMinY2 = 0;
-			this.graph.Size = new System.Drawing.Size(402, 118);
+			this.graph.Size = new System.Drawing.Size(402, 134);
 			this.graph.TabIndex = 0;
 			// 
 			// FrmManualControl
@@ -408,11 +507,14 @@
 			this.grpInstantValue.PerformLayout();
 			this.grpSetup.ResumeLayout(false);
 			this.grpSetup.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).EndInit();
 			this.grpControlH.ResumeLayout(false);
 			this.grpControlH.PerformLayout();
 			this.grpControlV.ResumeLayout(false);
 			this.grpControlV.PerformLayout();
 			this.grpGraph.ResumeLayout(false);
+			this.grpGraph.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numAvg)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -445,5 +547,10 @@
 		private System.Windows.Forms.Label lblDuty;
 		private System.Windows.Forms.GroupBox grpGraph;
 		private ZedGraph.ZedGraphControl graph;
+		private System.Windows.Forms.Label lblAdcMax;
+		private System.Windows.Forms.NumericUpDown numAdcMax;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.NumericUpDown numAvg;
+		private System.Windows.Forms.Label lnlPoints;
 	}
 }

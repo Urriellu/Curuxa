@@ -13,6 +13,9 @@ namespace _3DScannerPC {
 	/// 50-80cm - low resolution
 	/// </remarks>
 	public struct Measure {
+		/// <summary>
+		/// List of known points of the voltage-distance graph for the GP2 sensor. Key: voltage. Value: distance in mm
+		/// </summary>
 		static List<KeyValuePair<float,float>> knownPoints;
 
 		static Measure() {
@@ -34,6 +37,11 @@ namespace _3DScannerPC {
 			return value * VRef / AdcMax;
 		}
 
+		/// <summary>
+		/// Get the real distance, in millimeters
+		/// </summary>
+		/// <param name="volt"></param>
+		/// <returns></returns>
 		public static float VoltageToDistance(float volt) {
 			if(volt >= knownPoints[0].Key) return 0;
 			else if(volt <= knownPoints[knownPoints.Count - 1].Key) return float.PositiveInfinity;

@@ -47,15 +47,23 @@
 			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.miMode = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModeManual = new System.Windows.Forms.ToolStripMenuItem();
-			this.miModeInactive = new System.Windows.Forms.ToolStripMenuItem();
 			this.miView = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewConnection = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewManualControl = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewLog = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.miViewStatus = new System.Windows.Forms.ToolStripMenuItem();
+			this.miMode = new System.Windows.Forms.ToolStripMenuItem();
+			this.miModeManual = new System.Windows.Forms.ToolStripMenuItem();
+			this.miModeInactive = new System.Windows.Forms.ToolStripMenuItem();
+			this.nSManualControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlActivate = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlDeactivate = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+			this.miManualControlStartNewSeries = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlSaveSeriesInst = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.miOptions = new System.Windows.Forms.ToolStripMenuItem();
 			this.nSLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogShow = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogHide = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,8 +74,6 @@
 			this.nSSaveLogAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveTxt = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveRTF = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.miOptions = new System.Windows.Forms.ToolStripMenuItem();
 			this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.miWindowsDefaultPos = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
@@ -90,8 +96,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.nSManualControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.miManualControlActivate = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlSaveSeriesAvg = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -303,29 +308,6 @@
 			this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.selectAllToolStripMenuItem.Text = "Select &All";
 			// 
-			// miMode
-			// 
-			this.miMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miModeManual,
-            this.miModeInactive});
-			this.miMode.Name = "miMode";
-			this.miMode.Size = new System.Drawing.Size(98, 20);
-			this.miMode.Text = "NOT SET (Mode)";
-			// 
-			// miModeManual
-			// 
-			this.miModeManual.Name = "miModeManual";
-			this.miModeManual.Size = new System.Drawing.Size(254, 22);
-			this.miModeManual.Text = "NOT SET (Manual)";
-			this.miModeManual.Click += new System.EventHandler(this.miModeManual_Click);
-			// 
-			// miModeInactive
-			// 
-			this.miModeInactive.Name = "miModeInactive";
-			this.miModeInactive.Size = new System.Drawing.Size(254, 22);
-			this.miModeInactive.Text = "NOT SET (Inactive: Ready to Scan)";
-			this.miModeInactive.Click += new System.EventHandler(this.miModeInactive_Click);
-			// 
 			// miView
 			// 
 			this.miView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -373,6 +355,90 @@
 			this.miViewStatus.Size = new System.Drawing.Size(210, 22);
 			this.miViewStatus.Text = "NS (&Status Bar)";
 			this.miViewStatus.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
+			// 
+			// miMode
+			// 
+			this.miMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miModeManual,
+            this.miModeInactive});
+			this.miMode.Name = "miMode";
+			this.miMode.Size = new System.Drawing.Size(98, 20);
+			this.miMode.Text = "NOT SET (Mode)";
+			// 
+			// miModeManual
+			// 
+			this.miModeManual.Name = "miModeManual";
+			this.miModeManual.Size = new System.Drawing.Size(254, 22);
+			this.miModeManual.Text = "NOT SET (Manual)";
+			this.miModeManual.Click += new System.EventHandler(this.miModeManual_Click);
+			// 
+			// miModeInactive
+			// 
+			this.miModeInactive.Name = "miModeInactive";
+			this.miModeInactive.Size = new System.Drawing.Size(254, 22);
+			this.miModeInactive.Text = "NOT SET (Inactive: Ready to Scan)";
+			this.miModeInactive.Click += new System.EventHandler(this.miModeInactive_Click);
+			// 
+			// nSManualControlToolStripMenuItem
+			// 
+			this.nSManualControlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miManualControlActivate,
+            this.miManualControlDeactivate,
+            this.toolStripMenuItem6,
+            this.miManualControlStartNewSeries,
+            this.miManualControlSaveSeriesInst,
+            this.miManualControlSaveSeriesAvg});
+			this.nSManualControlToolStripMenuItem.Name = "nSManualControlToolStripMenuItem";
+			this.nSManualControlToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
+			this.nSManualControlToolStripMenuItem.Text = "NS (Manual Control)";
+			// 
+			// miManualControlActivate
+			// 
+			this.miManualControlActivate.Name = "miManualControlActivate";
+			this.miManualControlActivate.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlActivate.Text = "NS (Activate)";
+			this.miManualControlActivate.Click += new System.EventHandler(this.miManualControlActivate_Click);
+			// 
+			// miManualControlDeactivate
+			// 
+			this.miManualControlDeactivate.Name = "miManualControlDeactivate";
+			this.miManualControlDeactivate.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlDeactivate.Text = "NS (Deactivate)";
+			this.miManualControlDeactivate.Click += new System.EventHandler(this.miManualControlDeactivate_Click);
+			// 
+			// toolStripMenuItem6
+			// 
+			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+			this.toolStripMenuItem6.Size = new System.Drawing.Size(202, 6);
+			// 
+			// miManualControlStartNewSeries
+			// 
+			this.miManualControlStartNewSeries.Name = "miManualControlStartNewSeries";
+			this.miManualControlStartNewSeries.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlStartNewSeries.Text = "NS (Start New Series)";
+			this.miManualControlStartNewSeries.Click += new System.EventHandler(this.nSStartNewSeriesToolStripMenuItem_Click);
+			// 
+			// miManualControlSaveSeriesInst
+			// 
+			this.miManualControlSaveSeriesInst.Name = "miManualControlSaveSeriesInst";
+			this.miManualControlSaveSeriesInst.Size = new System.Drawing.Size(227, 22);
+			this.miManualControlSaveSeriesInst.Text = "NS (Save Current Series Inst)";
+			this.miManualControlSaveSeriesInst.Click += new System.EventHandler(this.miManualControlSaveSeries_Click);
+			// 
+			// toolsMenu
+			// 
+			this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOptions});
+			this.toolsMenu.Name = "toolsMenu";
+			this.toolsMenu.Size = new System.Drawing.Size(68, 20);
+			this.toolsMenu.Text = "NS (&Tools)";
+			// 
+			// miOptions
+			// 
+			this.miOptions.Name = "miOptions";
+			this.miOptions.Size = new System.Drawing.Size(146, 22);
+			this.miOptions.Text = "NS (Options)";
+			this.miOptions.Click += new System.EventHandler(this.miOptions_Click);
 			// 
 			// nSLogToolStripMenuItem
 			// 
@@ -448,21 +514,6 @@
 			this.miLogSaveRTF.Size = new System.Drawing.Size(104, 22);
 			this.miLogSaveRTF.Text = "RTF";
 			this.miLogSaveRTF.Click += new System.EventHandler(this.miLogSaveRTF_Click);
-			// 
-			// toolsMenu
-			// 
-			this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miOptions});
-			this.toolsMenu.Name = "toolsMenu";
-			this.toolsMenu.Size = new System.Drawing.Size(68, 20);
-			this.toolsMenu.Text = "NS (&Tools)";
-			// 
-			// miOptions
-			// 
-			this.miOptions.Name = "miOptions";
-			this.miOptions.Size = new System.Drawing.Size(152, 22);
-			this.miOptions.Text = "NS (Options)";
-			this.miOptions.Click += new System.EventHandler(this.miOptions_Click);
 			// 
 			// windowsMenu
 			// 
@@ -627,20 +678,12 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
-			// nSManualControlToolStripMenuItem
+			// miManualControlSaveSeriesAvg
 			// 
-			this.nSManualControlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miManualControlActivate});
-			this.nSManualControlToolStripMenuItem.Name = "nSManualControlToolStripMenuItem";
-			this.nSManualControlToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
-			this.nSManualControlToolStripMenuItem.Text = "NS (Manual Control)";
-			// 
-			// miManualControlActivate
-			// 
-			this.miManualControlActivate.Name = "miManualControlActivate";
-			this.miManualControlActivate.Size = new System.Drawing.Size(152, 22);
-			this.miManualControlActivate.Text = "NS (Activate)";
-			this.miManualControlActivate.Click += new System.EventHandler(this.miManualControlActivate_Click);
+			this.miManualControlSaveSeriesAvg.Name = "miManualControlSaveSeriesAvg";
+			this.miManualControlSaveSeriesAvg.Size = new System.Drawing.Size(227, 22);
+			this.miManualControlSaveSeriesAvg.Text = "NS (Save Current Series Avg)";
+			this.miManualControlSaveSeriesAvg.Click += new System.EventHandler(this.miManualControlSaveSeriesAvg_Click);
 			// 
 			// FrmMdiParent
 			// 
@@ -734,6 +777,11 @@
 		private System.Windows.Forms.ToolStripMenuItem miShowHideDebug;
 		private System.Windows.Forms.ToolStripMenuItem nSManualControlToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem miManualControlActivate;
+		private System.Windows.Forms.ToolStripMenuItem miManualControlDeactivate;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+		private System.Windows.Forms.ToolStripMenuItem miManualControlStartNewSeries;
+		private System.Windows.Forms.ToolStripMenuItem miManualControlSaveSeriesInst;
+		private System.Windows.Forms.ToolStripMenuItem miManualControlSaveSeriesAvg;
 	}
 }
 

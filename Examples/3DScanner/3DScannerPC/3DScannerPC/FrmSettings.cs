@@ -33,7 +33,6 @@ namespace _3DScannerPC {
 			cbPrintDebugLogs.Checked = Settings.Default.PrintDebugLogs;
 			nbScannerId.Value = Settings.Default.ScannerID;
 			nbTimeChangesThres.Value = Settings.Default.SendDelayThreshold;
-			nbAdcMaxVal.Value = Settings.Default.AdcMax;
 			nbT1preload.Value = Settings.Default.T1preload;
 			numDutyH0.Value = Servo.H.Duty0deg;
 			numDutyH180.Value = Servo.H.Duty180deg;
@@ -55,10 +54,6 @@ namespace _3DScannerPC {
 
 		private void nbTimeChangesThres_ValueChanged(object sender, EventArgs e) {
 			Settings.Default.SendDelayThreshold = (int)nbTimeChangesThres.Value;
-		}
-
-		private void nbAdcMaxVal_ValueChanged(object sender, EventArgs e) {
-			Settings.Default.AdcMax = (int)nbAdcMaxVal.Value;
 		}
 
 		private void nbT1preload_ValueChanged(object sender, EventArgs e) {

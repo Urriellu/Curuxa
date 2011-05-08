@@ -73,18 +73,6 @@ namespace _3DScannerPC.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1024")]
-        public int AdcMax {
-            get {
-                return ((int)(this["AdcMax"]));
-            }
-            set {
-                this["AdcMax"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("97")]
         public byte ScannerID {
             get {
@@ -140,6 +128,30 @@ namespace _3DScannerPC.Properties {
             }
             set {
                 this["ServoVduty180Deg"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3draw")]
+        public string RawMsmExtension {
+            get {
+                return ((string)(this["RawMsmExtension"]));
+            }
+            set {
+                this["RawMsmExtension"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3D Scanner Raw Measurement (*.3draw)|*.3draw")]
+        public string RawMsmFileFilter {
+            get {
+                return ((string)(this["RawMsmFileFilter"]));
+            }
+            set {
+                this["RawMsmFileFilter"] = value;
             }
         }
     }
