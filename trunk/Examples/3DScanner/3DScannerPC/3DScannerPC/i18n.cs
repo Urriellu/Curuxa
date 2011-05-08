@@ -46,9 +46,9 @@ namespace _3DScannerPC {
 			langEn.Add("ManualControl", "Manual Control");
 			langEn.Add("Scan", "Scan");
 			langEn.Add("recManualTitle", "Latest Received Value:");
-			langEn.Add("recManualValue", "Value: {0} (0-{1})");
-			langEn.Add("recManualVoltage", "Voltage: {0}V (0V=0, {1}V={2})");
-			langEn.Add("recManualDistance", "Distance: {0}mm (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linear)");
+			langEn.Add("recManualValue", "Value: {0}      (0V = 0, {1}V = {2})");
+			langEn.Add("recManualVoltage", "Voltage: {0}V   (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linear)");
+			langEn.Add("recManualDistance", "Distance: {0}mm");
 			langEn.Add("Connection", "Connection");
 			langEn.Add("UpdateList", "Update List");
 			langEn.Add("bauds", "bauds");
@@ -63,6 +63,10 @@ namespace _3DScannerPC {
 			langEn.Add("ManualControlVtitle", "Vertical:");
 			langEn.Add("DegreesN", "Degrees: {0}º");
 			langEn.Add("ConnectedNotAuth", "Connected - Not Authenticated");
+			langEn.Add("SaveRawMsm", "Saved raw measurement \"{0}\" in {1}");
+			langEn.Add("UnableSaveFile", "Unable to save file \"{0}\". {1}");
+			langEn.Add("ReadRawMsm", "Raw measurement \"{0}\" read from {1}");
+			langEn.Add("UnableLoadFile", "Unable to load file \"{0}\". {1}");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

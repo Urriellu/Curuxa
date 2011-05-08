@@ -11,19 +11,30 @@ using ZedGraph;
 
 namespace _3DScannerPC {
 	public partial class FrmManualControl:FormChild {
-		UInt16 lastValueAdc;
+		/// <summary>
+		/// Number of points to make the average to show the object moving
+		/// </summary>
+		const int PointAvgObj = 5;
+
+		public RawMeasurement rawMsm;
+		public RawMeasurement rawMsmAvg;
+
+		/*UInt16 lastValueAdc;
 		float lastVoltage;
 		float lastDistance_mm;
 		float lastDistance_mm_slowChange;
 		float lastDistance_cm;
-		double lastDistance_cm_2dig;
+		double lastDistance_cm_2dig;*/
 		float lastDegH;
 		float lastDegV;
-		DateTime lastPosChange = DateTime.Now;
+		DateTime lastPosHChange = new DateTime(2000, 1, 1);
+		DateTime lastPosVChange = new DateTime(2000, 1, 1);
 
 		bool graphModified = false;
 		PointPairList graphPtInst = new PointPairList();
+		PointPairList graphPtAvg = new PointPairList();
 		LineItem curveInst;
+		LineItem curveAvg;
 		Timer tmrUpdtGraph;
 		DateTime graphStartTime = DateTime.Now;
 
@@ -49,7 +60,8 @@ namespace _3DScannerPC {
 			graph.GraphPane.YAxis.Title.Text = "TITLE AXIS Y [cm]";
 			graph.GraphPane.YAxis.Scale.Min = 0;
 			graph.GraphPane.YAxis.Scale.Max = 80;
-			curveInst = graph.GraphPane.AddCurve("NS (Instant Value)", graphPtInst, Color.Blue, SymbolType.Circle);
+			curveInst = graph.GraphPane.AddCurve("NS (Instant Value)", graphPtInst, Color.Red, SymbolType.Circle);
+			curveAvg = graph.GraphPane.AddCurve("NS (Average Value)", graphPtAvg, Color.Blue, SymbolType.Circle);
 			UpdateGraph();
 
 			//setup timer for updating the graph
@@ -83,13 +95,26 @@ namespace _3DScannerPC {
 			btnDeactManual.Enabled = Scanner.Mode == ScannerMode.Manual;
 
 			if(prevStatus != ScannerMode.Manual && Scanner.Mode == ScannerMode.Manual) {
-				//we just entered manual mode
-				graphPtInst.Clear();
-				graphStartTime = DateTime.Now;
-				UpdateServoRanges();
+				SetupNewSeries();
 			}
 
 			prevStatus = Scanner.Mode;
+		}
+
+		/// <summary>
+		/// Setup a new series of measurements
+		/// </summary>
+		public void SetupNewSeries() {
+			string newName = "ManualControl " + DateTime.Now.ShortDate() + " " + DateTime.Now.ShortTime();
+			string newNameAvg = "ManualControlAvg " + DateTime.Now.ShortDate() + " " + DateTime.Now.ShortTime();
+			rawMsm = new RawMeasurement(newName, (float)numVRefMax.Value, (UInt16)numAdcMax.Value);
+			rawMsmAvg = new RawMeasurement(newNameAvg, (float)numVRefMax.Value, (UInt16)numAdcMax.Value);
+			graphPtInst.Clear();
+			graphPtAvg.Clear();
+			graphStartTime = DateTime.Now;
+			UpdateServoRanges();
+			manualControlH_Scroll(null, null);
+			manualControlV_Scroll(null, null);
 		}
 
 		public override void UpdateLang() {
@@ -97,7 +122,7 @@ namespace _3DScannerPC {
 			grpInstantValue.Text = i18n.str("recManualTitle");
 			grpControlH.Text = i18n.str("ManualControlHtitle");
 			grpControlV.Text = i18n.str("ManualControlVtitle");
-			SetReceivedManualValue(0);
+			//SetReceivedManualValue(0);
 		}
 
 		private void FrmManualControl_FormClosing(object sender, FormClosingEventArgs e) {
@@ -116,10 +141,10 @@ namespace _3DScannerPC {
 			lblDegH.Text = i18n.str("DegreesN", lastDegH);
 
 			//send info
-			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosHChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
 				if(manualControlH.Value <= 0 || manualControlH.Value > UInt16.MaxValue || manualControlH.Value > 12000) throw new Exception("Wrong implementation");
 				Scanner.SetManualPosHduty((UInt16)manualControlH.Value);
-				lastPosChange = DateTime.Now;
+				lastPosHChange = DateTime.Now;
 			}
 		}
 
@@ -135,23 +160,40 @@ namespace _3DScannerPC {
 			lblDegV.Text = lastDegV + "º";
 
 			//send info
-			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
+			if(Scanner.Mode == ScannerMode.Manual && (DateTime.Now - lastPosVChange).TotalMilliseconds > Settings.Default.SendDelayThreshold) {
 				if(manualControlV.Value <= 0 || manualControlV.Value > UInt16.MaxValue || manualControlV.Value > 12000) throw new Exception("Wrong implementation");
 				Scanner.SetManualPosVduty((UInt16)manualControlV.Value);
-				lastPosChange = DateTime.Now;
+				lastPosVChange = DateTime.Now;
 			}
 		}
 
 		public void SetReceivedManualValue(UInt16 adcValue) {
+			/* BEFORE USING OBJECTS PROPERLY
 			lastValueAdc = adcValue;
 			UpdateReceivedValues();
 
 			//add instant position to graph
-			graphPtInst.Add((DateTime.Now-graphStartTime).TotalSeconds, lastDistance_cm);
+			graphPtInst.Add((DateTime.Now - graphStartTime).TotalSeconds, lastDistance_cm);
+			graphModified = true;*/
+
+			if(rawMsm == null || rawMsmAvg == null) SetupNewSeries();
+
+			rawMsm.Add(lastDegH, lastDegV, adcValue);
+			rawMsmAvg.Add(rawMsm.AvgLastPoints((int)numAvg.Value));
+			UpdateReceivedValues();
+
+			//add instant position to graph
+			double s = (DateTime.Now - graphStartTime).TotalSeconds;
+			graphPtInst.Add(s, rawMsm.Last.Distance_cm);
+			graphPtAvg.Add(s, rawMsmAvg.Last.Distance_cm);
 			graphModified = true;
 		}
 
+		/// <summary>
+		/// Update the representation of latest received values
+		/// </summary>
 		private void UpdateReceivedValues() {
+			/* BEFORE USING OBJECTS PROPERLY
 			lastVoltage = Measure.AdcValueToVoltage(lastValueAdc, Settings.Default.AdcMax, (float)numVRefMax.Value);
 			lastDistance_mm = Measure.VoltageToDistance(lastVoltage);
 			lastDistance_cm = lastDistance_mm / 10;
@@ -170,10 +212,25 @@ namespace _3DScannerPC {
 			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
 			float distancePorc = lastDistance_mm_slowChange / 700;
 			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
-			picObject.Location = new Point(picObjMinPosX+picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
+			picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);*/
+
+			lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
+			lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
+			lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);
+
+			// change position of object drawn on screen
+			int picObjBorders = 10;
+			int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
+			int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
+			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
+			float distancePorc = rawMsm.AvgLastPoints(PointAvgObj).Distance_mm / 700;
+			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
+			picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
+
 		}
 
 		private void numVRefMax_ValueChanged(object sender, EventArgs e) {
+			rawMsm.VRef = (float)numVRefMax.Value;
 			UpdateReceivedValues();
 		}
 
@@ -193,6 +250,10 @@ namespace _3DScannerPC {
 			graph.AxisChange();
 			graph.Update();
 			graphModified = false;
+		}
+
+		private void numAdcMax_ValueChanged(object sender, EventArgs e) {
+			rawMsm.AdcMax = (UInt16)numAdcMax.Value;
 		}
 	}
 }

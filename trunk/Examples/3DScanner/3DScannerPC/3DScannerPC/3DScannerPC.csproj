@@ -35,6 +35,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -52,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionsDateTime.cs" />
     <Compile Include="FormChild.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +153,7 @@
     </Compile>
     <Compile Include="Servo.cs" />
     <Compile Include="ServoID.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Vector3.cs" />
   </ItemGroup>
