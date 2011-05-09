@@ -167,19 +167,6 @@ namespace _3DScannerPC {
 			frmLog.Show();
 		}
 
-		/*/// <summary>
-		/// Update GUI to show connection status
-		/// </summary>
-		public void ShowConnectionStatus(Status st) {
-			if(st == Status.Connected) {
-				tsStatus.Text = i18n.str("Connected");
-				tsStatus.ForeColor = Color.Green;
-			} else {
-				tsStatus.Text = i18n.str("Disconnected");
-				tsStatus.ForeColor = Color.Red;
-			}
-		}*/
-
 		/// <summary>
 		/// Update GUI to show connection status and current scanner mode
 		/// </summary>

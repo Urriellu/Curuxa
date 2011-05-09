@@ -12,7 +12,7 @@ namespace _3DScannerPC {
 	/// Collection of raw measured points
 	/// </summary>
 	[DataContract]
-	public class RawMeasurement/*:List<RawMeasuredPoint>*/ {
+	public class RawMeasurement {
 		[DataMember]
 		public string Name;
 
