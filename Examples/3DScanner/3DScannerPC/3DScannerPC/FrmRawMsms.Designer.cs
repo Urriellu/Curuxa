@@ -23,7 +23,6 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("first one");
 			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("second one");
 			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
@@ -37,6 +36,15 @@
 			this.splitMain = new System.Windows.Forms.SplitContainer();
 			this.lstMsms = new System.Windows.Forms.ListView();
 			this.columnName = new System.Windows.Forms.ColumnHeader();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.lstPoints = new System.Windows.Forms.ListView();
+			this.columnId = new System.Windows.Forms.ColumnHeader();
+			this.columnPosH = new System.Windows.Forms.ColumnHeader();
+			this.columnPosV = new System.Windows.Forms.ColumnHeader();
+			this.columnAdcValue = new System.Windows.Forms.ColumnHeader();
+			this.columnVolts = new System.Windows.Forms.ColumnHeader();
+			this.columnDistanceMm = new System.Windows.Forms.ColumnHeader();
+			this.picBox = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.numAdcMax = new System.Windows.Forms.NumericUpDown();
 			this.lblAdcMax = new System.Windows.Forms.Label();
@@ -56,17 +64,13 @@
 			this.lblBaseRot = new System.Windows.Forms.Label();
 			this.numBaseRot = new System.Windows.Forms.NumericUpDown();
 			this.numVRef = new System.Windows.Forms.NumericUpDown();
-			this.lstPoints = new System.Windows.Forms.ListView();
-			this.columnId = new System.Windows.Forms.ColumnHeader();
-			this.columnPosH = new System.Windows.Forms.ColumnHeader();
-			this.columnPosV = new System.Windows.Forms.ColumnHeader();
-			this.columnAdcValue = new System.Windows.Forms.ColumnHeader();
-			this.columnVolts = new System.Windows.Forms.ColumnHeader();
-			this.columnDistanceMm = new System.Windows.Forms.ColumnHeader();
-			this.graphDepth = new ZedGraph.ZedGraphControl();
 			this.splitMain.Panel1.SuspendLayout();
 			this.splitMain.Panel2.SuspendLayout();
 			this.splitMain.SuspendLayout();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).BeginInit();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -80,7 +84,7 @@
 			// btnOpen
 			// 
 			this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOpen.Location = new System.Drawing.Point(12, 224);
+			this.btnOpen.Location = new System.Drawing.Point(12, 391);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(75, 23);
 			this.btnOpen.TabIndex = 1;
@@ -92,7 +96,7 @@
 			// 
 			this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnRemove.Enabled = false;
-			this.btnRemove.Location = new System.Drawing.Point(93, 224);
+			this.btnRemove.Location = new System.Drawing.Point(93, 391);
 			this.btnRemove.Name = "btnRemove";
 			this.btnRemove.Size = new System.Drawing.Size(75, 23);
 			this.btnRemove.TabIndex = 2;
@@ -115,10 +119,9 @@
 			// 
 			// splitMain.Panel2
 			// 
-			this.splitMain.Panel2.Controls.Add(this.graphDepth);
+			this.splitMain.Panel2.Controls.Add(this.splitContainer1);
 			this.splitMain.Panel2.Controls.Add(this.tableLayoutPanel1);
-			this.splitMain.Panel2.Controls.Add(this.lstPoints);
-			this.splitMain.Size = new System.Drawing.Size(887, 206);
+			this.splitMain.Size = new System.Drawing.Size(903, 373);
 			this.splitMain.SplitterDistance = 135;
 			this.splitMain.TabIndex = 3;
 			// 
@@ -134,7 +137,7 @@
 			this.lstMsms.Location = new System.Drawing.Point(0, 0);
 			this.lstMsms.MultiSelect = false;
 			this.lstMsms.Name = "lstMsms";
-			this.lstMsms.Size = new System.Drawing.Size(135, 206);
+			this.lstMsms.Size = new System.Drawing.Size(135, 373);
 			this.lstMsms.TabIndex = 1;
 			this.lstMsms.UseCompatibleStateImageBehavior = false;
 			this.lstMsms.View = System.Windows.Forms.View.List;
@@ -144,6 +147,86 @@
 			// 
 			this.columnName.Text = "NS (Name)";
 			this.columnName.Width = 300;
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainer1.Location = new System.Drawing.Point(2, 92);
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.lstPoints);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.picBox);
+			this.splitContainer1.Size = new System.Drawing.Size(762, 281);
+			this.splitContainer1.SplitterDistance = 355;
+			this.splitContainer1.TabIndex = 5;
+			// 
+			// lstPoints
+			// 
+			this.lstPoints.Activation = System.Windows.Forms.ItemActivation.OneClick;
+			this.lstPoints.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnId,
+            this.columnPosH,
+            this.columnPosV,
+            this.columnAdcValue,
+            this.columnVolts,
+            this.columnDistanceMm});
+			this.lstPoints.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstPoints.HideSelection = false;
+			listViewItem3.StateImageIndex = 0;
+			this.lstPoints.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem3});
+			this.lstPoints.LabelEdit = true;
+			this.lstPoints.Location = new System.Drawing.Point(0, 0);
+			this.lstPoints.MultiSelect = false;
+			this.lstPoints.Name = "lstPoints";
+			this.lstPoints.Size = new System.Drawing.Size(355, 281);
+			this.lstPoints.TabIndex = 2;
+			this.lstPoints.UseCompatibleStateImageBehavior = false;
+			this.lstPoints.View = System.Windows.Forms.View.Details;
+			// 
+			// columnId
+			// 
+			this.columnId.Text = "ID";
+			this.columnId.Width = 37;
+			// 
+			// columnPosH
+			// 
+			this.columnPosH.Text = "H [º]";
+			this.columnPosH.Width = 72;
+			// 
+			// columnPosV
+			// 
+			this.columnPosV.Text = "V [º]";
+			// 
+			// columnAdcValue
+			// 
+			this.columnAdcValue.Text = "ADC";
+			// 
+			// columnVolts
+			// 
+			this.columnVolts.Text = "Volts";
+			// 
+			// columnDistanceMm
+			// 
+			this.columnDistanceMm.Text = "mm";
+			// 
+			// picBox
+			// 
+			this.picBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.picBox.Location = new System.Drawing.Point(0, 0);
+			this.picBox.Name = "picBox";
+			this.picBox.Size = new System.Drawing.Size(403, 281);
+			this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.picBox.TabIndex = 5;
+			this.picBox.TabStop = false;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -172,7 +255,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(743, 86);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(759, 86);
 			this.tableLayoutPanel1.TabIndex = 3;
 			// 
 			// numAdcMax
@@ -242,13 +325,13 @@
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(354, 23);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(367, 23);
 			this.tableLayoutPanel2.TabIndex = 4;
 			// 
 			// numBaseLocZ
 			// 
 			this.numBaseLocZ.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numBaseLocZ.Location = new System.Drawing.Point(262, 3);
+			this.numBaseLocZ.Location = new System.Drawing.Point(270, 3);
 			this.numBaseLocZ.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -260,13 +343,13 @@
             0,
             -2147483648});
 			this.numBaseLocZ.Name = "numBaseLocZ";
-			this.numBaseLocZ.Size = new System.Drawing.Size(89, 20);
+			this.numBaseLocZ.Size = new System.Drawing.Size(94, 20);
 			this.numBaseLocZ.TabIndex = 7;
 			// 
 			// numBaseLocY
 			// 
 			this.numBaseLocY.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numBaseLocY.Location = new System.Drawing.Point(144, 3);
+			this.numBaseLocY.Location = new System.Drawing.Point(148, 3);
 			this.numBaseLocY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -278,14 +361,14 @@
             0,
             -2147483648});
 			this.numBaseLocY.Name = "numBaseLocY";
-			this.numBaseLocY.Size = new System.Drawing.Size(89, 20);
+			this.numBaseLocY.Size = new System.Drawing.Size(93, 20);
 			this.numBaseLocY.TabIndex = 7;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
 			this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label5.Location = new System.Drawing.Point(239, 0);
+			this.label5.Location = new System.Drawing.Point(247, 0);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(17, 26);
 			this.label5.TabIndex = 5;
@@ -307,7 +390,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label4.Location = new System.Drawing.Point(121, 0);
+			this.label4.Location = new System.Drawing.Point(125, 0);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(17, 26);
 			this.label4.TabIndex = 1;
@@ -329,7 +412,7 @@
             0,
             -2147483648});
 			this.numBaseLocX.Name = "numBaseLocX";
-			this.numBaseLocX.Size = new System.Drawing.Size(89, 20);
+			this.numBaseLocX.Size = new System.Drawing.Size(93, 20);
 			this.numBaseLocX.TabIndex = 6;
 			// 
 			// lblName
@@ -368,7 +451,7 @@
 			this.lblDateValue.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblDateValue.Location = new System.Drawing.Point(389, 0);
 			this.lblDateValue.Name = "lblDateValue";
-			this.lblDateValue.Size = new System.Drawing.Size(354, 26);
+			this.lblDateValue.Size = new System.Drawing.Size(367, 26);
 			this.lblDateValue.TabIndex = 3;
 			this.lblDateValue.Text = "NOT SET";
 			this.lblDateValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -405,7 +488,7 @@
             0,
             0});
 			this.numBaseRot.Name = "numBaseRot";
-			this.numBaseRot.Size = new System.Drawing.Size(354, 20);
+			this.numBaseRot.Size = new System.Drawing.Size(367, 20);
 			this.numBaseRot.TabIndex = 8;
 			// 
 			// numVRef
@@ -437,77 +520,11 @@
             0,
             0});
 			// 
-			// lstPoints
-			// 
-			this.lstPoints.Activation = System.Windows.Forms.ItemActivation.OneClick;
-			this.lstPoints.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.lstPoints.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnId,
-            this.columnPosH,
-            this.columnPosV,
-            this.columnAdcValue,
-            this.columnVolts,
-            this.columnDistanceMm});
-			this.lstPoints.HideSelection = false;
-			listViewItem3.StateImageIndex = 0;
-			this.lstPoints.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
-			this.lstPoints.LabelEdit = true;
-			this.lstPoints.Location = new System.Drawing.Point(2, 92);
-			this.lstPoints.MultiSelect = false;
-			this.lstPoints.Name = "lstPoints";
-			this.lstPoints.Size = new System.Drawing.Size(449, 114);
-			this.lstPoints.TabIndex = 2;
-			this.lstPoints.UseCompatibleStateImageBehavior = false;
-			this.lstPoints.View = System.Windows.Forms.View.Details;
-			// 
-			// columnId
-			// 
-			this.columnId.Text = "ID";
-			this.columnId.Width = 37;
-			// 
-			// columnPosH
-			// 
-			this.columnPosH.Text = "H [º]";
-			this.columnPosH.Width = 72;
-			// 
-			// columnPosV
-			// 
-			this.columnPosV.Text = "V [º]";
-			// 
-			// columnAdcValue
-			// 
-			this.columnAdcValue.Text = "ADC";
-			// 
-			// columnVolts
-			// 
-			this.columnVolts.Text = "Volts";
-			// 
-			// columnDistanceMm
-			// 
-			this.columnDistanceMm.Text = "mm";
-			// 
-			// graphDepth
-			// 
-			this.graphDepth.Location = new System.Drawing.Point(457, 92);
-			this.graphDepth.Name = "graphDepth";
-			this.graphDepth.ScrollGrace = 0;
-			this.graphDepth.ScrollMaxX = 0;
-			this.graphDepth.ScrollMaxY = 0;
-			this.graphDepth.ScrollMaxY2 = 0;
-			this.graphDepth.ScrollMinX = 0;
-			this.graphDepth.ScrollMinY = 0;
-			this.graphDepth.ScrollMinY2 = 0;
-			this.graphDepth.Size = new System.Drawing.Size(291, 114);
-			this.graphDepth.TabIndex = 4;
-			// 
 			// FrmRawMsms
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(911, 259);
+			this.ClientSize = new System.Drawing.Size(927, 426);
 			this.Controls.Add(this.splitMain);
 			this.Controls.Add(this.btnRemove);
 			this.Controls.Add(this.btnOpen);
@@ -519,6 +536,10 @@
 			this.splitMain.Panel1.ResumeLayout(false);
 			this.splitMain.Panel2.ResumeLayout(false);
 			this.splitMain.ResumeLayout(false);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).EndInit();
@@ -566,6 +587,7 @@
 		private System.Windows.Forms.NumericUpDown numAdcMax;
 		private System.Windows.Forms.ColumnHeader columnDistanceMm;
 		private System.Windows.Forms.ColumnHeader columnId;
-		private ZedGraph.ZedGraphControl graphDepth;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.PictureBox picBox;
 	}
 }
