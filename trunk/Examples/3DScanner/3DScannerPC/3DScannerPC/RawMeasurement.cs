@@ -101,9 +101,108 @@ namespace _3DScannerPC {
 			}
 		}
 
+		/// <summary>
+		/// The last measured point
+		/// </summary>
 		public RawMeasuredPoint Last {
 			get {
 				return this[Count - 1];
+			}
+		}
+
+		/// <summary>
+		/// The closes measured point
+		/// </summary>
+		public RawMeasuredPoint Closest {
+			get {
+				RawMeasuredPoint closest = null;
+				foreach(var p in points) {
+					if(closest == null || p.DistanceAdcValue > closest.DistanceAdcValue) closest = p;
+				}
+				return closest;
+			}
+		}
+
+		/// <summary>
+		/// The fasthest measured point
+		/// </summary>
+		public RawMeasuredPoint Farthest {
+			get {
+				RawMeasuredPoint farthest = null;
+				foreach(var p in points) {
+					if(farthest == null || p.DistanceAdcValue < farthest.DistanceAdcValue) farthest = p;
+				}
+				return farthest;
+			}
+		}
+
+		/// <summary>
+		/// The point measured furthest to the left
+		/// </summary>
+		public RawMeasuredPoint LeftMost {
+			get {
+				RawMeasuredPoint leftMost = null;
+				foreach(var p in points) {
+					if(leftMost == null || p.ServoHdeg > leftMost.ServoHdeg) leftMost = p;
+				}
+				return leftMost;
+			}
+		}
+
+		/// <summary>
+		/// The point measured furthest to the right
+		/// </summary>
+		public RawMeasuredPoint RightMost {
+			get {
+				RawMeasuredPoint righttmost = null;
+				foreach(var p in points) {
+					if(righttmost == null || p.ServoHdeg < righttmost.ServoHdeg) righttmost = p;
+				}
+				return righttmost;
+			}
+		}
+
+		/// <summary>
+		/// The highest point measured
+		/// </summary>
+		public RawMeasuredPoint Highest {
+			get {
+				RawMeasuredPoint highest = null;
+				foreach(var p in points) {
+					if(highest == null || p.ServoVdeg < highest.ServoVdeg) highest = p;
+				}
+				return highest;
+			}
+		}
+
+		/// <summary>
+		/// Horizontal range of measurement
+		/// </summary>
+		public float HRangeDeg {
+			get {
+				return LeftMost.ServoHdeg - RightMost.ServoHdeg;
+			}
+		}
+
+		/// <summary>
+		/// Vertical range of measurement
+		/// </summary>
+		public float VRangeDeg {
+			get {
+				return Lowest.ServoVdeg - Highest.ServoVdeg;
+			}
+		}
+
+		/// <summary>
+		/// The lowest point measured
+		/// </summary>
+		public RawMeasuredPoint Lowest {
+			get {
+				RawMeasuredPoint lowest = null;
+				foreach(var p in points) {
+					if(lowest == null || p.ServoVdeg > lowest.ServoVdeg) lowest = p;
+				}
+				return lowest;
 			}
 		}
 
