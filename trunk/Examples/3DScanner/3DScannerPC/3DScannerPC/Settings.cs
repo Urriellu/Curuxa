@@ -1,4 +1,5 @@
-﻿namespace _3DScannerPC.Properties {
+﻿using System.IO;
+namespace _3DScannerPC.Properties {
     
     
     // This class allows you to handle specific events on the settings class:
@@ -22,7 +23,40 @@
         }
         
         private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
-            // Add code to handle the SettingsSaving event here.
+			SaveAllSettings();
         }
+
+		public static void SaveAllSettings() {
+			Globals.Log(LogType.Information, i18n.str("SavingSettings"));
+
+			Settings.Default.OpenRawMsms.Clear();
+			foreach(var rm in RawMeasurement.KnownRMs) {
+				Settings.Default.OpenRawMsms.Add(rm.Key);
+			}
+
+			Settings.Default.Save();
+		}
+
+		/// <summary>
+		/// Full path to the running executable file
+		/// </summary>
+		public static string ExePath {
+			get {
+				if(_ExePath == null) _ExePath = System.Reflection.Assembly.GetEntryAssembly().Location;
+				return _ExePath;
+			}
+		}
+		private static string _ExePath;
+
+		/// <summary>
+		/// Full path to the directory that contains the running executable file. The last character is NOT a slash ('/')
+		/// </summary>
+		public static string ExeLocation {
+			get {
+				if(_ExeLocation == null) _ExeLocation = System.IO.Path.GetDirectoryName(ExePath);
+				return _ExeLocation;
+			}
+		}
+		private static string _ExeLocation;
     }
 }

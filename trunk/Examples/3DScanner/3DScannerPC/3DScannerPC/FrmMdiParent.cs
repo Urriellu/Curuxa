@@ -16,6 +16,7 @@ namespace _3DScannerPC {
 		FrmConnection frmConnection;
 		FrmSettings frmSettings;
 		public FrmLog frmLog;
+		FrmRawMsms frmRawMsms;
 
 		public FrmMdiParent() {
 			Control.CheckForIllegalCrossThreadCalls = false;
@@ -35,6 +36,9 @@ namespace _3DScannerPC {
 			frmSettings = new FrmSettings();
 			frmSettings.MdiParent = this;
 
+			frmRawMsms = new FrmRawMsms();
+			frmRawMsms.MdiParent = this;
+
 			SetMdiChildrenDefaultLocations();
 
 			UpdateLang();
@@ -42,6 +46,7 @@ namespace _3DScannerPC {
 			frmLog.Show();
 			frmManualControl.Show();
 			frmConnection.Show();
+			frmRawMsms.Show();
 
 			Globals.Log(LogType.Information, i18n.str("init"));
 
@@ -63,6 +68,9 @@ namespace _3DScannerPC {
 			frmLog.StartPosition = FormStartPosition.Manual;
 			frmLog.Width = Width - frmConnection.Width - 2 * t;
 			frmLog.Location = new Point(0, Height - frmLog.Height - statusStrip.Height - 2 * t);
+
+			frmRawMsms.StartPosition = FormStartPosition.Manual;
+			frmRawMsms.Location = new Point(0, 0);
 		}
 
 		public override void UpdateLang() {
@@ -190,7 +198,7 @@ namespace _3DScannerPC {
 		}
 
 		private void FrmMdiParent_FormClosing(object sender, FormClosingEventArgs e) {
-			Properties.Settings.Default.Save();
+			Properties.Settings.SaveAllSettings();
 			Scanner.Disconnect();
 			foreach(Form childForm in MdiChildren) {
 				childForm.Close();
@@ -299,12 +307,29 @@ namespace _3DScannerPC {
 
 			if(sfd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
 				rawMeasurement.Save(sfd.FileName);
-				RawMeasurement test = RawMeasurement.Load(sfd.FileName);
+			}
+		}
+
+		public void OpenRawMsm() {
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.FileName = "*." + Settings.Default.RawMsmExtension;
+			ofd.Filter = Settings.Default.RawMsmFileFilter;
+
+			if(ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName)) {
+				RawMeasurement.OpenRawMsm(ofd.FileName);
 			}
 		}
 
 		private void miManualControlSaveSeriesAvg_Click(object sender, EventArgs e) {
 			SaveRawMsm(frmManualControl.rawMsmAvg);
+		}
+
+		internal void UpdateListOpenRawMsms() {
+			frmRawMsms.UpdateListOpenRawMsms();
+		}
+
+		private void miViewRawMsms_Click(object sender, EventArgs e) {
+			frmRawMsms.Show();
 		}
 	}
 }

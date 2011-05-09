@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Runtime.Serialization;
+using _3DScannerPC.Properties;
 
 namespace _3DScannerPC {
 	/// <summary>
@@ -14,25 +15,31 @@ namespace _3DScannerPC {
 	[DataContract]
 	public class RawMeasurement {
 		[DataMember]
-		public string Name;
+		public string Name = "NO NAME";
 
 		/// <summary>
 		/// Voltage reference (usually 5V)
 		/// </summary>
 		[DataMember]
-		public float VRef;
+		public float VRef = 5;
 
 		/// <summary>
 		/// Maximum ADC value (for a 10-bit ADC it would be 1023)
 		/// </summary>
 		[DataMember]
-		public UInt16 AdcMax;
+		public UInt16 AdcMax = 1023;
 
 		/// <summary>
 		/// Location of the 3D Scanner
 		/// </summary>
 		[DataMember]
 		public Vector3 BaseLocation = new Vector3(0, 0, 0);
+
+		/// <summary>
+		/// Rotation of the 3D Scanner. Degrees
+		/// </summary>
+		[DataMember]
+		public float BaseRotation = 0f;
 
 		[DataMember]
 		public DateTime Date;
@@ -133,6 +140,53 @@ namespace _3DScannerPC {
 		}
 
 		#region STATIC
+		/// <summary>
+		/// Initilize static stuff
+		/// </summary>
+		static RawMeasurement() {
+			KnownRMs = new Dictionary<string, RawMeasurement>();
+			foreach(string fileRawMsm in Settings.Default.OpenRawMsms) {
+				RawMeasurement.OpenRawMsm(fileRawMsm, false);
+			}
+		}
+
+		/// <summary>
+		/// Collection of RAW Measurements.
+		/// Key: file where it's stored.
+		/// Value: RawMeasurement object
+		/// </summary>
+		public static Dictionary<string, RawMeasurement> KnownRMs;
+
+		/// <summary>
+		/// Open a new RAW Measurement from a file and puts it in the list of all known RAW Measurements
+		/// </summary>
+		/// <param name="fileRawMsm">RAW Measurement file</param>
+		public static RawMeasurement OpenRawMsm(string fileRawMsm) {
+			return OpenRawMsm(fileRawMsm, true);
+		}
+
+		/// <summary>
+		/// Open a new RAW Measurement from a file and puts it in the list of all known RAW Measurements
+		/// </summary>
+		/// <param name="fileRawMsm">RAW Measurement file</param>
+		/// <param name="updateWindows">Indicate if windows should be updated. This is to avoid that the static constructos updates the windows when starting the app</param>
+		public static RawMeasurement OpenRawMsm(string fileRawMsm, bool updateWindows) {
+			RawMeasurement newRM = null;
+			if(!KnownRMs.ContainsKey(fileRawMsm)) {
+				newRM = Load(fileRawMsm);
+				if(newRM != null) {
+					KnownRMs.Add(fileRawMsm, newRM);
+					if(updateWindows) Globals.MainWindow.UpdateListOpenRawMsms();
+				}
+			}
+			return newRM;
+		}
+
+		public static void CloseRawMwm(string fileRawMsm) {
+			KnownRMs.Remove(fileRawMsm);
+			Globals.MainWindow.UpdateListOpenRawMsms();
+		}
+
 		/// <summary>
 		/// Load a new RAW Measurement from a file
 		/// </summary>

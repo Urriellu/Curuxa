@@ -16,7 +16,7 @@ namespace _3DScannerPC {
 
 		private void btnOk_Click(object sender, EventArgs e) {
 			Hide();
-			Settings.Default.Save();
+			Settings.SaveAllSettings();
 		}
 
 		private void FrmSettings_FormClosing(object sender, FormClosingEventArgs e) {
