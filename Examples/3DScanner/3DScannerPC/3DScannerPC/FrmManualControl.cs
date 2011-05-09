@@ -19,12 +19,6 @@ namespace _3DScannerPC {
 		public RawMeasurement rawMsm;
 		public RawMeasurement rawMsmAvg;
 
-		/*UInt16 lastValueAdc;
-		float lastVoltage;
-		float lastDistance_mm;
-		float lastDistance_mm_slowChange;
-		float lastDistance_cm;
-		double lastDistance_cm_2dig;*/
 		float lastDegH;
 		float lastDegV;
 		DateTime lastPosHChange = new DateTime(2000, 1, 1);
@@ -168,14 +162,6 @@ namespace _3DScannerPC {
 		}
 
 		public void SetReceivedManualValue(UInt16 adcValue) {
-			/* BEFORE USING OBJECTS PROPERLY
-			lastValueAdc = adcValue;
-			UpdateReceivedValues();
-
-			//add instant position to graph
-			graphPtInst.Add((DateTime.Now - graphStartTime).TotalSeconds, lastDistance_cm);
-			graphModified = true;*/
-
 			if(rawMsm == null || rawMsmAvg == null) SetupNewSeries();
 
 			rawMsm.Add(lastDegH, lastDegV, adcValue);
@@ -193,27 +179,6 @@ namespace _3DScannerPC {
 		/// Update the representation of latest received values
 		/// </summary>
 		private void UpdateReceivedValues() {
-			/* BEFORE USING OBJECTS PROPERLY
-			lastVoltage = Measure.AdcValueToVoltage(lastValueAdc, Settings.Default.AdcMax, (float)numVRefMax.Value);
-			lastDistance_mm = Measure.VoltageToDistance(lastVoltage);
-			lastDistance_cm = lastDistance_mm / 10;
-			lastDistance_cm_2dig = Math.Round(lastDistance_cm, 2);
-			if(float.IsInfinity(lastDistance_mm_slowChange)) lastDistance_mm_slowChange = lastDistance_mm;
-			lastDistance_mm_slowChange = (float)(lastDistance_mm_slowChange * 0.2 + lastDistance_mm * 0.8);
-
-			lblReceivedValue.Text = i18n.str("recManualValue", lastValueAdc, Settings.Default.AdcMax);
-			lblReceivedVoltage.Text = i18n.str("recManualVoltage", lastVoltage, numVRefMax.Value, Settings.Default.AdcMax);
-			lblReceivedDistance.Text = i18n.str("recManualDistance", lastDistance_mm);
-
-			// change position of object drawn on screen
-			int picObjBorders = 10;
-			int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
-			int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
-			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
-			float distancePorc = lastDistance_mm_slowChange / 700;
-			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
-			picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);*/
-
 			lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
 			lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
 			lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);

@@ -11,7 +11,6 @@ namespace _3DScannerPC {
 	}
 
 	public static class Scanner {
-		static SWF.Timer AuthTimer;
 		static DateTime LastAuthentication = new DateTime(1900, 1, 1);
 		static DummyLocker s = new DummyLocker();
 		public static ScannerMode Mode = ScannerMode.Inactive;
@@ -41,18 +40,6 @@ namespace _3DScannerPC {
 
 		static SerialPort SP;
 
-		/*/// <summary>
-		/// Thread to do Serial Port polling looking for new received data
-		/// </summary>
-		static Thread ThreadReceiver;*/
-
-		static Scanner() {
-			AuthTimer = new SWF.Timer();
-			AuthTimer.Tick += new EventHandler(AuthTimer_Tick);
-			AuthTimer.Interval = 1000;
-			AuthTimer.Start();
-		}
-
 		/// <summary>
 		/// Connect to the microcontroller
 		/// </summary>
@@ -64,10 +51,6 @@ namespace _3DScannerPC {
 				SP.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(SP_DataReceived);
 				SP.Open();
 				Globals.Log(LogType.Success, "Connected to " + portName);
-				/*if(ThreadReceiver == null) {
-					ThreadReceiver = new Thread(Scanner.DataReceiver);
-					ThreadReceiver.Start();
-				}*/
 				Status = Status.Connected;
 				AskAuth();
 			} catch(Exception e) {
@@ -128,37 +111,15 @@ namespace _3DScannerPC {
 			}
 		}
 
-		static void AuthTimer_Tick(object sender, EventArgs e) {
-			// ask for authentification
-			/*if(Status == Status.Connected) {
-				Check();
-
-				if((DateTime.Now - LastAuthentication).TotalSeconds > 2.5) {
-					Globals.Log("Not authenticated for too long...");
-					//Disconnect();
-					Authenticated = false;
-				}
-			}*/
-
-			//if(Status == Status.Disconnected) Connect();
-		}
-
 		public static void Disconnect() {
 			SetMode(ScannerMode.Inactive);
-			/*if(ThreadReceiver != null) {
-				ThreadReceiver.Abort();
-				//ThreadReceiver = null;
-			}*/
 			if(SP != null) {
 				SP.Close();
-				//SP.Dispose();
-				//SP = null;
 			}
 			Authenticated = false;
 			Status = Status.Disconnected;
 			Mode = ScannerMode.Inactive;
 			Globals.Log(LogType.Information, "Disconnected");
-			//Globals.MainWindow.UpdateStatus();
 		}
 
 		//THIS ONE MUST NOT CONTAIN A LOCK
@@ -194,78 +155,6 @@ namespace _3DScannerPC {
 				return Send((byte)CB);
 			}
 		}
-
-		/*public static void SetLight(ControlByteLight CBL) {
-			lock(s) {
-				Send(ControlByte.SetLight);
-				Send((byte)CBL);
-			}
-		}
-
-		static DateTime LastBaseMvChange = DateTime.Now;
-
-		public static void SetBaseMv(ControlByteBaseMv CBB) {
-			//don't send changes too fast
-			if((DateTime.Now - LastBaseMvChange).TotalMilliseconds < 400) return;
-
-			lock(s) {
-				Send(ControlByte.SetBaseMovement);
-				Send((byte)CBB);
-			}
-			LastBaseMvChange = DateTime.Now;
-		}*/
-
-		/// <summary>
-		/// Method run on a separate thread which maked polling to the serial port and processes received data
-		/// </summary>
-		/*public static void DataReceiver() {
-			Globals.Log("Starting receiver thread");
-			do {
-				while(SP != null && SP.IsOpen && Globals.MainWindow != null) {
-					try {
-						byte Rcv = (byte)ReadByte();
-						Globals.Log("Received byte: " + Rcv);
-						ControlByte BC = (ControlByte)Rcv;
-						if(BC == ControlByte.AuthID) {
-							Rcv = (byte)ReadByte();
-							if(Rcv == Settings.ScannerID) {
-								// auth success
-								Status = Status.Connected;
-								Authenticated = true;
-								LastAuthentication = DateTime.Now;
-								Globals.Log("Authentication successful");
-							} else {
-								Globals.Log("Authentication failure (received ID: " + Rcv + "), disconnecting...");
-								Disconnect();
-							}
-						}
-
-						if(Authenticated || !Settings.RequireAuthentication) {
-							switch(BC) {
-								case ControlByte.AuthID:
-									break;
-								case ControlByte.ManualTxValue:
-									UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
-									receivedValue += (byte)ReadByte();
-									Globals.MainWindow.SetReceivedManualValue(receivedValue);
-									Globals.Log("Received manual value: " + receivedValue);
-									break;
-								default:
-									Globals.Log("Unknown control byte: " + BC.ToString());
-									break;
-							}
-						} else {
-							Globals.Log("Not authenticated, ignoring received byte: " + Rcv);
-						}
-					} catch(Exception ex) {
-						Globals.Log("Error receiving data: " + ex.Message);
-					}
-				}
-				Thread.Sleep(100);
-			} while(true);
-			Globals.Log("Closing receiver thread");
-			Disconnect(); //avoid being connected with no DataReceiver
-		}*/
 
 		public static void SetMode(ScannerMode scannerMode) {
 			lock(s) {
