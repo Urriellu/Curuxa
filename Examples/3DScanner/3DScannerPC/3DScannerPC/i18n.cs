@@ -67,6 +67,9 @@ namespace _3DScannerPC {
 			langEn.Add("UnableSaveFile", "Unable to save file \"{0}\". {1}");
 			langEn.Add("ReadRawMsm", "Raw measurement \"{0}\" read from {1}");
 			langEn.Add("UnableLoadFile", "Unable to load file \"{0}\". {1}");
+			langEn.Add("Open", "Open");
+			langEn.Add("Remove", "Remove");
+			langEn.Add("SavingSettings", "Saving settings");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

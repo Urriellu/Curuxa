@@ -35,5 +35,26 @@
     <Setting Name="RawMsmFileFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)">3D Scanner Raw Measurement (*.3draw)|*.3draw</Value>
     </Setting>
+    <Setting Name="Setting" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OpenRawMsms" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;C:\throw_error_test.3draw&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="OpenScanModels" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;C:\this scanned model doesnt exist.3dmodel&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ModelExtension" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3dmodel</Value>
+    </Setting>
+    <Setting Name="ModelFileFilter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3D Scanned Model (*.3dmodel)|*.3draw</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

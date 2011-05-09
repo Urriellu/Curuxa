@@ -154,5 +154,69 @@ namespace _3DScannerPC.Properties {
                 this["RawMsmFileFilter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Setting {
+            get {
+                return ((string)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>C:\\throw_error_test.3draw</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection OpenRawMsms {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OpenRawMsms"]));
+            }
+            set {
+                this["OpenRawMsms"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>C:\\this scanned model doesnt exist.3dmodel</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection OpenScanModels {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OpenScanModels"]));
+            }
+            set {
+                this["OpenScanModels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3dmodel")]
+        public string ModelExtension {
+            get {
+                return ((string)(this["ModelExtension"]));
+            }
+            set {
+                this["ModelExtension"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3D Scanned Model (*.3dmodel)|*.3draw")]
+        public string ModelFileFilter {
+            get {
+                return ((string)(this["ModelFileFilter"]));
+            }
+            set {
+                this["ModelFileFilter"] = value;
+            }
+        }
     }
 }

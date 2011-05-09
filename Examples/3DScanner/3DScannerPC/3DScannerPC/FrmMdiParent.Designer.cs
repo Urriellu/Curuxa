@@ -62,6 +62,7 @@
 			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
 			this.miManualControlStartNewSeries = new System.Windows.Forms.ToolStripMenuItem();
 			this.miManualControlSaveSeriesInst = new System.Windows.Forms.ToolStripMenuItem();
+			this.miManualControlSaveSeriesAvg = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.miOptions = new System.Windows.Forms.ToolStripMenuItem();
 			this.nSLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +97,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.miManualControlSaveSeriesAvg = new System.Windows.Forms.ToolStripMenuItem();
+			this.miViewRawMsms = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -313,6 +314,7 @@
 			this.miView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miViewConnection,
             this.miViewManualControl,
+            this.miViewRawMsms,
             this.miViewLog,
             this.toolStripMenuItem1,
             this.miViewStatus});
@@ -395,26 +397,26 @@
 			// miManualControlActivate
 			// 
 			this.miManualControlActivate.Name = "miManualControlActivate";
-			this.miManualControlActivate.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlActivate.Size = new System.Drawing.Size(227, 22);
 			this.miManualControlActivate.Text = "NS (Activate)";
 			this.miManualControlActivate.Click += new System.EventHandler(this.miManualControlActivate_Click);
 			// 
 			// miManualControlDeactivate
 			// 
 			this.miManualControlDeactivate.Name = "miManualControlDeactivate";
-			this.miManualControlDeactivate.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlDeactivate.Size = new System.Drawing.Size(227, 22);
 			this.miManualControlDeactivate.Text = "NS (Deactivate)";
 			this.miManualControlDeactivate.Click += new System.EventHandler(this.miManualControlDeactivate_Click);
 			// 
 			// toolStripMenuItem6
 			// 
 			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-			this.toolStripMenuItem6.Size = new System.Drawing.Size(202, 6);
+			this.toolStripMenuItem6.Size = new System.Drawing.Size(224, 6);
 			// 
 			// miManualControlStartNewSeries
 			// 
 			this.miManualControlStartNewSeries.Name = "miManualControlStartNewSeries";
-			this.miManualControlStartNewSeries.Size = new System.Drawing.Size(205, 22);
+			this.miManualControlStartNewSeries.Size = new System.Drawing.Size(227, 22);
 			this.miManualControlStartNewSeries.Text = "NS (Start New Series)";
 			this.miManualControlStartNewSeries.Click += new System.EventHandler(this.nSStartNewSeriesToolStripMenuItem_Click);
 			// 
@@ -424,6 +426,13 @@
 			this.miManualControlSaveSeriesInst.Size = new System.Drawing.Size(227, 22);
 			this.miManualControlSaveSeriesInst.Text = "NS (Save Current Series Inst)";
 			this.miManualControlSaveSeriesInst.Click += new System.EventHandler(this.miManualControlSaveSeries_Click);
+			// 
+			// miManualControlSaveSeriesAvg
+			// 
+			this.miManualControlSaveSeriesAvg.Name = "miManualControlSaveSeriesAvg";
+			this.miManualControlSaveSeriesAvg.Size = new System.Drawing.Size(227, 22);
+			this.miManualControlSaveSeriesAvg.Text = "NS (Save Current Series Avg)";
+			this.miManualControlSaveSeriesAvg.Click += new System.EventHandler(this.miManualControlSaveSeriesAvg_Click);
 			// 
 			// toolsMenu
 			// 
@@ -678,12 +687,12 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
-			// miManualControlSaveSeriesAvg
+			// miViewRawMsms
 			// 
-			this.miManualControlSaveSeriesAvg.Name = "miManualControlSaveSeriesAvg";
-			this.miManualControlSaveSeriesAvg.Size = new System.Drawing.Size(227, 22);
-			this.miManualControlSaveSeriesAvg.Text = "NS (Save Current Series Avg)";
-			this.miManualControlSaveSeriesAvg.Click += new System.EventHandler(this.miManualControlSaveSeriesAvg_Click);
+			this.miViewRawMsms.Name = "miViewRawMsms";
+			this.miViewRawMsms.Size = new System.Drawing.Size(210, 22);
+			this.miViewRawMsms.Text = "NS (Raw Measurements)";
+			this.miViewRawMsms.Click += new System.EventHandler(this.miViewRawMsms_Click);
 			// 
 			// FrmMdiParent
 			// 
@@ -782,6 +791,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miManualControlStartNewSeries;
 		private System.Windows.Forms.ToolStripMenuItem miManualControlSaveSeriesInst;
 		private System.Windows.Forms.ToolStripMenuItem miManualControlSaveSeriesAvg;
+		private System.Windows.Forms.ToolStripMenuItem miViewRawMsms;
 	}
 }
 
