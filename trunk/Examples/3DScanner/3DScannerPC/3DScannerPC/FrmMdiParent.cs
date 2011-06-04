@@ -17,6 +17,7 @@ namespace _3DScannerPC {
 		FrmSettings frmSettings;
 		public FrmLog frmLog;
 		FrmRawMsms frmRawMsms;
+		public FrmNewAutoMsm frmNewAutoMsm;
 
 		public FrmMdiParent() {
 			Control.CheckForIllegalCrossThreadCalls = false;
@@ -39,14 +40,18 @@ namespace _3DScannerPC {
 			frmRawMsms = new FrmRawMsms();
 			frmRawMsms.MdiParent = this;
 
+			frmNewAutoMsm = new FrmNewAutoMsm();
+			frmNewAutoMsm.MdiParent = this;
+
 			SetMdiChildrenDefaultLocations();
 
 			UpdateLang();
 
+			//frmRawMsms.Show();
 			frmLog.Show();
-			frmManualControl.Show();
+			//frmManualControl.Show();
 			frmConnection.Show();
-			frmRawMsms.Show();
+			//frmNewAutoMsm.Show();
 
 			Globals.Log(LogType.Information, i18n.str("init"));
 
@@ -71,6 +76,9 @@ namespace _3DScannerPC {
 
 			frmRawMsms.StartPosition = FormStartPosition.Manual;
 			frmRawMsms.Location = new Point(0, 0);
+
+			frmNewAutoMsm.StartPosition = FormStartPosition.Manual;
+			frmNewAutoMsm.Location = new Point(10, 10);
 		}
 
 		public override void UpdateLang() {
@@ -83,6 +91,15 @@ namespace _3DScannerPC {
 			miView.Text = i18n.str("View");
 			miLanguage.Text = i18n.str("Language");
 			miHelp.Text = i18n.str("Help");
+			miManualControl.Text = i18n.str("ManualControl");
+			miManualControlActivate.Text = i18n.str("Activate");
+			miManualControlDeactivate.Text = i18n.str("Deactivate");
+			miManualControlStartNewSeries.Text = i18n.str("StartNewSeries");
+			miManualControlSaveSeriesInst.Text = i18n.str("SaveInstantSeries");
+			miManualControlSaveSeriesAvg.Text = i18n.str("SaveAvgSeries");
+			miTools.Text = i18n.str("Tools");
+			miSettings.Text = i18n.str("Settings");
+			miNewAutoMsm.Text = i18n.str("NewAutoMsm");
 
 			foreach(Form f in MdiChildren) {
 				if(f is FormChild) {
@@ -291,7 +308,7 @@ namespace _3DScannerPC {
 			frmManualControl.SetupNewSeries();
 		}
 
-		private void miManualControlSaveSeries_Click(object sender, EventArgs e) {
+		public void miManualControlSaveSeriesInst_Click(object sender, EventArgs e) {
 			SaveRawMsm(frmManualControl.rawMsm);
 		}
 
@@ -307,6 +324,7 @@ namespace _3DScannerPC {
 
 			if(sfd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
 				rawMeasurement.Save(sfd.FileName);
+				RawMeasurement.OpenRawMsm(sfd.FileName);
 			}
 		}
 
@@ -320,7 +338,7 @@ namespace _3DScannerPC {
 			}
 		}
 
-		private void miManualControlSaveSeriesAvg_Click(object sender, EventArgs e) {
+		public void miManualControlSaveSeriesAvg_Click(object sender, EventArgs e) {
 			SaveRawMsm(frmManualControl.rawMsmAvg);
 		}
 
@@ -330,6 +348,10 @@ namespace _3DScannerPC {
 
 		private void miViewRawMsms_Click(object sender, EventArgs e) {
 			frmRawMsms.Show();
+		}
+
+		private void nSNewAutoMsmToolStripMenuItem_Click(object sender, EventArgs e) {
+			frmNewAutoMsm.Show();
 		}
 	}
 }

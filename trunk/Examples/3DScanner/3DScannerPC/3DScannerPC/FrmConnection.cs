@@ -25,6 +25,7 @@ namespace _3DScannerPC {
 			lblBauds.Text = i18n.str("bauds");
 			btnConnect.Text = i18n.str("Connect");
 			btnDisconnect.Text = i18n.str("Disconnect");
+			btnAuth.Text = i18n.str("Auth");
 			UpdateStatus();
 		}
 
@@ -56,6 +57,10 @@ namespace _3DScannerPC {
 
 		private void btnConnect_Click(object sender, EventArgs e) {
 			Scanner.Connect(cmbPort.Text, int.Parse(cmbBaud.Text));
+			if(Scanner.Status == Status.Connected) {
+				Globals.MainWindow.frmManualControl.Show();
+				Globals.MainWindow.frmNewAutoMsm.Show();
+			}
 		}
 
 		private void btnDisconnect_Click(object sender, EventArgs e) {

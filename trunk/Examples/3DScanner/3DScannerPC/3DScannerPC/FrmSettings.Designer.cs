@@ -28,10 +28,10 @@
 			this.lblT1preload = new System.Windows.Forms.Label();
 			this.nbT1preload = new System.Windows.Forms.NumericUpDown();
 			this.nbTimeChangesThres = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
+			this.lblChangesEvery = new System.Windows.Forms.Label();
 			this.cbReqAuth = new System.Windows.Forms.CheckBox();
 			this.nbScannerId = new System.Windows.Forms.NumericUpDown();
-			this.label2 = new System.Windows.Forms.Label();
+			this.lblScannerID = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.numDutyV180 = new System.Windows.Forms.NumericUpDown();
 			this.numDutyV0 = new System.Windows.Forms.NumericUpDown();
@@ -123,16 +123,16 @@
             0});
 			this.nbTimeChangesThres.ValueChanged += new System.EventHandler(this.nbTimeChangesThres_ValueChanged);
 			// 
-			// label1
+			// lblChangesEvery
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(3, 72);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(256, 26);
-			this.label1.TabIndex = 6;
-			this.label1.Text = "NS (On manual control, send changes at least every:";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblChangesEvery.AutoSize = true;
+			this.lblChangesEvery.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblChangesEvery.Location = new System.Drawing.Point(3, 72);
+			this.lblChangesEvery.Name = "lblChangesEvery";
+			this.lblChangesEvery.Size = new System.Drawing.Size(256, 26);
+			this.lblChangesEvery.TabIndex = 6;
+			this.lblChangesEvery.Text = "NS (On manual control, send changes at least every:";
+			this.lblChangesEvery.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// cbReqAuth
 			// 
@@ -170,16 +170,16 @@
             0});
 			this.nbScannerId.ValueChanged += new System.EventHandler(this.nbScabberId_ValueChanged);
 			// 
-			// label2
+			// lblScannerID
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label2.Location = new System.Drawing.Point(3, 46);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(256, 26);
-			this.label2.TabIndex = 9;
-			this.label2.Text = "NS (Scanner ID)";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblScannerID.AutoSize = true;
+			this.lblScannerID.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblScannerID.Location = new System.Drawing.Point(3, 46);
+			this.lblScannerID.Name = "lblScannerID";
+			this.lblScannerID.Size = new System.Drawing.Size(256, 26);
+			this.lblScannerID.TabIndex = 9;
+			this.lblScannerID.Text = "NS (Scanner ID)";
+			this.lblScannerID.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -199,8 +199,8 @@
 			this.tableLayoutPanel1.Controls.Add(this.nbT1preload, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.lblT1preload, 0, 4);
 			this.tableLayoutPanel1.Controls.Add(this.nbScannerId, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.lblChangesEvery, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.lblScannerID, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.lblDutyH0, 0, 5);
 			this.tableLayoutPanel1.Controls.Add(this.lblDutyH180, 0, 6);
 			this.tableLayoutPanel1.Controls.Add(this.cbReqAuth, 0, 0);
@@ -394,10 +394,10 @@
 		private System.Windows.Forms.Label lblT1preload;
 		private System.Windows.Forms.NumericUpDown nbT1preload;
 		private System.Windows.Forms.NumericUpDown nbTimeChangesThres;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblChangesEvery;
 		private System.Windows.Forms.CheckBox cbReqAuth;
 		private System.Windows.Forms.NumericUpDown nbScannerId;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label lblScannerID;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label lblDutyH0;
 		private System.Windows.Forms.Label lblDutyH180;

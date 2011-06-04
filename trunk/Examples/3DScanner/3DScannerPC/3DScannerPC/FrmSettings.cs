@@ -26,6 +26,21 @@ namespace _3DScannerPC {
 
 		private void FrmSettings_Load(object sender, EventArgs e) {
 			LoadSettings();
+			UpdateLang();
+		}
+
+		public override void UpdateLang() {
+			this.Text = i18n.str("Settings");
+			cbReqAuth.Text = i18n.str("ReqAuth");
+			cbPrintDebugLogs.Text = i18n.str("PrintDebugLogs");
+			lblScannerID.Text = i18n.str("ScannerID") + ":";
+			lblChangesEvery.Text = i18n.str("ManualCtrlChangesEvery") + ":";
+			lblT1preload.Text = i18n.str("T1preload") + ":";
+			lblDutyH0.Text = i18n.str("Duty0H") + ":";
+			lblDutyH180.Text = i18n.str("Duty180H") + ":";
+			lblDutyV0.Text = i18n.str("Duty0V") + ":";
+			lblDutyV180.Text = i18n.str("Duty180V") + ":";
+			btnOk.Text = i18n.str("OK");
 		}
 
 		private void LoadSettings() {

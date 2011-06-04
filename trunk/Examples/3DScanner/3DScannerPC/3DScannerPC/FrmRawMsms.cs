@@ -40,17 +40,29 @@ namespace _3DScannerPC {
 			//clear development stuff
 			lstPoints.Items.Clear();
 
+			UpdateLang();
+
 			//show the currently open RAW Measurements
 			UpdateListOpenRawMsms();
 
 			//and update the data
-			UpdateShownData();
+			UpdateShownDataOneMsm();
+		}
+
+		public override void UpdateLang() {
+			this.Text = i18n.str("RawMsms");
+			lblName.Text = i18n.str("Name") + ":";
+			lblDateTitle.Text = i18n.str("Date") + ":";
+			lblBaseLoc.Text = i18n.str("BaseLocation") + ":";
+			lblBaseRot.Text = i18n.str("BaseRotation") + ":";
+			btnOpen.Text = i18n.str("Open");
+			btnRemove.Text = i18n.str("Remove");
 		}
 
 		/// <summary>
 		/// Shows on the form all the data for the selected RAW Measurement
 		/// </summary>
-		private void UpdateShownData() {
+		private void UpdateShownDataOneMsm() {
 			if(string.IsNullOrEmpty(selRawMsmFile)) {
 				//no RAW Measurement selected
 				splitMain.Panel2.Enabled = false;
@@ -116,7 +128,7 @@ namespace _3DScannerPC {
 				//no items selected
 				selRawMsmFile = null;
 			}
-			UpdateShownData();
+			UpdateShownDataOneMsm();
 		}
 
 		private void FrmRawMsms_FormClosing(object sender, FormClosingEventArgs e) {

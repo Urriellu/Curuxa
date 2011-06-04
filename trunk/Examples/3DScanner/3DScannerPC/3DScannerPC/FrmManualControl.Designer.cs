@@ -51,10 +51,10 @@
 			this.grpControlH = new System.Windows.Forms.GroupBox();
 			this.lblDuty = new System.Windows.Forms.Label();
 			this.grpControlV = new System.Windows.Forms.GroupBox();
-			this.grpGraph = new System.Windows.Forms.GroupBox();
-			this.label3 = new System.Windows.Forms.Label();
+			this.grpMeasPoints = new System.Windows.Forms.GroupBox();
+			this.lblAvgEvery = new System.Windows.Forms.Label();
 			this.numAvg = new System.Windows.Forms.NumericUpDown();
-			this.lnlPoints = new System.Windows.Forms.Label();
+			this.lblPoints = new System.Windows.Forms.Label();
 			this.graph = new ZedGraph.ZedGraphControl();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.manualNumControlH)).BeginInit();
@@ -69,7 +69,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).BeginInit();
 			this.grpControlH.SuspendLayout();
 			this.grpControlV.SuspendLayout();
-			this.grpGraph.SuspendLayout();
+			this.grpMeasPoints.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numAvg)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -396,31 +396,31 @@
 			this.grpControlV.TabStop = false;
 			this.grpControlV.Text = "NS (Vertical Control)";
 			// 
-			// grpGraph
+			// grpMeasPoints
 			// 
-			this.grpGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			this.grpMeasPoints.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.grpGraph.Controls.Add(this.label3);
-			this.grpGraph.Controls.Add(this.numAvg);
-			this.grpGraph.Controls.Add(this.lnlPoints);
-			this.grpGraph.Controls.Add(this.graph);
-			this.grpGraph.Location = new System.Drawing.Point(12, 412);
-			this.grpGraph.Name = "grpGraph";
-			this.grpGraph.Size = new System.Drawing.Size(414, 192);
-			this.grpGraph.TabIndex = 34;
-			this.grpGraph.TabStop = false;
-			this.grpGraph.Text = "NS (Measured points)";
+			this.grpMeasPoints.Controls.Add(this.lblAvgEvery);
+			this.grpMeasPoints.Controls.Add(this.numAvg);
+			this.grpMeasPoints.Controls.Add(this.lblPoints);
+			this.grpMeasPoints.Controls.Add(this.graph);
+			this.grpMeasPoints.Location = new System.Drawing.Point(12, 412);
+			this.grpMeasPoints.Name = "grpMeasPoints";
+			this.grpMeasPoints.Size = new System.Drawing.Size(414, 192);
+			this.grpMeasPoints.TabIndex = 34;
+			this.grpMeasPoints.TabStop = false;
+			this.grpMeasPoints.Text = "NS (Measured points)";
 			// 
-			// label3
+			// lblAvgEvery
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(13, 28);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 13);
-			this.label3.TabIndex = 15;
-			this.label3.Tag = "";
-			this.label3.Text = "NS (Average every)";
+			this.lblAvgEvery.AutoSize = true;
+			this.lblAvgEvery.Location = new System.Drawing.Point(13, 28);
+			this.lblAvgEvery.Name = "lblAvgEvery";
+			this.lblAvgEvery.Size = new System.Drawing.Size(100, 13);
+			this.lblAvgEvery.TabIndex = 15;
+			this.lblAvgEvery.Tag = "";
+			this.lblAvgEvery.Text = "NS (Average every)";
 			// 
 			// numAvg
 			// 
@@ -450,15 +450,15 @@
             0,
             0});
 			// 
-			// lnlPoints
+			// lblPoints
 			// 
-			this.lnlPoints.AutoSize = true;
-			this.lnlPoints.Location = new System.Drawing.Point(188, 28);
-			this.lnlPoints.Name = "lnlPoints";
-			this.lnlPoints.Size = new System.Drawing.Size(59, 13);
-			this.lnlPoints.TabIndex = 17;
-			this.lnlPoints.Tag = "Voltage reference";
-			this.lnlPoints.Text = "NS (points)";
+			this.lblPoints.AutoSize = true;
+			this.lblPoints.Location = new System.Drawing.Point(188, 28);
+			this.lblPoints.Name = "lblPoints";
+			this.lblPoints.Size = new System.Drawing.Size(59, 13);
+			this.lblPoints.TabIndex = 17;
+			this.lblPoints.Tag = "Voltage reference";
+			this.lblPoints.Text = "NS (points)";
 			// 
 			// graph
 			// 
@@ -482,7 +482,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(565, 616);
-			this.Controls.Add(this.grpGraph);
+			this.Controls.Add(this.grpMeasPoints);
 			this.Controls.Add(this.grpControlV);
 			this.Controls.Add(this.grpControlH);
 			this.Controls.Add(this.grpSetup);
@@ -512,8 +512,8 @@
 			this.grpControlH.PerformLayout();
 			this.grpControlV.ResumeLayout(false);
 			this.grpControlV.PerformLayout();
-			this.grpGraph.ResumeLayout(false);
-			this.grpGraph.PerformLayout();
+			this.grpMeasPoints.ResumeLayout(false);
+			this.grpMeasPoints.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numAvg)).EndInit();
 			this.ResumeLayout(false);
 
@@ -545,12 +545,12 @@
 		private System.Windows.Forms.GroupBox grpControlH;
 		private System.Windows.Forms.GroupBox grpControlV;
 		private System.Windows.Forms.Label lblDuty;
-		private System.Windows.Forms.GroupBox grpGraph;
+		private System.Windows.Forms.GroupBox grpMeasPoints;
 		private ZedGraph.ZedGraphControl graph;
 		private System.Windows.Forms.Label lblAdcMax;
 		private System.Windows.Forms.NumericUpDown numAdcMax;
-		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label lblAvgEvery;
 		private System.Windows.Forms.NumericUpDown numAvg;
-		private System.Windows.Forms.Label lnlPoints;
+		private System.Windows.Forms.Label lblPoints;
 	}
 }

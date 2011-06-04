@@ -12,7 +12,7 @@ namespace _3DScannerPC {
 	/// 30-50cm - medium resolution
 	/// 50-80cm - low resolution
 	/// </remarks>
-	public struct Measure {
+	public static class Measure {
 		/// <summary>
 		/// List of known points of the voltage-distance graph for the GP2 sensor. Key: voltage. Value: distance in mm
 		/// </summary>
