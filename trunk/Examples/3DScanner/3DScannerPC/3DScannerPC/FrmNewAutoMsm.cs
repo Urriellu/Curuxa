@@ -15,6 +15,12 @@ namespace _3DScannerPC {
 
 		private void FrmNewAutoMsm_Load(object sender, EventArgs e) {
 			UpdateLang();
+
+			UpdateDefaultValues();
+		}
+
+		private void UpdateDefaultValues() {
+			
 		}
 
 		public override void UpdateLang() {
