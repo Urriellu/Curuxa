@@ -268,7 +268,7 @@ namespace _3DScannerPC {
 		/// Open a new RAW Measurement from a file and puts it in the list of all known RAW Measurements
 		/// </summary>
 		/// <param name="fileRawMsm">RAW Measurement file</param>
-		/// <param name="updateWindows">Indicate if windows should be updated. This is to avoid that the static constructos updates the windows when starting the app</param>
+		/// <param name="updateWindows">Indicate if windows should be updated. This is to avoid that the static constructors updates the windows when starting the app</param>
 		public static RawMeasurement OpenRawMsm(string fileRawMsm, bool updateWindows) {
 			RawMeasurement newRM = null;
 			if(!KnownRMs.ContainsKey(fileRawMsm)) {

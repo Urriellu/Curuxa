@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("first one");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("second one");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("first one");
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("second one");
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "fdh",
             "a02",
             "b03",
@@ -132,8 +132,8 @@
 			this.lstMsms.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstMsms.HideSelection = false;
 			this.lstMsms.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem4,
+            listViewItem5});
 			this.lstMsms.Location = new System.Drawing.Point(0, 0);
 			this.lstMsms.MultiSelect = false;
 			this.lstMsms.Name = "lstMsms";
@@ -180,9 +180,9 @@
             this.columnDistanceMm});
 			this.lstPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstPoints.HideSelection = false;
-			listViewItem3.StateImageIndex = 0;
+			listViewItem6.StateImageIndex = 0;
 			this.lstPoints.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem6});
 			this.lstPoints.LabelEdit = true;
 			this.lstPoints.Location = new System.Drawing.Point(0, 0);
 			this.lstPoints.MultiSelect = false;
@@ -261,7 +261,7 @@
 			// numAdcMax
 			// 
 			this.numAdcMax.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numAdcMax.Location = new System.Drawing.Point(79, 58);
+			this.numAdcMax.Location = new System.Drawing.Point(68, 58);
 			this.numAdcMax.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -287,9 +287,9 @@
 			this.lblAdcMax.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblAdcMax.Location = new System.Drawing.Point(3, 55);
 			this.lblAdcMax.Name = "lblAdcMax";
-			this.lblAdcMax.Size = new System.Drawing.Size(70, 31);
+			this.lblAdcMax.Size = new System.Drawing.Size(59, 31);
 			this.lblAdcMax.TabIndex = 10;
-			this.lblAdcMax.Text = "NS (AdcMax)";
+			this.lblAdcMax.Text = "ADC Max.:";
 			this.lblAdcMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// lblVRef
@@ -298,9 +298,9 @@
 			this.lblVRef.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblVRef.Location = new System.Drawing.Point(3, 26);
 			this.lblVRef.Name = "lblVRef";
-			this.lblVRef.Size = new System.Drawing.Size(70, 29);
+			this.lblVRef.Size = new System.Drawing.Size(59, 29);
 			this.lblVRef.TabIndex = 6;
-			this.lblVRef.Text = "NS (VRef)";
+			this.lblVRef.Text = "V. Ref.:";
 			this.lblVRef.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// tableLayoutPanel2
@@ -320,18 +320,18 @@
 			this.tableLayoutPanel2.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.label4, 2, 0);
 			this.tableLayoutPanel2.Controls.Add(this.numBaseLocX, 1, 0);
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(389, 29);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(378, 29);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(367, 23);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 23);
 			this.tableLayoutPanel2.TabIndex = 4;
 			// 
 			// numBaseLocZ
 			// 
 			this.numBaseLocZ.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numBaseLocZ.Location = new System.Drawing.Point(270, 3);
+			this.numBaseLocZ.Location = new System.Drawing.Point(278, 3);
 			this.numBaseLocZ.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -343,13 +343,13 @@
             0,
             -2147483648});
 			this.numBaseLocZ.Name = "numBaseLocZ";
-			this.numBaseLocZ.Size = new System.Drawing.Size(94, 20);
+			this.numBaseLocZ.Size = new System.Drawing.Size(97, 20);
 			this.numBaseLocZ.TabIndex = 7;
 			// 
 			// numBaseLocY
 			// 
 			this.numBaseLocY.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numBaseLocY.Location = new System.Drawing.Point(148, 3);
+			this.numBaseLocY.Location = new System.Drawing.Point(152, 3);
 			this.numBaseLocY.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -361,14 +361,14 @@
             0,
             -2147483648});
 			this.numBaseLocY.Name = "numBaseLocY";
-			this.numBaseLocY.Size = new System.Drawing.Size(93, 20);
+			this.numBaseLocY.Size = new System.Drawing.Size(97, 20);
 			this.numBaseLocY.TabIndex = 7;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
 			this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label5.Location = new System.Drawing.Point(247, 0);
+			this.label5.Location = new System.Drawing.Point(255, 0);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(17, 26);
 			this.label5.TabIndex = 5;
@@ -390,7 +390,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label4.Location = new System.Drawing.Point(125, 0);
+			this.label4.Location = new System.Drawing.Point(129, 0);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(17, 26);
 			this.label4.TabIndex = 1;
@@ -412,7 +412,7 @@
             0,
             -2147483648});
 			this.numBaseLocX.Name = "numBaseLocX";
-			this.numBaseLocX.Size = new System.Drawing.Size(93, 20);
+			this.numBaseLocX.Size = new System.Drawing.Size(97, 20);
 			this.numBaseLocX.TabIndex = 6;
 			// 
 			// lblName
@@ -421,7 +421,7 @@
 			this.lblName.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblName.Location = new System.Drawing.Point(3, 0);
 			this.lblName.Name = "lblName";
-			this.lblName.Size = new System.Drawing.Size(70, 26);
+			this.lblName.Size = new System.Drawing.Size(59, 26);
 			this.lblName.TabIndex = 0;
 			this.lblName.Text = "NS (Name)";
 			this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -429,7 +429,7 @@
 			// txtName
 			// 
 			this.txtName.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtName.Location = new System.Drawing.Point(79, 3);
+			this.txtName.Location = new System.Drawing.Point(68, 3);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(199, 20);
 			this.txtName.TabIndex = 1;
@@ -438,7 +438,7 @@
 			// 
 			this.lblDateTitle.AutoSize = true;
 			this.lblDateTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblDateTitle.Location = new System.Drawing.Point(284, 0);
+			this.lblDateTitle.Location = new System.Drawing.Point(273, 0);
 			this.lblDateTitle.Name = "lblDateTitle";
 			this.lblDateTitle.Size = new System.Drawing.Size(99, 26);
 			this.lblDateTitle.TabIndex = 2;
@@ -449,9 +449,9 @@
 			// 
 			this.lblDateValue.AutoSize = true;
 			this.lblDateValue.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblDateValue.Location = new System.Drawing.Point(389, 0);
+			this.lblDateValue.Location = new System.Drawing.Point(378, 0);
 			this.lblDateValue.Name = "lblDateValue";
-			this.lblDateValue.Size = new System.Drawing.Size(367, 26);
+			this.lblDateValue.Size = new System.Drawing.Size(378, 26);
 			this.lblDateValue.TabIndex = 3;
 			this.lblDateValue.Text = "NOT SET";
 			this.lblDateValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -460,7 +460,7 @@
 			// 
 			this.lblBaseLoc.AutoSize = true;
 			this.lblBaseLoc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblBaseLoc.Location = new System.Drawing.Point(284, 26);
+			this.lblBaseLoc.Location = new System.Drawing.Point(273, 26);
 			this.lblBaseLoc.Name = "lblBaseLoc";
 			this.lblBaseLoc.Size = new System.Drawing.Size(99, 29);
 			this.lblBaseLoc.TabIndex = 5;
@@ -471,7 +471,7 @@
 			// 
 			this.lblBaseRot.AutoSize = true;
 			this.lblBaseRot.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblBaseRot.Location = new System.Drawing.Point(284, 55);
+			this.lblBaseRot.Location = new System.Drawing.Point(273, 55);
 			this.lblBaseRot.Name = "lblBaseRot";
 			this.lblBaseRot.Size = new System.Drawing.Size(99, 31);
 			this.lblBaseRot.TabIndex = 7;
@@ -481,14 +481,14 @@
 			// numBaseRot
 			// 
 			this.numBaseRot.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.numBaseRot.Location = new System.Drawing.Point(389, 58);
+			this.numBaseRot.Location = new System.Drawing.Point(378, 58);
 			this.numBaseRot.Maximum = new decimal(new int[] {
             360,
             0,
             0,
             0});
 			this.numBaseRot.Name = "numBaseRot";
-			this.numBaseRot.Size = new System.Drawing.Size(367, 20);
+			this.numBaseRot.Size = new System.Drawing.Size(378, 20);
 			this.numBaseRot.TabIndex = 8;
 			// 
 			// numVRef
@@ -500,7 +500,7 @@
             0,
             0,
             65536});
-			this.numVRef.Location = new System.Drawing.Point(79, 29);
+			this.numVRef.Location = new System.Drawing.Point(68, 29);
 			this.numVRef.Maximum = new decimal(new int[] {
             25,
             0,

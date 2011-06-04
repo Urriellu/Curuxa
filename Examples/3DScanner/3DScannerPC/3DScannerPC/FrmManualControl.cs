@@ -116,6 +116,13 @@ namespace _3DScannerPC {
 			grpInstantValue.Text = i18n.str("recManualTitle");
 			grpControlH.Text = i18n.str("ManualControlHtitle");
 			grpControlV.Text = i18n.str("ManualControlVtitle");
+			grpSetup.Text = i18n.str("Setup");
+			lblAvgEvery.Text = i18n.str("AvgEvery");
+			lblPoints.Text = i18n.str("points");
+			btnActivateManual.Text = i18n.str("Activate");
+			btnDeactManual.Text = i18n.str("Deactivate");
+			grpClosestObj.Text = i18n.str("ClosestObject");
+			grpMeasPoints.Text = i18n.str("MeasuredPoints");
 			//SetReceivedManualValue(0);
 		}
 
@@ -179,19 +186,20 @@ namespace _3DScannerPC {
 		/// Update the representation of latest received values
 		/// </summary>
 		private void UpdateReceivedValues() {
-			lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
-			lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
-			lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);
+			if(rawMsm.Count > 0) {
+				lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
+				lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
+				lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);
 
-			// change position of object drawn on screen
-			int picObjBorders = 10;
-			int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
-			int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
-			int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
-			float distancePorc = rawMsm.AvgLastPoints(PointAvgObj).Distance_mm / 700;
-			int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
-			picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
-
+				// change position of object drawn on screen
+				int picObjBorders = 10;
+				int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
+				int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
+				int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
+				float distancePorc = rawMsm.AvgLastPoints(PointAvgObj).Distance_mm / 700;
+				int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
+				picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
+			}
 		}
 
 		private void numVRefMax_ValueChanged(object sender, EventArgs e) {
@@ -219,6 +227,14 @@ namespace _3DScannerPC {
 
 		private void numAdcMax_ValueChanged(object sender, EventArgs e) {
 			rawMsm.AdcMax = (UInt16)numAdcMax.Value;
+		}
+
+		private void btnSaveInst_Click(object sender, EventArgs e) {
+			Globals.MainWindow.miManualControlSaveSeriesInst_Click(null, null);
+		}
+
+		private void btnSaveAvg_Click(object sender, EventArgs e) {
+			Globals.MainWindow.miManualControlSaveSeriesAvg_Click(null, null);
 		}
 	}
 }
