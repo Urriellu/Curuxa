@@ -82,6 +82,10 @@ namespace _3DScannerPC {
 			}
 		}
 
+		public UInt16 DutyFromDeg(float degrees) {
+			return (UInt16)((Duty180deg - Duty0deg) * degrees / 180f + Duty0deg);
+		}
+
 		public UInt16 Ccp0deg {
 			get {
 				return DutyToCcp(Duty0deg);
@@ -92,6 +96,10 @@ namespace _3DScannerPC {
 			get {
 				return DutyToCcp(Duty180deg);
 			}
+		}
+
+		public float DutyToDeg(UInt16 duty) {
+			return DutyToDeg(duty, ID);
 		}
 
 

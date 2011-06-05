@@ -100,6 +100,13 @@ namespace _3DScannerPC {
 			langEn.Add("Ok", "Ok");
 			langEn.Add("OK", "OK");
 			langEn.Add("NewAutoMsm", "New Automatic Measurement");
+			langEn.Add("AutoScanResolutionSummaryH", "Will measure {0} points between {1}º and {2}º for each row, {3} times each point");
+			langEn.Add("AutoScanResolutionSummaryV", "Will measure {0} rows between {1}º and {2}º");
+			langEn.Add("ElapsedTime", "Elapsed Time: ");
+			langEn.Add("RemainingTime", "Remaining Time: ");
+			langEn.Add("ReceivedXpointsOfY", "Received {0} points out of {1}");
+			langEn.Add("StartNewAutoMsm", "New Automatic Measurement");
+			langEn.Add("ForceStop", "Force Stop");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 
