@@ -228,6 +228,10 @@ namespace _3DScannerPC {
 			frmManualControl.SetReceivedManualValue(value);
 		}
 
+		public void SetReceivedAutoValue(UInt16 CcpServoH, UInt16 CcpServoV, UInt16 adcValue) {
+			frmNewAutoMsm.SetReceivedAutoValue(CcpServoH, CcpServoV, adcValue);
+		}
+
 		private void miModeManual_Click(object sender, EventArgs e) {
 			Scanner.SetMode(ScannerMode.Manual);
 		}
@@ -317,7 +321,8 @@ namespace _3DScannerPC {
 		/// Ask where to save a raw measurement and save it
 		/// </summary>
 		/// <param name="rawMeasurement">The RAW Measurement</param>
-		public void SaveRawMsm(RawMeasurement rawMeasurement) {
+		/// <returns>True if successful. False otherwise</returns>
+		public bool SaveRawMsm(RawMeasurement rawMeasurement) {
 			SaveFileDialog sfd = new SaveFileDialog();
 			sfd.FileName = rawMeasurement.Name + "." + Settings.Default.RawMsmExtension;
 			sfd.Filter = Settings.Default.RawMsmFileFilter;
@@ -326,7 +331,8 @@ namespace _3DScannerPC {
 			if(sfd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
 				rawMeasurement.Save(sfd.FileName);
 				RawMeasurement.OpenRawMsm(sfd.FileName);
-			}
+				return true;
+			} else return false;
 		}
 
 		public void OpenRawMsm() {

@@ -66,6 +66,13 @@ namespace _3DScannerPC {
 			return Rcv;
 		}
 
+		static UInt16 ReadUInt16() {
+			UInt16 receivedValue = (UInt16)((byte)SP.ReadByte() << 8);
+			receivedValue += (byte)SP.ReadByte();
+			Globals.Log(LogType.Debug, "Received UInt16: " + receivedValue);
+			return receivedValue;
+		}
+
 		/// <summary>
 		/// Method called when a new byte is received
 		/// </summary>
@@ -96,10 +103,22 @@ namespace _3DScannerPC {
 							Globals.Log(LogType.Error, "Microcontroller error: " + error);
 							break;
 						case ControlByte.ManualTxValue:
-							UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
-							receivedValue += (byte)ReadByte();
+							/*UInt16 receivedValue = (UInt16)((byte)ReadByte() << 8);
+							receivedValue += (byte)ReadByte();*/
+							UInt16 receivedValue = ReadUInt16();
 							Globals.MainWindow.SetReceivedManualValue(receivedValue);
 							Globals.Log(LogType.Debug, "Received manual value: " + receivedValue);
+							break;
+						case ControlByte.AutoTxValue:
+							UInt16 CcpServoH = ReadUInt16();
+							UInt16 CcpServoV = ReadUInt16();
+							UInt16 adcValue = ReadUInt16();
+							Globals.MainWindow.SetReceivedAutoValue(CcpServoH, CcpServoV, adcValue);
+							Globals.Log(LogType.Debug, string.Format("Received automatic value: CcpH={0}, CcpV={1}, ADC={2}", CcpServoH, CcpServoV, adcValue));
+							break;
+						case ControlByte.EndModeAutoScan:
+							Globals.MainWindow.frmNewAutoMsm.EndAutoScan();
+							Globals.Log(LogType.Debug, "End of automatic scan");
 							break;
 						default:
 							Globals.Log(LogType.Error, "Unknown control byte: " + BC.ToString());
@@ -169,6 +188,39 @@ namespace _3DScannerPC {
 						Globals.Log(LogType.Information, "Setting scanner in inactive mode");
 						ok = Send(ControlByte.SetModeInactive);
 						if(ok) Mode = ScannerMode.Inactive;
+						break;
+					case ScannerMode.Scan:
+						Globals.Log(LogType.Information, string.Format("Starting new automatic scan: {0} points, {1}", Globals.MainWindow.frmNewAutoMsm.TotalPointsToReceive, Globals.MainWindow.frmNewAutoMsm.totalTime.NormalTime()));
+						
+						Send(ControlByte.SetModeScan); //control code, set mode scan
+
+						Send(Globals.MainWindow.frmNewAutoMsm.MeasuresPerPoint);
+
+						//send min CCP H
+						Send(Globals.MainWindow.frmNewAutoMsm.MinCcpH.GetBytes()[1]); //MSByte
+						Send(Globals.MainWindow.frmNewAutoMsm.MinCcpH.GetBytes()[0]); //LSByte
+
+						//send max CCP H
+						Send(Globals.MainWindow.frmNewAutoMsm.MaxCcpH.GetBytes()[1]); //MSByte
+						Send(Globals.MainWindow.frmNewAutoMsm.MaxCcpH.GetBytes()[0]); //LSByte
+						
+						//send interval duty H
+						// NOTE: this is interval for duty. On the microcontroller we have to multiply this by 2, to convert it to CCP interval
+						Send(Globals.MainWindow.frmNewAutoMsm.DutyIntervalH);
+						
+						//send min CCP V
+						Send(Globals.MainWindow.frmNewAutoMsm.MinCcpV.GetBytes()[1]); //MSByte
+						Send(Globals.MainWindow.frmNewAutoMsm.MinCcpV.GetBytes()[0]); //LSByte
+
+						//send max CCP V
+						Send(Globals.MainWindow.frmNewAutoMsm.MaxCcpV.GetBytes()[1]); //MSByte
+						Send(Globals.MainWindow.frmNewAutoMsm.MaxCcpV.GetBytes()[0]); //LSByte
+						
+						//send interval duty V
+						// NOTE: this is interval for duty. On the microcontroller we have to multiply this by 2, to convert it to CCP interval
+						Send(Globals.MainWindow.frmNewAutoMsm.DutyIntervalV);
+						
+						Mode = ScannerMode.Scan;
 						break;
 					default:
 						throw new NotImplementedException();

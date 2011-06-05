@@ -107,6 +107,7 @@ namespace _3DScannerPC {
 			langEn.Add("ReceivedXpointsOfY", "Received {0} points out of {1}");
 			langEn.Add("StartNewAutoMsm", "New Automatic Measurement");
 			langEn.Add("ForceStop", "Force Stop");
+			langEn.Add("MustSaveMsm", "You must save the automatic measurement that has just finished");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

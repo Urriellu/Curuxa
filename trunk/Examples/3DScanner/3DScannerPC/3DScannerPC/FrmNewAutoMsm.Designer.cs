@@ -37,6 +37,8 @@
 			this.lblMsBetweenMeas = new System.Windows.Forms.Label();
 			this.numTimeIntervalMs = new System.Windows.Forms.NumericUpDown();
 			this.grpSetup = new System.Windows.Forms.GroupBox();
+			this.txtName = new System.Windows.Forms.TextBox();
+			this.lblName = new System.Windows.Forms.Label();
 			this.grpHRes = new System.Windows.Forms.GroupBox();
 			this.lblSummaryHRes = new System.Windows.Forms.Label();
 			this.numMaxValH = new System.Windows.Forms.NumericUpDown();
@@ -76,7 +78,7 @@
 			// lblAdcMax
 			// 
 			this.lblAdcMax.AutoSize = true;
-			this.lblAdcMax.Location = new System.Drawing.Point(12, 52);
+			this.lblAdcMax.Location = new System.Drawing.Point(183, 49);
 			this.lblAdcMax.Name = "lblAdcMax";
 			this.lblAdcMax.Size = new System.Drawing.Size(55, 13);
 			this.lblAdcMax.TabIndex = 32;
@@ -90,7 +92,7 @@
             0,
             0,
             65536});
-			this.numAdcMax.Location = new System.Drawing.Point(73, 50);
+			this.numAdcMax.Location = new System.Drawing.Point(244, 47);
 			this.numAdcMax.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -113,7 +115,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 26);
+			this.label1.Location = new System.Drawing.Point(183, 23);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(27, 13);
 			this.label1.TabIndex = 29;
@@ -128,7 +130,7 @@
             0,
             0,
             65536});
-			this.numVRefMax.Location = new System.Drawing.Point(45, 24);
+			this.numVRefMax.Location = new System.Drawing.Point(216, 21);
 			this.numVRefMax.Maximum = new decimal(new int[] {
             12,
             0,
@@ -152,7 +154,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(114, 26);
+			this.label2.Location = new System.Drawing.Point(285, 23);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(25, 13);
 			this.label2.TabIndex = 31;
@@ -242,6 +244,7 @@
 			// 
 			// numTimeIntervalMs
 			// 
+			this.numTimeIntervalMs.Enabled = false;
 			this.numTimeIntervalMs.Location = new System.Drawing.Point(15, 25);
 			this.numTimeIntervalMs.Maximum = new decimal(new int[] {
             255,
@@ -265,6 +268,8 @@
 			// 
 			// grpSetup
 			// 
+			this.grpSetup.Controls.Add(this.txtName);
+			this.grpSetup.Controls.Add(this.lblName);
 			this.grpSetup.Controls.Add(this.label1);
 			this.grpSetup.Controls.Add(this.label2);
 			this.grpSetup.Controls.Add(this.numVRefMax);
@@ -276,6 +281,23 @@
 			this.grpSetup.TabIndex = 38;
 			this.grpSetup.TabStop = false;
 			this.grpSetup.Text = "NS Setup";
+			// 
+			// txtName
+			// 
+			this.txtName.Location = new System.Drawing.Point(15, 46);
+			this.txtName.Name = "txtName";
+			this.txtName.Size = new System.Drawing.Size(146, 20);
+			this.txtName.TabIndex = 35;
+			this.txtName.Text = "AutoScan 001";
+			// 
+			// lblName
+			// 
+			this.lblName.AutoSize = true;
+			this.lblName.Location = new System.Drawing.Point(12, 23);
+			this.lblName.Name = "lblName";
+			this.lblName.Size = new System.Drawing.Size(57, 13);
+			this.lblName.TabIndex = 34;
+			this.lblName.Text = "NS (name)";
 			// 
 			// grpHRes
 			// 
@@ -382,7 +404,7 @@
 			// 
 			this.numIntervalH.Location = new System.Drawing.Point(559, 28);
 			this.numIntervalH.Maximum = new decimal(new int[] {
-            5000,
+            255,
             0,
             0,
             0});
@@ -396,7 +418,7 @@
 			this.numIntervalH.TabIndex = 0;
 			this.numIntervalH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.numIntervalH.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -507,7 +529,7 @@
 			// 
 			this.numIntervalV.Location = new System.Drawing.Point(559, 28);
 			this.numIntervalV.Maximum = new decimal(new int[] {
-            5000,
+            255,
             0,
             0,
             0});
@@ -521,7 +543,7 @@
 			this.numIntervalV.TabIndex = 0;
 			this.numIntervalV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.numIntervalV.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -539,13 +561,13 @@
 			// 
 			// btnForceStop
 			// 
-			this.btnForceStop.Enabled = false;
 			this.btnForceStop.Location = new System.Drawing.Point(568, 54);
 			this.btnForceStop.Name = "btnForceStop";
 			this.btnForceStop.Size = new System.Drawing.Size(106, 23);
 			this.btnForceStop.TabIndex = 43;
 			this.btnForceStop.Text = "NS (Force Stop)";
 			this.btnForceStop.UseVisualStyleBackColor = true;
+			this.btnForceStop.Click += new System.EventHandler(this.btnForceStop_Click);
 			// 
 			// grpResults
 			// 
@@ -634,5 +656,7 @@
 		private System.Windows.Forms.Button btnStartNewAutoScan;
 		private System.Windows.Forms.Button btnForceStop;
 		private System.Windows.Forms.GroupBox grpResults;
+		private System.Windows.Forms.TextBox txtName;
+		private System.Windows.Forms.Label lblName;
 	}
 }
