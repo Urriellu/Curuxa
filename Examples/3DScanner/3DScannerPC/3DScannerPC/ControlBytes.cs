@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace _3DScannerPC {
 	/// <summary>
@@ -41,6 +42,15 @@ namespace _3DScannerPC {
 		ManualTxValue = 103,
 
 		SetModeInactive = 115,
+
+		SetModeScan = 120,
+
+		/// <summary>
+		/// Send MCU->PC measured value (by distance sensor) in automatic mode
+		/// </summary>
+		AutoTxValue = 121,
+
+		EndModeAutoScan = 122,
 	}
 
 	public enum ControlByteError {
@@ -49,6 +59,6 @@ namespace _3DScannerPC {
 		/// <summary>
 		/// Serial Port receive overrun
 		/// </summary>
-		OERR = 7,
+		OERR_Receive_Overrun = 7,
 	}
 }

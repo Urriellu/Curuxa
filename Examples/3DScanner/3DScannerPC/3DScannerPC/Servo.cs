@@ -102,6 +102,10 @@ namespace _3DScannerPC {
 			return DutyToDeg(duty, ID);
 		}
 
+		public float CcpToDeg(UInt16 ccpValue) {
+			return CcpToDeg(ccpValue, ID);
+		}
+
 
 
 
@@ -127,6 +131,15 @@ namespace _3DScannerPC {
 			float val = duty - All[servo].Duty0deg;
 			float val180 = All[servo].Duty180deg - All[servo].Duty0deg;
 			return (float)val * 180f / val180;
+		}
+
+		public static UInt16 CcpToDuty(UInt16 ccpValue) {
+			return (UInt16)((ccpValue - Settings.Default.T1preload) / 2);
+		}
+
+		public static float CcpToDeg(UInt16 ccpValue, ServoID servo) {
+			UInt16 duty = CcpToDuty(ccpValue);
+			return DutyToDeg(duty, servo);
 		}
 		#endregion
 	}
