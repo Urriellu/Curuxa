@@ -6,6 +6,7 @@ typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & 
 
 // Variable types
 #define int8 char
+#define bool unsigned int8
 #define true 1
 #define false 0
 
@@ -19,6 +20,9 @@ typedef unsigned int config; config __at 0x2007 __CONFIG = _CP_OFF & _LVP_OFF & 
 #define CcManualSetPosV 102
 #define CcManualTxValue 103
 #define CcSetModeInactive 115
+#define CcSetModeScan 120
+#define CcAutoTxValue 121
+#define CcEndModeAutoScan 122
 
 // CcAuthID - Identification (ID must be unique)
 #define CccAuthID 97
@@ -47,6 +51,11 @@ unsigned int8 ServoV_ccpL;
 #define ModeManual 1
 #define ModeScan 2
 unsigned int8 Mode;
+
+//for counting 50ms
+bool elapsed50ms;
+unsigned int8 T0cycles;
+#define T0preload 60
 
 // temp variable to store received data
 unsigned int8 Rcv;
@@ -203,6 +212,14 @@ void Setup(){
 	TMR1IF=0;
 	TMR1IE=1;
 	TMR1ON=1;
+
+	//setup TMR0 for 50ms
+	//Fosc=8MHz, Fcy=2MHz, Tcy=0.5us, for 50ms -> 100000inst, prescaler 256 -> 390inst
+	//we'll preload TMR0 to 60, so each overflow (prescaler 256) will happen every 25ms
+	T0CS=0; //Fosc/4
+	PSA=0; //prescaler for Timer0
+	PS2=1; PS1=1; PS0=1; //prescaler 1:256
+	T0cycles=0;
 	
 	// Lights pinout
 	TRISD0=0;
@@ -276,8 +293,20 @@ static void isr(void) __interrupt 0 {
 				ServoV_ccpH=ReadSPWait();
 				ServoV_ccpL=ReadSPWait();
 				break;
+			case CcSetModeScan:
+				Mode=ModeScan;
+				break;
 		}
 		if(OERR) Error(CccErrorOerr);
+	} else if(T0IF){
+		T0cycles++;
+		TMR0=T0preload;
+		if(T0cycles>=2){
+			T0cycles=0;
+			T0IE=0; //deactivate the count of 50ms until next time it's started
+			elapsed50ms=true;
+		}
+		T0IF=0;
 	} else {
 		//unknown interrupt
 		TestLedR=ON;
@@ -296,8 +325,98 @@ void RunModeManual() {
 	Delay(50); Delay(50); Delay(50); Delay(50);
 }
 
+void StartCounting50ms(){
+	elapsed50ms=false;
+	T0IF=0;
+	TMR0=T0preload;
+	T0IE=1;
+}
+
+unsigned int8 MeasuresPerPoint;
+unsigned int8 MinCcpH_msb;
+unsigned int8 MinCcpH_lsb;
+unsigned int8 MaxCcpH_msb;
+unsigned int8 MaxCcpH_lsb;
+unsigned int8 DutyIntervalH; //note, interval for duty, must be double for CPP
+unsigned int8 MinCcpV_msb;
+unsigned int8 MinCcpV_lsb;
+unsigned int8 MaxCcpV_msb;
+unsigned int8 MaxCcpV_lsb;
+unsigned int8 DutyIntervalV; //note, interval for duty, must be double for CPP
+
+//check if, in automatic scan mode, the servos are already in the last position
+bool InLastAutoPosition() {
+	//NOT IMPLEMENTED
+	return false;
+}
+
+//in automatic mode, move servos to next position
+void MoveAutoNextPos() {
+	//NOT IMPLEMENTED
+}
+
 void RunModeScan() {
-	//NOT YET IMPLEMENTED
+	unsigned int last_ServoH_ccpH;
+	unsigned int last_ServoH_ccpL;
+	unsigned int last_ServoV_ccpH;
+	unsigned int last_ServoV_ccpL;
+
+	RCIE=0; //disable serial port received interrupts
+
+	MeasuresPerPoint=ReadSPWait();
+	MinCcpH_msb=ReadSPWait();
+	MinCcpH_lsb=ReadSPWait();
+	MaxCcpH_msb=ReadSPWait();
+	MaxCcpH_lsb=ReadSPWait();
+	DutyIntervalH=ReadSPWait();
+	MinCcpV_msb=ReadSPWait();
+	MinCcpV_lsb=ReadSPWait();
+	MaxCcpV_msb=ReadSPWait();
+	MaxCcpV_lsb=ReadSPWait();
+	DutyIntervalV=ReadSPWait();
+
+	//move to first position and wait 1 second (maybe the servos need to move a lot)
+	TMR1IE=0;
+	ServoH_ccpH=MinCcpH_msb;
+	ServoH_ccpL=MinCcpH_lsb;
+	ServoV_ccpH=MinCcpV_msb;
+	ServoV_ccpL=MinCcpV_lsb;
+	TMR1IE=1;
+	StartCounting50ms(); Delay(1000);
+
+	while(!InLastAutoPosition()){
+		//wait until time ends, so servos arrive to proper destination
+		while(!elapsed50ms) /*wait*/ ;
+
+		//start measurement
+		GO=1;
+
+		//move to next position while ADC is working
+		last_ServoH_ccpH=ServoH_ccpH;
+		last_ServoH_ccpL=ServoH_ccpL;
+		last_ServoV_ccpH=ServoV_ccpH;
+		last_ServoV_ccpL=ServoV_ccpL;
+		MoveAutoNextPos();
+
+		//start counting time so we give enough time for the servos to move
+		StartCounting50ms();
+
+		//wait for ADC to finish
+		while(NOT_DONE) /*wait*/ ;
+
+		//send info to PC
+		WriteSP(CcAutoTxValue); // 1 - send control byte
+		WriteSP(last_ServoH_ccpH); // 2 - send position of servos for last position (when measurement began)
+		WriteSP(last_ServoH_ccpL);
+		WriteSP(last_ServoV_ccpH);
+		WriteSP(last_ServoV_ccpL);
+		WriteSP(ADRESH); // 3 - Send ADC result (high byte)
+		WriteSP(ADRESL); // low byte
+	}
+
+	WriteSP(CcEndModeAutoScan);
+
+	RCIF=0; RCIE=1;
 }
 
 void main() {
@@ -308,7 +427,8 @@ void main() {
 		//do something...
 		switch(Mode){
 			case ModeInactive:
-				//do nothing
+				ClearErrors();
+				RCIF=0; RCIE=1;
 				break;
 			case ModeManual:
 				RunModeManual();
