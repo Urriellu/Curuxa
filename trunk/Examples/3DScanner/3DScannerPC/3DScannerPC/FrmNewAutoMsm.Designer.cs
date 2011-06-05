@@ -32,19 +32,19 @@
 			this.lblReceivedXPoints = new System.Windows.Forms.Label();
 			this.lblElapsedTime = new System.Windows.Forms.Label();
 			this.grpDepth = new System.Windows.Forms.GroupBox();
-			this.grpSetup = new System.Windows.Forms.GroupBox();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			this.lblMsBetweenMeas = new System.Windows.Forms.Label();
 			this.lblMeasPerPoint = new System.Windows.Forms.Label();
-			this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+			this.numMeasPerPnt = new System.Windows.Forms.NumericUpDown();
+			this.lblMsBetweenMeas = new System.Windows.Forms.Label();
+			this.numTimeIntervalMs = new System.Windows.Forms.NumericUpDown();
+			this.grpSetup = new System.Windows.Forms.GroupBox();
 			this.grpHRes = new System.Windows.Forms.GroupBox();
-			this.numIntervalH = new System.Windows.Forms.NumericUpDown();
-			this.lblIntervalsOfH = new System.Windows.Forms.Label();
-			this.lblTakeMeasBetweenH = new System.Windows.Forms.Label();
-			this.numMinValH = new System.Windows.Forms.NumericUpDown();
-			this.lblAndH = new System.Windows.Forms.Label();
-			this.numMaxValH = new System.Windows.Forms.NumericUpDown();
 			this.lblSummaryHRes = new System.Windows.Forms.Label();
+			this.numMaxValH = new System.Windows.Forms.NumericUpDown();
+			this.lblAndH = new System.Windows.Forms.Label();
+			this.numMinValH = new System.Windows.Forms.NumericUpDown();
+			this.lblTakeMeasBetweenH = new System.Windows.Forms.Label();
+			this.lblIntervalsOfH = new System.Windows.Forms.Label();
+			this.numIntervalH = new System.Windows.Forms.NumericUpDown();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.lblSummaryVRes = new System.Windows.Forms.Label();
 			this.numMaxValV = new System.Windows.Forms.NumericUpDown();
@@ -59,13 +59,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numVRefMax)).BeginInit();
 			this.grpDepth.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numMeasPerPnt)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numTimeIntervalMs)).BeginInit();
 			this.grpSetup.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
 			this.grpHRes.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValH)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMinValV)).BeginInit();
@@ -189,15 +189,79 @@
 			// grpDepth
 			// 
 			this.grpDepth.Controls.Add(this.lblMeasPerPoint);
-			this.grpDepth.Controls.Add(this.numericUpDown2);
+			this.grpDepth.Controls.Add(this.numMeasPerPnt);
 			this.grpDepth.Controls.Add(this.lblMsBetweenMeas);
-			this.grpDepth.Controls.Add(this.numericUpDown1);
+			this.grpDepth.Controls.Add(this.numTimeIntervalMs);
 			this.grpDepth.Location = new System.Drawing.Point(17, 108);
 			this.grpDepth.Name = "grpDepth";
 			this.grpDepth.Size = new System.Drawing.Size(321, 85);
 			this.grpDepth.TabIndex = 37;
 			this.grpDepth.TabStop = false;
 			this.grpDepth.Text = "NS Depth";
+			// 
+			// lblMeasPerPoint
+			// 
+			this.lblMeasPerPoint.AutoSize = true;
+			this.lblMeasPerPoint.Location = new System.Drawing.Point(90, 53);
+			this.lblMeasPerPoint.Name = "lblMeasPerPoint";
+			this.lblMeasPerPoint.Size = new System.Drawing.Size(120, 13);
+			this.lblMeasPerPoint.TabIndex = 42;
+			this.lblMeasPerPoint.Text = "NS (measures per point)";
+			// 
+			// numMeasPerPnt
+			// 
+			this.numMeasPerPnt.Location = new System.Drawing.Point(15, 51);
+			this.numMeasPerPnt.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+			this.numMeasPerPnt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numMeasPerPnt.Name = "numMeasPerPnt";
+			this.numMeasPerPnt.Size = new System.Drawing.Size(69, 20);
+			this.numMeasPerPnt.TabIndex = 41;
+			this.numMeasPerPnt.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numMeasPerPnt.ValueChanged += new System.EventHandler(this.numMeasPerPnt_ValueChanged);
+			// 
+			// lblMsBetweenMeas
+			// 
+			this.lblMsBetweenMeas.AutoSize = true;
+			this.lblMsBetweenMeas.Location = new System.Drawing.Point(90, 27);
+			this.lblMsBetweenMeas.Name = "lblMsBetweenMeas";
+			this.lblMsBetweenMeas.Size = new System.Drawing.Size(179, 13);
+			this.lblMsBetweenMeas.TabIndex = 40;
+			this.lblMsBetweenMeas.Text = "NS (milliseconds between measures)";
+			// 
+			// numTimeIntervalMs
+			// 
+			this.numTimeIntervalMs.Location = new System.Drawing.Point(15, 25);
+			this.numTimeIntervalMs.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.numTimeIntervalMs.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.numTimeIntervalMs.Name = "numTimeIntervalMs";
+			this.numTimeIntervalMs.Size = new System.Drawing.Size(69, 20);
+			this.numTimeIntervalMs.TabIndex = 39;
+			this.numTimeIntervalMs.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numTimeIntervalMs.ValueChanged += new System.EventHandler(this.numTimeIntervalMs_ValueChanged);
 			// 
 			// grpSetup
 			// 
@@ -212,68 +276,6 @@
 			this.grpSetup.TabIndex = 38;
 			this.grpSetup.TabStop = false;
 			this.grpSetup.Text = "NS Setup";
-			// 
-			// numericUpDown1
-			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(15, 25);
-			this.numericUpDown1.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.numericUpDown1.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(69, 20);
-			this.numericUpDown1.TabIndex = 39;
-			this.numericUpDown1.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-			// 
-			// lblMsBetweenMeas
-			// 
-			this.lblMsBetweenMeas.AutoSize = true;
-			this.lblMsBetweenMeas.Location = new System.Drawing.Point(90, 27);
-			this.lblMsBetweenMeas.Name = "lblMsBetweenMeas";
-			this.lblMsBetweenMeas.Size = new System.Drawing.Size(179, 13);
-			this.lblMsBetweenMeas.TabIndex = 40;
-			this.lblMsBetweenMeas.Text = "NS (milliseconds between measures)";
-			// 
-			// lblMeasPerPoint
-			// 
-			this.lblMeasPerPoint.AutoSize = true;
-			this.lblMeasPerPoint.Location = new System.Drawing.Point(90, 53);
-			this.lblMeasPerPoint.Name = "lblMeasPerPoint";
-			this.lblMeasPerPoint.Size = new System.Drawing.Size(120, 13);
-			this.lblMeasPerPoint.TabIndex = 42;
-			this.lblMeasPerPoint.Text = "NS (measures per point)";
-			// 
-			// numericUpDown2
-			// 
-			this.numericUpDown2.Location = new System.Drawing.Point(15, 51);
-			this.numericUpDown2.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-			this.numericUpDown2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numericUpDown2.Name = "numericUpDown2";
-			this.numericUpDown2.Size = new System.Drawing.Size(69, 20);
-			this.numericUpDown2.TabIndex = 41;
-			this.numericUpDown2.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			// 
 			// grpHRes
 			// 
@@ -291,78 +293,15 @@
 			this.grpHRes.TabStop = false;
 			this.grpHRes.Text = "NS (Horizontal Resolution)";
 			// 
-			// numIntervalH
+			// lblSummaryHRes
 			// 
-			this.numIntervalH.Location = new System.Drawing.Point(559, 28);
-			this.numIntervalH.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-			this.numIntervalH.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numIntervalH.Name = "numIntervalH";
-			this.numIntervalH.Size = new System.Drawing.Size(80, 20);
-			this.numIntervalH.TabIndex = 0;
-			this.numIntervalH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numIntervalH.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
-			// lblIntervalsOfH
-			// 
-			this.lblIntervalsOfH.Location = new System.Drawing.Point(413, 26);
-			this.lblIntervalsOfH.Name = "lblIntervalsOfH";
-			this.lblIntervalsOfH.Size = new System.Drawing.Size(140, 20);
-			this.lblIntervalsOfH.TabIndex = 1;
-			this.lblIntervalsOfH.Text = "NS (with intervals of)";
-			this.lblIntervalsOfH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lblTakeMeasBetweenH
-			// 
-			this.lblTakeMeasBetweenH.Location = new System.Drawing.Point(12, 26);
-			this.lblTakeMeasBetweenH.Name = "lblTakeMeasBetweenH";
-			this.lblTakeMeasBetweenH.Size = new System.Drawing.Size(159, 20);
-			this.lblTakeMeasBetweenH.TabIndex = 2;
-			this.lblTakeMeasBetweenH.Text = "NS (Take measures between)";
-			this.lblTakeMeasBetweenH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// numMinValH
-			// 
-			this.numMinValH.Location = new System.Drawing.Point(177, 28);
-			this.numMinValH.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-			this.numMinValH.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.numMinValH.Name = "numMinValH";
-			this.numMinValH.Size = new System.Drawing.Size(80, 20);
-			this.numMinValH.TabIndex = 41;
-			this.numMinValH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.numMinValH.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			// 
-			// lblAndH
-			// 
-			this.lblAndH.Location = new System.Drawing.Point(263, 26);
-			this.lblAndH.Name = "lblAndH";
-			this.lblAndH.Size = new System.Drawing.Size(58, 20);
-			this.lblAndH.TabIndex = 42;
-			this.lblAndH.Text = "NS (and)";
-			this.lblAndH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lblSummaryHRes.AutoSize = true;
+			this.lblSummaryHRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSummaryHRes.Location = new System.Drawing.Point(12, 65);
+			this.lblSummaryHRes.Name = "lblSummaryHRes";
+			this.lblSummaryHRes.Size = new System.Drawing.Size(396, 17);
+			this.lblSummaryHRes.TabIndex = 44;
+			this.lblSummaryHRes.Text = "NS (Will measure X points between Yº and Zº, XX times each)";
 			// 
 			// numMaxValH
 			// 
@@ -386,16 +325,82 @@
             0,
             0,
             0});
+			this.numMaxValH.ValueChanged += new System.EventHandler(this.numMaxValH_ValueChanged);
 			// 
-			// lblSummaryHRes
+			// lblAndH
 			// 
-			this.lblSummaryHRes.AutoSize = true;
-			this.lblSummaryHRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblSummaryHRes.Location = new System.Drawing.Point(12, 65);
-			this.lblSummaryHRes.Name = "lblSummaryHRes";
-			this.lblSummaryHRes.Size = new System.Drawing.Size(396, 17);
-			this.lblSummaryHRes.TabIndex = 44;
-			this.lblSummaryHRes.Text = "NS (Will measure X points between Yº and Zº, XX times each)";
+			this.lblAndH.Location = new System.Drawing.Point(263, 26);
+			this.lblAndH.Name = "lblAndH";
+			this.lblAndH.Size = new System.Drawing.Size(58, 20);
+			this.lblAndH.TabIndex = 42;
+			this.lblAndH.Text = "NS (and)";
+			this.lblAndH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// numMinValH
+			// 
+			this.numMinValH.Location = new System.Drawing.Point(177, 28);
+			this.numMinValH.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numMinValH.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numMinValH.Name = "numMinValH";
+			this.numMinValH.Size = new System.Drawing.Size(80, 20);
+			this.numMinValH.TabIndex = 41;
+			this.numMinValH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numMinValH.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numMinValH.ValueChanged += new System.EventHandler(this.numMinValH_ValueChanged);
+			// 
+			// lblTakeMeasBetweenH
+			// 
+			this.lblTakeMeasBetweenH.Location = new System.Drawing.Point(12, 26);
+			this.lblTakeMeasBetweenH.Name = "lblTakeMeasBetweenH";
+			this.lblTakeMeasBetweenH.Size = new System.Drawing.Size(159, 20);
+			this.lblTakeMeasBetweenH.TabIndex = 2;
+			this.lblTakeMeasBetweenH.Text = "NS (Take measures between)";
+			this.lblTakeMeasBetweenH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// lblIntervalsOfH
+			// 
+			this.lblIntervalsOfH.Location = new System.Drawing.Point(413, 26);
+			this.lblIntervalsOfH.Name = "lblIntervalsOfH";
+			this.lblIntervalsOfH.Size = new System.Drawing.Size(140, 20);
+			this.lblIntervalsOfH.TabIndex = 1;
+			this.lblIntervalsOfH.Text = "NS (with intervals of)";
+			this.lblIntervalsOfH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// numIntervalH
+			// 
+			this.numIntervalH.Location = new System.Drawing.Point(559, 28);
+			this.numIntervalH.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+			this.numIntervalH.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numIntervalH.Name = "numIntervalH";
+			this.numIntervalH.Size = new System.Drawing.Size(80, 20);
+			this.numIntervalH.TabIndex = 0;
+			this.numIntervalH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.numIntervalH.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numIntervalH.ValueChanged += new System.EventHandler(this.numIntervalH_ValueChanged);
 			// 
 			// groupBox1
 			// 
@@ -445,6 +450,7 @@
             0,
             0,
             0});
+			this.numMaxValV.ValueChanged += new System.EventHandler(this.numMaxValV_ValueChanged);
 			// 
 			// lblAndV
 			// 
@@ -477,6 +483,7 @@
             0,
             0,
             0});
+			this.numMinValV.ValueChanged += new System.EventHandler(this.numMinValV_ValueChanged);
 			// 
 			// lblTakeMeasBetweenV
 			// 
@@ -518,6 +525,7 @@
             0,
             0,
             0});
+			this.numIntervalV.ValueChanged += new System.EventHandler(this.numIntervalV_ValueChanged);
 			// 
 			// btnStartNewAutoScan
 			// 
@@ -527,6 +535,7 @@
 			this.btnStartNewAutoScan.TabIndex = 42;
 			this.btnStartNewAutoScan.Text = "NS (Start New Automatic Measurement)";
 			this.btnStartNewAutoScan.UseVisualStyleBackColor = true;
+			this.btnStartNewAutoScan.Click += new System.EventHandler(this.btnStartNewAutoScan_Click);
 			// 
 			// btnForceStop
 			// 
@@ -570,15 +579,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.numVRefMax)).EndInit();
 			this.grpDepth.ResumeLayout(false);
 			this.grpDepth.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numMeasPerPnt)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numTimeIntervalMs)).EndInit();
 			this.grpSetup.ResumeLayout(false);
 			this.grpSetup.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
 			this.grpHRes.ResumeLayout(false);
 			this.grpHRes.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValH)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValV)).EndInit();
@@ -602,10 +611,10 @@
 		private System.Windows.Forms.Label lblElapsedTime;
 		private System.Windows.Forms.GroupBox grpDepth;
 		private System.Windows.Forms.Label lblMsBetweenMeas;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown numTimeIntervalMs;
 		private System.Windows.Forms.GroupBox grpSetup;
 		private System.Windows.Forms.Label lblMeasPerPoint;
-		private System.Windows.Forms.NumericUpDown numericUpDown2;
+		private System.Windows.Forms.NumericUpDown numMeasPerPnt;
 		private System.Windows.Forms.GroupBox grpHRes;
 		private System.Windows.Forms.NumericUpDown numMaxValH;
 		private System.Windows.Forms.Label lblAndH;

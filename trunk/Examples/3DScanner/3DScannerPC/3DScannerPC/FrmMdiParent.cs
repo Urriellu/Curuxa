@@ -211,6 +211,7 @@ namespace _3DScannerPC {
 			frmConnection.UpdateStatus();
 			frmManualControl.UpdateStatus();
 			frmManualControl.Usable = (Scanner.Status == Status.Connected && Scanner.Mode == ScannerMode.Manual);
+			frmNewAutoMsm.Usable = (Scanner.Status == Status.Connected && Scanner.Mode == ScannerMode.Inactive);
 			miMode.Enabled = (Scanner.Status == Status.Connected);
 		}
 
