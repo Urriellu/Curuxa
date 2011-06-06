@@ -58,6 +58,7 @@
 			this.btnStartNewAutoScan = new System.Windows.Forms.Button();
 			this.btnForceStop = new System.Windows.Forms.Button();
 			this.grpResults = new System.Windows.Forms.GroupBox();
+			this.btnDefault = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.numAdcMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numVRefMax)).BeginInit();
 			this.grpDepth.SuspendLayout();
@@ -288,7 +289,7 @@
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(146, 20);
 			this.txtName.TabIndex = 35;
-			this.txtName.Text = "AutoScan 001";
+			this.txtName.Text = "NOT SET";
 			// 
 			// lblName
 			// 
@@ -404,7 +405,7 @@
 			// 
 			this.numIntervalH.Location = new System.Drawing.Point(559, 28);
 			this.numIntervalH.Maximum = new decimal(new int[] {
-            255,
+            254,
             0,
             0,
             0});
@@ -529,7 +530,7 @@
 			// 
 			this.numIntervalV.Location = new System.Drawing.Point(559, 28);
 			this.numIntervalV.Maximum = new decimal(new int[] {
-            255,
+            254,
             0,
             0,
             0});
@@ -581,11 +582,22 @@
 			this.grpResults.TabStop = false;
 			this.grpResults.Text = "NS (Results)";
 			// 
+			// btnDefault
+			// 
+			this.btnDefault.Location = new System.Drawing.Point(373, 54);
+			this.btnDefault.Name = "btnDefault";
+			this.btnDefault.Size = new System.Drawing.Size(189, 23);
+			this.btnDefault.TabIndex = 44;
+			this.btnDefault.Text = "NS (Default)";
+			this.btnDefault.UseVisualStyleBackColor = true;
+			this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
+			// 
 			// FrmNewAutoMsm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(688, 415);
+			this.Controls.Add(this.btnDefault);
 			this.Controls.Add(this.btnForceStop);
 			this.Controls.Add(this.grpResults);
 			this.Controls.Add(this.btnStartNewAutoScan);
@@ -658,5 +670,6 @@
 		private System.Windows.Forms.GroupBox grpResults;
 		private System.Windows.Forms.TextBox txtName;
 		private System.Windows.Forms.Label lblName;
+		private System.Windows.Forms.Button btnDefault;
 	}
 }

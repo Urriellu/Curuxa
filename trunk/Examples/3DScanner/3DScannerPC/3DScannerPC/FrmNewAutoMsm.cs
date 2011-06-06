@@ -93,7 +93,7 @@ namespace _3DScannerPC {
 		private void FrmNewAutoMsm_Load(object sender, EventArgs e) {
 			UpdateLang();
 
-			UpdateDefaultValues();
+			SetDefaultValues();
 
 			tmrElapsed.Interval = 1000;
 			tmrElapsed.Tick += new EventHandler(tmrElapsed_Tick);
@@ -106,9 +106,11 @@ namespace _3DScannerPC {
 			}
 		}
 
-		bool updateSummaries = false;
+		bool updateSummaries;
 
-		private void UpdateDefaultValues() {
+		private void SetDefaultValues() {
+			updateSummaries = false;
+
 			numMinValH.Minimum = numMaxValH.Minimum = Servo.H.Duty0deg;
 			numMinValH.Maximum = numMaxValH.Maximum = Servo.H.Duty180deg;
 			numMaxValH.Value = Servo.H.DutyFromDeg(120);
@@ -122,6 +124,8 @@ namespace _3DScannerPC {
 			updateSummaries = true;
 			UpdateHResSummary();
 			UpdateVResSummary();
+
+			txtName.Text = "AutoScan " + DateTime.Now.ShortDateTime();
 		}
 
 		public override void UpdateLang() {
@@ -205,7 +209,7 @@ namespace _3DScannerPC {
 
 		private void UpdateTotalTime() {
 			totalTime = new TimeSpan(0);
-			UInt64 totalSec = (UInt64)(IntervalBetweenPointsMs * TotalPointsToReceive / 1000);
+			UInt64 totalSec = (UInt64)(IntervalBetweenPointsMs * TotalPointsToReceive / 1000 + pointsToReceiveV); //points * time + 1 second for changing rows
 			while(totalSec > int.MaxValue) {
 				totalTime += new TimeSpan(0, 0, int.MaxValue);
 				totalSec -= int.MaxValue;
@@ -241,8 +245,8 @@ namespace _3DScannerPC {
 		public void EndAutoScan() {
 			bool success;
 			do {
+				MessageBox.Show(this, i18n.str("SaveMsm"), "3D Scanner", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 				success = Globals.MainWindow.SaveRawMsm(currentRawMsm);
-				if(!success) MessageBox.Show(i18n.str("MustSaveMsm"));
 			} while(!success);
 			Scanner.SetMode(ScannerMode.Inactive);
 		}
@@ -250,6 +254,10 @@ namespace _3DScannerPC {
 		private void btnForceStop_Click(object sender, EventArgs e) {
 			Globals.MainWindow.SaveRawMsm(currentRawMsm);
 			Scanner.SetMode(ScannerMode.Inactive);
+		}
+
+		private void btnDefault_Click(object sender, EventArgs e) {
+			SetDefaultValues();
 		}
 	}
 }

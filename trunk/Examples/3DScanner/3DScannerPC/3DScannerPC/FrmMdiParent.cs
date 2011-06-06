@@ -328,9 +328,11 @@ namespace _3DScannerPC {
 			sfd.Filter = Settings.Default.RawMsmFileFilter;
 			sfd.Title = rawMeasurement.Name;
 
-			if(sfd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
+			if(sfd.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
 				rawMeasurement.Save(sfd.FileName);
 				RawMeasurement.OpenRawMsm(sfd.FileName);
+				frmRawMsms.Show();
+				frmRawMsms.BringToFront();
 				return true;
 			} else return false;
 		}
