@@ -55,10 +55,13 @@ namespace _3DScannerPC {
 
 	public enum ControlByteError {
 		Unknown = 5,
+		Wrong6 = 6,
 
 		/// <summary>
 		/// Serial Port receive overrun
 		/// </summary>
 		OERR_Receive_Overrun = 7,
+
+		Wrong8 = 8,
 	}
 }

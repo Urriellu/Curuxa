@@ -94,7 +94,8 @@ namespace _3DScannerPC {
 					lstPoints.Items.Add(lvi);
 
 					//add point to depth graph
-					int colorScale = (int)((p.Distance_mm - mmMin) * 255 / (mmMax - mmMin));
+					float colorScaleF = (p.Distance_mm - mmMin) * 255 / (mmMax - mmMin);
+					int colorScale = (float.IsInfinity(colorScaleF) || float.IsNaN(colorScaleF)) ? 255 : (int)colorScaleF;
 					Color pointColor = Color.FromArgb(255 - colorScale, 255 - colorScale, 255);
 					(picBox.Image as Bitmap).SetPixel(picBox.Image.Width - (int)(p.ServoHdeg - selRawMsm.RightMost.ServoHdeg) - 1, (int)(p.ServoVdeg - selRawMsm.Highest.ServoVdeg), pointColor);
 				}
