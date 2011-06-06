@@ -332,6 +332,11 @@ void StartCounting50ms(){
 	T0IE=1;
 }
 
+unsigned int last_ServoH_ccpH;
+unsigned int last_ServoH_ccpL;
+unsigned int last_ServoV_ccpH;
+unsigned int last_ServoV_ccpL;
+
 unsigned int8 MeasuresPerPoint;
 unsigned int8 MinCcpH_msb;
 unsigned int8 MinCcpH_lsb;
@@ -344,23 +349,94 @@ unsigned int8 MaxCcpV_msb;
 unsigned int8 MaxCcpV_lsb;
 unsigned int8 DutyIntervalV; //note, interval for duty, must be double for CPP
 
+unsigned int8 measInCurrPos;
+
+#define HMovInc 0
+#define HMovDec 1
+unsigned int8 HMovDirection;
+
 //check if, in automatic scan mode, the servos are already in the last position
 bool InLastAutoPosition() {
-	//NOT IMPLEMENTED
-	return false;
+	if(	last_ServoV_ccpH==MaxCcpV_msb
+		&& last_ServoV_ccpL==MaxCcpV_lsb
+		&& last_ServoH_ccpH==MaxCcpH_msb
+		&& last_ServoH_ccpL==MaxCcpH_lsb ) {
+		return true;
+	} else return false;
+}
+
+//check if, in automatic scan mode, the horizontal servo is at the last position
+bool InLastAutoHPos() {
+	if(ServoH_ccpH==MaxCcpH_msb && ServoH_ccpL==MaxCcpH_lsb) return true;
+	else return false;
+}
+
+void MoveAutoFirstHPos() {
+	ServoH_ccpH=MinCcpH_msb;
+	ServoH_ccpL=MinCcpH_lsb;
+}
+
+void MoveAutoLastHPos() {
+	ServoH_ccpH=MaxCcpH_msb;
+	ServoH_ccpL=MaxCcpH_lsb;
+}
+
+//in automatic mode, move to next row
+void MoveAutoNextRow(){
+	unsigned int temp;
+
+	MoveAutoFirstHPos();
+	
+	//increment ServoV_ccpX twice
+	temp=ServoV_ccpL;	ServoV_ccpL+=DutyIntervalV; if(ServoV_ccpL<=temp) ServoV_ccpH++;
+	temp=ServoV_ccpL; ServoV_ccpL+=DutyIntervalV; if(ServoV_ccpL<=temp) ServoV_ccpH++;
+
+	TMR1IE=1; Delay(1000); TMR1IE=0; //wait for the new line to start
+}
+
+//in automatic mode, move to next horizontal position
+void MoveAutoNextHPos(){
+	unsigned int temp;
+	
+	//increment ServoH_ccpX twice
+	temp=ServoH_ccpL;	ServoH_ccpL+=DutyIntervalH; if(ServoH_ccpL<=temp) ServoH_ccpH++;
+	temp=ServoH_ccpL; ServoH_ccpL+=DutyIntervalH; if(ServoH_ccpL<=temp) ServoH_ccpH++;
+}
+
+//in automatic mode, check if the horizontal position is too high (that is, because of the increment we are over the limit indicated by the user)
+bool IsHPosTooHigh() {
+	if(ServoH_ccpH>MaxCcpH_msb || (ServoH_ccpH==MaxCcpH_msb && ServoH_ccpL>MaxCcpH_lsb)) return true;
+	else return false;
+}
+
+bool IsRowTooHigh() {
+	if(ServoV_ccpH>MaxCcpV_msb || (ServoV_ccpH==MaxCcpV_msb && ServoV_ccpL>MaxCcpV_lsb)) return true;
+	else return false;
 }
 
 //in automatic mode, move servos to next position
 void MoveAutoNextPos() {
-	//NOT IMPLEMENTED
+	measInCurrPos++;
+
+	if(measInCurrPos>MeasuresPerPoint) {
+		measInCurrPos=0;
+
+		TMR1IE=0; //disable Timer1 so servos don't update their position with incomplete information
+		if(InLastAutoHPos()) {
+			//if last H position, go to next row
+			MoveAutoNextRow();
+		} else {
+			//next horizontal position
+			MoveAutoNextHPos();
+			if(IsHPosTooHigh()) MoveAutoLastHPos();
+		}
+		TMR1IE=1;
+	} else {
+		//don't move, we still have to make take more measurements in this position
+	}
 }
 
 void RunModeScan() {
-	unsigned int last_ServoH_ccpH;
-	unsigned int last_ServoH_ccpL;
-	unsigned int last_ServoV_ccpH;
-	unsigned int last_ServoV_ccpL;
-
 	RCIE=0; //disable serial port received interrupts
 
 	MeasuresPerPoint=ReadSPWait();
@@ -375,6 +451,9 @@ void RunModeScan() {
 	MaxCcpV_lsb=ReadSPWait();
 	DutyIntervalV=ReadSPWait();
 
+	HMovDirection=HMovInc;
+	measInCurrPos=0;
+
 	//move to first position and wait 1 second (maybe the servos need to move a lot)
 	TMR1IE=0;
 	ServoH_ccpH=MinCcpH_msb;
@@ -384,7 +463,7 @@ void RunModeScan() {
 	TMR1IE=1;
 	StartCounting50ms(); Delay(1000);
 
-	while(!InLastAutoPosition()){
+	do{
 		//wait until time ends, so servos arrive to proper destination
 		while(!elapsed50ms) /*wait*/ ;
 
@@ -412,7 +491,7 @@ void RunModeScan() {
 		WriteSP(last_ServoV_ccpL);
 		WriteSP(ADRESH); // 3 - Send ADC result (high byte)
 		WriteSP(ADRESL); // low byte
-	}
+	} while(!IsRowTooHigh());
 
 	WriteSP(CcEndModeAutoScan);
 
