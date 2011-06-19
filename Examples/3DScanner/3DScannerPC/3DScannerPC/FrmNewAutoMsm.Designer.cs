@@ -47,7 +47,7 @@
 			this.lblTakeMeasBetweenH = new System.Windows.Forms.Label();
 			this.lblIntervalsOfH = new System.Windows.Forms.Label();
 			this.numIntervalH = new System.Windows.Forms.NumericUpDown();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.grpVRes = new System.Windows.Forms.GroupBox();
 			this.lblSummaryVRes = new System.Windows.Forms.Label();
 			this.numMaxValV = new System.Windows.Forms.NumericUpDown();
 			this.lblAndV = new System.Windows.Forms.Label();
@@ -69,7 +69,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).BeginInit();
-			this.groupBox1.SuspendLayout();
+			this.grpVRes.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMinValV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numIntervalV)).BeginInit();
@@ -425,21 +425,21 @@
             0});
 			this.numIntervalH.ValueChanged += new System.EventHandler(this.numIntervalH_ValueChanged);
 			// 
-			// groupBox1
+			// grpVRes
 			// 
-			this.groupBox1.Controls.Add(this.lblSummaryVRes);
-			this.groupBox1.Controls.Add(this.numMaxValV);
-			this.groupBox1.Controls.Add(this.lblAndV);
-			this.groupBox1.Controls.Add(this.numMinValV);
-			this.groupBox1.Controls.Add(this.lblTakeMeasBetweenV);
-			this.groupBox1.Controls.Add(this.lblIntervalsOfV);
-			this.groupBox1.Controls.Add(this.numIntervalV);
-			this.groupBox1.Location = new System.Drawing.Point(17, 304);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(657, 99);
-			this.groupBox1.TabIndex = 41;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "NS (Vertical Resolution)";
+			this.grpVRes.Controls.Add(this.lblSummaryVRes);
+			this.grpVRes.Controls.Add(this.numMaxValV);
+			this.grpVRes.Controls.Add(this.lblAndV);
+			this.grpVRes.Controls.Add(this.numMinValV);
+			this.grpVRes.Controls.Add(this.lblTakeMeasBetweenV);
+			this.grpVRes.Controls.Add(this.lblIntervalsOfV);
+			this.grpVRes.Controls.Add(this.numIntervalV);
+			this.grpVRes.Location = new System.Drawing.Point(17, 304);
+			this.grpVRes.Name = "grpVRes";
+			this.grpVRes.Size = new System.Drawing.Size(657, 99);
+			this.grpVRes.TabIndex = 41;
+			this.grpVRes.TabStop = false;
+			this.grpVRes.Text = "NS (Vertical Resolution)";
 			// 
 			// lblSummaryVRes
 			// 
@@ -601,7 +601,7 @@
 			this.Controls.Add(this.btnForceStop);
 			this.Controls.Add(this.grpResults);
 			this.Controls.Add(this.btnStartNewAutoScan);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.grpVRes);
 			this.Controls.Add(this.grpHRes);
 			this.Controls.Add(this.grpDepth);
 			this.Controls.Add(this.grpSetup);
@@ -622,8 +622,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValH)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMinValH)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numIntervalH)).EndInit();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
+			this.grpVRes.ResumeLayout(false);
+			this.grpVRes.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numMaxValV)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numMinValV)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numIntervalV)).EndInit();
@@ -657,7 +657,7 @@
 		private System.Windows.Forms.Label lblIntervalsOfH;
 		private System.Windows.Forms.NumericUpDown numIntervalH;
 		private System.Windows.Forms.Label lblSummaryHRes;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox grpVRes;
 		private System.Windows.Forms.Label lblSummaryVRes;
 		private System.Windows.Forms.NumericUpDown numMaxValV;
 		private System.Windows.Forms.Label lblAndV;

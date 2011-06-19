@@ -50,6 +50,7 @@
 			this.miView = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewConnection = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewManualControl = new System.Windows.Forms.ToolStripMenuItem();
+			this.miNewAutoMsm = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewRawMsms = new System.Windows.Forms.ToolStripMenuItem();
 			this.miViewLog = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -66,14 +67,14 @@
 			this.miManualControlSaveSeriesAvg = new System.Windows.Forms.ToolStripMenuItem();
 			this.miTools = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
-			this.nSLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miLog = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogShow = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogHide = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.miLogClearAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.miShowHideDebug = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-			this.nSSaveLogAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.miSaveLogAs = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveTxt = new System.Windows.Forms.ToolStripMenuItem();
 			this.miLogSaveRTF = new System.Windows.Forms.ToolStripMenuItem();
 			this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +99,6 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.miNewAutoMsm = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -112,7 +112,7 @@
             this.miMode,
             this.miManualControl,
             this.miTools,
-            this.nSLogToolStripMenuItem,
+            this.miLog,
             this.windowsMenu,
             this.miHelp});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
@@ -338,6 +338,13 @@
 			this.miViewManualControl.Text = "NOT SET (Manual Control)";
 			this.miViewManualControl.Click += new System.EventHandler(this.miManualControl_Click);
 			// 
+			// miNewAutoMsm
+			// 
+			this.miNewAutoMsm.Name = "miNewAutoMsm";
+			this.miNewAutoMsm.Size = new System.Drawing.Size(210, 22);
+			this.miNewAutoMsm.Text = "NS (New Auto Msm)";
+			this.miNewAutoMsm.Click += new System.EventHandler(this.nSNewAutoMsmToolStripMenuItem_Click);
+			// 
 			// miViewRawMsms
 			// 
 			this.miViewRawMsms.Name = "miViewRawMsms";
@@ -454,23 +461,23 @@
 			// miSettings
 			// 
 			this.miSettings.Name = "miSettings";
-			this.miSettings.Size = new System.Drawing.Size(152, 22);
+			this.miSettings.Size = new System.Drawing.Size(148, 22);
 			this.miSettings.Text = "NS (Settings)";
 			this.miSettings.Click += new System.EventHandler(this.miOptions_Click);
 			// 
-			// nSLogToolStripMenuItem
+			// miLog
 			// 
-			this.nSLogToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.miLog.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miLogShow,
             this.miLogHide,
             this.toolStripMenuItem3,
             this.miLogClearAll,
             this.miShowHideDebug,
             this.toolStripMenuItem4,
-            this.nSSaveLogAsToolStripMenuItem});
-			this.nSLogToolStripMenuItem.Name = "nSLogToolStripMenuItem";
-			this.nSLogToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-			this.nSLogToolStripMenuItem.Text = "NS (Log)";
+            this.miSaveLogAs});
+			this.miLog.Name = "miLog";
+			this.miLog.Size = new System.Drawing.Size(60, 20);
+			this.miLog.Text = "NS (Log)";
 			// 
 			// miLogShow
 			// 
@@ -510,26 +517,26 @@
 			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
 			this.toolStripMenuItem4.Size = new System.Drawing.Size(183, 6);
 			// 
-			// nSSaveLogAsToolStripMenuItem
+			// miSaveLogAs
 			// 
-			this.nSSaveLogAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.miSaveLogAs.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miLogSaveTxt,
             this.miLogSaveRTF});
-			this.nSSaveLogAsToolStripMenuItem.Name = "nSSaveLogAsToolStripMenuItem";
-			this.nSSaveLogAsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.nSSaveLogAsToolStripMenuItem.Text = "NS Save Log As...";
+			this.miSaveLogAs.Name = "miSaveLogAs";
+			this.miSaveLogAs.Size = new System.Drawing.Size(186, 22);
+			this.miSaveLogAs.Text = "NS Save Log As...";
 			// 
 			// miLogSaveTxt
 			// 
 			this.miLogSaveTxt.Name = "miLogSaveTxt";
-			this.miLogSaveTxt.Size = new System.Drawing.Size(104, 22);
+			this.miLogSaveTxt.Size = new System.Drawing.Size(152, 22);
 			this.miLogSaveTxt.Text = "TXT";
 			this.miLogSaveTxt.Click += new System.EventHandler(this.miLogSaveTxt_Click);
 			// 
 			// miLogSaveRTF
 			// 
 			this.miLogSaveRTF.Name = "miLogSaveRTF";
-			this.miLogSaveRTF.Size = new System.Drawing.Size(104, 22);
+			this.miLogSaveRTF.Size = new System.Drawing.Size(152, 22);
 			this.miLogSaveRTF.Text = "RTF";
 			this.miLogSaveRTF.Click += new System.EventHandler(this.miLogSaveRTF_Click);
 			// 
@@ -696,13 +703,6 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
-			// miNewAutoMsm
-			// 
-			this.miNewAutoMsm.Name = "miNewAutoMsm";
-			this.miNewAutoMsm.Size = new System.Drawing.Size(210, 22);
-			this.miNewAutoMsm.Text = "NS (New Auto Msm)";
-			this.miNewAutoMsm.Click += new System.EventHandler(this.nSNewAutoMsmToolStripMenuItem_Click);
-			// 
 			// FrmMdiParent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -782,9 +782,9 @@
 		private System.Windows.Forms.ToolStripMenuItem miViewLog;
 		private System.Windows.Forms.ToolStripMenuItem miViewConnection;
 		private System.Windows.Forms.ToolStripMenuItem miWindowsDefaultPos;
-		private System.Windows.Forms.ToolStripMenuItem nSLogToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem miLog;
 		private System.Windows.Forms.ToolStripMenuItem miLogClearAll;
-		private System.Windows.Forms.ToolStripMenuItem nSSaveLogAsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem miSaveLogAs;
 		private System.Windows.Forms.ToolStripMenuItem miLogShow;
 		private System.Windows.Forms.ToolStripMenuItem miLogHide;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
