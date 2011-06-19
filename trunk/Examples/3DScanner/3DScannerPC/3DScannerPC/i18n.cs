@@ -108,6 +108,22 @@ namespace _3DScannerPC {
 			langEn.Add("StartNewAutoMsm", "New Automatic Measurement");
 			langEn.Add("ForceStop", "Force Stop");
 			langEn.Add("SaveMsm", "Automatic measurement scan has just finished. We'll save the data now");
+			langEn.Add("Default", "Default");
+			langEn.Add("and", "and");
+			langEn.Add("TakeMeasuresBetween", "Take measures between");
+			langEn.Add("WithIntervalsOf", "with intervals of");
+			langEn.Add("MsBetweenMeas", "milliseconds between measures");
+			langEn.Add("MeasPerPoint", "measures per point");
+			langEn.Add("Results", "Results");
+			langEn.Add("HorizontalResolution", "Horizontal Resolution");
+			langEn.Add("VerticalResolution", "Vertical Resolution");
+			langEn.Add("StatusBar", "Status Bar");
+			langEn.Add("Log", "Log");
+			langEn.Add("Show", "Show");
+			langEn.Add("Hide", "Hide");
+			langEn.Add("ClearAll", "Clear All");
+			langEn.Add("ShowHideDebug", "Show/Hide Debug");
+			langEn.Add("SaveLogAs", "Save log as...");
 			//langEn.Add("", "");
 			langs.Add("en", langEn);
 

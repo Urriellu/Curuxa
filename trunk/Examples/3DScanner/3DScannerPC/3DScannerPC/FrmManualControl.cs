@@ -62,7 +62,6 @@ namespace _3DScannerPC {
 			tmrUpdtGraph = new Timer();
 			tmrUpdtGraph.Interval = 1000;
 			tmrUpdtGraph.Tick += new EventHandler(tmrUpdtGraph_Tick);
-			tmrUpdtGraph.Start();
 		}
 
 		public void UpdateServoRanges() {
@@ -92,6 +91,11 @@ namespace _3DScannerPC {
 				SetupNewSeries();
 			}
 
+			if(tmrUpdtGraph != null) {
+				if(Scanner.Mode == ScannerMode.Manual) tmrUpdtGraph.Start();
+				else tmrUpdtGraph.Stop();
+			}
+
 			prevStatus = Scanner.Mode;
 		}
 
@@ -99,6 +103,11 @@ namespace _3DScannerPC {
 		/// Setup a new series of measurements
 		/// </summary>
 		public void SetupNewSeries() {
+			if(rawMsm != null) {
+				lock(rawMsm) {
+					Console.WriteLine("Waiting till rawMsm is no longer used");
+				}
+			}
 			string newName = "ManualControl " + DateTime.Now.ShortDate() + " " + DateTime.Now.ShortTime();
 			string newNameAvg = "ManualControlAvg " + DateTime.Now.ShortDate() + " " + DateTime.Now.ShortTime();
 			rawMsm = new RawMeasurement(newName, (float)numVRefMax.Value, (UInt16)numAdcMax.Value);
@@ -171,34 +180,38 @@ namespace _3DScannerPC {
 		public void SetReceivedManualValue(UInt16 adcValue) {
 			if(rawMsm == null || rawMsmAvg == null) SetupNewSeries();
 
-			rawMsm.Add(lastDegH, lastDegV, adcValue);
-			rawMsmAvg.Add(rawMsm.AvgLastPoints((int)numAvg.Value));
-			UpdateReceivedValues();
+			lock(rawMsm) {
+				rawMsm.Add(lastDegH, lastDegV, adcValue);
+				rawMsmAvg.Add(rawMsm.AvgLastPoints((int)numAvg.Value));
+				UpdateReceivedValues();
 
-			//add instant position to graph
-			double s = (DateTime.Now - graphStartTime).TotalSeconds;
-			graphPtInst.Add(s, rawMsm.Last.Distance_cm);
-			graphPtAvg.Add(s, rawMsmAvg.Last.Distance_cm);
-			graphModified = true;
+				//add instant position to graph
+				double s = (DateTime.Now - graphStartTime).TotalSeconds;
+				graphPtInst.Add(s, rawMsm.Last.Distance_cm);
+				graphPtAvg.Add(s, rawMsmAvg.Last.Distance_cm);
+				graphModified = true;
+			}
 		}
 
 		/// <summary>
 		/// Update the representation of latest received values
 		/// </summary>
 		private void UpdateReceivedValues() {
-			if(rawMsm.Count > 0) {
-				lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
-				lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
-				lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);
+			lock(rawMsm) {
+				if(rawMsm.Count > 0) {
+					lblReceivedValue.Text = i18n.str("recManualValue", rawMsm.Last.DistanceAdcValue, numVRefMax.Value, numAdcMax.Value);
+					lblReceivedVoltage.Text = i18n.str("recManualVoltage", rawMsm.Last.DistanceVolts);
+					lblReceivedDistance.Text = float.IsInfinity(rawMsm.Last.Distance_mm) ? " - " : i18n.str("recManualDistance", rawMsm.Last.Distance_mm);
 
-				// change position of object drawn on screen
-				int picObjBorders = 10;
-				int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
-				int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
-				int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
-				float distancePorc = rawMsm.AvgLastPoints(PointAvgObj).Distance_mm / 700;
-				int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
-				picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
+					// change position of object drawn on screen
+					int picObjBorders = 10;
+					int picObjMinPosX = picView.Location.X + picView.Width + picObjBorders;
+					int picObjMaxPoxX = grpClosestObj.Width - picObjBorders;
+					int picObjPosXRange = picObjMaxPoxX - picObjMinPosX;
+					float distancePorc = rawMsm.AvgLastPoints(PointAvgObj).Distance_mm / 700;
+					int picObjNewOffset = (int)(distancePorc * picObjPosXRange);
+					picObject.Location = new Point(picObjMinPosX + picObjNewOffset, picView.Location.Y + picView.Height / 2 - picObject.Height / 2);
+				}
 			}
 		}
 

@@ -99,6 +99,22 @@ namespace _3DScannerPC {
 			tmrElapsed.Tick += new EventHandler(tmrElapsed_Tick);
 		}
 
+		public override void UpdateLang() {
+			this.Text = i18n.str("NewAutoMsm");
+			btnStartNewAutoScan.Text = i18n.str("StartNewAutoMsm");
+			btnForceStop.Text = i18n.str("ForceStop");
+			btnDefault.Text = i18n.str("Default");
+			lblAndH.Text = lblAndV.Text = i18n.str("and");
+			lblTakeMeasBetweenH.Text = lblTakeMeasBetweenV.Text = i18n.str("TakeMeasuresBetween");
+			lblIntervalsOfH.Text = lblIntervalsOfV.Text = i18n.str("WithIntervalsOf");
+			lblMsBetweenMeas.Text = i18n.str("MsBetweenMeas");
+			lblMeasPerPoint.Text = i18n.str("MeasPerPoint");
+			grpSetup.Text = i18n.str("Setup");
+			grpResults.Text = i18n.str("Results");
+			grpHRes.Text = i18n.str("HorizontalResolution");
+			grpVRes.Text = i18n.str("VerticalResolution");
+		}
+
 		void tmrElapsed_Tick(object sender, EventArgs e) {
 			elapsedTime += new TimeSpan(0, 0, 1);
 			if(elapsedTime >= totalTime) {
@@ -118,20 +134,14 @@ namespace _3DScannerPC {
 
 			numMinValV.Minimum = numMaxValV.Minimum = Servo.V.Duty0deg;
 			numMinValV.Maximum = numMaxValV.Maximum = Servo.V.Duty180deg;
-			numMaxValV.Value = Servo.V.DutyFromDeg(120);
-			numMinValV.Value = Servo.V.DutyFromDeg(60);
+			numMaxValV.Value = Servo.V.DutyFromDeg(90);
+			numMinValV.Value = Servo.V.DutyFromDeg(45);
 
 			updateSummaries = true;
 			UpdateHResSummary();
 			UpdateVResSummary();
 
 			txtName.Text = "AutoScan " + DateTime.Now.ShortDateTime();
-		}
-
-		public override void UpdateLang() {
-			this.Text = i18n.str("NewAutoMsm");
-			btnStartNewAutoScan.Text = i18n.str("StartNewAutoMsm");
-			btnForceStop.Text = i18n.str("ForceStop");
 		}
 
 		private void FrmNewAutoMsm_FormClosing(object sender, FormClosingEventArgs e) {

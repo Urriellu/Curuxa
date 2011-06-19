@@ -100,6 +100,16 @@ namespace _3DScannerPC {
 			miTools.Text = i18n.str("Tools");
 			miSettings.Text = i18n.str("Settings");
 			miNewAutoMsm.Text = i18n.str("NewAutoMsm");
+			miViewConnection.Text = i18n.str("Connection");
+			miViewManualControl.Text = i18n.str("ManualControl");
+			miViewRawMsms.Text = i18n.str("RawMsms");
+			miViewStatus.Text = i18n.str("StatusBar");
+			miViewLog.Text = miLog.Text = i18n.str("Log");
+			miLogShow.Text = i18n.str("Show");
+			miLogHide.Text = i18n.str("Hide");
+			miLogClearAll.Text = i18n.str("ClearAll");
+			miShowHideDebug.Text = i18n.str("ShowHideDebug");
+			miSaveLogAs.Text = i18n.str("SaveLogAs");
 
 			foreach(Form f in MdiChildren) {
 				if(f is FormChild) {
@@ -331,8 +341,9 @@ namespace _3DScannerPC {
 			if(sfd.ShowDialog(this) == DialogResult.OK && !string.IsNullOrEmpty(sfd.FileName)) {
 				rawMeasurement.Save(sfd.FileName);
 				RawMeasurement.OpenRawMsm(sfd.FileName);
-				frmRawMsms.Show();
+				/*frmRawMsms.Show();
 				frmRawMsms.BringToFront();
+				frmRawMsms.Update();*/
 				return true;
 			} else return false;
 		}
