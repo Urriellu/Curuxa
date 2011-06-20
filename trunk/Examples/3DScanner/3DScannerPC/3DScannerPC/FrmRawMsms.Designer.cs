@@ -23,9 +23,9 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("first one");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("second one");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("first one");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("second one");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "fdh",
             "a02",
             "b03",
@@ -132,8 +132,8 @@
 			this.lstMsms.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstMsms.HideSelection = false;
 			this.lstMsms.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5});
+            listViewItem1,
+            listViewItem2});
 			this.lstMsms.Location = new System.Drawing.Point(0, 0);
 			this.lstMsms.MultiSelect = false;
 			this.lstMsms.Name = "lstMsms";
@@ -180,9 +180,9 @@
             this.columnDistanceMm});
 			this.lstPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstPoints.HideSelection = false;
-			listViewItem6.StateImageIndex = 0;
+			listViewItem3.StateImageIndex = 0;
 			this.lstPoints.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6});
+            listViewItem3});
 			this.lstPoints.LabelEdit = true;
 			this.lstPoints.Location = new System.Drawing.Point(0, 0);
 			this.lstPoints.MultiSelect = false;

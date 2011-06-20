@@ -34,6 +34,11 @@ namespace _3DScannerPC.Properties {
 				Settings.Default.OpenRawMsms.Add(rm.Key);
 			}
 
+			Settings.Default.OpenModels.Clear();
+			foreach(var model in Model3D.KnownModels) {
+				Settings.Default.OpenModels.Add(model.Key);
+			}
+
 			Settings.Default.Save();
 		}
 

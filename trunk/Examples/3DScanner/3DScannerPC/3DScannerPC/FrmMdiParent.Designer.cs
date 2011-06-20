@@ -99,6 +99,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.miViewModels = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -317,6 +318,7 @@
             this.miViewManualControl,
             this.miNewAutoMsm,
             this.miViewRawMsms,
+            this.miViewModels,
             this.miViewLog,
             this.toolStripMenuItem1,
             this.miViewStatus});
@@ -529,14 +531,14 @@
 			// miLogSaveTxt
 			// 
 			this.miLogSaveTxt.Name = "miLogSaveTxt";
-			this.miLogSaveTxt.Size = new System.Drawing.Size(152, 22);
+			this.miLogSaveTxt.Size = new System.Drawing.Size(104, 22);
 			this.miLogSaveTxt.Text = "TXT";
 			this.miLogSaveTxt.Click += new System.EventHandler(this.miLogSaveTxt_Click);
 			// 
 			// miLogSaveRTF
 			// 
 			this.miLogSaveRTF.Name = "miLogSaveRTF";
-			this.miLogSaveRTF.Size = new System.Drawing.Size(152, 22);
+			this.miLogSaveRTF.Size = new System.Drawing.Size(104, 22);
 			this.miLogSaveRTF.Text = "RTF";
 			this.miLogSaveRTF.Click += new System.EventHandler(this.miLogSaveRTF_Click);
 			// 
@@ -703,6 +705,13 @@
 			this.tsStatus.Size = new System.Drawing.Size(153, 17);
 			this.tsStatus.Text = "UNDEFINED STATUS";
 			// 
+			// miViewModels
+			// 
+			this.miViewModels.Name = "miViewModels";
+			this.miViewModels.Size = new System.Drawing.Size(210, 22);
+			this.miViewModels.Text = "NS (Models)";
+			this.miViewModels.Click += new System.EventHandler(this.miViewModels_Click);
+			// 
 			// FrmMdiParent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -802,6 +811,7 @@
 		private System.Windows.Forms.ToolStripMenuItem miManualControlSaveSeriesAvg;
 		private System.Windows.Forms.ToolStripMenuItem miViewRawMsms;
 		private System.Windows.Forms.ToolStripMenuItem miNewAutoMsm;
+		private System.Windows.Forms.ToolStripMenuItem miViewModels;
 	}
 }
 

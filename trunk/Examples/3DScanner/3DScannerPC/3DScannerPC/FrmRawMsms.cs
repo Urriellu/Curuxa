@@ -26,9 +26,10 @@ namespace _3DScannerPC {
 		/// </summary>
 		string selRawMsmFile = null;
 
-		RawMeasurement selRawMsm {
+		public RawMeasurement selRawMsm {
 			get {
-				return RawMeasurement.KnownRMs[selRawMsmFile];
+				if(!string.IsNullOrEmpty(selRawMsmFile)) return RawMeasurement.KnownRMs[selRawMsmFile];
+				else return null;
 			}
 		}
 

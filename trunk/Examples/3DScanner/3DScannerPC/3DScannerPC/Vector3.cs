@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;			// for various Xml attributes
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace _3DScannerPC {
 	/// <summary>
@@ -21,22 +22,26 @@ namespace _3DScannerPC {
 	/// Mixed product function implemented
 	/// </Changes>
 	[Serializable]
+	[DataContract]
 	public struct Vector3:IComparable, IComparable<Vector3>, IEquatable<Vector3>, IFormattable {
 
 		#region Class Variables
 		/// <summary>
 		/// The X component of the vector
 		/// </summary>
+		[DataMember]
 		private double x;
 
 		/// <summary>
 		/// The Y component of the vector
 		/// </summary>
+		[DataMember]
 		private double y;
 
 		/// <summary>
 		/// The Z component of the vector
 		/// </summary>
+		[DataMember]
 		private double z;
 
 		#endregion
