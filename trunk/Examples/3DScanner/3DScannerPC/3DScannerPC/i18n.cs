@@ -170,7 +170,7 @@ namespace _3DScannerPC {
 			langEs.Add("ManualControlVtitle", "Vertical:");
 			langEs.Add("DegreesN", "Grados: {0}º");
 			langEs.Add("ConnectedNotAuth", "Conectado - No Autenticado");
-			langEs.Add("SaveRawMsm", "Medición en bruto guardada \"{0}\" in {1}");
+			langEs.Add("SaveRawMsm", "Medición en bruto \"{0}\" guardada en {1}");
 			langEs.Add("UnableSaveFile", "Imposible guardar \"{0}\". {1}");
 			langEs.Add("ReadRawMsm", "Medición en bruto \"{0}\" leída desde {1}");
 			langEs.Add("UnableLoadFile", "Imposible cargar archivo \"{0}\". {1}");
@@ -270,6 +270,33 @@ namespace _3DScannerPC {
 			langFr.Add("Edit", "Modifier");
 			langFr.Add("View", "Affichage");
 			langFr.Add("Language", "Langage");
+			langFr.Add("Help", "Aide");
+			langFr.Add("MenuModeInactiveReadyScan", "Inactif: disponible pour scan");
+			langFr.Add("ManualControlHtitle", "Mouvement horizontal (duty et degrés):");
+			langFr.Add("ManualControlVtitle", "Vertical:");
+			langFr.Add("DegreesN", "Degrés: {0}º");
+			langFr.Add("ConnectedNotAuth", "Conecté - Non authentifié");
+			langFr.Add("SaveRawMsm", "Mesure brut \"{0}\" sauvé dans {1}");
+			langFr.Add("UnableSaveFile", "Impossible d'enregistrer \"{0}\". {1}");
+			langFr.Add("ReadRawMsm", "Mesure brut \"{0}\" lire à partir de {1}");
+			langFr.Add("UnableLoadFile", "Impossible de charger le fichier \"{0}\". {1}");
+			langFr.Add("Open", "Ouvrir");
+			langFr.Add("Remove", "Supprimer");
+			langFr.Add("SavingSettings", "Enregistrement d'options");
+			langFr.Add("Setup", "Options");
+			langFr.Add("AvgEvery", "Moyenne chaque");
+			langFr.Add("points", "points");
+			langFr.Add("Activate", "Activer");
+			langFr.Add("Deactivate", "Désactiver");
+			langFr.Add("Auth", "Auth");
+			langFr.Add("ClosestObject", "Objet Plus Proche");
+			langFr.Add("MeasuredPoints", "Points Moyennes");
+			langFr.Add("StartNewSeries", "Démarrer Nouvelle Série");
+			langFr.Add("SaveInstantSeries", "Enregistrer Série Instantanée");
+			langFr.Add("SaveAvgSeries", "Enregistrer Série Moyenne");
+			langFr.Add("RawMsms", "Mesures Brut");
+			langFr.Add("Name", "Nom");
+			langFr.Add("Date", "Date");
 			langs.Add("fr", langFr);
 		}
 
