@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace _3DScannerPC {
-	public class Model {
+	public class ModelOLD {
 		public string Name;
 		
 		/// <summary>

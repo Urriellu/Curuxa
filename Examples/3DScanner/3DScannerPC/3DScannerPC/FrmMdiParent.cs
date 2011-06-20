@@ -16,8 +16,9 @@ namespace _3DScannerPC {
 		FrmConnection frmConnection;
 		FrmSettings frmSettings;
 		public FrmLog frmLog;
-		FrmRawMsms frmRawMsms;
+		public FrmRawMsms frmRawMsms;
 		public FrmNewAutoMsm frmNewAutoMsm;
+		FrmModels3D frmModels3D;
 
 		public FrmMdiParent() {
 			Control.CheckForIllegalCrossThreadCalls = false;
@@ -43,6 +44,9 @@ namespace _3DScannerPC {
 			frmNewAutoMsm = new FrmNewAutoMsm();
 			frmNewAutoMsm.MdiParent = this;
 
+			frmModels3D = new FrmModels3D();
+			frmModels3D.MdiParent = this;
+
 			SetMdiChildrenDefaultLocations();
 
 			UpdateLang();
@@ -52,6 +56,7 @@ namespace _3DScannerPC {
 			//frmManualControl.Show();
 			frmConnection.Show();
 			//frmNewAutoMsm.Show();
+			frmModels3D.Show();
 
 			Globals.Log(LogType.Information, i18n.str("init"));
 
@@ -110,6 +115,7 @@ namespace _3DScannerPC {
 			miLogClearAll.Text = i18n.str("ClearAll");
 			miShowHideDebug.Text = i18n.str("ShowHideDebug");
 			miSaveLogAs.Text = i18n.str("SaveLogAs");
+			miViewModels.Text = i18n.str("Models");
 
 			foreach(Form f in MdiChildren) {
 				if(f is FormChild) {
@@ -358,6 +364,16 @@ namespace _3DScannerPC {
 			}
 		}
 
+		public void OpenModel3D() {
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.FileName = "*." + Settings.Default.ModelExtension;
+			ofd.Filter = Settings.Default.ModelFileFilter;
+
+			if(ofd.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(ofd.FileName)) {
+				Model3D.OpenModel(ofd.FileName);
+			}
+		}
+
 		public void miManualControlSaveSeriesAvg_Click(object sender, EventArgs e) {
 			SaveRawMsm(frmManualControl.rawMsmAvg);
 		}
@@ -366,12 +382,20 @@ namespace _3DScannerPC {
 			frmRawMsms.UpdateListOpenRawMsms();
 		}
 
+		internal void UpdateListOpenModels() {
+			frmModels3D.UpdateListOpenModels();
+		}
+
 		private void miViewRawMsms_Click(object sender, EventArgs e) {
 			frmRawMsms.Show();
 		}
 
 		private void nSNewAutoMsmToolStripMenuItem_Click(object sender, EventArgs e) {
 			frmNewAutoMsm.Show();
+		}
+
+		private void miViewModels_Click(object sender, EventArgs e) {
+			frmModels3D.Show();
 		}
 	}
 }

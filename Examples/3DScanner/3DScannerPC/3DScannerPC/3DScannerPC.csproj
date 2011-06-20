@@ -61,11 +61,23 @@
     <Compile Include="FormChild.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmModels3D.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmModels3D.Designer.cs">
+      <DependentUpon>FrmModels3D.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmNewAutoMsm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmNewAutoMsm.Designer.cs">
       <DependentUpon>FrmNewAutoMsm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmNewModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmNewModel.Designer.cs">
+      <DependentUpon>FrmNewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmRawMsms.cs">
       <SubType>Form</SubType>
@@ -80,6 +92,7 @@
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="LogType.cs" />
+    <Compile Include="Model3D.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -118,16 +131,10 @@
     <Compile Include="FrmMdiParent.Designer.cs">
       <DependentUpon>FrmMdiParent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmModel.Designer.cs">
-      <DependentUpon>FrmModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="i18n.cs" />
     <Compile Include="Measure.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="ModelOLD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
@@ -144,11 +151,14 @@
     <EmbeddedResource Include="FrmMdiParent.resx">
       <DependentUpon>FrmMdiParent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmModel.resx">
-      <DependentUpon>FrmModel.cs</DependentUpon>
+    <EmbeddedResource Include="FrmModels3D.resx">
+      <DependentUpon>FrmModels3D.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmNewAutoMsm.resx">
       <DependentUpon>FrmNewAutoMsm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmNewModel.resx">
+      <DependentUpon>FrmNewModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmRawMsms.resx">
       <DependentUpon>FrmRawMsms.cs</DependentUpon>
