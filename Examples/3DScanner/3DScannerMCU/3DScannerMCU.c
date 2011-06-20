@@ -494,6 +494,7 @@ void RunModeScan() {
 	} while(!IsRowTooHigh());
 
 	WriteSP(CcEndModeAutoScan);
+	Mode=ModeInactive;
 
 	RCIF=0; RCIE=1;
 }
