@@ -258,10 +258,10 @@ namespace _3DScannerPC {
 			langFr.Add("Mode" + ScannerMode.Scan, "Numérisation");
 			langFr.Add("ManualControl", "Contrôle Manuel");
 			langFr.Add("Scan", "Scan");
-			langFr.Add("recManualTitle", "Dernière Valeur Reçu :");
-			langFr.Add("recManualValue", "Valeur: {0} (0-{1})");
-			langFr.Add("recManualVoltage", "Tension: {0}V (0V=0, {1}V={2})");
-			langFr.Add("recManualDistance", "Distance: {0}mm (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, non-linéaire)");
+			langFr.Add("recManualTitle", "Dernière valeur reçu:");
+			langFr.Add("recManualValue", "Valeur: {0}      (0V = 0, {1}V = {2})");
+			langFr.Add("recManualVoltage", "Tension: {0}V   (3.15V=70mm, 1.65V=150mmm 0.4V=800mm, pas lineal)");
+			langFr.Add("recManualDistance", "Distance: {0}mm");
 			langFr.Add("Connection", "Connexion");
 			langFr.Add("UpdateList", "Mise à jour");
 			langFr.Add("bauds", "bauds");
