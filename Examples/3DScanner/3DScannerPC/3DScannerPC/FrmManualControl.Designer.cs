@@ -445,7 +445,7 @@
 			this.numAvg.TabIndex = 16;
 			this.numAvg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.numAvg.Value = new decimal(new int[] {
-            3,
+            20,
             0,
             0,
             0});

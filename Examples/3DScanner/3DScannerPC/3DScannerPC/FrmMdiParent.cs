@@ -56,7 +56,7 @@ namespace _3DScannerPC {
 			//frmManualControl.Show();
 			frmConnection.Show();
 			//frmNewAutoMsm.Show();
-			frmModels3D.Show();
+			//frmModels3D.Show();
 
 			Globals.Log(LogType.Information, i18n.str("init"));
 

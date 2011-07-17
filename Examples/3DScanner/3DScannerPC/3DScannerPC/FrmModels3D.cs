@@ -110,7 +110,7 @@ namespace _3DScannerPC {
 				//no Model3D selected
 				lstPoints.Enabled = false;
 				btnRemoveModel.Enabled = false;
-				btnNewModel.Enabled = false;
+				//btnNewModel.Enabled = false;
 				btnImport.Enabled = false;
 				btnSave.Enabled = false;
 				btnExportTabbed.Enabled = false;
@@ -118,7 +118,7 @@ namespace _3DScannerPC {
 			} else {
 				lstPoints.Enabled = true;
 				btnRemoveModel.Enabled = true;
-				btnNewModel.Enabled = true;
+				//btnNewModel.Enabled = true;
 				btnImport.Enabled = true;
 				btnSave.Enabled = true;
 				btnExportTabbed.Enabled = true;
@@ -171,7 +171,7 @@ namespace _3DScannerPC {
 			if(saveFileDialog.ShowDialog(this) == DialogResult.OK) {
 				string FileName = saveFileDialog.FileName;
 				string result = "";
-				for(int i = 0; i < selModel.Count; i++) result += selModel[i].X.ToString() + ";" + selModel[i].Y.ToString() + ";" + selModel[i].Z.ToString() + Environment.NewLine;
+				for(int i = 0 ; i < selModel.Count ; i++) result += selModel[i].X.ToString().Replace(",", ".") + ";" + selModel[i].Y.ToString().Replace(",", ".") + ";" + selModel[i].Z.ToString().Replace(",", ".") + Environment.NewLine;
 				File.WriteAllText(FileName, result);
 			}
 		}
